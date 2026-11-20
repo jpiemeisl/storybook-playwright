@@ -4,6 +4,7 @@ html {
 }
 
 body {
+  overflow-wrap: break-word;
   background-color: var(--color-bg);
   color: var(--color-text);
   font-family: var(--text-font-body);

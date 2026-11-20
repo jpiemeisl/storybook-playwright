@@ -1,0 +1,23 @@
+@layer components {
+  .icon {
+    display: inline-block;
+    flex-shrink: 0;
+  }
+
+  .sm {
+    inline-size: var(--icon-size-sm);
+    block-size: var(--icon-size-sm);
+  }
+  .md {
+    inline-size: var(--icon-size-md);
+    block-size: var(--icon-size-md);
+  }
+  .lg {
+    inline-size: var(--icon-size-lg);
+    block-size: var(--icon-size-lg);
+  }
+  .xl {
+    inline-size: var(--icon-size-xl);
+    block-size: var(--icon-size-xl);
+  }
+}

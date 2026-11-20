@@ -62,6 +62,8 @@ async function waitForStoryReady(page: Page) {
     return phase === 'completed' || phase === 'afterEach' || phase === 'finished';
   });
   await page.evaluate(async () => {
+    // Lazy images outside the viewport never start loading (and full-page shots would miss them).
+    for (const img of document.querySelectorAll<HTMLImageElement>('img[loading="lazy"]')) img.loading = 'eager';
     await document.fonts.ready;
     await Promise.all(
       Array.from(document.images)
@@ -74,6 +76,8 @@ async function waitForStoryReady(page: Page) {
             }),
         ),
     );
+    // Let components react to load/error events (e.g. Image's fallback) before capturing.
+    await new Promise((done) => requestAnimationFrame(() => requestAnimationFrame(done)));
   });
 }
 

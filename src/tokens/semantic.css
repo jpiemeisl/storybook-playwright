@@ -9,6 +9,8 @@
   --color-bg-subtle: var(--neutral-50);
   --color-bg-muted: var(--neutral-100);
   --color-surface: var(--neutral-0);
+  --color-bg-accent-subtle: var(--teal-50);
+  --color-bg-inverse: var(--neutral-900);
   --color-border: var(--neutral-200);
   --color-border-strong: var(--neutral-400);
 
@@ -67,6 +69,22 @@
   --gap-lg: var(--space-6);
   --gap-xl: var(--space-8);
 
+  /* Page layout */
+  --gutter: clamp(1rem, 0.48rem + 2.21vw, 2.5rem);
+  --section-padding-sm: var(--space-section-sm);
+  --section-padding-md: var(--space-section-md);
+  --section-padding-lg: var(--space-section-lg);
+  --container-width-sm: var(--container-sm);
+  --container-width-md: var(--container-md);
+  --container-width-lg: var(--container-lg);
+  --container-width-xl: var(--container-xl);
+
+  /* Icons */
+  --icon-size-sm: var(--space-4);
+  --icon-size-md: var(--space-5);
+  --icon-size-lg: var(--space-6);
+  --icon-size-xl: var(--space-8);
+
   /* Control sizing */
   --control-height-sm: var(--space-8);
   --control-height-md: var(--space-10);
@@ -85,4 +103,36 @@
 
   /* Motion */
   --transition-control: var(--duration-fast) var(--easing-standard);
+}
+
+/*
+ * Inverse surface. Any element with data-surface='inverse' (e.g. <Section background="inverse">)
+ * remaps the colour aliases so descendants stay readable on a dark background.
+ */
+[data-surface='inverse'] {
+  --color-bg: var(--color-bg-inverse);
+  --color-bg-subtle: var(--neutral-800);
+  --color-bg-muted: var(--neutral-700);
+  --color-surface: var(--neutral-800);
+  --color-border: var(--neutral-700);
+  --color-border-strong: var(--neutral-500);
+
+  --color-text: var(--color-text-inverse);
+  --color-text-muted: var(--neutral-300);
+  --color-text-subtle: var(--neutral-400);
+
+  --color-action: var(--teal-200);
+  --color-action-hover: var(--teal-100);
+  --color-action-active: var(--teal-50);
+  --color-action-text: var(--neutral-900);
+  --color-action-subtle: var(--teal-900);
+  --color-action-subtle-hover: var(--teal-800);
+  --color-focus-ring: var(--teal-200);
+
+  --color-danger: var(--red-100);
+  --color-danger-subtle: var(--red-700);
+  --color-success: var(--green-100);
+  --color-success-subtle: var(--green-700);
+
+  color: var(--color-text);
 }

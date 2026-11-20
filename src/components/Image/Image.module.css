@@ -1,0 +1,32 @@
+@layer components {
+  .image {
+    display: block;
+    inline-size: 100%;
+    block-size: auto;
+    max-inline-size: 100%;
+    background-color: var(--color-bg-muted);
+  }
+
+  .cover {
+    object-fit: cover;
+  }
+
+  .contain {
+    object-fit: contain;
+  }
+
+  .fallback {
+    display: grid;
+    place-items: center;
+    inline-size: 100%;
+    min-block-size: var(--space-16);
+    padding: var(--gap-md);
+    background-color: var(--color-bg-muted);
+    color: var(--color-text-muted);
+  }
+
+  .fallbackText {
+    font-size: var(--text-size-sm);
+    text-align: center;
+  }
+}

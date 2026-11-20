@@ -44,8 +44,8 @@ export const LevelVersusSize: Story = {
       <Heading as="h1" size="xl">
         An h1 styled at xl
       </Heading>
-      <Heading as="h3" size="3xl">
-        An h3 styled at 3xl
+      <Heading as="h2" size="3xl">
+        An h2 styled at 3xl
       </Heading>
     </div>
   ),
