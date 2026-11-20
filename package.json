@@ -1,0 +1,32 @@
+{
+  "name": "storybook-playwright",
+  "private": true,
+  "version": "0.1.0",
+  "type": "module",
+  "scripts": {
+    "typecheck": "tsc --noEmit",
+    "storybook": "storybook dev -p 6006",
+    "build-storybook": "storybook build",
+    "test:vrt": "storybook build && playwright test",
+    "test:vrt:update": "storybook build && playwright test --update-snapshots",
+    "test:vrt:report": "playwright show-report"
+  },
+  "dependencies": {
+    "react": "^19.3.1",
+    "react-dom": "^19.3.1"
+  },
+  "devDependencies": {
+    "@playwright/test": "^1.65.1",
+    "@storybook/addon-a11y": "^10.6.8",
+    "@storybook/addon-docs": "^10.6.8",
+    "@storybook/react-vite": "^10.6.8",
+    "@types/node": "^26.6.6",
+    "@types/react": "^19.3.0",
+    "@types/react-dom": "^19.3.0",
+    "@vitejs/plugin-react": "^6.3.0",
+    "http-server": "^14.1.1",
+    "storybook": "^10.6.8",
+    "typescript": "^7.0.2",
+    "vite": "^8.3.8"
+  }
+}
