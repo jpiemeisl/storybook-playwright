@@ -1,0 +1,54 @@
+@layer components {
+  .link {
+    color: var(--color-action);
+    border-radius: var(--radius-1);
+    text-underline-offset: 0.2em;
+    text-decoration-thickness: 1px;
+    transition: color var(--transition-control);
+  }
+
+  .link:hover {
+    color: var(--color-action-hover);
+    text-decoration-thickness: 2px;
+  }
+
+  .link:focus-visible {
+    outline: var(--focus-ring-width) solid var(--color-focus-ring);
+    outline-offset: var(--focus-ring-offset);
+  }
+
+  .inline {
+    text-decoration-line: underline;
+  }
+
+  .standalone {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--gap-xs);
+    font-weight: var(--text-weight-strong);
+    text-decoration-line: none;
+  }
+
+  .standalone:hover {
+    text-decoration-line: underline;
+  }
+
+  .icon {
+    display: inline-block;
+    vertical-align: -0.125em;
+    margin-inline-start: 0.2em;
+  }
+
+  .standalone .icon {
+    margin-inline-start: 0;
+  }
+
+  .visuallyHidden {
+    position: absolute;
+    inline-size: 1px;
+    block-size: 1px;
+    overflow: hidden;
+    clip-path: inset(50%);
+    white-space: nowrap;
+  }
+}

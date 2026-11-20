@@ -1,0 +1,49 @@
+@layer components {
+  .badge {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--gap-xs);
+    border: 1px solid transparent;
+    border-radius: var(--radius-pill);
+    font-family: var(--text-font-body);
+    font-weight: var(--text-weight-strong);
+    line-height: 1.2;
+    white-space: nowrap;
+  }
+
+  .sm {
+    padding-block: 0;
+    padding-inline: var(--space-2);
+    font-size: var(--text-size-xs);
+  }
+
+  .md {
+    padding-block: var(--space-1);
+    padding-inline: var(--space-3);
+    font-size: var(--text-size-sm);
+  }
+
+  .neutral {
+    background-color: var(--color-bg-muted);
+    border-color: var(--color-border);
+    color: var(--color-text);
+  }
+
+  .accent {
+    background-color: var(--color-action-subtle);
+    border-color: var(--color-action);
+    color: var(--color-action);
+  }
+
+  .success {
+    background-color: var(--color-success-subtle);
+    border-color: var(--color-success);
+    color: var(--color-success);
+  }
+
+  .danger {
+    background-color: var(--color-danger-subtle);
+    border-color: var(--color-danger);
+    color: var(--color-danger);
+  }
+}
