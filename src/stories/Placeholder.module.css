@@ -1,0 +1,33 @@
+@layer components {
+  .placeholder {
+    display: grid;
+    /* minmax(0, 1fr), not auto: lets long unbroken strings wrap instead of widening the card. */
+    grid-template-columns: minmax(0, 1fr);
+    gap: var(--gap-xs);
+    align-content: start;
+    padding: var(--gap-md);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-surface);
+    background-color: var(--color-surface);
+    color: var(--color-text);
+  }
+
+  .title {
+    font-weight: var(--text-weight-strong);
+  }
+
+  .body {
+    color: var(--color-text-muted);
+    font-size: var(--text-size-sm);
+  }
+
+  .ruler {
+    padding-block: var(--gap-sm);
+    background-color: var(--color-action-subtle);
+    border-inline: 2px solid var(--color-action);
+    color: var(--color-text);
+    font-family: var(--text-font-code);
+    font-size: var(--text-size-sm);
+    text-align: center;
+  }
+}
