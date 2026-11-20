@@ -1,0 +1,32 @@
+@layer components {
+  .section {
+    color: var(--color-text);
+  }
+
+  .bg-default {
+    background-color: var(--color-bg);
+  }
+  .bg-subtle {
+    background-color: var(--color-bg-subtle);
+  }
+  .bg-accent {
+    background-color: var(--color-bg-accent-subtle);
+  }
+  /* data-surface="inverse" remaps --color-bg and friends (see semantic.css). */
+  .bg-inverse {
+    background-color: var(--color-bg);
+  }
+
+  .pad-none {
+    padding-block: 0;
+  }
+  .pad-sm {
+    padding-block: var(--section-padding-sm);
+  }
+  .pad-md {
+    padding-block: var(--section-padding-md);
+  }
+  .pad-lg {
+    padding-block: var(--section-padding-lg);
+  }
+}

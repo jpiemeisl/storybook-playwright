@@ -1,0 +1,60 @@
+@layer components {
+  /* The query container. Grid columns respond to this element's width, not the viewport. */
+  .slot {
+    container-type: inline-size;
+  }
+
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(var(--grid-base, 1), minmax(0, 1fr));
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .grid > * {
+    min-inline-size: 0;
+  }
+
+  @container (min-width: 30rem) {
+    .grid {
+      grid-template-columns: repeat(var(--grid-sm, 1), minmax(0, 1fr));
+    }
+  }
+
+  @container (min-width: 45rem) {
+    .grid {
+      grid-template-columns: repeat(var(--grid-md, 1), minmax(0, 1fr));
+    }
+  }
+
+  @container (min-width: 60rem) {
+    .grid {
+      grid-template-columns: repeat(var(--grid-lg, 1), minmax(0, 1fr));
+    }
+  }
+
+  /* Auto-fit wins over the column counts at every width (higher specificity). */
+  .grid.autoFit {
+    grid-template-columns: repeat(auto-fit, minmax(min(var(--grid-min), 100%), 1fr));
+  }
+
+  .gap-none {
+    gap: 0;
+  }
+  .gap-xs {
+    gap: var(--gap-xs);
+  }
+  .gap-sm {
+    gap: var(--gap-sm);
+  }
+  .gap-md {
+    gap: var(--gap-md);
+  }
+  .gap-lg {
+    gap: var(--gap-lg);
+  }
+  .gap-xl {
+    gap: var(--gap-xl);
+  }
+}

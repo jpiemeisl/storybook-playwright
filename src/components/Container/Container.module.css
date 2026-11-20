@@ -1,0 +1,41 @@
+@layer components {
+  .container {
+    inline-size: 100%;
+    margin-inline: auto;
+    padding-inline: var(--gutter);
+  }
+
+  /* A container inside another already sits within the outer gutter. */
+  .container .container {
+    padding-inline: 0;
+  }
+
+  /* Max widths apply to the content box, so the gutter sits outside the measure. */
+  .sm {
+    max-inline-size: calc(var(--container-width-sm) + 2 * var(--gutter));
+  }
+  .md {
+    max-inline-size: calc(var(--container-width-md) + 2 * var(--gutter));
+  }
+  .lg {
+    max-inline-size: calc(var(--container-width-lg) + 2 * var(--gutter));
+  }
+  .xl {
+    max-inline-size: calc(var(--container-width-xl) + 2 * var(--gutter));
+  }
+  .container .container:is(.sm, .md, .lg, .xl) {
+    max-inline-size: none;
+  }
+  .container .container.sm {
+    max-inline-size: var(--container-width-sm);
+  }
+  .container .container.md {
+    max-inline-size: var(--container-width-md);
+  }
+  .container .container.lg {
+    max-inline-size: var(--container-width-lg);
+  }
+  .container .container.xl {
+    max-inline-size: var(--container-width-xl);
+  }
+}
