@@ -1,0 +1,36 @@
+@layer components {
+  .form {
+    display: grid;
+    gap: var(--gap-sm);
+  }
+
+  .label {
+    font-weight: var(--text-weight-strong);
+  }
+
+  .row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--gap-sm);
+  }
+
+  .input {
+    flex: 1 1 12rem;
+    min-inline-size: 0;
+    min-block-size: var(--control-height-md);
+    padding-inline: var(--space-3);
+    border: 1px solid var(--color-border-strong);
+    border-radius: var(--radius-control);
+    background-color: var(--color-surface);
+    color: var(--color-text);
+  }
+
+  .input::placeholder {
+    color: var(--color-text-subtle);
+  }
+
+  .input:focus-visible {
+    outline: var(--focus-ring-width) solid var(--color-focus-ring);
+    outline-offset: var(--focus-ring-offset);
+  }
+}

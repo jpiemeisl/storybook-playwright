@@ -50,6 +50,10 @@ fetching in components.
 | ---------- | ------------------------------------------------------------------ |
 | Primitives | Button, Text, Heading, Link (+ LinkProvider), Icon, Image, Badge, Divider |
 | Layout     | Container, Section, Stack, Grid                                    |
+| Navigation | SkipLink, Header, MobileMenu, Footer, Breadcrumbs, Pagination      |
+
+Navigation components take plain data from `src/content-types/navigation.ts` (`NavItem`,
+`SocialLink`, `BreadcrumbItem`); map your CMS or router data into those shapes.
 
 - **LinkProvider** injects the element `Link` uses for internal links (e.g. Next.js `Link`). External
   links (absolute http(s) URLs) always render a plain `<a>` with `rel="noopener noreferrer"`.
@@ -59,16 +63,37 @@ fetching in components.
   `columns` value steps down 4 → 3 → 2 → 1 as the slot narrows; pass an object for exact control.
 - Items that contain long unbroken strings need a shrinkable track inside them too (e.g.
   `grid-template-columns: minmax(0, 1fr)` on a card); Stack and Grid already let their children shrink.
+- **Header** shows the inline nav from 48rem. It also *measures* the nav: whenever the items do not fit
+  their slot (long or many labels), it hides the inline nav and shows the menu button instead, at any
+  width. Items never wrap or get clipped. Dropdowns are disclosure buttons (Enter/Space, arrows,
+  Escape, outside click); there is no hover-only behaviour.
+- **MobileMenu** is a native `<dialog>` opened with `showModal()`: focus stays in the dialog (Tab can
+  reach the browser chrome, which is the platform behaviour) and the page behind is inert. Page scroll
+  is locked while open, and focus returns to the opener on close.
+- **Breadcrumbs** and **Pagination** use container queries: below 40rem the trail collapses its
+  middle items (still announced) and pagination switches to "Page X of Y" with previous/next.
+- All transitions sit inside `@media (prefers-reduced-motion: no-preference)`.
 
 ## Visual regression testing
 
 `tests/visual/stories.spec.ts` reads `storybook-static/index.json` and generates one test per story.
-Each test opens the story's iframe, waits for the render (and any play function), web fonts and images
-(lazy images are switched to eager so full-page shots include them), then takes a screenshot with
-animations disabled and the caret hidden. Stories that need focus or other interaction use a `play`
-function; the harness waits for it to finish.
+For each viewport it opens the story's iframe and waits for Storybook's `storyFinished` event on the
+preview channel. That event fires only after the story has rendered, its `play` function has completed
+and the a11y addon has run axe. Then it waits for web fonts and images (lazy images are switched to
+eager so full-page shots include them) and takes a screenshot with animations disabled and the caret
+hidden. There are no fixed sleeps.
 
-Control what gets captured with story tags:
+A story **fails** (before any screenshot comparison) if:
+
+- its `play` function throws, including a failed `expect(...)` interaction assertion, or
+- axe reports a violation (`parameters.a11y.test` is `'error'` in `.storybook/preview.tsx`), at any of
+  the story's viewports.
+
+So interaction tests and accessibility checks run as part of `npm run test:vrt`.
+
+### Choosing viewports
+
+There are two mechanisms. Use tags for the common cases:
 
 | Tag          | Effect                                                         |
 | ------------ | -------------------------------------------------------------- |
@@ -76,6 +101,29 @@ Control what gets captured with story tags:
 | `vrt-mobile` | Adds a 375×800 screenshot (use for layout-sensitive stories)   |
 | `vrt-full`   | Full-page screenshots at 375, 768 and 1280 wide                |
 | `skip-vrt`   | Not captured (docs-only stories such as `Playground`)          |
+
+Use the `vrt` parameter when a story needs specific viewports, for example a mobile-only open-menu
+state or a desktop-only dropdown. It **replaces** the tag-derived viewports for that story:
+
+```tsx
+export const MobileMenuOpen: Story = {
+  parameters: { vrt: { viewports: [375] } },
+  play: async ({ canvasElement }) => { /* open the menu */ },
+};
+
+export const DropdownOpen: Story = {
+  parameters: { vrt: { viewports: [{ width: 1280, height: 800, fullPage: true }] } },
+};
+```
+
+A number means `{ width, height: 800, fullPage: false }`. Parameters are not in `index.json`, so the
+harness reads them from the loaded story. The first load (at the tag viewport) is only a probe when a
+`vrt` parameter is present, and the story is then reloaded at each requested viewport so play
+functions and media queries run at that size.
+
+Play functions in `vrt-full` stories run at 375, 768 and 1280. Write them so they work at every width
+(query elements that are visible at all sizes, or use `{ hidden: true }` when only asserting attributes),
+or pin the story's viewports with the `vrt` parameter.
 
 Baselines live in `tests/visual/__screenshots__/` and are named `<story-id>-<width>.png`. They have no
 platform suffix because they are generated on a single Windows machine; screenshots from another OS
