@@ -1,0 +1,45 @@
+@layer components {
+  .text {
+    font-family: var(--text-font-body);
+    line-height: var(--text-leading-body);
+  }
+
+  .size-xs {
+    font-size: var(--text-size-xs);
+  }
+  .size-sm {
+    font-size: var(--text-size-sm);
+  }
+  .size-md {
+    font-size: var(--text-size-md);
+  }
+  .size-lg {
+    font-size: var(--text-size-lg);
+  }
+  .size-xl {
+    font-size: var(--text-size-xl);
+  }
+
+  .tone-default {
+    color: var(--color-text);
+  }
+  .tone-muted {
+    color: var(--color-text-muted);
+  }
+  .tone-subtle {
+    color: var(--color-text-subtle);
+  }
+  .tone-danger {
+    color: var(--color-danger);
+  }
+  .tone-success {
+    color: var(--color-success);
+  }
+
+  .weight-regular {
+    font-weight: var(--text-weight-body);
+  }
+  .weight-strong {
+    font-weight: var(--text-weight-strong);
+  }
+}

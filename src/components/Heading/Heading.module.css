@@ -1,0 +1,28 @@
+@layer components {
+  .heading {
+    font-family: var(--text-font-heading);
+    font-weight: var(--text-weight-heading);
+    line-height: var(--text-leading-heading);
+    color: var(--color-text);
+    text-wrap: balance;
+  }
+
+  .size-md {
+    font-size: var(--text-size-md);
+  }
+  .size-lg {
+    font-size: var(--text-size-lg);
+  }
+  .size-xl {
+    font-size: var(--text-size-xl);
+  }
+  .size-2xl {
+    font-size: var(--text-size-2xl);
+  }
+  .size-3xl {
+    font-size: var(--text-size-3xl);
+  }
+  .size-4xl {
+    font-size: var(--text-size-4xl);
+  }
+}

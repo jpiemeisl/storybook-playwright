@@ -1,0 +1,101 @@
+@layer components {
+  .button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: var(--gap-sm);
+    border: 1px solid transparent;
+    border-radius: var(--radius-control);
+    font-family: var(--text-font-body);
+    font-weight: var(--text-weight-strong);
+    line-height: 1;
+    white-space: nowrap;
+    text-decoration: none;
+    cursor: pointer;
+    transition:
+      background-color var(--transition-control),
+      border-color var(--transition-control),
+      color var(--transition-control);
+  }
+
+  .button:focus-visible {
+    outline: var(--focus-ring-width) solid var(--color-focus-ring);
+    outline-offset: var(--focus-ring-offset);
+  }
+
+  .button:disabled {
+    cursor: not-allowed;
+  }
+
+  /* Sizes */
+  .sm {
+    min-height: var(--control-height-sm);
+    padding-inline: var(--control-padding-sm);
+    font-size: var(--text-size-sm);
+  }
+
+  .md {
+    min-height: var(--control-height-md);
+    padding-inline: var(--control-padding-md);
+    font-size: var(--text-size-md);
+  }
+
+  .lg {
+    min-height: var(--control-height-lg);
+    padding-inline: var(--control-padding-lg);
+    font-size: var(--text-size-lg);
+  }
+
+  /* Variants */
+  .primary {
+    background-color: var(--color-action);
+    color: var(--color-action-text);
+  }
+
+  .primary:hover:not(:disabled) {
+    background-color: var(--color-action-hover);
+  }
+
+  .primary:active:not(:disabled) {
+    background-color: var(--color-action-active);
+  }
+
+  .secondary {
+    background-color: var(--color-surface);
+    border-color: var(--color-action);
+    color: var(--color-action);
+  }
+
+  .secondary:hover:not(:disabled) {
+    background-color: var(--color-action-subtle);
+  }
+
+  .secondary:active:not(:disabled) {
+    background-color: var(--color-action-subtle-hover);
+  }
+
+  .ghost {
+    background-color: transparent;
+    color: var(--color-action);
+  }
+
+  .ghost:hover:not(:disabled) {
+    background-color: var(--color-action-subtle);
+  }
+
+  .ghost:active:not(:disabled) {
+    background-color: var(--color-action-subtle-hover);
+  }
+
+  /* Disabled overrides every variant */
+  .button:disabled {
+    background-color: var(--color-disabled-bg);
+    border-color: var(--color-disabled-border);
+    color: var(--color-disabled-text);
+  }
+
+  .ghost:disabled {
+    background-color: transparent;
+    border-color: transparent;
+  }
+}
