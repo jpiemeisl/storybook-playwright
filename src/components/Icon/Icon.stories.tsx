@@ -2,7 +2,8 @@ import type { Meta, StoryObj } from '@storybook/react-vite';
 import { Grid } from '../Grid';
 import { Stack } from '../Stack';
 import { Text } from '../Text';
-import { Icon, iconNames } from './Icon';
+import { Heading } from '../Heading';
+import { Icon, iconNames, socialIconNames, type IconName } from './Icon';
 
 const meta = {
   title: 'Primitives/Icon',
@@ -21,19 +22,32 @@ export const Playground: Story = {
   tags: ['skip-vrt'],
 };
 
-/** Every icon in the set. Decorative here: names are shown as visible text. */
+const socialSet = new Set<IconName>(socialIconNames);
+const groups = [
+  { title: 'Interface', names: iconNames.filter((name) => !socialSet.has(name)) },
+  { title: 'Social', names: [...socialIconNames] },
+];
+
+/** Every icon in the set, grouped. Decorative here: names are shown as visible text. */
 export const AllIcons: Story = {
   render: (args) => (
-    <Grid as="ul" columns={{ base: 2, sm: 3, md: 5 }} gap="lg">
-      {iconNames.map((name) => (
-        <Stack as="li" key={name} align="center" gap="sm">
-          <Icon {...args} name={name} size="lg" />
-          <Text as="span" size="xs" tone="muted">
-            {name}
-          </Text>
+    <Stack gap="xl">
+      {groups.map((group) => (
+        <Stack key={group.title} gap="md">
+          <Heading size="md">{group.title}</Heading>
+          <Grid as="ul" columns={{ base: 2, sm: 3, md: 5, lg: 6 }} gap="lg">
+            {group.names.map((name) => (
+              <Stack as="li" key={name} align="center" gap="sm">
+                <Icon {...args} name={name} size="lg" />
+                <Text as="span" size="xs" tone="muted">
+                  {name}
+                </Text>
+              </Stack>
+            ))}
+          </Grid>
         </Stack>
       ))}
-    </Grid>
+    </Stack>
   ),
 };
 

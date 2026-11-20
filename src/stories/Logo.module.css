@@ -1,0 +1,24 @@
+@layer components {
+  /* Two classes so these win over Link's own styles. */
+  .logo.logo {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--gap-sm);
+    color: var(--color-text);
+    font-size: var(--text-size-lg);
+    font-weight: var(--text-weight-heading);
+    text-decoration-line: none;
+    white-space: nowrap;
+  }
+
+  .logo.logo:focus-visible {
+    outline: var(--focus-ring-width) solid var(--color-focus-ring);
+    outline-offset: var(--focus-ring-offset);
+  }
+
+  .mark {
+    inline-size: var(--icon-size-xl);
+    block-size: var(--icon-size-xl);
+    color: var(--color-action);
+  }
+}
