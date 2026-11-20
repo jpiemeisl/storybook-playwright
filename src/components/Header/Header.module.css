@@ -1,0 +1,202 @@
+@layer components {
+  .header {
+    position: relative;
+    z-index: var(--z-header);
+    background-color: var(--color-bg);
+    border-block-end: 1px solid var(--color-border);
+    color: var(--color-text);
+    /* A hidden, overflowing nav must never cause horizontal page scroll; dropdowns can still drop down. */
+    overflow: clip visible;
+  }
+
+  .sticky {
+    position: sticky;
+    inset-block-start: 0;
+  }
+
+  .inner {
+    display: flex;
+    align-items: center;
+    gap: var(--gap-md);
+    min-block-size: var(--header-height);
+  }
+
+  .logo {
+    flex-shrink: 0;
+  }
+
+  .navSlot {
+    display: none;
+    flex: 1;
+    min-inline-size: 0;
+  }
+
+  .list {
+    display: flex;
+    gap: var(--gap-xs);
+    inline-size: max-content;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  /* Nav links and dropdown toggles share one look. Two classes so these win over Link's own styles. */
+  .header .navLink {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--gap-xs);
+    min-block-size: var(--control-height-md);
+    padding-inline: var(--space-3);
+    border-radius: var(--radius-control);
+    color: var(--color-text);
+    font-weight: var(--text-weight-strong);
+    text-decoration-line: none;
+    white-space: nowrap;
+  }
+
+  .header .navLink:hover {
+    background-color: var(--color-bg-subtle);
+    color: var(--color-action);
+  }
+
+  .header .navLink:focus-visible,
+  .header .panelLink:focus-visible,
+  .header .cta:focus-visible,
+  .menuButton:focus-visible {
+    outline: var(--focus-ring-width) solid var(--color-focus-ring);
+    outline-offset: var(--focus-ring-offset);
+  }
+
+  .header .navLink[aria-current='page'],
+  .header .active {
+    color: var(--color-action);
+    box-shadow: inset 0 -2px 0 var(--color-action);
+    border-end-start-radius: 0;
+    border-end-end-radius: 0;
+  }
+
+  .header .toggle[aria-expanded='true'] {
+    background-color: var(--color-bg-subtle);
+  }
+
+  .chevron {
+    flex-shrink: 0;
+  }
+
+  .toggle[aria-expanded='true'] .chevron {
+    rotate: 180deg;
+  }
+
+  /* Dropdown panel */
+  .dropdown {
+    position: relative;
+  }
+
+  .panel {
+    position: absolute;
+    inset-block-start: calc(100% + var(--gap-xs));
+    inset-inline-start: 0;
+    min-inline-size: 15rem;
+    margin: 0;
+    padding: var(--gap-xs);
+    list-style: none;
+    background-color: var(--color-surface);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-surface);
+    box-shadow: var(--elevation-mid);
+  }
+
+  .panel:not([hidden]) {
+    display: grid;
+    gap: 2px;
+  }
+
+  .header .panelLink {
+    display: block;
+    padding-block: var(--space-2);
+    padding-inline: var(--space-3);
+    border-radius: var(--radius-control);
+    color: var(--color-text);
+    text-decoration-line: none;
+  }
+
+  .header .panelLink:hover {
+    background-color: var(--color-bg-subtle);
+    color: var(--color-action);
+  }
+
+  .header .panelLink[aria-current='page'] {
+    color: var(--color-action);
+    font-weight: var(--text-weight-strong);
+  }
+
+  /* CTA: a link styled as a primary button. Inside MobileMenu below 48rem. */
+  .header .cta {
+    display: none;
+    flex-shrink: 0;
+    align-items: center;
+    min-block-size: var(--control-height-md);
+    padding-inline: var(--control-padding-md);
+    border-radius: var(--radius-control);
+    background-color: var(--color-action);
+    color: var(--color-action-text);
+    text-decoration-line: none;
+    white-space: nowrap;
+  }
+
+  .header .cta:hover {
+    background-color: var(--color-action-hover);
+    color: var(--color-action-text);
+  }
+
+  .menuButton {
+    display: inline-flex;
+    flex-shrink: 0;
+    align-items: center;
+    gap: var(--gap-sm);
+    min-block-size: var(--control-height-md);
+    margin-inline-start: auto;
+    padding-inline: var(--space-3);
+    border: 1px solid var(--color-border-strong);
+    border-radius: var(--radius-control);
+    color: var(--color-text);
+    font-weight: var(--text-weight-strong);
+  }
+
+  .menuButton:hover {
+    background-color: var(--color-bg-subtle);
+  }
+
+  @media (min-width: 48rem) {
+    .navSlot {
+      display: block;
+    }
+
+    .header .cta {
+      display: inline-flex;
+    }
+
+    .header:not([data-overflowing]) .menuButton {
+      display: none;
+    }
+  }
+
+  /* Measured overflow: hide the inline nav (its slot stays for re-measuring) and use the menu button. */
+  .header[data-overflowing] .navSlot {
+    visibility: hidden;
+  }
+
+  @media (prefers-reduced-motion: no-preference) {
+    .header .navLink,
+    .header .panelLink,
+    .menuButton {
+      transition:
+        background-color var(--transition-fast) var(--transition-easing),
+        color var(--transition-fast) var(--transition-easing);
+    }
+
+    .chevron {
+      transition: rotate var(--transition-base) var(--transition-easing);
+    }
+  }
+}
