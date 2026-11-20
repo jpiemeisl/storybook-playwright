@@ -1,0 +1,88 @@
+/*
+ * Tier 2: semantic aliases. Meaning-based tokens that components consume.
+ * Themes override this tier only, by redefining these under [data-theme='<name>'].
+ */
+:root,
+[data-theme='default'] {
+  /* Surfaces */
+  --color-bg: var(--neutral-0);
+  --color-bg-subtle: var(--neutral-50);
+  --color-bg-muted: var(--neutral-100);
+  --color-surface: var(--neutral-0);
+  --color-border: var(--neutral-200);
+  --color-border-strong: var(--neutral-400);
+
+  /* Text */
+  --color-text: var(--neutral-900);
+  --color-text-muted: var(--neutral-600);
+  --color-text-subtle: var(--neutral-500);
+  --color-text-inverse: var(--neutral-0);
+
+  /* Action (interactive accent) */
+  --color-action: var(--teal-600);
+  --color-action-hover: var(--teal-700);
+  --color-action-active: var(--teal-800);
+  --color-action-text: var(--neutral-0);
+  --color-action-subtle: var(--teal-50);
+  --color-action-subtle-hover: var(--teal-100);
+
+  /* Disabled */
+  --color-disabled-bg: var(--neutral-100);
+  --color-disabled-text: var(--neutral-500);
+  --color-disabled-border: var(--neutral-200);
+
+  /* Focus */
+  --color-focus-ring: var(--teal-500);
+  --focus-ring-width: 2px;
+  --focus-ring-offset: 2px;
+
+  /* Status */
+  --color-danger: var(--red-600);
+  --color-danger-subtle: var(--red-50);
+  --color-success: var(--green-600);
+  --color-success-subtle: var(--green-50);
+
+  /* Typography */
+  --text-font-body: var(--font-sans);
+  --text-font-heading: var(--font-sans);
+  --text-font-code: var(--font-mono);
+  --text-size-xs: var(--font-size-xs);
+  --text-size-sm: var(--font-size-sm);
+  --text-size-md: var(--font-size-md);
+  --text-size-lg: var(--font-size-lg);
+  --text-size-xl: var(--font-size-xl);
+  --text-size-2xl: var(--font-size-2xl);
+  --text-size-3xl: var(--font-size-3xl);
+  --text-size-4xl: var(--font-size-4xl);
+  --text-weight-body: var(--font-weight-regular);
+  --text-weight-strong: var(--font-weight-semibold);
+  --text-weight-heading: var(--font-weight-bold);
+  --text-leading-body: var(--line-height-normal);
+  --text-leading-heading: var(--line-height-tight);
+
+  /* Layout */
+  --gap-xs: var(--space-1);
+  --gap-sm: var(--space-2);
+  --gap-md: var(--space-4);
+  --gap-lg: var(--space-6);
+  --gap-xl: var(--space-8);
+
+  /* Control sizing */
+  --control-height-sm: var(--space-8);
+  --control-height-md: var(--space-10);
+  --control-height-lg: var(--space-12);
+  --control-padding-sm: var(--space-3);
+  --control-padding-md: var(--space-4);
+  --control-padding-lg: var(--space-6);
+
+  /* Shape and elevation */
+  --radius-control: var(--radius-2);
+  --radius-surface: var(--radius-3);
+  --radius-pill: var(--radius-full);
+  --elevation-low: var(--shadow-1);
+  --elevation-mid: var(--shadow-2);
+  --elevation-high: var(--shadow-3);
+
+  /* Motion */
+  --transition-control: var(--duration-fast) var(--easing-standard);
+}

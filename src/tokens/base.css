@@ -1,0 +1,29 @@
+/* Base element styles. Imported into the `base` layer by index.css. Semantic tokens only. */
+html {
+  color-scheme: light;
+}
+
+body {
+  background-color: var(--color-bg);
+  color: var(--color-text);
+  font-family: var(--text-font-body);
+  font-size: var(--text-size-md);
+  font-weight: var(--text-weight-body);
+  line-height: var(--text-leading-body);
+}
+
+code,
+kbd,
+pre,
+samp {
+  font-family: var(--text-font-code);
+}
+
+a {
+  color: var(--color-action);
+}
+
+:focus-visible {
+  outline: var(--focus-ring-width) solid var(--color-focus-ring);
+  outline-offset: var(--focus-ring-offset);
+}

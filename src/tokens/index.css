@@ -1,0 +1,10 @@
+/*
+ * Entry point for the design system's global CSS.
+ * Layer order is declared once here; later layers win regardless of specificity.
+ */
+@layer reset, tokens, base, components, overrides;
+
+@import url('./reset.css') layer(reset);
+@import url('./primitives.css') layer(tokens);
+@import url('./semantic.css') layer(tokens);
+@import url('./base.css') layer(base);

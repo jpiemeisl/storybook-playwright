@@ -1,0 +1,105 @@
+/*
+ * Tier 1: primitives. Raw scales with no meaning attached.
+ * Components must NOT reference these directly; use semantic.css aliases.
+ */
+:root {
+  /* Neutrals */
+  --neutral-0: #ffffff;
+  --neutral-50: #f7f8f8;
+  --neutral-100: #eef0f1;
+  --neutral-200: #dde1e3;
+  --neutral-300: #c3c9cc;
+  --neutral-400: #9aa3a8;
+  --neutral-500: #6f7a80;
+  --neutral-600: #535d63;
+  --neutral-700: #3d454a;
+  --neutral-800: #272d31;
+  --neutral-900: #161a1d;
+  --neutral-1000: #0b0d0e;
+
+  /* Accent: deep teal */
+  --teal-50: #e6f4f3;
+  --teal-100: #c2e4e1;
+  --teal-200: #8fcdc8;
+  --teal-300: #56b0aa;
+  --teal-400: #2a928c;
+  --teal-500: #0f7570;
+  --teal-600: #0b625e;
+  --teal-700: #084f4c;
+  --teal-800: #063c3a;
+  --teal-900: #042a28;
+
+  /* Status: red */
+  --red-50: #fdecec;
+  --red-100: #f9cfcf;
+  --red-500: #c62828;
+  --red-600: #a91f1f;
+  --red-700: #8b1818;
+
+  /* Status: green */
+  --green-50: #e8f5ec;
+  --green-100: #c6e6cf;
+  --green-500: #23803f;
+  --green-600: #1b6b33;
+  --green-700: #145528;
+
+  /* Spacing: 4px base */
+  --space-0: 0;
+  --space-1: 0.25rem; /* 4px */
+  --space-2: 0.5rem; /* 8px */
+  --space-3: 0.75rem; /* 12px */
+  --space-4: 1rem; /* 16px */
+  --space-5: 1.25rem; /* 20px */
+  --space-6: 1.5rem; /* 24px */
+  --space-8: 2rem; /* 32px */
+  --space-10: 2.5rem; /* 40px */
+  --space-12: 3rem; /* 48px */
+  --space-16: 4rem; /* 64px */
+
+  /* Font stacks (system only, no web fonts) */
+  --font-sans: system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+  --font-serif: ui-serif, Georgia, Cambria, 'Times New Roman', Times, serif;
+  --font-mono: ui-monospace, 'Cascadia Code', 'SF Mono', Menlo, Consolas, 'Liberation Mono', monospace;
+
+  /* Font weights */
+  --font-weight-regular: 400;
+  --font-weight-medium: 500;
+  --font-weight-semibold: 600;
+  --font-weight-bold: 700;
+
+  /* Fluid type scale: min at 375px viewport, max at 1280px */
+  --font-size-xs: clamp(0.75rem, 0.73rem + 0.08vw, 0.8125rem);
+  --font-size-sm: clamp(0.8125rem, 0.79rem + 0.11vw, 0.875rem);
+  --font-size-md: clamp(0.9375rem, 0.91rem + 0.11vw, 1rem);
+  --font-size-lg: clamp(1.0625rem, 1.02rem + 0.19vw, 1.1875rem);
+  --font-size-xl: clamp(1.25rem, 1.17rem + 0.33vw, 1.4375rem);
+  --font-size-2xl: clamp(1.5rem, 1.37rem + 0.55vw, 1.8125rem);
+  --font-size-3xl: clamp(1.75rem, 1.53rem + 0.94vw, 2.3125rem);
+  --font-size-4xl: clamp(2.0625rem, 1.71rem + 1.49vw, 2.9375rem);
+
+  --line-height-tight: 1.2;
+  --line-height-snug: 1.35;
+  --line-height-normal: 1.5;
+
+  /* Radii */
+  --radius-0: 0;
+  --radius-1: 2px;
+  --radius-2: 4px;
+  --radius-3: 8px;
+  --radius-4: 12px;
+  --radius-full: 9999px;
+
+  /* Shadows */
+  --shadow-1: 0 1px 2px rgb(11 13 14 / 0.08);
+  --shadow-2: 0 2px 6px rgb(11 13 14 / 0.1), 0 1px 2px rgb(11 13 14 / 0.06);
+  --shadow-3: 0 8px 24px rgb(11 13 14 / 0.12), 0 2px 6px rgb(11 13 14 / 0.08);
+
+  /* Breakpoints: reference values only (custom properties cannot be used in media queries) */
+  --breakpoint-sm: 375px;
+  --breakpoint-md: 768px;
+  --breakpoint-lg: 1280px;
+
+  /* Motion */
+  --duration-fast: 120ms;
+  --easing-standard: cubic-bezier(0.2, 0, 0, 1);
+}
