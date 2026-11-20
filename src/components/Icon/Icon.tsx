@@ -25,7 +25,41 @@ const paths = {
   ),
   check: <path d="M5 12l5 5 9-10" />,
   'external-link': <path d="M14 4h6v6M20 4l-9 9M18 14v5a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V7a1 1 0 0 1 1-1h5" />,
+
+  /* Social: simplified glyphs, not official brand marks. */
+  facebook: (
+    <>
+      <rect x="3" y="3" width="18" height="18" rx="4" />
+      <path d="M15.5 8H14a2 2 0 0 0-2 2v11M9 13h6" />
+    </>
+  ),
+  instagram: (
+    <>
+      <rect x="3" y="3" width="18" height="18" rx="5" />
+      <circle cx="12" cy="12" r="4" />
+      <circle cx="17.5" cy="6.5" r="0.75" fill="currentColor" stroke="none" />
+    </>
+  ),
+  linkedin: (
+    <>
+      <rect x="3" y="3" width="18" height="18" rx="3" />
+      <path d="M8 10.5V17M8 7.5v.01M12 17v-6.5M12 13.5a2.5 2.5 0 0 1 5 0V17" />
+    </>
+  ),
+  x: <path d="M4 4h4.5L20 20h-4.5zM19.5 4l-6.6 7.6M4.5 20l6.6-7.6" />,
+  youtube: (
+    <>
+      <rect x="2" y="5" width="20" height="14" rx="4" />
+      <path d="M10 9l5 3-5 3z" fill="currentColor" />
+    </>
+  ),
+  github: (
+    <path d="M9 20v-2.6a2.6 2.6 0 0 1 .7-1.9C6.8 15.2 5 13.9 5 10.8c0-1.1.4-2.1 1.1-2.9-.2-.8-.2-1.8.2-2.6 0 0 .9 0 2.6 1.1a9.4 9.4 0 0 1 6.2 0c1.7-1.1 2.6-1.1 2.6-1.1.4.8.4 1.8.2 2.6.7.8 1.1 1.8 1.1 2.9 0 3.1-1.8 4.4-4.7 4.7a2.6 2.6 0 0 1 .7 1.9V20M9 18c-2.6.6-3.2-1-4.2-1.6" />
+  ),
 } satisfies Record<string, ReactNode>;
+
+export const socialIconNames = ['facebook', 'instagram', 'linkedin', 'x', 'youtube', 'github'] as const;
+export type SocialIconName = (typeof socialIconNames)[number];
 
 export type IconName = keyof typeof paths;
 export type IconSize = 'sm' | 'md' | 'lg' | 'xl';

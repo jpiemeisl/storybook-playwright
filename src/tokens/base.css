@@ -1,6 +1,8 @@
 /* Base element styles. Imported into the `base` layer by index.css. Semantic tokens only. */
 html {
   color-scheme: light;
+  /* Keep in-page anchor targets clear of a sticky header. */
+  scroll-padding-block-start: var(--header-height);
 }
 
 body {

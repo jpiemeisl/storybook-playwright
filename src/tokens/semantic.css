@@ -101,8 +101,18 @@
   --elevation-mid: var(--shadow-2);
   --elevation-high: var(--shadow-3);
 
-  /* Motion */
-  --transition-control: var(--duration-fast) var(--easing-standard);
+  /* Motion. Only apply transitions inside @media (prefers-reduced-motion: no-preference). */
+  --transition-fast: var(--duration-fast);
+  --transition-base: var(--duration-base);
+  --transition-easing: var(--easing-standard);
+  --transition-control: var(--transition-fast) var(--transition-easing);
+
+  /* Chrome and stacking */
+  --header-height: var(--space-16);
+  --color-overlay: var(--black-alpha-50);
+  --z-header: 100;
+  --z-overlay: 200;
+  --z-drawer: 300;
 }
 
 /*

@@ -12,10 +12,15 @@
     white-space: nowrap;
     text-decoration: none;
     cursor: pointer;
-    transition:
-      background-color var(--transition-control),
-      border-color var(--transition-control),
-      color var(--transition-control);
+  }
+
+  @media (prefers-reduced-motion: no-preference) {
+    .button {
+      transition:
+        background-color var(--transition-control),
+        border-color var(--transition-control),
+        color var(--transition-control);
+    }
   }
 
   .button:focus-visible {
