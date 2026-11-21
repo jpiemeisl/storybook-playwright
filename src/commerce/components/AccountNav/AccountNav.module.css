@@ -22,7 +22,10 @@
     scroll-snap-align: start;
   }
 
+  /* position: relative keeps the visually hidden count separator inside the scroller (an absolute
+     element with no positioned ancestor would escape it and widen the page). */
   .link {
+    position: relative;
     display: flex;
     align-items: center;
     gap: var(--gap-xs);
