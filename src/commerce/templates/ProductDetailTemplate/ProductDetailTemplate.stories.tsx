@@ -63,11 +63,14 @@ const meta = {
 export default meta;
 type Story = StoryObj<typeof meta>;
 
-const full = { tags: ['!vrt-mobile', 'vrt-full'], parameters: { vrt: undefined } };
+// Tags must be literal on each story: Storybook reads them statically, so spreading them in is ignored
+// (npm run check:story-tags guards this). `viewports: []` clears the meta's viewports so the tag's
+// viewports apply (`undefined` would not: Storybook keeps the meta value when merging).
+const full = { layout: 'fullscreen', vrt: { viewports: [] } };
 
-export const PhysicalWithVariants: Story = { ...full, args: { name: 'variants' } };
-export const DigitalSingleFile: Story = { ...full, args: { name: 'digital' } };
-export const MonthlySubscription: Story = { ...full, args: { name: 'monthly' } };
+export const PhysicalWithVariants: Story = { tags: ['!vrt-mobile', 'vrt-full'], parameters: full, args: { name: 'variants' } };
+export const DigitalSingleFile: Story = { tags: ['!vrt-mobile', 'vrt-full'], parameters: full, args: { name: 'digital' } };
+export const MonthlySubscription: Story = { tags: ['!vrt-mobile', 'vrt-full'], parameters: full, args: { name: 'monthly' } };
 export const SimplePhysical: Story = { args: { name: 'simple' } };
 export const Sale: Story = { args: { name: 'sale' } };
 export const SoldOut: Story = {

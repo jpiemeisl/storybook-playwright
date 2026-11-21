@@ -17,12 +17,12 @@ const meta = {
 export default meta;
 type Story = StoryObj<typeof meta>;
 
-const full = ['!vrt-mobile', 'vrt-full'];
+// Tags are written literally on each story (Storybook reads them statically; see check:story-tags).
 
-export const Home: Story = { args: { name: 'home' }, tags: full };
+export const Home: Story = { args: { name: 'home' }, tags: ['!vrt-mobile', 'vrt-full'] };
 export const About: Story = {
   args: { name: 'about' },
-  tags: full,
+  tags: ['!vrt-mobile', 'vrt-full'],
   play: async ({ canvasElement, args }) => {
     await expectPageInvariants(canvasElement, args);
     await expectCurrentNav(canvasElement, 'About');
@@ -30,8 +30,8 @@ export const About: Story = {
 };
 export const Services: Story = { args: { name: 'services' } };
 export const ServiceDetail: Story = { args: { name: 'service-detail' } };
-export const Pricing: Story = { args: { name: 'pricing' }, tags: full };
-export const Contact: Story = { args: { name: 'contact' }, tags: full };
+export const Pricing: Story = { args: { name: 'pricing' }, tags: ['!vrt-mobile', 'vrt-full'] };
+export const Contact: Story = { args: { name: 'contact' }, tags: ['!vrt-mobile', 'vrt-full'] };
 
 /** Desktop: the Services dropdown open over the hero. */
 export const HeaderDropdownOpen: Story = {

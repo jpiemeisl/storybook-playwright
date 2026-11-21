@@ -12,7 +12,8 @@
     "test:vrt:report": "playwright show-report",
     "test:unit": "vitest run",
     "docs:content-model": "node scripts/content-model-docs.mjs",
-    "check:boundaries": "node scripts/check-boundaries.mjs"
+    "check:boundaries": "node scripts/check-boundaries.mjs",
+    "check:story-tags": "node scripts/check-story-tags.mjs"
   },
   "dependencies": {
     "react": "^19.3.1",
