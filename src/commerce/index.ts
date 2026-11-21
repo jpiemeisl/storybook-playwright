@@ -8,3 +8,4 @@ export * from './logic/pricing';
 export * from './logic/cart';
 export * from './logic/variants';
 export { useVariantSelection } from './hooks/useVariantSelection';
+export * from './logic/validate';
