@@ -33,7 +33,7 @@ export function PageHeader({
     <header className={[styles.root, styles[variant], withMedia && styles.hasMedia].filter(Boolean).join(' ')}>
       <div className={styles.layout}>
         <div className={styles.text}>
-          {breadcrumbs}
+          {breadcrumbs && <div className={styles.breadcrumbs}>{breadcrumbs}</div>}
           <Heading as={`h${headingLevel}` as const} size="4xl" className={styles.title}>
             {title}
           </Heading>

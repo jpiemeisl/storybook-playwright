@@ -9,7 +9,11 @@
     font-family: var(--text-font-body);
     font-weight: var(--text-weight-strong);
     line-height: 1;
-    white-space: nowrap;
+    /* Labels stay on one line when they fit; a label wider than its container wraps instead of overflowing. */
+    max-inline-size: 100%;
+    text-align: center;
+    text-wrap: balance;
+    overflow-wrap: anywhere;
     text-decoration: none;
     cursor: pointer;
   }

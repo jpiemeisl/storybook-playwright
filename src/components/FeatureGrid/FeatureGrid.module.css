@@ -36,8 +36,15 @@
 
   .content {
     display: grid;
+    /* An explicit shrinkable track: an implicit auto track grows to fit unbreakable words. */
+    grid-template-columns: minmax(0, 1fr);
     gap: var(--gap-xs);
     min-inline-size: 0;
+    overflow-wrap: anywhere;
+  }
+
+  /* The reset gives headings overflow-wrap: break-word, which does not shrink a linked title's min-content. */
+  .content > :is(h2, h3, h4) {
     overflow-wrap: anywhere;
   }
 }
