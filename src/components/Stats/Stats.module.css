@@ -1,0 +1,42 @@
+@layer components {
+  .root {
+    display: grid;
+    gap: var(--gap-lg);
+    color: var(--color-text);
+  }
+
+  .list {
+    margin: 0;
+  }
+
+  /* Value first visually, label first in reading order. */
+  .item {
+    display: flex;
+    flex-direction: column;
+    gap: var(--gap-xs);
+    min-inline-size: 0;
+    padding-inline-start: var(--gap-md);
+    border-inline-start: var(--border-width-emphasis) solid var(--color-action);
+  }
+
+  .label {
+    order: 2;
+    font-weight: var(--text-weight-strong);
+  }
+
+  .value {
+    order: 1;
+    margin: 0;
+    font-size: var(--text-size-3xl);
+    font-weight: var(--text-weight-heading);
+    line-height: var(--text-leading-heading);
+    overflow-wrap: anywhere;
+  }
+
+  .description {
+    order: 3;
+    margin: 0;
+    color: var(--color-text-muted);
+    font-size: var(--text-size-sm);
+  }
+}

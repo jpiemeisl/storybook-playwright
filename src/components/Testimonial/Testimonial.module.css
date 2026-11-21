@@ -1,0 +1,100 @@
+@layer components {
+  .figure {
+    display: grid;
+    gap: var(--gap-md);
+    margin: 0;
+    color: var(--color-text);
+  }
+
+  .quote {
+    margin: 0;
+    overflow-wrap: anywhere;
+  }
+
+  /* Opening quote mark is decorative. */
+  .quote::before {
+    content: '“' / '';
+    display: block;
+    color: var(--color-action);
+    font-size: 3em;
+    font-weight: var(--text-weight-heading);
+    line-height: 0.8;
+  }
+
+  .single {
+    justify-items: center;
+    max-inline-size: 48rem;
+    margin-inline: auto;
+    text-align: center;
+  }
+
+  .single .quote {
+    font-size: var(--text-size-xl);
+    line-height: var(--text-leading-heading);
+  }
+
+  /* Flex column so the attribution sits at the bottom of equal-height cards. */
+  .card {
+    display: flex;
+    flex-direction: column;
+    block-size: 100%;
+    padding: var(--gap-lg);
+    border: var(--border-1) solid var(--color-border);
+    border-radius: var(--radius-surface);
+    background-color: var(--color-surface);
+  }
+
+  .card .quote {
+    font-size: var(--text-size-md);
+  }
+
+  .card .caption {
+    margin-block-start: auto;
+  }
+
+  .caption {
+    display: flex;
+    align-items: center;
+    gap: var(--gap-sm);
+    text-align: start;
+  }
+
+  /* Two classes so these win over Image's own sizing. */
+  .figure .avatar {
+    flex-shrink: 0;
+    inline-size: var(--space-12);
+    block-size: var(--space-12);
+    border-radius: var(--radius-full);
+    object-fit: cover;
+  }
+
+  .figure .logo {
+    inline-size: auto;
+    max-inline-size: 10rem;
+    block-size: var(--space-8);
+    background-color: transparent;
+    object-fit: contain;
+  }
+
+  .attribution {
+    display: grid;
+    min-inline-size: 0;
+  }
+
+  .name {
+    font-weight: var(--text-weight-strong);
+  }
+
+  .role {
+    color: var(--color-text-muted);
+    font-size: var(--text-size-sm);
+  }
+
+  .grid > li {
+    display: flex;
+  }
+
+  .grid > li > * {
+    flex: 1;
+  }
+}

@@ -1,0 +1,56 @@
+@layer components {
+  .root {
+    display: grid;
+    gap: var(--gap-md);
+    justify-items: center;
+  }
+
+  .heading {
+    text-align: center;
+  }
+
+  .list {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+    gap: var(--gap-lg) var(--gap-xl);
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  /* Two classes so these win over Image's own sizing. */
+  .list .logo {
+    inline-size: auto;
+    max-inline-size: 10rem;
+    block-size: var(--logo-height);
+    background-color: transparent;
+    object-fit: contain;
+  }
+
+  .grayscale .logo {
+    filter: var(--logo-filter-muted);
+  }
+
+  .grayscale .item:hover .logo,
+  .grayscale .link:focus-visible .logo {
+    filter: none;
+  }
+
+  .link {
+    display: block;
+    border-radius: var(--radius-control);
+  }
+
+  .link:focus-visible {
+    outline: var(--focus-ring-width) solid var(--color-focus-ring);
+    outline-offset: var(--focus-ring-offset);
+  }
+
+  @media (prefers-reduced-motion: no-preference) {
+    .logo {
+      transition: filter var(--transition-base) var(--transition-easing);
+    }
+  }
+}
