@@ -42,9 +42,10 @@ export interface ActionRef extends LinkRef {
 /**
  * Formatted text. Only HTML is implemented today; the union leaves room for other formats.
  *
- * SECURITY: `html` is inserted into the page as-is. The ADAPTER that produces it is responsible for
- * sanitizing it (allow-list of tags and attributes). The renderer additionally neutralises
- * javascript:/data: link targets, but that is defence in depth, not a sanitizer.
+ * WARNING: THIS LIBRARY DOES NOT SANITIZE HTML. `html` is inserted into the page as-is. The adapter
+ * (or host app) MUST sanitize it with an allow-list of tags and attributes BEFORE producing a
+ * RichText value. The renderer only neutralizes unsafe URLs (javascript:, data: and similar link and
+ * image targets); it does not remove scripts, event handler attributes, styles or iframes.
  */
 export type RichText = {
   /** Format discriminator. */

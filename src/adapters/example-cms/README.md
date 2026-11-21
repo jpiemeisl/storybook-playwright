@@ -11,6 +11,29 @@ The "CMS" is imaginary. Its payloads ([`fixtures/`](fixtures)) have the shape ma
 - rich text as a node tree (`paragraph`, `heading_2`, `hyperlink`, `text` with `marks`, ...)
 - section types the adapter does not support (`instagram_feed` in `about.json`)
 
+## Coverage: 9 of 26 block types
+
+This adapter maps only the 9 section types its imaginary CMS models:
+
+| CMS section | Block |
+| --- | --- |
+| `hero_section` | `hero` |
+| `feature_list` | `featureGrid` |
+| `rich_text_section` | `richText` |
+| `image_text_section` | `mediaText` |
+| `cta_section` | `ctaBanner` |
+| `faq_section` | `faq` |
+| `stats_section` | `stats` |
+| `testimonials_section` | `testimonialGrid` |
+| `team_section` | `team` |
+
+Not mapped (17): `pageHeader`, `cardGrid`, `articleCardGrid`, `testimonial`, `logoStrip`,
+`pricingTable`, `gallery`, `videoEmbed`, `mapEmbed`, `timeline`, `steps`, `tabs`, `table`,
+`contactForm`, `newsletterSignup`, `divider` and `spacer`.
+
+A real adapter should cover whichever blocks its CMS actually models, no more and no fewer, and
+report anything else through `onUnmapped`.
+
 ## Files
 
 | File | Purpose |

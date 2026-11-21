@@ -152,6 +152,12 @@ Container, so place it directly in the page.
 
 The library ships a CMS-agnostic content model and a renderer; it contains no CMS-specific code.
 
+> **Warning: the library does NOT sanitize HTML.** `RichText` (`{ format: 'html', html }`) is inserted
+> into the page as-is. Your adapter or host app must sanitize the HTML (allow-list of tags and
+> attributes) **before** producing a `RichText` value. The renderer only neutralizes unsafe URLs
+> (`javascript:`, `data:` and similar link and image targets); it does not strip scripts, event
+> handlers, inline styles or iframes.
+
 1. **Content model** (`src/content-types`): plain JSON types. A page is
    `PageContent { id, slug, template?, seo, blocks }`, and each block is one of 26 types (`hero`,
    `featureGrid`, `faq`, `richText`, `tabs`, ...). Field-by-field reference:
