@@ -18,3 +18,19 @@ export type {
   StatItem,
   TestimonialContent,
 } from './sections';
+export type {
+  AuthorContent,
+  CategoryItem,
+  GalleryImage,
+  MapContent,
+  PageHeaderContent,
+  ShareNetwork,
+  StepItem,
+  TableColumn,
+  TableData,
+  TeamMemberContent,
+  TimelineItem,
+  TocItem,
+  VideoContent,
+  VideoProvider,
+} from './content';
