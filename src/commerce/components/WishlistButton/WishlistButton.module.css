@@ -12,7 +12,8 @@
     font-weight: var(--text-weight-strong);
   }
 
-  .button[aria-pressed='true'] {
+  .button[aria-pressed='true'],
+  .button[data-saved] {
     border-color: var(--color-sale);
     color: var(--color-sale);
   }

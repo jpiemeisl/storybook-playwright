@@ -82,3 +82,5 @@ export * from './components/DownloadsLibrary';
 export * from './components/SubscriptionCard';
 export * from './components/ManageSubscription';
 export * from './components/InvoiceList';
+export * from './components/AddressBook';
+export * from './components/WishlistGrid';
