@@ -1,0 +1,14 @@
+@layer components {
+  .root {
+    min-inline-size: 12rem;
+  }
+
+  .visuallyHidden {
+    position: absolute;
+    inline-size: 1px;
+    block-size: 1px;
+    overflow: hidden;
+    clip-path: inset(50%);
+    white-space: nowrap;
+  }
+}
