@@ -276,6 +276,13 @@ backend: the types are the contract for future adapters.
   controlled and presentational.
 - **Rules:** only `src/commerce` and `demo/` may import from `src/commerce`, and nothing under
   `src/` may import `demo/`. `npm run check:boundaries` enforces both.
+- **Browsing (Phase 10):**
+  - filter, sort and facet logic with a URL query format
+  - product cards and grids, the filter panel and drawer, and the product page components
+  - `CollectionTemplate` and `ProductDetailTemplate`, merged into the template registry with
+    `createTemplates(Object.values(commerceTemplates))`
+
+  See [`docs/commerce-browsing.md`](docs/commerce-browsing.md).
 
 ## Visual regression testing
 

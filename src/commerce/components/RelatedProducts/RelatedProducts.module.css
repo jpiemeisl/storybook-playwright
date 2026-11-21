@@ -1,0 +1,6 @@
+@layer components {
+  .root {
+    display: grid;
+    gap: var(--gap-md);
+  }
+}

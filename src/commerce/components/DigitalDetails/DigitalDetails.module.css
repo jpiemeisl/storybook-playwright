@@ -1,0 +1,49 @@
+@layer components {
+  .root {
+    display: grid;
+    gap: var(--gap-sm);
+    font-size: var(--text-size-sm);
+  }
+
+  .files {
+    display: grid;
+    gap: 0;
+    margin: 0;
+    padding: 0;
+    border: var(--border-1) solid var(--color-border);
+    border-radius: var(--radius-control);
+    list-style: none;
+  }
+
+  .file {
+    display: grid;
+    grid-template-columns: auto minmax(0, 1fr) auto;
+    align-items: center;
+    gap: var(--gap-sm);
+    padding: var(--gap-xs) var(--gap-sm);
+  }
+
+  .file + .file {
+    border-block-start: var(--border-1) solid var(--color-border);
+  }
+
+  .name {
+    overflow-wrap: anywhere;
+  }
+
+  .meta {
+    color: var(--color-text-muted);
+    white-space: nowrap;
+  }
+
+  .icon {
+    flex-shrink: 0;
+    color: var(--color-text-muted);
+  }
+
+  .licence {
+    display: flex;
+    gap: var(--gap-sm);
+    margin: 0;
+  }
+}

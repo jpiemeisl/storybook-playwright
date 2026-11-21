@@ -83,6 +83,13 @@ export function validateProduct(product: unknown): ValidationIssue[] {
     c.each('options', 0, 4, (o) => {
       o.str('name');
       o.strings('values', true);
+      o.oneOf('display', ['buttons', 'swatches', 'select']);
+      o.child('swatches', false, (sw) => {
+        for (const [value, colour] of Object.entries(sw.value)) {
+          if (!Array.isArray(o.value.values) || !o.value.values.includes(value)) sw.report('invalid-field', value, `Swatch for ${JSON.stringify(value)}, which is not a value of this option.`);
+          if (typeof colour !== 'string' || !/^(#[0-9a-f]{3,8}|rgb\(|hsl\(|oklch\()/i.test(colour)) sw.report('invalid-field', value, 'Swatch colours must be hex, rgb(), hsl() or oklch() values.');
+        }
+      });
       const values = o.value.values;
       if (Array.isArray(values) && values.length === 0) o.report('too-few', 'values', 'An option needs at least one value.');
       if (Array.isArray(values) && new Set(values).size !== values.length) o.report('duplicate-id', 'values', 'Option values must be unique.');
@@ -142,7 +149,7 @@ export function validateProduct(product: unknown): ValidationIssue[] {
     if (types.filter((t) => t === 'one-time').length > 1) c.report('duplicate-id', 'purchaseOptions', 'Only one one-time purchase option is allowed.');
 
     c.child('digital', c.value.kind === 'digital', (d) => {
-      if (c.value.kind !== 'digital') d.report('invalid-field', '', '"digital" is only for digital products.');
+      if (c.value.kind !== 'digital') c.report('invalid-field', 'digital', '"digital" is only for digital products.');
       d.each('files', 1, 50, (f) => {
         f.str('id');
         f.str('name');
@@ -167,6 +174,49 @@ export function validateProduct(product: unknown): ValidationIssue[] {
       intField(r, 'count', 0, true);
     });
     c.child('seo', false, (s) => s.str('title'));
+    c.each('infoSections', 0, 12, (s) => {
+      s.str('id');
+      s.str('title');
+      s.richText('content');
+    });
+    uniqueIds(c, 'infoSections');
+    c.child('sizeGuide', false, (t) => {
+      t.str('caption');
+      t.each('columns', 1, 16, (col) => {
+        col.str('key');
+        col.str('header');
+      });
+      t.each('rows', 1, 100, () => {});
+    });
+    c.date('createdAt', false);
+  });
+}
+
+/** Reviews data: summary numbers that add up, ratings 1-5, unique ids, ISO dates. */
+export function validateReviewsData(data: unknown): ValidationIssue[] {
+  return run(data, (c) => {
+    c.child('summary', true, (s) => {
+      const average = s.value.average;
+      if (typeof average !== 'number' || average < 0 || average > 5) s.report('invalid-field', 'average', '"average" must be between 0 and 5.');
+      intField(s, 'count', 0, true);
+      s.child('distribution', true, (d) => {
+        let total = 0;
+        for (const star of ['1', '2', '3', '4', '5']) {
+          if (!isInt(d.value[star], 0)) d.report('invalid-field', star, `Count for ${star} stars must be a whole number.`);
+          else total += d.value[star] as number;
+        }
+        if (isInt(s.value.count, 0) && total !== s.value.count) s.report('invalid-field', 'distribution', `Distribution adds up to ${total}, not ${String(s.value.count)}.`);
+      });
+    });
+    c.each('reviews', 0, 500, (r) => {
+      r.str('id');
+      r.str('author');
+      intField(r, 'rating', 1, true);
+      if (isInt(r.value.rating, 1) && (r.value.rating as number) > 5) r.report('invalid-field', 'rating', '"rating" must be 1-5.');
+      r.str('body');
+      r.date('createdAt');
+    });
+    uniqueIds(c, 'reviews');
   });
 }
 
@@ -292,6 +342,7 @@ export function validateCatalog(catalog: unknown): ValidationIssue[] {
     uniqueIds(c, 'products', 'handle');
     const ids = new Set(products.map((p) => (isObj(p) ? p.id : undefined)));
     c.each('collections', 0, 50, (col) => {
+      col.image('image');
       col.str('id');
       col.str('handle');
       col.str('title');

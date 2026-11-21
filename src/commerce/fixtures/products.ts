@@ -24,6 +24,8 @@ export const mug: Product = {
   options: [],
   variants: [single('mug-default', 2400, { status: 'in-stock' }, { sku: 'FH-MUG', weight: 450 })],
   purchaseOptions: oneTime,
+  infoSections: [{ id: 'care', title: 'Care', content: html('<p>Dishwasher and microwave safe. Hand washing keeps the glaze bright for longer.</p>') }],
+  createdAt: '2025-11-02',
   rating: { average: 4.6, count: 212 },
 };
 
@@ -43,8 +45,28 @@ export const tee: Product = {
   // XXL is declared but exists on no variant.
   options: [
     { name: 'Size', values: teeSizes },
-    { name: 'Colour', values: teeColours },
+    { name: 'Colour', values: teeColours, display: 'swatches', swatches: { Moss: '#6b7f5a', Sand: '#d8c7a3', Ink: '#2f3a4a' } },
   ],
+  sizeGuide: {
+    caption: 'Organic cotton tee sizes (chest and length in cm)',
+    columns: [
+      { key: 'size', header: 'Size' },
+      { key: 'chest', header: 'Chest', numeric: true },
+      { key: 'length', header: 'Length', numeric: true },
+    ],
+    rows: [
+      { size: 'S', chest: 96, length: 70 },
+      { size: 'M', chest: 102, length: 72 },
+      { size: 'L', chest: 108, length: 74 },
+      { size: 'XL', chest: 114, length: 76 },
+      { size: 'XXL', chest: 120, length: 78 },
+    ],
+  },
+  infoSections: [
+    { id: 'materials', title: 'Materials', content: html('<p>100% organic cotton, 220 gsm. Dyed with low-impact dyes.</p>') },
+    { id: 'care', title: 'Care', content: html('<ul><li>Wash at 30°C</li><li>Do not tumble dry</li><li>Iron on medium</li></ul>') },
+  ],
+  createdAt: '2026-02-10',
   variants: teeSizes.slice(0, 4).flatMap((size) =>
     teeColours.map((colour) => ({
       id: `tee-${size}-${colour}`.toLowerCase(),
@@ -96,7 +118,7 @@ export const lamp: Product = {
   title: 'Brass desk lamp',
   description: html('<p>Adjustable brass shade on a weighted base.</p>'),
   images: [img('lamp', 800, 1000, 'A desk lamp with a brass shade')],
-  options: [{ name: 'Finish', values: ['Brass', 'Black'] }],
+  options: [{ name: 'Finish', values: ['Brass', 'Black'], display: 'swatches', swatches: { Brass: '#c8a24a', Black: '#222222' } }],
   variants: [
     { id: 'lamp-brass', title: 'Brass', optionValues: { Finish: 'Brass' }, price: usd(8900), stock: { status: 'out-of-stock' }, weight: 2100 },
     { id: 'lamp-black', title: 'Black', optionValues: { Finish: 'Black' }, price: usd(8900), stock: { status: 'out-of-stock' }, weight: 2100 },
@@ -128,6 +150,7 @@ export const kettle: Product = {
   variants: [single('kettle-default', 6500, { status: 'preorder', availableOn: '2026-06-01' }, { weight: 1300 })],
   purchaseOptions: oneTime,
   badges: ['New'],
+  createdAt: '2026-03-10',
 };
 
 export const coffee: Product = {
@@ -220,6 +243,7 @@ export const club: Product = {
     { type: 'subscription', interval: { unit: 'year', count: 1 }, priceMultiplier: 12, discountPercent: 20 },
   ],
   subscription: { cancelAnytime: false, minimumTermMonths: 3 },
+  infoSections: [{ id: 'plan', title: 'Plan details', content: html('<p>Monthly workshops, 10% member pricing in the shop and four issues of the magazine a year.</p>') }],
 };
 
 export const plannerApp: Product = {
@@ -289,8 +313,9 @@ export const socks: Product = {
   images: [img('socks', 800, 800, 'A purple wool sock')],
   options: [
     { name: 'Size', values: sockSizes },
-    { name: 'Colour', values: sockColours },
+    { name: 'Colour', values: sockColours, display: 'swatches', swatches: { Ink: '#2f3a4a', Moss: '#6b7f5a', Sand: '#d8c7a3', Rust: '#a5532c', Fog: '#c9ced6' } },
   ],
+  createdAt: '2026-01-20',
   variants: sockSizes.flatMap((size, i) =>
     sockColours.map((colour, j) => ({
       id: `socks-${size}-${colour}`.toLowerCase(),

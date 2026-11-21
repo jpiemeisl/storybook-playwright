@@ -1,0 +1,43 @@
+@layer components {
+  .root {
+    display: grid;
+    gap: var(--gap-xs);
+  }
+
+  .button {
+    inline-size: 100%;
+  }
+
+  .button[aria-disabled='true'] {
+    border-color: var(--color-disabled-border);
+    background-color: var(--color-disabled-bg);
+    color: var(--color-disabled-text);
+    cursor: not-allowed;
+  }
+
+  .button[data-status='success'] {
+    border-color: var(--color-success);
+    background-color: var(--color-success);
+  }
+
+  .reason {
+    margin: 0;
+    color: var(--color-text-muted);
+    font-size: var(--text-size-sm);
+  }
+
+  .error {
+    margin: 0;
+    color: var(--color-danger);
+    font-size: var(--text-size-sm);
+  }
+
+  .visuallyHidden {
+    position: absolute;
+    inline-size: 1px;
+    block-size: 1px;
+    overflow: hidden;
+    clip-path: inset(50%);
+    white-space: nowrap;
+  }
+}

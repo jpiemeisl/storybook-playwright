@@ -1,0 +1,79 @@
+@layer components {
+  .group {
+    min-inline-size: 0;
+    margin: 0;
+    padding: 0;
+    border: 0;
+  }
+
+  .legend {
+    margin-block-end: var(--gap-xs);
+    padding: 0;
+    font-weight: var(--text-weight-strong);
+  }
+
+  .segments {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(8.5rem, 1fr));
+    gap: var(--gap-xs);
+  }
+
+  .segment {
+    position: relative;
+    display: grid;
+    align-content: start;
+    gap: 2px;
+    padding: var(--gap-sm);
+    border: var(--border-1) solid var(--color-border-strong);
+    border-radius: var(--radius-control);
+    background-color: var(--color-surface);
+    color: var(--color-text);
+    cursor: pointer;
+  }
+
+  .input {
+    position: absolute;
+    inset: 0;
+    inline-size: 100%;
+    block-size: 100%;
+    margin: 0;
+    opacity: 0;
+    cursor: inherit;
+  }
+
+  .segment:has(.input:checked) {
+    border-color: var(--color-action);
+    border-width: var(--border-width-emphasis);
+    background-color: var(--color-action-subtle);
+  }
+
+  .segment:has(.input:checked) .name::after {
+    content: ' ✓';
+  }
+
+  .segment:has(.input:focus-visible) {
+    outline: var(--focus-ring-width) solid var(--color-focus-ring);
+    outline-offset: var(--focus-ring-offset);
+  }
+
+  .name {
+    font-weight: var(--text-weight-strong);
+  }
+
+  .price {
+    font-size: var(--text-size-sm);
+    color: var(--color-text-muted);
+  }
+
+  .savings {
+    color: var(--color-success);
+    font-size: var(--text-size-sm);
+    font-weight: var(--text-weight-strong);
+  }
+
+  @media (forced-colors: active) {
+    .segment:has(.input:checked) {
+      border-color: Highlight;
+    }
+  }
+}

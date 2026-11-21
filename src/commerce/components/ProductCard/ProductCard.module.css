@@ -1,0 +1,174 @@
+@layer components {
+  .root {
+    block-size: 100%;
+    min-inline-size: 0;
+    container-type: inline-size;
+  }
+
+  .card {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    block-size: 100%;
+    min-inline-size: 0;
+    overflow: hidden;
+    border: var(--border-1) solid var(--color-border);
+    border-radius: var(--radius-surface);
+    background-color: var(--color-surface);
+    color: var(--color-text);
+  }
+
+  .media {
+    position: relative;
+    flex-shrink: 0;
+    overflow: hidden;
+    background-color: var(--color-bg-muted);
+  }
+
+  .image {
+    inline-size: 100%;
+    block-size: 100%;
+  }
+
+  .placeholder {
+    display: grid;
+    place-items: center;
+    block-size: 100%;
+    color: var(--color-text-subtle);
+  }
+
+  .badges {
+    position: absolute;
+    inset-block-start: var(--gap-sm);
+    inset-inline-start: var(--gap-sm);
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--gap-xs);
+    max-inline-size: calc(100% - 2 * var(--gap-sm));
+  }
+
+  .badge {
+    padding-inline: var(--space-2);
+    border-radius: var(--radius-pill);
+    background-color: var(--color-surface);
+    color: var(--color-text);
+    font-size: var(--text-size-xs);
+    font-weight: var(--text-weight-strong);
+    line-height: 1.6;
+  }
+
+  .body {
+    display: flex;
+    flex: 1;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: var(--gap-xs);
+    min-inline-size: 0;
+    padding: var(--gap-sm) var(--gap-md) var(--gap-md);
+  }
+
+  .title {
+    overflow-wrap: anywhere;
+  }
+
+  .card .link {
+    color: inherit;
+    text-decoration-line: none;
+    outline: none;
+  }
+
+  /* Stretched link: the title covers the whole card. */
+  .card .link::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+  }
+
+  .card:hover {
+    border-color: var(--color-action);
+  }
+
+  .card:hover .link {
+    text-decoration-line: underline;
+    text-underline-offset: 0.2em;
+  }
+
+  .card:has(.link:focus-visible) {
+    outline: var(--focus-ring-width) solid var(--color-focus-ring);
+    outline-offset: var(--focus-ring-offset);
+  }
+
+  .meta {
+    margin: 0;
+    color: var(--color-text-muted);
+    font-size: var(--text-size-sm);
+  }
+
+  /* Quick add sits above the stretched link so it is its own target. */
+  .action {
+    position: relative;
+    z-index: 1;
+    margin-block-start: auto;
+    padding-block-start: var(--gap-xs);
+  }
+
+  .choose {
+    margin-block-start: auto;
+    padding-block-start: var(--gap-xs);
+    color: var(--color-action);
+    font-size: var(--text-size-sm);
+    font-weight: var(--text-weight-strong);
+    text-decoration-line: underline;
+    text-underline-offset: 0.2em;
+  }
+
+  .soldOut .image {
+    opacity: 0.6;
+  }
+
+  @container (min-width: 30rem) {
+    .horizontal {
+      flex-direction: row;
+    }
+
+    .horizontal .media {
+      flex: 0 0 40%;
+      align-self: stretch;
+    }
+  }
+
+  .visuallyHidden {
+    position: absolute;
+    inline-size: 1px;
+    block-size: 1px;
+    overflow: hidden;
+    clip-path: inset(50%);
+    white-space: nowrap;
+  }
+
+  /* Skeleton */
+  .skeleton {
+    border-color: var(--color-border);
+  }
+
+  .shimmer {
+    background-color: var(--color-bg-muted);
+  }
+
+  .line {
+    display: block;
+    inline-size: 80%;
+    block-size: 0.9em;
+    border-radius: var(--radius-control);
+  }
+
+  .lineLg {
+    block-size: 1.3em;
+  }
+
+  @media (prefers-reduced-motion: no-preference) {
+    .card {
+      transition: border-color var(--transition-control);
+    }
+  }
+}

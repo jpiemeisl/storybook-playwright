@@ -1,0 +1,60 @@
+@layer components {
+  .card {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    block-size: 100%;
+    overflow: hidden;
+    border: var(--border-1) solid var(--color-border);
+    border-radius: var(--radius-surface);
+    background-color: var(--color-surface);
+  }
+
+  .media {
+    display: grid;
+    place-items: center;
+    aspect-ratio: 4 / 3;
+    background-color: var(--color-bg-muted);
+  }
+
+  .placeholder {
+    color: var(--color-text-subtle);
+  }
+
+  .body {
+    display: grid;
+    gap: var(--gap-xs);
+    padding: var(--gap-sm) var(--gap-md) var(--gap-md);
+  }
+
+  .title {
+    overflow-wrap: anywhere;
+  }
+
+  .card .link {
+    color: inherit;
+    text-decoration-line: none;
+    outline: none;
+  }
+
+  .card .link::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+  }
+
+  .card:hover .link {
+    text-decoration-line: underline;
+  }
+
+  .card:has(.link:focus-visible) {
+    outline: var(--focus-ring-width) solid var(--color-focus-ring);
+    outline-offset: var(--focus-ring-offset);
+  }
+
+  .count {
+    margin: 0;
+    color: var(--color-text-muted);
+    font-size: var(--text-size-sm);
+  }
+}

@@ -1,0 +1,1 @@
+export { DigitalDetails } from './DigitalDetails';
