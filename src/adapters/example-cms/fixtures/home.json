@@ -1,0 +1,153 @@
+{
+  "sys": {
+    "id": "cms-home",
+    "content_type": "page",
+    "updated_at": "2026-03-01T09:00:00Z",
+    "locale": "en-US"
+  },
+  "fields": {
+    "title": "Home",
+    "slug": "/",
+    "seo_title": "Brightside Bookkeeping",
+    "seo_description": "Monthly bookkeeping for small businesses.",
+    "page_template": "landing",
+    "sections": [
+      {
+        "sys": {
+          "id": "cms-hero",
+          "content_type": "hero_section"
+        },
+        "fields": {
+          "headline": "Bookkeeping that keeps up with your business",
+          "sub_headline": "A named accountant, books closed by the 10th.",
+          "primary_cta": {
+            "label": "Book a consultation",
+            "url": "/consultation",
+            "style": "primary"
+          },
+          "secondary_cta": {
+            "label": "See pricing",
+            "url": "/pricing",
+            "style": "secondary"
+          },
+          "hero_image": {
+            "asset": {
+              "url": "/fixtures/images/hero-desk-3x2.svg",
+              "title": "Printed invoices and a calculator on a desk",
+              "width": 1200,
+              "height": 800,
+              "mime_type": "image/svg+xml"
+            }
+          },
+          "display_style": "split"
+        }
+      },
+      {
+        "sys": {
+          "id": "cms-features",
+          "content_type": "feature_list"
+        },
+        "fields": {
+          "title": "Everything your books need",
+          "columns": 3,
+          "features": [
+            {
+              "label": "Monthly reconciliation",
+              "summary": "Every account matched by the 10th.",
+              "icon_name": "check"
+            },
+            {
+              "label": "A named accountant",
+              "summary": "Replies within a working day.",
+              "icon_name": "mail",
+              "link": {
+                "label": "Meet the team",
+                "url": "/about#team"
+              }
+            },
+            {
+              "label": "Receipt capture",
+              "summary": "Snap, forward, done.",
+              "icon_name": "search"
+            }
+          ]
+        }
+      },
+      {
+        "sys": {
+          "id": "cms-stats",
+          "content_type": "stats_section"
+        },
+        "fields": {
+          "title": "In numbers",
+          "figures": [
+            {
+              "number": "1,200+",
+              "caption": "Clients"
+            },
+            {
+              "number": "98%",
+              "caption": "On-time filings"
+            },
+            {
+              "number": "1 day",
+              "caption": "Reply time"
+            }
+          ]
+        }
+      },
+      {
+        "sys": {
+          "id": "cms-quotes",
+          "content_type": "testimonials_section"
+        },
+        "fields": {
+          "title": "What clients say",
+          "quotes": [
+            {
+              "quote_text": "Month-end went from dread to done.",
+              "person_name": "Priya Natarajan",
+              "person_title": "Owner",
+              "company_name": "Copperleaf Studio",
+              "photo": {
+                "asset": {
+                  "url": "/fixtures/images/avatar-ana.svg",
+                  "title": "",
+                  "width": 160,
+                  "height": 160,
+                  "mime_type": "image/svg+xml"
+                }
+              }
+            },
+            {
+              "quote_text": "Payroll just happens now.",
+              "person_name": "Marcus Webb",
+              "person_title": "Operations Manager",
+              "company_name": "Tidewater Marine"
+            }
+          ]
+        }
+      },
+      {
+        "sys": {
+          "id": "cms-cta",
+          "content_type": "cta_section"
+        },
+        "fields": {
+          "title": "Ready to talk?",
+          "text": "A free 30-minute call.",
+          "button": {
+            "label": "Book a call",
+            "url": "/consultation"
+          },
+          "second_button": {
+            "label": "Email us",
+            "url": "mailto:hello@brightside.example",
+            "style": "link"
+          },
+          "theme": "brand"
+        }
+      }
+    ]
+  }
+}

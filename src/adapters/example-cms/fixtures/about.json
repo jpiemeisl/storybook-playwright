@@ -1,0 +1,118 @@
+{
+  "sys": {
+    "id": "cms-about",
+    "content_type": "page"
+  },
+  "fields": {
+    "title": "About us",
+    "slug": "about",
+    "sections": [
+      {
+        "sys": {
+          "id": "cms-about-hero",
+          "content_type": "hero_section"
+        },
+        "fields": {
+          "headline": "About Brightside",
+          "sub_headline": "Accountants who think month-end should be boring.",
+          "display_style": "centered"
+        }
+      },
+      {
+        "sys": {
+          "id": "cms-about-story",
+          "content_type": "image_text_section"
+        },
+        "fields": {
+          "kicker": "Our approach",
+          "title": "One named accountant, every month",
+          "body": [
+            {
+              "node_type": "paragraph",
+              "content": [
+                {
+                  "node_type": "text",
+                  "value": "Every client works with "
+                },
+                {
+                  "node_type": "text",
+                  "value": "one person",
+                  "marks": [
+                    "bold"
+                  ]
+                },
+                {
+                  "node_type": "text",
+                  "value": " who knows their books."
+                }
+              ]
+            }
+          ],
+          "image": {
+            "asset": {
+              "url": "/fixtures/images/hero-office-16x9.svg",
+              "title": "A tidy office with a laptop and a wall clock",
+              "width": 1600,
+              "height": 900,
+              "mime_type": "image/svg+xml"
+            }
+          },
+          "image_side": "right",
+          "buttons": [
+            {
+              "label": "Meet the team",
+              "url": "/about#team"
+            }
+          ]
+        }
+      },
+      {
+        "sys": {
+          "id": "cms-about-team",
+          "content_type": "team_section"
+        },
+        "fields": {
+          "title": "The team",
+          "people": [
+            {
+              "full_name": "Ana Ruiz",
+              "job_title": "Senior Accountant",
+              "headshot": {
+                "asset": {
+                  "url": "/fixtures/images/avatar-ana.svg",
+                  "title": "",
+                  "width": 160,
+                  "height": 160,
+                  "mime_type": "image/svg+xml"
+                }
+              },
+              "short_bio": "Leads month-end close."
+            },
+            {
+              "full_name": "Marcus Webb",
+              "job_title": "Founder",
+              "headshot": {
+                "asset": {
+                  "url": "/fixtures/images/avatar-marcus.svg",
+                  "title": "",
+                  "width": 160,
+                  "height": 160,
+                  "mime_type": "image/svg+xml"
+                }
+              }
+            }
+          ]
+        }
+      },
+      {
+        "sys": {
+          "id": "cms-about-unknown",
+          "content_type": "instagram_feed"
+        },
+        "fields": {
+          "handle": "@brightside"
+        }
+      }
+    ]
+  }
+}
