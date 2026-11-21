@@ -1,0 +1,58 @@
+@layer components {
+  .root {
+    container-type: inline-size;
+  }
+
+  .banner {
+    display: grid;
+    gap: var(--gap-lg);
+    padding-block: var(--gap-xl);
+    padding-inline: var(--gap-lg);
+    border: var(--border-1) solid var(--color-border);
+    border-radius: var(--radius-surface);
+    color: var(--color-text);
+  }
+
+  .accent {
+    background-color: var(--color-bg-accent-subtle);
+    border-color: var(--color-action);
+  }
+
+  /* data-surface="inverse" remaps --color-bg and the text/action colours for this panel. */
+  .inverse {
+    background-color: var(--color-bg);
+  }
+
+  .subtle {
+    background-color: var(--color-bg-subtle);
+  }
+
+  .text {
+    display: grid;
+    gap: var(--gap-sm);
+    min-inline-size: 0;
+  }
+
+  .centered {
+    justify-items: center;
+    text-align: center;
+  }
+
+  .centered .text {
+    max-inline-size: 40rem;
+  }
+
+  @container (min-width: 40rem) {
+    .banner {
+      padding-inline: var(--gap-xl);
+    }
+  }
+
+  /* Side by side only when the text column keeps a comfortable measure. */
+  @container (min-width: 56rem) {
+    .split {
+      grid-template-columns: minmax(0, 1fr) auto;
+      align-items: center;
+    }
+  }
+}
