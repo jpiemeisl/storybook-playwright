@@ -14,3 +14,9 @@ Phase 3 (branch `phase-3-navigation`): harness waits for Storybook's `storyFinis
 a11y gate) and supports `parameters.vrt.viewports`; motion/overlay/z-index/header tokens; social
 icons; navigation content types; SkipLink, Header (+ NavDropdown), MobileMenu, Footer, Breadcrumbs,
 Pagination; navigation fixtures and a PageShell composition story.
+
+Phase 4 (branch `phase-4-content-sections`): Money type and formatMoney/formatIsoDate utilities;
+section content types; Link `unstyled` and ButtonLink; content-section tokens and a default-surface
+reset; Hero, FeatureGrid, Card/CardGrid, ArticleCard, MediaText, CtaBanner, Stats,
+Testimonial/TestimonialGrid, LogoStrip, Accordion/FaqSection, PricingTable; Brightside fixtures and
+SectionBackgrounds composition stories.
