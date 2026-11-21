@@ -45,6 +45,21 @@
   --color-danger-subtle: var(--red-50);
   --color-success: var(--green-600);
   --color-success-subtle: var(--green-50);
+  --color-warning: var(--amber-700);
+  --color-warning-subtle: var(--amber-50);
+  --color-info: var(--teal-600);
+  --color-info-subtle: var(--teal-50);
+
+  /* Form fields. Borders are >= 3:1 against the field and page (WCAG 1.4.11). */
+  --color-field-bg: var(--neutral-0);
+  --color-field-border: var(--neutral-500);
+  --color-field-border-hover: var(--neutral-700);
+  --color-field-border-focus: var(--teal-600);
+  --color-field-disabled-bg: var(--neutral-100);
+  --field-height-sm: var(--control-height-sm);
+  --field-height-md: var(--control-height-md);
+  --field-height-lg: var(--control-height-lg);
+  --field-padding-inline: var(--space-3);
 
   /* Typography */
   --text-font-body: var(--font-sans);
@@ -154,6 +169,16 @@
   --color-danger-subtle: var(--red-700);
   --color-success: var(--green-100);
   --color-success-subtle: var(--green-700);
+  --color-warning: var(--amber-100);
+  --color-warning-subtle: var(--amber-900);
+  --color-info: var(--teal-200);
+  --color-info-subtle: var(--teal-900);
+
+  --color-field-bg: var(--neutral-800);
+  --color-field-border: var(--neutral-400);
+  --color-field-border-hover: var(--neutral-300);
+  --color-field-border-focus: var(--teal-200);
+  --color-field-disabled-bg: var(--neutral-700);
 
   /* Muted logos become light silhouettes so dark marks stay visible on a dark surface. */
   --logo-filter-muted: grayscale(1) brightness(0) invert(1) opacity(0.8);

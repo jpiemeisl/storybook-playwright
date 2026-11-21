@@ -43,6 +43,13 @@
   --green-600: #1b6b33;
   --green-700: #145528;
 
+  /* Status: amber (warning) */
+  --amber-50: #fff6e0;
+  --amber-100: #ffe3a3;
+  --amber-600: #b7791f;
+  --amber-700: #8a5300;
+  --amber-900: #4a2c00;
+
   /* Spacing: 4px base */
   --space-0: 0;
   --space-1: 0.25rem; /* 4px */
