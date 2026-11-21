@@ -1,0 +1,92 @@
+{
+  "id": "page-post-long",
+  "slug": "blog/long",
+  "template": "blog-post",
+  "seo": {
+    "title": "Long title edge case",
+    "description": "Long title edge case | Brightside Bookkeeping"
+  },
+  "article": {
+    "title": "Comprehensive month-end reconciliation, payroll processing and tax-ready reporting for growing multi-location retail and hospitality businesses across every state and territory",
+    "excerpt": "A stress test for wrapping: Supercalifragilisticexpialidociousbookkeepingreconciliationautomation appears in headings and tags.",
+    "author": {
+      "name": "Jordan Alexandria Montgomery-Fitzwilliam",
+      "role": "Tax Specialist",
+      "avatar": {
+        "src": "/fixtures/images/avatar-jordan.svg",
+        "alt": "",
+        "width": 160,
+        "height": 160
+      },
+      "bio": "A deliberately long author name."
+    },
+    "publishedAt": "2026-01-08",
+    "readingTime": 12,
+    "tags": [
+      {
+        "label": "Supercalifragilisticexpialidociousbookkeepingreconciliationautomation",
+        "href": "/blog/tag/long"
+      },
+      {
+        "label": "Multi-location retail and hospitality operations",
+        "href": "/blog/tag/multi"
+      },
+      {
+        "label": "Tax",
+        "href": "/blog/tag/tax"
+      }
+    ],
+    "breadcrumbs": [
+      {
+        "label": "Home",
+        "href": "/"
+      },
+      {
+        "label": "Blog",
+        "href": "/blog"
+      },
+      {
+        "label": "Comprehensive month-end reconciliation for growing multi-location businesses"
+      }
+    ],
+    "body": [
+      {
+        "id": "long-body",
+        "type": "richText",
+        "content": {
+          "format": "html",
+          "html": "<h2>Supercalifragilisticexpialidociousbookkeepingreconciliationautomation</h2><p>Unbroken strings must wrap inside the column and the table of contents.</p><h2>Reconciling dozens of bank accounts across locations without losing track of transfers between them</h2><p>Transfers between your own accounts are not income.</p><h3>Short</h3><p>SupercalifragilisticexpialidociousbookkeepingreconciliationautomationSupercalifragilisticexpialidociousbookkeepingreconciliationautomation</p><h2>Final checks</h2><p>Lock the period.</p>"
+        }
+      }
+    ],
+    "related": [
+      {
+        "id": "post-contractors",
+        "title": "A related article with an exceptionally long title that keeps going well past the point where it should wrap onto several lines",
+        "href": "/blog/contractors",
+        "excerpt": "The questions that decide it, and what to do when the answer changes.",
+        "category": "Payroll",
+        "publishedAt": "2026-02-03",
+        "readingTime": 9,
+        "author": {
+          "name": "Marcus Webb",
+          "role": "Payroll Lead",
+          "avatar": {
+            "src": "/fixtures/images/avatar-marcus.svg",
+            "alt": "",
+            "width": 160,
+            "height": 160
+          },
+          "href": "/team/marcus-webb"
+        },
+        "image": {
+          "src": "/fixtures/images/gallery/harbour.svg",
+          "alt": "",
+          "width": 1200,
+          "height": 800
+        }
+      }
+    ]
+  },
+  "blocks": []
+}

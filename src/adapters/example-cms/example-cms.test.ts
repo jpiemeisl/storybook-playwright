@@ -94,7 +94,8 @@ describe('example CMS payloads (contract)', () => {
   it('maps the home payload to the expected block types and fields', () => {
     const page = mapPage(payload('home'));
     expect(page.slug).toBe('');
-    expect(page.template).toBe('landing');
+    // The CMS's "landing" page type is this site's home page (mapped explicitly, not passed through).
+    expect(page.template).toBe('home');
     expect(page.blocks.map((b) => b.type)).toEqual(['hero', 'featureGrid', 'stats', 'testimonialGrid', 'ctaBanner']);
     expect(page.blocks[0]).toMatchObject({ id: 'cms-hero', headline: 'Bookkeeping that keeps up with your business', variant: 'split' });
   });

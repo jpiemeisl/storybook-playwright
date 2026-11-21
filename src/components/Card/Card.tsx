@@ -9,6 +9,7 @@ import styles from './Card.module.css';
 
 export type CardVariant = 'elevated' | 'outlined' | 'flat';
 export type CardOrientation = 'vertical' | 'horizontal';
+export type CardSize = 'md' | 'lg';
 
 export interface CardProps extends CardContent {
   /** CSS aspect-ratio for the image. Default "16 / 9". */
@@ -19,6 +20,8 @@ export interface CardProps extends CardContent {
   /** `horizontal` puts the image beside the body when the card is at least 32rem wide. */
   orientation?: CardOrientation;
   headingLevel?: 2 | 3 | 4;
+  /** `lg`: larger title and more padding, for a featured item above a grid. Default "md". */
+  size?: CardSize;
 }
 
 /**
@@ -36,10 +39,11 @@ export function Card({
   variant = 'outlined',
   orientation = 'vertical',
   headingLevel = 3,
+  size = 'md',
 }: CardProps) {
   return (
     <article className={styles.root}>
-      <div className={[styles.card, styles[variant], styles[orientation], href && styles.linked].filter(Boolean).join(' ')}>
+      <div className={[styles.card, styles[variant], styles[orientation], size === 'lg' && styles.large, href && styles.linked].filter(Boolean).join(' ')}>
         {image && (
           <div className={styles.media}>
             <Image {...image} aspectRatio={imageAspectRatio} />
@@ -47,7 +51,7 @@ export function Card({
         )}
         <div className={styles.body}>
           {eyebrow && <div className={styles.eyebrow}>{eyebrow}</div>}
-          <Heading as={`h${headingLevel}` as const} size="lg" className={styles.title}>
+          <Heading as={`h${headingLevel}` as const} size={size === 'lg' ? '2xl' : 'lg'} className={styles.title}>
             {href ? (
               <Link href={href} unstyled className={styles.titleLink}>
                 {title}
@@ -57,7 +61,7 @@ export function Card({
             )}
           </Heading>
           {description && (
-            <Text as="div" size="sm" tone="muted" className={styles.description}>
+            <Text as="div" size={size === 'lg' ? 'md' : 'sm'} tone="muted" className={styles.description}>
               {description}
             </Text>
           )}

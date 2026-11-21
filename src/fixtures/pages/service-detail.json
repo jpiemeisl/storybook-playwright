@@ -1,6 +1,7 @@
 {
   "id": "page-service-bookkeeping",
   "slug": "services/bookkeeping",
+  "template": "service-detail",
   "seo": {
     "title": "Monthly bookkeeping",
     "description": "Monthly bookkeeping | Brightside Bookkeeping"

@@ -3,6 +3,7 @@
  */
 import type { Block, PageContent } from '../../content-types/blocks';
 import type { ActionRef, ImageRef, LinkRef, RichText } from '../../content-types/shared';
+import type { TemplateName } from '../../content-types/templates';
 import { richTextToHtml } from './richText';
 import type { CmsAsset, CmsLink, CmsRichText, CmsSection, ExampleCmsPage } from './types';
 
@@ -132,12 +133,18 @@ export function mapSection(section: CmsSection, options: MapPageOptions = {}): B
   return mapper(section);
 }
 
+/**
+ * CMS page templates → library template names, mapped explicitly. The CMS's "article" pages carry
+ * only sections (no structured article data), so they use the composed default template.
+ */
+const templates: Record<string, TemplateName> = { landing: 'home', campaign: 'landing', article: 'default', standard: 'default' };
+
 export function mapPage(page: ExampleCmsPage, options: MapPageOptions = {}): PageContent {
   const { sys, fields } = page;
   return compact({
     id: sys.id,
     slug: fields.slug.replace(/^\/+/, ''),
-    template: fields.page_template,
+    template: fields.page_template ? (templates[fields.page_template] ?? 'default') : undefined,
     seo: compact({ title: fields.seo_title ?? fields.title, description: fields.seo_description, noindex: fields.no_index || undefined }),
     blocks: fields.sections.flatMap((section) => mapSection(section, options) ?? []),
   });

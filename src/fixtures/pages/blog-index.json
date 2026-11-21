@@ -1,171 +1,393 @@
 {
   "id": "page-blog",
-  "slug": "blog",
+  "slug": "blog/page/2",
+  "template": "blog-index",
   "seo": {
-    "title": "Blog",
-    "description": "Blog | Brightside Bookkeeping"
+    "title": "Blog, page 2",
+    "description": "Blog, page 2 | Brightside Bookkeeping"
+  },
+  "heading": {
+    "title": "The Brightside blog",
+    "description": "Practical advice on bookkeeping, payroll and tax for small businesses.",
+    "breadcrumbs": [
+      {
+        "label": "Home",
+        "href": "/"
+      },
+      {
+        "label": "Blog"
+      }
+    ]
+  },
+  "listing": {
+    "items": [
+      {
+        "id": "post-five-day-close",
+        "title": "How to close your books in five working days",
+        "href": "/blog/five-day-close",
+        "excerpt": "A routine that turns month-end into numbers you can act on.",
+        "category": "Bookkeeping",
+        "publishedAt": "2026-03-14",
+        "readingTime": 4,
+        "author": {
+          "name": "Ana Ruiz",
+          "role": "Senior Accountant",
+          "avatar": {
+            "src": "/fixtures/images/avatar-ana.svg",
+            "alt": "",
+            "width": 160,
+            "height": 160
+          },
+          "href": "/team/ana-ruiz"
+        },
+        "image": {
+          "src": "/fixtures/images/gallery/desk.svg",
+          "alt": "",
+          "width": 1200,
+          "height": 800
+        }
+      },
+      {
+        "id": "post-seasonal-payroll",
+        "title": "Payroll for seasonal staff without the April panic",
+        "href": "/blog/seasonal-payroll",
+        "excerpt": "Hiring forty people for the summer? Set up payroll before the first shift.",
+        "category": "Payroll",
+        "publishedAt": "2026-03-02",
+        "readingTime": 7,
+        "author": {
+          "name": "Marcus Webb",
+          "role": "Payroll Lead",
+          "avatar": {
+            "src": "/fixtures/images/avatar-marcus.svg",
+            "alt": "",
+            "width": 160,
+            "height": 160
+          },
+          "href": "/team/marcus-webb"
+        },
+        "image": {
+          "src": "/fixtures/images/gallery/orchard.svg",
+          "alt": "",
+          "width": 1200,
+          "height": 800
+        }
+      },
+      {
+        "id": "post-quarterly-tax",
+        "title": "Quarterly estimated tax: a calendar you can keep",
+        "href": "/blog/quarterly-tax",
+        "excerpt": "Four dates, one spreadsheet and no penalties.",
+        "category": "Tax",
+        "publishedAt": "2026-02-20",
+        "readingTime": 10,
+        "author": {
+          "name": "Jordan Lee",
+          "role": "Tax Specialist",
+          "avatar": {
+            "src": "/fixtures/images/avatar-jordan.svg",
+            "alt": "",
+            "width": 160,
+            "height": 160
+          }
+        },
+        "image": {
+          "src": "/fixtures/images/gallery/tower.svg",
+          "alt": "",
+          "width": 1200,
+          "height": 800
+        }
+      },
+      {
+        "id": "post-receipts",
+        "title": "Stop losing receipts: a capture habit that sticks",
+        "href": "/blog/receipts",
+        "excerpt": "Photograph, forward, forget. Our three-rule system.",
+        "category": "Bookkeeping",
+        "publishedAt": "2026-02-11",
+        "readingTime": 6,
+        "author": {
+          "name": "Ana Ruiz",
+          "role": "Senior Accountant",
+          "avatar": {
+            "src": "/fixtures/images/avatar-ana.svg",
+            "alt": "",
+            "width": 160,
+            "height": 160
+          },
+          "href": "/team/ana-ruiz"
+        },
+        "image": {
+          "src": "/fixtures/images/gallery/market.svg",
+          "alt": "",
+          "width": 1200,
+          "height": 800
+        }
+      },
+      {
+        "id": "post-contractors",
+        "title": "Contractor or employee? Getting classification right",
+        "href": "/blog/contractors",
+        "excerpt": "The questions that decide it, and what to do when the answer changes.",
+        "category": "Payroll",
+        "publishedAt": "2026-02-03",
+        "readingTime": 9,
+        "author": {
+          "name": "Marcus Webb",
+          "role": "Payroll Lead",
+          "avatar": {
+            "src": "/fixtures/images/avatar-marcus.svg",
+            "alt": "",
+            "width": 160,
+            "height": 160
+          },
+          "href": "/team/marcus-webb"
+        },
+        "image": {
+          "src": "/fixtures/images/gallery/harbour.svg",
+          "alt": "",
+          "width": 1200,
+          "height": 800
+        }
+      },
+      {
+        "id": "post-home-office",
+        "title": "Claiming a home office without inviting an audit",
+        "href": "/blog/home-office",
+        "excerpt": "What counts, how to measure it and the records to keep.",
+        "category": "Tax",
+        "publishedAt": "2026-01-27",
+        "readingTime": 5,
+        "author": {
+          "name": "Jordan Lee",
+          "role": "Tax Specialist",
+          "avatar": {
+            "src": "/fixtures/images/avatar-jordan.svg",
+            "alt": "",
+            "width": 160,
+            "height": 160
+          }
+        },
+        "image": {
+          "src": "/fixtures/images/gallery/studio.svg",
+          "alt": "",
+          "width": 1200,
+          "height": 800
+        }
+      },
+      {
+        "id": "post-cash-flow",
+        "title": "A thirteen-week cash flow forecast in one afternoon",
+        "href": "/blog/cash-flow",
+        "excerpt": "The simplest forecast that still catches a shortfall early.",
+        "category": "Bookkeeping",
+        "publishedAt": "2026-01-19",
+        "readingTime": 8,
+        "author": {
+          "name": "Sam Patel",
+          "role": "Founder",
+          "avatar": {
+            "src": "/fixtures/images/avatar-sam.svg",
+            "alt": "",
+            "width": 160,
+            "height": 160
+          }
+        },
+        "image": {
+          "src": "/fixtures/images/gallery/lake.svg",
+          "alt": "",
+          "width": 1200,
+          "height": 800
+        }
+      },
+      {
+        "id": "post-pay-rises",
+        "title": "Planning pay rises when margins are tight",
+        "href": "/blog/pay-rises",
+        "excerpt": "Ways to reward people that the budget can actually carry.",
+        "category": "Payroll",
+        "publishedAt": "2026-01-12",
+        "readingTime": 4,
+        "author": {
+          "name": "Marcus Webb",
+          "role": "Payroll Lead",
+          "avatar": {
+            "src": "/fixtures/images/avatar-marcus.svg",
+            "alt": "",
+            "width": 160,
+            "height": 160
+          },
+          "href": "/team/marcus-webb"
+        },
+        "image": {
+          "src": "/fixtures/images/gallery/bridge.svg",
+          "alt": "",
+          "width": 1200,
+          "height": 800
+        }
+      },
+      {
+        "id": "post-year-end",
+        "title": "Year-end checklist for small businesses",
+        "href": "/blog/year-end",
+        "excerpt": "Twelve things to do before your accountant asks.",
+        "category": "Tax",
+        "publishedAt": "2026-01-05",
+        "readingTime": 7,
+        "author": {
+          "name": "Jordan Lee",
+          "role": "Tax Specialist",
+          "avatar": {
+            "src": "/fixtures/images/avatar-jordan.svg",
+            "alt": "",
+            "width": 160,
+            "height": 160
+          }
+        },
+        "image": {
+          "src": "/fixtures/images/gallery/kiln.svg",
+          "alt": "",
+          "width": 1200,
+          "height": 800
+        }
+      },
+      {
+        "id": "post-chart-of-accounts",
+        "title": "Your chart of accounts is probably too long",
+        "href": "/blog/chart-of-accounts",
+        "excerpt": "Why forty accounts beat four hundred, and how to merge safely.",
+        "category": "Bookkeeping",
+        "publishedAt": "2025-12-15",
+        "readingTime": 10,
+        "author": {
+          "name": "Ana Ruiz",
+          "role": "Senior Accountant",
+          "avatar": {
+            "src": "/fixtures/images/avatar-ana.svg",
+            "alt": "",
+            "width": 160,
+            "height": 160
+          },
+          "href": "/team/ana-ruiz"
+        },
+        "image": {
+          "src": "/fixtures/images/gallery/forest.svg",
+          "alt": "",
+          "width": 1200,
+          "height": 800
+        }
+      },
+      {
+        "id": "post-benefits",
+        "title": "Payroll benefits that cost less than you think",
+        "href": "/blog/benefits",
+        "excerpt": "Small perks with outsized effect on hiring and retention.",
+        "category": "Payroll",
+        "publishedAt": "2025-12-08",
+        "readingTime": 6,
+        "author": {
+          "name": "Sam Patel",
+          "role": "Founder",
+          "avatar": {
+            "src": "/fixtures/images/avatar-sam.svg",
+            "alt": "",
+            "width": 160,
+            "height": 160
+          }
+        },
+        "image": {
+          "src": "/fixtures/images/gallery/pier.svg",
+          "alt": "",
+          "width": 1200,
+          "height": 800
+        }
+      },
+      {
+        "id": "post-sales-tax",
+        "title": "Sales tax across state lines, explained",
+        "href": "/blog/sales-tax",
+        "excerpt": "Nexus, registration and filing for online sellers.",
+        "category": "Tax",
+        "publishedAt": "2025-12-01",
+        "readingTime": 9,
+        "author": {
+          "name": "Jordan Lee",
+          "role": "Tax Specialist",
+          "avatar": {
+            "src": "/fixtures/images/avatar-jordan.svg",
+            "alt": "",
+            "width": 160,
+            "height": 160
+          }
+        },
+        "image": {
+          "src": "/fixtures/images/gallery/dunes.svg",
+          "alt": "",
+          "width": 1200,
+          "height": 800
+        }
+      }
+    ],
+    "featured": {
+      "id": "post-featured-guide",
+      "title": "The small business finance handbook, 2026 edition",
+      "href": "/blog/handbook-2026",
+      "excerpt": "Everything we know about running clean books, paying people correctly and staying ahead of tax deadlines, in one place.",
+      "category": "Bookkeeping",
+      "publishedAt": "2026-03-14",
+      "readingTime": 4,
+      "author": {
+        "name": "Ana Ruiz",
+        "role": "Senior Accountant",
+        "avatar": {
+          "src": "/fixtures/images/avatar-ana.svg",
+          "alt": "",
+          "width": 160,
+          "height": 160
+        },
+        "href": "/team/ana-ruiz"
+      },
+      "image": {
+        "src": "/fixtures/images/hero-office-16x9.svg",
+        "alt": "",
+        "width": 1600,
+        "height": 900
+      }
+    },
+    "categories": [
+      {
+        "id": "all",
+        "label": "All posts",
+        "href": "/blog",
+        "count": 48
+      },
+      {
+        "id": "bookkeeping",
+        "label": "Bookkeeping",
+        "href": "/blog/category/bookkeeping",
+        "count": 16
+      },
+      {
+        "id": "payroll",
+        "label": "Payroll",
+        "href": "/blog/category/payroll",
+        "count": 16
+      },
+      {
+        "id": "tax",
+        "label": "Tax",
+        "href": "/blog/category/tax",
+        "count": 16
+      }
+    ],
+    "activeCategoryId": "all",
+    "pagination": {
+      "currentPage": 2,
+      "totalPages": 4,
+      "basePath": "/blog"
+    }
   },
   "blocks": [
-    {
-      "id": "blog-header",
-      "type": "pageHeader",
-      "title": "The Brightside blog",
-      "description": "Practical advice on bookkeeping, payroll and running a small business.",
-      "breadcrumbs": [
-        {
-          "label": "Home",
-          "href": "/"
-        },
-        {
-          "label": "Blog"
-        }
-      ]
-    },
-    {
-      "id": "blog-latest",
-      "type": "articleCardGrid",
-      "heading": "Latest articles",
-      "items": [
-        {
-          "title": "Five receipts you can stop keeping",
-          "href": "/blog/receipts-you-can-stop-keeping",
-          "excerpt": "Digital copies are fine for most of them.",
-          "category": "Tax",
-          "publishedAt": "2026-03-14",
-          "readingTimeMinutes": 4,
-          "author": {
-            "name": "Ana Ruiz",
-            "avatar": {
-              "src": "/fixtures/images/avatar-ana.svg",
-              "alt": "",
-              "width": 160,
-              "height": 160
-            }
-          },
-          "image": {
-            "src": "/fixtures/images/hero-desk-3x2.svg",
-            "alt": "Printed invoices and a calculator on a desk",
-            "width": 1200,
-            "height": 800
-          }
-        },
-        {
-          "title": "Cash flow forecasting in an afternoon",
-          "href": "/blog/cash-flow-forecast",
-          "excerpt": "A 13-week forecast from last month’s bank statement.",
-          "category": "Planning",
-          "publishedAt": "2026-02-02",
-          "readingTimeMinutes": 7,
-          "author": {
-            "name": "Marcus Webb",
-            "avatar": {
-              "src": "/fixtures/images/avatar-marcus.svg",
-              "alt": "",
-              "width": 160,
-              "height": 160
-            }
-          },
-          "image": {
-            "src": "/fixtures/images/hero-office-16x9.svg",
-            "alt": "A tidy office with a laptop showing a chart, a wall clock and a coffee mug",
-            "width": 1600,
-            "height": 900
-          }
-        },
-        {
-          "title": "When to hire a bookkeeper",
-          "href": "/blog/when-to-hire",
-          "excerpt": "Signs you have outgrown doing it yourself.",
-          "category": "Growth",
-          "publishedAt": "2025-11-20",
-          "readingTimeMinutes": 5,
-          "author": {
-            "name": "Ana Ruiz",
-            "avatar": {
-              "src": "/fixtures/images/avatar-ana.svg",
-              "alt": "",
-              "width": 160,
-              "height": 160
-            }
-          },
-          "image": {
-            "src": "/fixtures/images/studio-4x3.svg",
-            "alt": "Geometric shapes arranged on a light grey studio floor",
-            "width": 800,
-            "height": 600
-          }
-        },
-        {
-          "title": "Five receipts you can stop keeping",
-          "href": "/blog/receipts-you-can-stop-keeping-3",
-          "excerpt": "Digital copies are fine for most of them.",
-          "category": "Tax",
-          "publishedAt": "2026-03-14",
-          "readingTimeMinutes": 4,
-          "author": {
-            "name": "Ana Ruiz",
-            "avatar": {
-              "src": "/fixtures/images/avatar-ana.svg",
-              "alt": "",
-              "width": 160,
-              "height": 160
-            }
-          },
-          "image": {
-            "src": "/fixtures/images/hero-desk-3x2.svg",
-            "alt": "Printed invoices and a calculator on a desk",
-            "width": 1200,
-            "height": 800
-          }
-        },
-        {
-          "title": "Cash flow forecasting in an afternoon",
-          "href": "/blog/cash-flow-forecast-4",
-          "excerpt": "A 13-week forecast from last month’s bank statement.",
-          "category": "Planning",
-          "publishedAt": "2026-02-02",
-          "readingTimeMinutes": 7,
-          "author": {
-            "name": "Marcus Webb",
-            "avatar": {
-              "src": "/fixtures/images/avatar-marcus.svg",
-              "alt": "",
-              "width": 160,
-              "height": 160
-            }
-          },
-          "image": {
-            "src": "/fixtures/images/hero-office-16x9.svg",
-            "alt": "A tidy office with a laptop showing a chart, a wall clock and a coffee mug",
-            "width": 1600,
-            "height": 900
-          }
-        },
-        {
-          "title": "When to hire a bookkeeper",
-          "href": "/blog/when-to-hire-5",
-          "excerpt": "Signs you have outgrown doing it yourself.",
-          "category": "Growth",
-          "publishedAt": "2025-11-20",
-          "readingTimeMinutes": 5,
-          "author": {
-            "name": "Ana Ruiz",
-            "avatar": {
-              "src": "/fixtures/images/avatar-ana.svg",
-              "alt": "",
-              "width": 160,
-              "height": 160
-            }
-          },
-          "image": {
-            "src": "/fixtures/images/studio-4x3.svg",
-            "alt": "Geometric shapes arranged on a light grey studio floor",
-            "width": 800,
-            "height": 600
-          }
-        }
-      ]
-    },
     {
       "id": "blog-newsletter",
       "type": "newsletterSignup",

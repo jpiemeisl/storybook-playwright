@@ -1,0 +1,152 @@
+{
+  "header": {
+    "logo": {
+      "text": "Brightside",
+      "href": "/",
+      "image": {
+        "src": "/fixtures/images/logo-mark.svg",
+        "alt": "",
+        "width": 32,
+        "height": 32
+      }
+    },
+    "items": [
+      {
+        "label": "Services",
+        "href": "/services",
+        "children": [
+          {
+            "label": "Monthly bookkeeping",
+            "href": "/services/bookkeeping"
+          },
+          {
+            "label": "Payroll",
+            "href": "/services/payroll"
+          },
+          {
+            "label": "Tax-ready reporting",
+            "href": "/services/tax"
+          }
+        ]
+      },
+      {
+        "label": "Pricing",
+        "href": "/pricing"
+      },
+      {
+        "label": "Work",
+        "href": "/work"
+      },
+      {
+        "label": "Blog",
+        "href": "/blog"
+      },
+      {
+        "label": "About",
+        "href": "/about"
+      }
+    ],
+    "cta": {
+      "label": "Book a call",
+      "href": "/contact"
+    },
+    "sticky": true
+  },
+  "footer": {
+    "logo": {
+      "text": "Brightside",
+      "href": "/"
+    },
+    "columns": [
+      {
+        "heading": "Services",
+        "items": [
+          {
+            "label": "Monthly bookkeeping",
+            "href": "/services/bookkeeping"
+          },
+          {
+            "label": "Payroll",
+            "href": "/services/payroll"
+          },
+          {
+            "label": "Tax-ready reporting",
+            "href": "/services/tax"
+          }
+        ]
+      },
+      {
+        "heading": "Company",
+        "items": [
+          {
+            "label": "About us",
+            "href": "/about"
+          },
+          {
+            "label": "Case studies",
+            "href": "/work"
+          },
+          {
+            "label": "Careers",
+            "href": "/careers"
+          }
+        ]
+      },
+      {
+        "heading": "Resources",
+        "items": [
+          {
+            "label": "Blog",
+            "href": "/blog"
+          },
+          {
+            "label": "Search",
+            "href": "/search"
+          },
+          {
+            "label": "Contact",
+            "href": "/contact"
+          }
+        ]
+      }
+    ],
+    "social": [
+      {
+        "platform": "linkedin",
+        "href": "https://www.linkedin.com/company/brightside-example",
+        "label": "Brightside on LinkedIn"
+      },
+      {
+        "platform": "x",
+        "href": "https://x.com/brightside_example",
+        "label": "Brightside on X"
+      }
+    ],
+    "legal": {
+      "copyright": "© 2026 Brightside Bookkeeping Ltd.",
+      "links": [
+        {
+          "label": "Privacy policy",
+          "href": "/legal/privacy"
+        },
+        {
+          "label": "Terms of service",
+          "href": "/legal/terms"
+        },
+        {
+          "label": "Accessibility",
+          "href": "/accessibility"
+        }
+      ]
+    }
+  },
+  "announcement": {
+    "message": "New for 2026: payroll for seasonal teams of up to 60 people.",
+    "link": {
+      "label": "See how it works",
+      "href": "/services/payroll"
+    },
+    "tone": "accent",
+    "dismissible": true
+  }
+}

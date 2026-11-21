@@ -1,0 +1,39 @@
+{
+  "id": "page-404",
+  "slug": "404",
+  "template": "error",
+  "seo": {
+    "title": "Page not found",
+    "description": "Page not found | Brightside Bookkeeping",
+    "noindex": true
+  },
+  "error": {
+    "code": 404,
+    "title": "We can’t find that page",
+    "message": "It may have moved, or the link may be out of date. Try searching, or start from one of these pages.",
+    "primaryAction": {
+      "label": "Go to the home page",
+      "href": "/"
+    },
+    "secondaryAction": {
+      "label": "Contact us",
+      "href": "/contact"
+    },
+    "links": [
+      {
+        "label": "Pricing",
+        "href": "/pricing"
+      },
+      {
+        "label": "Our services",
+        "href": "/services"
+      },
+      {
+        "label": "The Brightside blog",
+        "href": "/blog"
+      }
+    ],
+    "searchAction": "/search"
+  },
+  "blocks": []
+}

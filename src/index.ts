@@ -69,12 +69,23 @@ export * from './components/Table';
 export * from './components/Timeline';
 export * from './components/TeamMember';
 
+// Layout and templates (Phase 8)
+export * from './components/AnnouncementBar';
+export * from './components/SiteLogo';
+export * from './components/LinkList';
+export * from './components/EmptyState';
+export * from './components/DescriptionList';
+export * from './components/PrevNextNav';
+export * from './components/SidebarLayout';
+export * from './components/StickyActionBar';
+
 // Content model: registry, renderer and validation
 export * from './registry';
+export * from './templates';
 
 // Content types and utilities
 export type * from './content-types';
-export { blockTypes } from './content-types';
+export { blockTypes, composedTemplates } from './content-types';
 export type * from './component-types';
 export * from './utils';
 

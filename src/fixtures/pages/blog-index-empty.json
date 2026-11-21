@@ -1,0 +1,63 @@
+{
+  "id": "page-blog-empty",
+  "slug": "blog/category/tax",
+  "template": "blog-index",
+  "seo": {
+    "title": "Tax articles",
+    "description": "Tax articles | Brightside Bookkeeping"
+  },
+  "heading": {
+    "title": "Tax articles",
+    "description": "Deadlines, deductions and filing, explained.",
+    "breadcrumbs": [
+      {
+        "label": "Home",
+        "href": "/"
+      },
+      {
+        "label": "Blog",
+        "href": "/blog"
+      },
+      {
+        "label": "Tax"
+      }
+    ]
+  },
+  "listing": {
+    "items": [],
+    "categories": [
+      {
+        "id": "all",
+        "label": "All posts",
+        "href": "/blog",
+        "count": 48
+      },
+      {
+        "id": "bookkeeping",
+        "label": "Bookkeeping",
+        "href": "/blog/category/bookkeeping",
+        "count": 16
+      },
+      {
+        "id": "payroll",
+        "label": "Payroll",
+        "href": "/blog/category/payroll",
+        "count": 16
+      },
+      {
+        "id": "tax",
+        "label": "Tax",
+        "href": "/blog/category/tax",
+        "count": 0
+      }
+    ],
+    "activeCategoryId": "tax",
+    "allPostsHref": "/blog",
+    "pagination": {
+      "currentPage": 1,
+      "totalPages": 1,
+      "basePath": "/blog/category/tax"
+    }
+  },
+  "blocks": []
+}

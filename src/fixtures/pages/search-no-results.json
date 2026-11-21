@@ -1,0 +1,30 @@
+{
+  "id": "page-search-none",
+  "slug": "search",
+  "template": "search",
+  "seo": {
+    "title": "Search results",
+    "description": "Search results | Brightside Bookkeeping",
+    "noindex": true
+  },
+  "search": {
+    "pagination": {
+      "currentPage": 1,
+      "totalPages": 1,
+      "basePath": "/search"
+    },
+    "contactLink": {
+      "label": "Contact our team",
+      "href": "/contact"
+    },
+    "query": "cryptocurrency mining",
+    "total": 0,
+    "results": [],
+    "suggestions": [
+      "payroll",
+      "tax deadlines",
+      "bookkeeping"
+    ]
+  },
+  "blocks": []
+}

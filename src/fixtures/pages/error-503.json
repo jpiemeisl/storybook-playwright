@@ -1,0 +1,21 @@
+{
+  "id": "page-503",
+  "slug": "503",
+  "template": "error",
+  "seo": {
+    "title": "Down for maintenance",
+    "description": "Down for maintenance | Brightside Bookkeeping",
+    "noindex": true
+  },
+  "error": {
+    "code": 503,
+    "title": "Down for scheduled maintenance",
+    "message": "The client portal is being upgraded and will be back by 6am Eastern time. Your data is safe.",
+    "primaryAction": {
+      "label": "Check service status",
+      "href": "/status"
+    },
+    "layout": "minimal"
+  },
+  "blocks": []
+}

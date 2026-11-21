@@ -1,0 +1,23 @@
+@layer components {
+  /*
+   * Print only. Header, footer and announcement are hidden by SiteLayout, the table of contents by
+   * SidebarLayout. Here: print link targets after the text and keep headings with what follows.
+   */
+  @media print {
+    .body a[href]:not([href^='#'])::after {
+      content: ' (' attr(href) ')';
+      font-size: 0.85em;
+      overflow-wrap: anywhere;
+    }
+
+    .body :is(h2, h3, h4) {
+      break-after: avoid;
+      break-inside: avoid;
+    }
+
+    .body :is(p, li) {
+      orphans: 3;
+      widows: 3;
+    }
+  }
+}

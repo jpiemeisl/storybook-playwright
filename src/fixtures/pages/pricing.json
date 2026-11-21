@@ -1,6 +1,7 @@
 {
   "id": "page-pricing",
   "slug": "pricing",
+  "template": "pricing",
   "seo": {
     "title": "Pricing",
     "description": "Pricing | Brightside Bookkeeping"

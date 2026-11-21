@@ -8,4 +8,6 @@ export type { ActionRef, AuthorRef, ImageRef, LinkRef, RichText, SeoMeta } from 
 export type * from './blocks';
 export { blockTypes } from './blocks';
 export type { AnnouncementContent, FooterContent, HeaderContent, LogoContent, SiteChrome } from './chrome';
+export type * from './templates';
+export { composedTemplates } from './templates';
 export type { IsJson } from './json';

@@ -1,0 +1,49 @@
+{
+  "id": "page-thanks",
+  "slug": "contact/thanks",
+  "template": "thank-you",
+  "seo": {
+    "title": "Thanks for getting in touch",
+    "description": "Thanks for getting in touch | Brightside Bookkeeping",
+    "noindex": true
+  },
+  "thankYou": {
+    "title": "Thanks, we’ve got your message",
+    "message": "A member of the team will reply within one working day. We have sent a copy of your message to your email address.",
+    "steps": [
+      {
+        "title": "We read your message",
+        "description": "Usually within a few hours."
+      },
+      {
+        "title": "We suggest a call",
+        "description": "Fifteen minutes, at a time that suits you."
+      },
+      {
+        "title": "You get a proposal",
+        "description": "A fixed monthly price, no surprises."
+      }
+    ],
+    "actions": [
+      {
+        "label": "Back to the home page",
+        "href": "/"
+      },
+      {
+        "label": "See pricing",
+        "href": "/pricing"
+      }
+    ],
+    "links": [
+      {
+        "label": "How to close your books in five working days",
+        "href": "/blog/five-day-close"
+      },
+      {
+        "label": "Case studies",
+        "href": "/work"
+      }
+    ]
+  },
+  "blocks": []
+}

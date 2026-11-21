@@ -6,6 +6,8 @@ This file is **generated**. Field descriptions come from the JSDoc in [`src/cont
 
 The content model is plain JSON: no functions, React nodes or `Date` objects (dates are ISO 8601 strings). A CMS adapter maps CMS entries to `PageContent`; `<BlockRenderer>` maps each block to a component through the registry. Length limits mentioned below are guidance, not validation.
 
+> **Warning: this library does NOT sanitize HTML.** `RichText.html` is inserted into the page as-is. Your adapter (or host app) must sanitize it with an allow-list of tags and attributes before producing a `RichText` value. The renderer only neutralizes unsafe URLs (`javascript:`, `data:` and similar link and image targets); it does not remove scripts, event handler attributes, inline styles or iframes.
+
 ## Modelling guidance
 
 - **One CMS content type per block type.** Keep CMS field names free; the adapter renames them. Do not model layout (columns, colours) as free text: use the enumerated values listed per block.
@@ -587,7 +589,7 @@ Allowed values: `variant`: `primary`, `secondary`, `ghost`.
 
 ### RichText
 
-Formatted text. Only HTML is implemented today; the union leaves room for other formats. SECURITY: `html` is inserted into the page as-is. The ADAPTER that produces it is responsible for sanitizing it (allow-list of tags and attributes). The renderer additionally neutralises javascript:/data: link targets, but that is defence in depth, not a sanitizer.
+Formatted text. Only HTML is implemented today; the union leaves room for other formats. WARNING: THIS LIBRARY DOES NOT SANITIZE HTML. `html` is inserted into the page as-is. The adapter (or host app) MUST sanitize it with an allow-list of tags and attributes BEFORE producing a RichText value. The renderer only neutralizes unsafe URLs (javascript:, data: and similar link and image targets); it does not remove scripts, event handler attributes, styles or iframes.
 
 | Field | Type | Required | Description |
 | --- | --- | --- | --- |

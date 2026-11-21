@@ -1,0 +1,111 @@
+{
+  "id": "page-post-feeds",
+  "slug": "blog/bank-feeds",
+  "template": "blog-post",
+  "seo": {
+    "title": "Check your bank feeds every month",
+    "description": "Check your bank feeds every month | Brightside Bookkeeping"
+  },
+  "article": {
+    "title": "Check your bank feeds every month",
+    "excerpt": "A two-minute habit that saves a painful year end.",
+    "author": {
+      "name": "Marcus Webb",
+      "role": "Payroll Lead",
+      "avatar": {
+        "src": "/fixtures/images/avatar-marcus.svg",
+        "alt": "",
+        "width": 160,
+        "height": 160
+      },
+      "href": "/team/marcus-webb",
+      "bio": "Marcus runs payroll for our seasonal clients."
+    },
+    "publishedAt": "2026-02-27",
+    "readingTime": 2,
+    "tags": [
+      {
+        "label": "Bank feeds",
+        "href": "/blog/tag/bank-feeds"
+      }
+    ],
+    "breadcrumbs": [
+      {
+        "label": "Home",
+        "href": "/"
+      },
+      {
+        "label": "Blog",
+        "href": "/blog"
+      },
+      {
+        "label": "Bank feeds"
+      }
+    ],
+    "body": [
+      {
+        "id": "feeds-body",
+        "type": "richText",
+        "content": {
+          "format": "html",
+          "html": "<p>Bank feeds save hours, but only if they keep working. Once a month, open each connected account and check the date of the most recent transaction. A feed that stopped three weeks ago is far easier to repair now than at year end.</p><h2>What to do when a feed breaks</h2><p>Reconnect it, then import the missing statement lines from a downloaded file so nothing is lost.</p>"
+        }
+      }
+    ],
+    "related": [
+      {
+        "id": "post-five-day-close",
+        "title": "How to close your books in five working days",
+        "href": "/blog/five-day-close",
+        "excerpt": "A routine that turns month-end into numbers you can act on.",
+        "category": "Bookkeeping",
+        "publishedAt": "2026-03-14",
+        "readingTime": 4,
+        "author": {
+          "name": "Ana Ruiz",
+          "role": "Senior Accountant",
+          "avatar": {
+            "src": "/fixtures/images/avatar-ana.svg",
+            "alt": "",
+            "width": 160,
+            "height": 160
+          },
+          "href": "/team/ana-ruiz"
+        },
+        "image": {
+          "src": "/fixtures/images/gallery/desk.svg",
+          "alt": "",
+          "width": 1200,
+          "height": 800
+        }
+      },
+      {
+        "id": "post-receipts",
+        "title": "Stop losing receipts: a capture habit that sticks",
+        "href": "/blog/receipts",
+        "excerpt": "Photograph, forward, forget. Our three-rule system.",
+        "category": "Bookkeeping",
+        "publishedAt": "2026-02-11",
+        "readingTime": 6,
+        "author": {
+          "name": "Ana Ruiz",
+          "role": "Senior Accountant",
+          "avatar": {
+            "src": "/fixtures/images/avatar-ana.svg",
+            "alt": "",
+            "width": 160,
+            "height": 160
+          },
+          "href": "/team/ana-ruiz"
+        },
+        "image": {
+          "src": "/fixtures/images/gallery/market.svg",
+          "alt": "",
+          "width": 1200,
+          "height": 800
+        }
+      }
+    ]
+  },
+  "blocks": []
+}

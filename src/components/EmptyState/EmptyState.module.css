@@ -1,0 +1,15 @@
+@layer components {
+  .empty {
+    display: grid;
+    justify-items: center;
+    gap: var(--gap-sm);
+    padding: var(--gap-xl) var(--gap-lg);
+    border: var(--border-1) dashed var(--color-border-strong);
+    border-radius: var(--radius-surface);
+    text-align: center;
+  }
+
+  .action {
+    margin-block-start: var(--gap-sm);
+  }
+}

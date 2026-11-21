@@ -1,0 +1,59 @@
+@layer components {
+  .bar {
+    color: var(--color-text);
+    font-size: var(--text-size-sm);
+  }
+
+  .accent {
+    background-color: var(--color-bg-accent-subtle);
+  }
+
+  .subtle {
+    background-color: var(--color-bg-subtle);
+    border-block-end: var(--border-1) solid var(--color-border);
+  }
+
+  /* data-surface="inverse" remaps the semantic colour tokens. */
+  .inverse {
+    background-color: var(--color-bg);
+  }
+
+  .inner {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: var(--gap-sm);
+    padding-block: var(--space-2);
+  }
+
+  .message {
+    margin: 0;
+    min-inline-size: 0;
+    text-align: center;
+    text-wrap: balance;
+  }
+
+  .bar .link {
+    color: inherit;
+    font-weight: var(--text-weight-strong);
+  }
+
+  .dismiss {
+    display: inline-grid;
+    flex-shrink: 0;
+    place-items: center;
+    inline-size: var(--control-height-sm);
+    block-size: var(--control-height-sm);
+    border-radius: var(--radius-control);
+    color: inherit;
+  }
+
+  .dismiss:hover {
+    background-color: var(--color-bg-muted);
+  }
+
+  .dismiss:focus-visible {
+    outline: var(--focus-ring-width) solid var(--color-focus-ring);
+    outline-offset: 0;
+  }
+}

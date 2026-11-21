@@ -1,0 +1,25 @@
+{
+  "id": "page-search",
+  "slug": "search",
+  "template": "search",
+  "seo": {
+    "title": "Search",
+    "description": "Search | Brightside Bookkeeping",
+    "noindex": true
+  },
+  "search": {
+    "pagination": {
+      "currentPage": 1,
+      "totalPages": 1,
+      "basePath": "/search"
+    },
+    "contactLink": {
+      "label": "Contact our team",
+      "href": "/contact"
+    },
+    "query": "",
+    "total": 0,
+    "results": []
+  },
+  "blocks": []
+}

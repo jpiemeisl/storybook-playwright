@@ -1,7 +1,7 @@
 import { Component, useEffect, useMemo, useRef, type ErrorInfo, type ReactNode } from 'react';
 import type { Block, NestedBlock } from '../content-types/blocks';
 import { Container } from '../components/Container';
-import { Section } from '../components/Section';
+import { Section, type SectionBackground, type SectionPadding } from '../components/Section';
 import { assignHeadingLevels } from './headingLevels';
 import { isSafeAnchorId } from './links';
 import { defaultRegistry, type Registry } from './registry';
@@ -20,6 +20,17 @@ export interface BlockRendererProps {
   onError?: (issue: ValidationIssue) => void;
   /** Show visible placeholders for blocks that could not render (CMS previews). Default false. */
   showErrors?: boolean;
+  /**
+   * The page already has its h1 (a template rendered the title), so blocks start at h2: a hero or
+   * pageHeader then renders an h2 too. Default false.
+   */
+  h1Provided?: boolean;
+  /**
+   * `page` (default): each block in its own Section (background, padding, anchorId) and Container.
+   * `flow`: blocks stacked with even spacing and no Section or Container, for a column inside a
+   * template (e.g. an article body). Backgrounds and padding are ignored; anchorIds still apply.
+   */
+  layout?: 'page' | 'flow';
 }
 
 /**
@@ -27,7 +38,15 @@ export interface BlockRendererProps {
  * Container its component expects; heading levels are assigned centrally; invalid or unknown blocks
  * are skipped (or shown as placeholders with `showErrors`) and reported through `onError`.
  */
-export function BlockRenderer({ blocks, registry = defaultRegistry, context, onError, showErrors = false }: BlockRendererProps) {
+export function BlockRenderer({
+  blocks,
+  registry = defaultRegistry,
+  context,
+  onError,
+  showErrors = false,
+  h1Provided = false,
+  layout = 'page',
+}: BlockRendererProps) {
   const onErrorRef = useRef(onError);
   onErrorRef.current = onError;
   const { nodes, issues } = useMemo(
@@ -36,10 +55,12 @@ export function BlockRenderer({ blocks, registry = defaultRegistry, context, onE
         registry,
         context: context ?? {},
         showErrors,
+        h1Provided,
+        layout,
         // Errors caught by a block's error boundary arrive after render (commit phase).
         onLateIssue: (issue) => onErrorRef.current?.(issue),
       }),
-    [blocks, registry, context, showErrors],
+    [blocks, registry, context, showErrors, h1Provided, layout],
   );
 
   // Report mapping/validation issues from an effect, not during render, so rendering stays pure.
@@ -47,13 +68,15 @@ export function BlockRenderer({ blocks, registry = defaultRegistry, context, onE
     issues.forEach((issue) => onErrorRef.current?.(issue));
   }, [issues]);
 
-  return <>{nodes}</>;
+  return layout === 'flow' ? <div className={styles.flow}>{nodes}</div> : <>{nodes}</>;
 }
 
 interface RenderOptions {
   registry: Registry;
   context: RendererContext;
   showErrors: boolean;
+  h1Provided?: boolean;
+  layout?: 'page' | 'flow';
   onLateIssue?: (issue: ValidationIssue) => void;
 }
 
@@ -66,7 +89,7 @@ export function renderBlocks(
   const { registry, showErrors } = options;
   const issues: ValidationIssue[] = [];
   const knownTypes = registry.types();
-  const levels = nested ? blocks.map(() => 3 as const) : assignHeadingLevels(blocks, registry.get);
+  const levels = nested ? blocks.map(() => 3 as const) : assignHeadingLevels(blocks, registry.get, { h1Provided: options.h1Provided });
   // Element ids must be unique: the first block with a given anchorId keeps it.
   const usedAnchors = new Set<string>();
 
@@ -117,31 +140,57 @@ export function renderBlocks(
 
     if (nested) return <div key={key}>{boundary}</div>;
 
-    const layout = definition.layout(block);
-    const padding = block.padding ?? definition.defaultPadding(block);
-    const background = block.background ?? 'default';
     let anchorId = isSafeAnchorId(block.anchorId) ? block.anchorId : undefined;
     if (anchorId && usedAnchors.has(anchorId)) {
       issues.push({ code: 'duplicate-id', severity: 'error', message: `anchorId "${anchorId}" is already used on this page; it was left off this block.`, path: 'anchorId', ...meta });
       anchorId = undefined;
     }
     if (anchorId) usedAnchors.add(anchorId);
+
+    if (options.layout === 'flow') {
+      return (
+        <div key={key} id={anchorId} data-block-type={block.type}>
+          {boundary}
+        </div>
+      );
+    }
+
+    const layout = definition.layout(block);
+    const padding = block.padding ?? definition.defaultPadding(block);
+    const background = block.background ?? 'default';
     return (
-      <Section
-        key={key}
-        id={anchorId}
-        background={background}
-        padding={padding}
-        data-block-type={block.type}
-        data-background={background}
-        className={styles.block}
-      >
+      <PageSection key={key} id={anchorId} background={background} padding={padding} data-block-type={block.type}>
         {layout === 'full-bleed' ? boundary : <Container size={layout === 'narrow' ? 'md' : 'xl'}>{boundary}</Container>}
-      </Section>
+      </PageSection>
     );
   });
 
   return { nodes, issues };
+}
+
+export interface PageSectionProps {
+  background?: SectionBackground;
+  padding?: SectionPadding;
+  id?: string;
+  children: ReactNode;
+  'data-block-type'?: string;
+  /** Accessible name; makes the section a region landmark. Use sparingly. */
+  'aria-label'?: string;
+}
+
+/**
+ * A full-width band of a page: Section plus the spacing rule BlockRenderer uses, so two adjacent
+ * PageSections with the same background do not double their padding. Templates use it for their
+ * structured parts, so those sit next to rendered blocks with the same rhythm. Sections with
+ * padding "none" never collapse the next one.
+ */
+export function PageSection({ background = 'default', padding = 'md', children, ...rest }: PageSectionProps) {
+  return (
+    // A section without padding (full-bleed background hero, spacer) must not cancel the next section's top padding.
+    <Section background={background} padding={padding} data-background={padding === 'none' ? undefined : background} className={styles.block} {...rest}>
+      {children}
+    </Section>
+  );
 }
 
 function renderError(block: BlockLike, error: unknown): ValidationIssue {

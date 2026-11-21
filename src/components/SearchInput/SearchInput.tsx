@@ -7,8 +7,16 @@ import styles from './SearchInput.module.css';
 
 export interface SearchInputProps
   extends Omit<ComponentPropsWithRef<'input'>, 'type' | 'size' | 'value' | 'defaultValue' | 'onChange'> {
-  /** Called with the trimmed query on Enter or the submit button. */
-  onSearch: (query: string) => void;
+  /**
+   * Called with the trimmed query on Enter or the submit button; the native submit is prevented.
+   * Optional when `action` is set: without it the form submits natively.
+   */
+  onSearch?: (query: string) => void;
+  /**
+   * Makes it a real GET form (works without JavaScript): submits to this URL with the input's `name`
+   * (pass e.g. name="q"). `onSearch`, if also given, intercepts the submit instead.
+   */
+  action?: string;
   /** Controlled query. */
   value?: string;
   /** Uncontrolled initial query. */
@@ -22,11 +30,12 @@ export interface SearchInputProps
 }
 
 /**
- * <form role="search"> with a search input, a leading icon and a clear button that appears when there
- * is text. Clearing returns focus to the input. No suggestions or autocomplete.
+ * <form role="search"> (a real GET form with `action`) with a search input, a leading icon and a
+ * clear button that appears when there is text. Clearing returns focus to the input. No suggestions or autocomplete.
  */
 export function SearchInput({
   onSearch,
+  action,
   value,
   defaultValue = '',
   onChange,
@@ -49,12 +58,21 @@ export function SearchInput({
   };
 
   const submit = (event: FormEvent) => {
+    // A GET form without a handler submits natively; otherwise the handler takes over.
+    if (action && !onSearch) return;
     event.preventDefault();
-    onSearch(query.trim());
+    onSearch?.(query.trim());
   };
 
   return (
-    <form role="search" aria-label={label} onSubmit={submit} className={[styles.form, className].filter(Boolean).join(' ')}>
+    <form
+      role="search"
+      aria-label={label}
+      action={action}
+      method={action ? 'get' : undefined}
+      onSubmit={submit}
+      className={[styles.form, className].filter(Boolean).join(' ')}
+    >
       <label htmlFor={inputId} className={styles.visuallyHidden}>
         {label}
       </label>

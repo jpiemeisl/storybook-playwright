@@ -118,6 +118,8 @@ export function generate() {
     '',
     'The content model is plain JSON: no functions, React nodes or `Date` objects (dates are ISO 8601 strings). A CMS adapter maps CMS entries to `PageContent`; `<BlockRenderer>` maps each block to a component through the registry. Length limits mentioned below are guidance, not validation.',
     '',
+    '> **Warning: this library does NOT sanitize HTML.** `RichText.html` is inserted into the page as-is. Your adapter (or host app) must sanitize it with an allow-list of tags and attributes before producing a `RichText` value. The renderer only neutralizes unsafe URLs (`javascript:`, `data:` and similar link and image targets); it does not remove scripts, event handler attributes, inline styles or iframes.',
+    '',
     '## Modelling guidance',
     '',
     '- **One CMS content type per block type.** Keep CMS field names free; the adapter renames them. Do not model layout (columns, colours) as free text: use the enumerated values listed per block.',

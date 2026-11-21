@@ -10,6 +10,7 @@ import styles from './Header.module.css';
 export interface HeaderProps {
   /** Logo slot, usually a Link to the home page. */
   logo: ReactNode;
+  /** Main navigation. Empty: a logo-only header (no nav landmark, no menu button), e.g. for landing pages. */
   items: NavItem[];
   cta?: MenuCta;
   /** Stick to the top of the viewport while scrolling. */
@@ -52,36 +53,39 @@ export function Header({
   }, []);
 
   const closeMenu = useCallback(() => setMenuOpen(false), []);
+  const hasNav = items.length > 0;
   const classes = [styles.header, sticky && styles.sticky].filter(Boolean).join(' ');
 
   return (
-    <header className={classes} data-overflowing={overflowing || undefined}>
+    <header className={classes} data-overflowing={overflowing || undefined} data-no-nav={hasNav ? undefined : ''}>
       <Container size="xl" className={styles.inner}>
         <div className={styles.logo}>{logo}</div>
 
-        <div ref={slotRef} className={styles.navSlot}>
-          <nav aria-label={navLabel}>
-            <ul ref={listRef} className={styles.list}>
-              {items.map((item, index) => (
-                <li key={item.href}>
-                  {item.children?.length ? (
-                    <NavDropdown
-                      item={item}
-                      open={openDropdown === index}
-                      onOpenChange={(open) =>
-                        setOpenDropdown((current) => (open ? index : current === index ? null : current))
-                      }
-                    />
-                  ) : (
-                    <Link href={item.href} className={styles.navLink} aria-current={item.current ? 'page' : undefined}>
-                      {item.label}
-                    </Link>
-                  )}
-                </li>
-              ))}
-            </ul>
-          </nav>
-        </div>
+        {hasNav && (
+          <div ref={slotRef} className={styles.navSlot}>
+            <nav aria-label={navLabel}>
+              <ul ref={listRef} className={styles.list}>
+                {items.map((item, index) => (
+                  <li key={item.href}>
+                    {item.children?.length ? (
+                      <NavDropdown
+                        item={item}
+                        open={openDropdown === index}
+                        onOpenChange={(open) =>
+                          setOpenDropdown((current) => (open ? index : current === index ? null : current))
+                        }
+                      />
+                    ) : (
+                      <Link href={item.href} className={styles.navLink} aria-current={item.current ? 'page' : undefined}>
+                        {item.label}
+                      </Link>
+                    )}
+                  </li>
+                ))}
+              </ul>
+            </nav>
+          </div>
+        )}
 
         {cta && (
           <Link href={cta.href} variant="standalone" className={styles.cta}>
@@ -89,20 +93,22 @@ export function Header({
           </Link>
         )}
 
-        <button
-          type="button"
-          className={styles.menuButton}
-          aria-haspopup="dialog"
-          aria-expanded={menuOpen}
-          aria-controls={menuId}
-          onClick={() => setMenuOpen(true)}
-        >
-          <Icon name="menu" />
-          {menuLabel}
-        </button>
+        {hasNav && (
+          <button
+            type="button"
+            className={styles.menuButton}
+            aria-haspopup="dialog"
+            aria-expanded={menuOpen}
+            aria-controls={menuId}
+            onClick={() => setMenuOpen(true)}
+          >
+            <Icon name="menu" />
+            {menuLabel}
+          </button>
+        )}
       </Container>
 
-      <MobileMenu id={menuId} open={menuOpen} onClose={closeMenu} items={items} cta={cta} aria-label={navLabel} />
+      {hasNav && <MobileMenu id={menuId} open={menuOpen} onClose={closeMenu} items={items} cta={cta} aria-label={navLabel} />}
     </header>
   );
 }

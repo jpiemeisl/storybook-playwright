@@ -1,139 +1,148 @@
 {
   "id": "page-case-bakery",
-  "slug": "work/cleanup",
+  "slug": "work/bakery",
+  "template": "case-study",
   "seo": {
-    "title": "Case study: cleaning up two years of books",
-    "description": "Case study: cleaning up two years of books | Brightside Bookkeeping"
+    "title": "Case study: Hearth & Crumb Bakery",
+    "description": "Case study: Hearth & Crumb Bakery | Brightside Bookkeeping"
+  },
+  "caseStudy": {
+    "title": "Two years of books cleaned up in six weeks",
+    "summary": "How a family-run bakery went from a shoebox of receipts to reconciled accounts, a tax return filed on time and a monthly routine that takes ten minutes.",
+    "client": "Hearth & Crumb Bakery",
+    "industry": "Food and drink",
+    "services": [
+      "Catch-up bookkeeping",
+      "Monthly bookkeeping",
+      "Tax-ready reporting"
+    ],
+    "breadcrumbs": [
+      {
+        "label": "Home",
+        "href": "/"
+      },
+      {
+        "label": "Work",
+        "href": "/work"
+      },
+      {
+        "label": "Hearth & Crumb Bakery"
+      }
+    ],
+    "heroImage": {
+      "src": "/fixtures/images/studio-4x3.svg",
+      "alt": "The bakery counter with loaves on wooden shelves",
+      "width": 800,
+      "height": 600
+    },
+    "results": [
+      {
+        "value": "6 weeks",
+        "label": "From shoebox to reconciled"
+      },
+      {
+        "value": "$4,800",
+        "label": "Duplicate payments recovered"
+      },
+      {
+        "value": "0",
+        "label": "Missed filings since"
+      }
+    ],
+    "body": [
+      {
+        "id": "case-story",
+        "type": "richText",
+        "content": {
+          "format": "html",
+          "html": "<h2>The challenge</h2><p>Two years of receipts in a shoebox, three bank accounts and a tax deadline eight weeks away. The owners knew roughly how the bakery was doing, but not which products made money.</p><h2>What we did</h2><ul><li>Connected every account to a bank feed and imported two years of statements.</li><li>Photographed and matched 1,400 receipts.</li><li>Rebuilt the chart of accounts around the bakery’s three product lines.</li></ul><h2>The result</h2><p>Reconciled books, a tax return filed on time and a monthly routine that takes the owners ten minutes.</p>"
+        }
+      },
+      {
+        "id": "case-gallery",
+        "type": "gallery",
+        "heading": "Inside the bakery",
+        "columns": 3,
+        "images": [
+          {
+            "src": "/fixtures/images/gallery/harbour.svg",
+            "alt": "Harbour at dawn with a low yellow sun",
+            "width": 1200,
+            "height": 800,
+            "caption": "Our first client, a harbour-side café."
+          },
+          {
+            "src": "/fixtures/images/gallery/desk.svg",
+            "alt": "A tidy desk with a teal notebook",
+            "width": 1000,
+            "height": 1000
+          },
+          {
+            "src": "/fixtures/images/gallery/market.svg",
+            "alt": "A busy market stall with red awnings",
+            "width": 1200,
+            "height": 900
+          },
+          {
+            "src": "/fixtures/images/gallery/lake.svg",
+            "alt": "A calm lake with teal hills",
+            "width": 1500,
+            "height": 1000
+          },
+          {
+            "src": "/fixtures/images/gallery/forest.svg",
+            "alt": "Pine forest on a green hillside",
+            "width": 1000,
+            "height": 800
+          },
+          {
+            "src": "/fixtures/images/gallery/kiln.svg",
+            "alt": "A pottery kiln glowing orange",
+            "width": 800,
+            "height": 800
+          }
+        ],
+        "background": "subtle"
+      },
+      {
+        "id": "case-quote",
+        "type": "testimonial",
+        "testimonial": {
+          "quote": "We went from dreading month-end to barely noticing it. Ana spotted a duplicate supplier payment in the first week that more than covered the fee.",
+          "author": {
+            "name": "Priya Natarajan",
+            "role": "Owner",
+            "company": "Copperleaf Studio",
+            "avatar": {
+              "src": "/fixtures/images/avatar-ana.svg",
+              "alt": "",
+              "width": 160,
+              "height": 160
+            }
+          },
+          "companyLogo": {
+            "src": "/fixtures/images/logo-copperleaf.svg",
+            "alt": "Copperleaf Studio",
+            "width": 160,
+            "height": 48
+          }
+        }
+      }
+    ],
+    "previous": {
+      "label": "Cash flow forecasting for a growing agency",
+      "href": "/work/agency"
+    },
+    "next": {
+      "label": "Payroll for a growing physiotherapy clinic",
+      "href": "/work/clinic"
+    }
   },
   "blocks": [
     {
-      "id": "case-header",
-      "type": "pageHeader",
-      "title": "Cleaning up two years of books",
-      "description": "How a family-run bakery went from a shoebox of receipts to reconciled accounts in six weeks.",
-      "breadcrumbs": [
-        {
-          "label": "Home",
-          "href": "/"
-        },
-        {
-          "label": "Work",
-          "href": "/work"
-        },
-        {
-          "label": "Bakery clean-up"
-        }
-      ],
-      "variant": "with-media",
-      "media": {
-        "src": "/fixtures/images/studio-4x3.svg",
-        "alt": "Geometric shapes arranged on a light grey studio floor",
-        "width": 800,
-        "height": 600
-      }
-    },
-    {
-      "id": "case-stats",
-      "type": "stats",
-      "heading": "Results",
-      "items": [
-        {
-          "value": "6 weeks",
-          "label": "From shoebox to reconciled"
-        },
-        {
-          "value": "$4,800",
-          "label": "Duplicate payments recovered"
-        },
-        {
-          "value": "0",
-          "label": "Missed filings since"
-        }
-      ],
-      "background": "subtle"
-    },
-    {
-      "id": "case-body",
-      "type": "richText",
-      "content": {
-        "format": "html",
-        "html": "<h2>The challenge</h2><p>Two years of receipts in a shoebox, three bank accounts and a tax deadline in eight weeks.</p><h2>What we did</h2><ul><li>Connected every account to a bank feed.</li><li>Photographed and matched 1,400 receipts.</li><li>Rebuilt the chart of accounts.</li></ul><h2>The result</h2><p>Reconciled books, a tax return filed on time and a monthly routine that takes the owner ten minutes.</p>"
-      }
-    },
-    {
-      "id": "case-gallery",
-      "type": "gallery",
-      "heading": "The bakery",
-      "columns": 3,
-      "images": [
-        {
-          "src": "/fixtures/images/gallery/harbour.svg",
-          "alt": "Harbour at dawn with a low yellow sun",
-          "width": 1200,
-          "height": 800,
-          "caption": "Our first client, a harbour-side café."
-        },
-        {
-          "src": "/fixtures/images/gallery/desk.svg",
-          "alt": "A tidy desk with a teal notebook",
-          "width": 1000,
-          "height": 1000
-        },
-        {
-          "src": "/fixtures/images/gallery/market.svg",
-          "alt": "A busy market stall with red awnings",
-          "width": 1200,
-          "height": 900
-        },
-        {
-          "src": "/fixtures/images/gallery/lake.svg",
-          "alt": "A calm lake with teal hills",
-          "width": 1500,
-          "height": 1000
-        },
-        {
-          "src": "/fixtures/images/gallery/forest.svg",
-          "alt": "Pine forest on a green hillside",
-          "width": 1000,
-          "height": 800
-        },
-        {
-          "src": "/fixtures/images/gallery/kiln.svg",
-          "alt": "A pottery kiln glowing orange",
-          "width": 800,
-          "height": 800
-        }
-      ],
-      "background": "subtle"
-    },
-    {
-      "id": "case-quote",
-      "type": "testimonial",
-      "testimonial": {
-        "quote": "We went from dreading month-end to barely noticing it. Ana spotted a duplicate supplier payment in the first week that more than covered the fee.",
-        "author": {
-          "name": "Priya Natarajan",
-          "role": "Owner",
-          "company": "Copperleaf Studio",
-          "avatar": {
-            "src": "/fixtures/images/avatar-ana.svg",
-            "alt": "",
-            "width": 160,
-            "height": 160
-          }
-        },
-        "companyLogo": {
-          "src": "/fixtures/images/logo-copperleaf.svg",
-          "alt": "Copperleaf Studio",
-          "width": 160,
-          "height": 48
-        }
-      }
-    },
-    {
       "id": "case-cta",
       "type": "ctaBanner",
-      "heading": "Ready for books you don’t have to think about?",
+      "heading": "Behind on your books?",
       "body": "Book a free 30-minute consultation. We’ll tell you honestly whether we can help.",
       "primaryAction": {
         "label": "Book a consultation",

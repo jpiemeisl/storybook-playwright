@@ -1,0 +1,59 @@
+{
+  "id": "page-search-long",
+  "slug": "search",
+  "template": "search",
+  "seo": {
+    "title": "Search results",
+    "description": "Search results | Brightside Bookkeeping",
+    "noindex": true
+  },
+  "search": {
+    "pagination": {
+      "currentPage": 1,
+      "totalPages": 1,
+      "basePath": "/search"
+    },
+    "contactLink": {
+      "label": "Contact our team",
+      "href": "/contact"
+    },
+    "query": "reconciliation",
+    "total": 3,
+    "results": [
+      {
+        "id": "r1",
+        "title": "How to reconcile intercompany transfers between locations without double counting revenue or losing track of cash in transit",
+        "url": "/help/articles/2026/reconciliation/multi-location-retail-and-hospitality-businesses/how-to-reconcile-intercompany-transfers-between-locations-without-double-counting-revenue",
+        "type": "Help",
+        "excerpt": "A step-by-step guide for multi-location businesses.",
+        "trail": [
+          {
+            "label": "Home",
+            "href": "/"
+          },
+          {
+            "label": "Help",
+            "href": "/help"
+          },
+          {
+            "label": "Reconciliation for multi-location retail and hospitality businesses"
+          }
+        ]
+      },
+      {
+        "id": "r2",
+        "title": "Supercalifragilisticexpialidociousbookkeepingreconciliationautomation",
+        "url": "/blog/supercalifragilisticexpialidociousbookkeepingreconciliationautomation",
+        "type": "Article",
+        "excerpt": "Supercalifragilisticexpialidociousbookkeepingreconciliationautomation Supercalifragilisticexpialidociousbookkeepingreconciliationautomation"
+      },
+      {
+        "id": "r3",
+        "title": "Reconciliation",
+        "url": "/glossary/reconciliation",
+        "type": "Glossary"
+      }
+    ]
+  },
+  "blocks": []
+}
