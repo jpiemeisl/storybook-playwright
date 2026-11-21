@@ -65,3 +65,8 @@ export * from './components/DownloadList';
 export * from './logic/account';
 export * from './logic/password';
 export * from './logic/authForms';
+export * from './components/AuthForm';
+export * from './components/LoginForm';
+export * from './components/RegisterForm';
+export * from './components/ForgotPasswordForm';
+export * from './components/ResetPasswordForm';
