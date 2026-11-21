@@ -15,3 +15,5 @@ export * from './components/StockBadge';
 export * from './components/ProductTypeBadge';
 export * from './components/Rating';
 export * from './logic/lines';
+export * from './logic/browse';
+export * from './logic/options';
