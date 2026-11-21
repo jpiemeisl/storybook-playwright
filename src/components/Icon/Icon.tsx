@@ -83,6 +83,16 @@ const paths = {
     </>
   ),
   'alert-triangle': <path d="M12 3.5 2.5 20h19zM12 10v4.5M12 17.5v.01" />,
+  star: <path d="M12 3l2.7 5.6 6.1.9-4.4 4.3 1 6.1L12 17l-5.4 2.9 1-6.1-4.4-4.3 6.1-.9z" fill="currentColor" />,
+  'star-half': (
+    <>
+      <path d="M12 3l2.7 5.6 6.1.9-4.4 4.3 1 6.1L12 17l-5.4 2.9 1-6.1-4.4-4.3 6.1-.9z" />
+      <path d="M12 3L9.3 8.6l-6.1.9 4.4 4.3-1 6.1L12 17z" fill="currentColor" />
+    </>
+  ),
+  'star-empty': <path d="M12 3l2.7 5.6 6.1.9-4.4 4.3 1 6.1L12 17l-5.4 2.9 1-6.1-4.4-4.3 6.1-.9z" />,
+  download: <path d="M12 4v11M7 10l5 5 5-5M5 20h14" />,
+  repeat: <path d="M17 2l3 3-3 3M4 11V9a4 4 0 0 1 4-4h12M7 22l-3-3 3-3M20 13v2a4 4 0 0 1-4 4H4" />,
   'check-circle': (
     <>
       <circle cx="12" cy="12" r="9" />
