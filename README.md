@@ -51,6 +51,7 @@ fetching in components.
 | Primitives | Button, Text, Heading, Link (+ LinkProvider), Icon, Image, Badge, Divider |
 | Layout     | Container, Section, Stack, Grid                                    |
 | Navigation | SkipLink, Header, MobileMenu, Footer, Breadcrumbs, Pagination      |
+| Forms      | Label, HelpText, FieldError, Field, Input, Textarea, Select, Checkbox, Radio + RadioGroup, Alert, SearchInput, NewsletterSignup, ContactForm (Button gains `loading`) |
 | Sections   | Hero, FeatureGrid, Card + CardGrid, ArticleCard, MediaText, CtaBanner, Stats, Testimonial + TestimonialGrid, LogoStrip, Accordion + FaqSection, PricingTable |
 
 Navigation components take plain data from `src/content-types/navigation.ts` (`NavItem`,
@@ -74,6 +75,31 @@ Navigation components take plain data from `src/content-types/navigation.ts` (`N
 - **Breadcrumbs** and **Pagination** use container queries: below 40rem the trail collapses its
   middle items (still announced) and pagination switches to "Page X of Y" with previous/next.
 - All transitions sit inside `@media (prefers-reduced-motion: no-preference)`.
+
+### Forms
+
+Forms are presentational and backend-free: they call `onSubmit(values)` and render the `status`
+(`'idle' | 'submitting' | 'success' | 'error'`) they are given. They are built on native controls and
+native constraint attributes (`required`, `type`, `minLength`, `pattern`, ...) with no form library.
+
+- **Controls** (Input, Textarea, Select, Checkbox, Radio) work controlled or uncontrolled, accept `ref`
+  (React 19 ref-as-prop), and spread other native props onto the native element. States are styled
+  from attributes (`aria-invalid`, `:disabled`, `[readonly]`), not classes.
+- **Field** wires label `for`/`id`, `aria-describedby` (hint, then error), `aria-invalid`, `required`
+  and `aria-required` onto its child control (or passes them to a render prop).
+- **Required** fields show a visual `*` hidden from screen readers, which announce the control's
+  native `required` state instead. Forms state "Required fields are marked with an asterisk".
+- **Validation** (`src/utils/validation.ts`): forms use `noValidate` and validate on submit (then on
+  blur), with messages built from each control's `ValidityState`. It also checks `minLength` and
+  `maxLength` itself, because browsers only report those for user-typed values. ContactForm shows a
+  focused error summary (`role="alert"`) whose links move focus to each field. FieldError is not a live
+  region.
+- **Textarea counter**: the visible "n / max" is `aria-hidden`; the limit is in the description, and a
+  polite live region announces the remaining characters once typing pauses for a second.
+- **Button `loading`** keeps the label in layout (so the width does not change), sets `aria-busy` and
+  `aria-disabled`, and swallows clicks. It does not use `disabled`, so keyboard focus stays put.
+- **Forced colors**: checkbox and radio marks switch to explicit system colours (`Highlight`,
+  `FieldText`) under `@media (forced-colors: active)`, and invalid fields get a 2px border.
 
 ### Content sections
 
