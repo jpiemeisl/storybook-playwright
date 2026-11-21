@@ -1,4 +1,4 @@
-import type { HeroContent } from '../../content-types/sections';
+import type { HeroContent } from '../../component-types/sections';
 import { ActionGroup } from '../ActionGroup';
 import { Container } from '../Container';
 import { Heading } from '../Heading';

@@ -1,5 +1,5 @@
 import type { ReactNode } from 'react';
-import type { PageHeaderContent } from '../../content-types/content';
+import type { PageHeaderContent } from '../../component-types/content';
 import { Heading } from '../Heading';
 import { Text } from '../Text';
 import styles from './PageHeader.module.css';

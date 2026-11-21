@@ -1,5 +1,5 @@
 import { useId, type ReactNode } from 'react';
-import type { TableColumn } from '../../content-types/content';
+import type { TableColumn } from '../../component-types/content';
 import styles from './Table.module.css';
 
 export interface TableProps<Row extends Record<string, ReactNode>> {

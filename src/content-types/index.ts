@@ -1,36 +1,7 @@
+/*
+ * JSON-serializable content model: what a CMS adapter produces. No React nodes, functions or Dates.
+ * (Prop-facing shapes that may contain React nodes live in src/component-types.)
+ */
 export type { Money } from './money';
 export type { BreadcrumbItem, NavItem, SocialLink } from './navigation';
-export type {
-  ActionLink,
-  ArticleCardContent,
-  Author,
-  BillingInterval,
-  CardContent,
-  CtaContent,
-  FaqItem,
-  FeatureItem,
-  HeroContent,
-  ImageContent,
-  LogoItem,
-  MediaTextContent,
-  PricingFeature,
-  PricingTier,
-  StatItem,
-  TestimonialContent,
-} from './sections';
-export type {
-  AuthorContent,
-  CategoryItem,
-  GalleryImage,
-  MapContent,
-  PageHeaderContent,
-  ShareNetwork,
-  StepItem,
-  TableColumn,
-  TableData,
-  TeamMemberContent,
-  TimelineItem,
-  TocItem,
-  VideoContent,
-  VideoProvider,
-} from './content';
+export type { ActionRef, AuthorRef, ImageRef, LinkRef, RichText, SeoMeta } from './shared';

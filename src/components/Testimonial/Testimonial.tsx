@@ -1,4 +1,4 @@
-import type { TestimonialContent } from '../../content-types/sections';
+import type { TestimonialContent } from '../../component-types/sections';
 import { Grid } from '../Grid';
 import { Image } from '../Image';
 import styles from './Testimonial.module.css';

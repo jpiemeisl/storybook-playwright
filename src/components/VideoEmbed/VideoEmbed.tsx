@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from 'react';
-import type { VideoContent } from '../../content-types/content';
+import type { VideoContent } from '../../component-types/content';
 import { Icon } from '../Icon';
 import { Image } from '../Image';
 import styles from './VideoEmbed.module.css';

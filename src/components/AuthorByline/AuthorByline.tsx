@@ -1,4 +1,4 @@
-import type { AuthorContent } from '../../content-types/content';
+import type { AuthorContent } from '../../component-types/content';
 import { formatIsoDate } from '../../utils/formatDate';
 import { Image } from '../Image';
 import { Link } from '../Link';

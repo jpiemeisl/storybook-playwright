@@ -1,5 +1,5 @@
 import type { ReactNode } from 'react';
-import type { FeatureItem } from '../../content-types/sections';
+import type { FeatureItem } from '../../component-types/sections';
 import { Grid } from '../Grid';
 import { Heading } from '../Heading';
 import { Icon } from '../Icon';

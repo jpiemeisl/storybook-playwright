@@ -3,7 +3,7 @@
  */
 import type { ReactNode } from 'react';
 import type { ImageContent } from './sections';
-import type { SocialLink } from './navigation';
+import type { SocialLink } from '../content-types/navigation';
 
 export interface PageHeaderContent {
   title: string;

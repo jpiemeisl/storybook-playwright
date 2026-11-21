@@ -1,4 +1,4 @@
-import type { ArticleCardContent } from '../../content-types/sections';
+import type { ArticleCardContent } from '../../component-types/sections';
 import { formatIsoDate } from '../../utils/formatDate';
 import { Badge } from '../Badge';
 import { Card, type CardOrientation, type CardVariant } from '../Card';

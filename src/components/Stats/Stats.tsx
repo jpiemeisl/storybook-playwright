@@ -1,4 +1,4 @@
-import type { StatItem } from '../../content-types/sections';
+import type { StatItem } from '../../component-types/sections';
 import { Grid } from '../Grid';
 import { Heading } from '../Heading';
 import styles from './Stats.module.css';

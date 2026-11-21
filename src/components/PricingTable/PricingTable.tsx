@@ -1,5 +1,5 @@
 import { useId, useState } from 'react';
-import type { BillingInterval, PricingTier } from '../../content-types/sections';
+import type { BillingInterval, PricingTier } from '../../component-types/sections';
 import { formatMoney } from '../../utils/formatMoney';
 import { Badge } from '../Badge';
 import { ButtonLink } from '../Button';

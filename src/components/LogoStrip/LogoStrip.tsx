@@ -1,4 +1,4 @@
-import type { LogoItem } from '../../content-types/sections';
+import type { LogoItem } from '../../component-types/sections';
 import { Image } from '../Image';
 import { Link } from '../Link';
 import { Text } from '../Text';

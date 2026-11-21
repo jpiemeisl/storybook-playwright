@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from 'react';
-import type { ShareNetwork } from '../../content-types/content';
+import type { ShareNetwork } from '../../component-types/content';
 import { Icon, type IconName } from '../Icon';
 import { Link } from '../Link';
 import styles from './ShareLinks.module.css';
