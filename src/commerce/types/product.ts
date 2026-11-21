@@ -2,6 +2,7 @@
  * Catalogue types. JSON-serializable only: dates are ISO 8601 strings, money is integer minor units
  * (the core Money type), images are ImageRef. These are the future contract for commerce adapters.
  */
+import type { TableBlock } from '../../content-types/blocks';
 import type { Money } from '../../content-types/money';
 import type { ImageRef, RichText, SeoMeta } from '../../content-types/shared';
 
@@ -14,6 +15,26 @@ export interface ProductOption {
   name: string;
   /** Allowed values in display order, e.g. ["S", "M", "L"]. Non-empty, unique. A value may exist on no variant. */
   values: string[];
+  /**
+   * How the selector shows it: `buttons`, `swatches` (colour plus the value text, never colour alone)
+   * or `select`. Default `buttons`, or `select` for 12 or more values.
+   */
+  display?: 'buttons' | 'swatches' | 'select';
+  /** Value → CSS colour for `swatches`, e.g. { "Moss": "#6b7f5a" }. Values without a colour show text only. */
+  swatches?: Record<string, string>;
+}
+
+/** A JSON table: the same caption/columns/rows shape as the content model's `table` block. */
+export type TableData = Pick<TableBlock, 'caption' | 'columns' | 'rows'>;
+
+/** A titled block of product information, e.g. "Materials" or "Care". */
+export interface ProductInfoSection {
+  /** Unique within the product. */
+  id: string;
+  /** Section title. */
+  title: string;
+  /** Section text (sanitized HTML; the library does not sanitize). */
+  content: RichText;
 }
 
 /** Stock state of one variant. */
@@ -161,6 +182,12 @@ export interface Product {
   badges?: string[];
   /** Page metadata. */
   seo?: SeoMeta;
+  /** Extra information sections (materials, care, plan details). Shown in an accordion. */
+  infoSections?: ProductInfoSection[];
+  /** Size guide table, opened from the variant selector. */
+  sizeGuide?: TableData;
+  /** ISO 8601 date the product was added; used by the "newest" sort. */
+  createdAt?: string;
 }
 
 /** A review of a product. */
@@ -181,6 +208,21 @@ export interface Review {
   verified?: boolean;
 }
 
+/** Reviews for a product page: a summary plus a page of reviews. */
+export interface ProductReviewsData {
+  /** Totals across all reviews (not just this page). */
+  summary: {
+    /** Average rating 0-5. */
+    average: number;
+    /** Number of reviews, integer >= 0. */
+    count: number;
+    /** Number of reviews per star rating; the values add up to `count`. */
+    distribution: Record<1 | 2 | 3 | 4 | 5, number>;
+  };
+  /** The reviews to show. */
+  reviews: Review[];
+}
+
 /** A named group of products for listing pages. */
 export interface Collection {
   /** Unique within the catalogue. */
@@ -193,6 +235,8 @@ export interface Collection {
   description?: string;
   /** Product ids in display order. */
   productIds: string[];
+  /** Tile image. */
+  image?: ImageRef;
 }
 
 /** Products plus collections. */
