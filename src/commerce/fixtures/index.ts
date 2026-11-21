@@ -6,3 +6,4 @@ export { reviewsNone, reviewsThree, reviewsForty } from './reviews';
 export { addresses, DEMO_NOW, promoDefinitions, shippingMethods } from './store';
 export * from './browsing';
 export * from './checkout';
+export * from './account';

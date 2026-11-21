@@ -62,3 +62,6 @@ export * from './components/PaymentMethodSelector';
 export * from './components/OrderSummary';
 export * from './components/TrustBadges';
 export * from './components/DownloadList';
+export * from './logic/account';
+export * from './logic/password';
+export * from './logic/authForms';

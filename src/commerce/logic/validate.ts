@@ -351,7 +351,7 @@ export function validateCustomerSubscription(subscription: unknown): ValidationI
     });
     c.oneOf('status', SUB_STATUS);
     c.date('startedAt');
-    c.date('nextBillingAt', c.value.status !== 'cancelled');
+    c.date('nextBillingAt', c.value.status !== 'cancelled' && !(c.value.status === 'paused' && c.value.pauseOpenEnded === true));
     c.date('trialEndsAt', c.value.status === 'trialing');
     c.date('cancelledAt', c.value.status === 'cancelled');
     c.str('productId', false);
