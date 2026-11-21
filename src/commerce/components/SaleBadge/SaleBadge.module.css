@@ -1,0 +1,30 @@
+@layer components {
+  .badge {
+    display: inline-flex;
+    align-items: center;
+    max-inline-size: 100%;
+    border: var(--border-1) solid currentColor;
+    border-radius: var(--radius-pill);
+    background-color: var(--color-danger-subtle);
+    color: var(--color-sale);
+    font-weight: var(--text-weight-strong);
+    line-height: 1.2;
+    overflow-wrap: anywhere;
+  }
+
+  .sm {
+    padding-inline: var(--space-2);
+    font-size: var(--text-size-xs);
+  }
+
+  .md {
+    padding: var(--space-1) var(--space-3);
+    font-size: var(--text-size-sm);
+  }
+
+  @media (forced-colors: active) {
+    .badge {
+      border-color: CanvasText;
+    }
+  }
+}

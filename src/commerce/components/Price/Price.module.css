@@ -1,0 +1,104 @@
+@layer components {
+  .price {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-1);
+    min-inline-size: 0;
+    color: var(--color-text);
+    font-family: var(--text-font-body);
+    line-height: var(--text-leading-heading);
+  }
+
+  .start {
+    align-items: flex-start;
+    text-align: start;
+  }
+  .center {
+    align-items: center;
+    text-align: center;
+  }
+  .end {
+    align-items: flex-end;
+    text-align: end;
+  }
+
+  .line {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    column-gap: var(--gap-xs);
+    max-inline-size: 100%;
+  }
+
+  .start .line {
+    justify-content: flex-start;
+  }
+  .center .line {
+    justify-content: center;
+  }
+  .end .line {
+    justify-content: flex-end;
+  }
+
+  .current {
+    font-weight: var(--text-weight-heading);
+    font-variant-numeric: tabular-nums;
+    /* Extreme amounts break inside the number rather than overflow a narrow container. */
+    overflow-wrap: anywhere;
+    min-inline-size: 0;
+  }
+
+  .sale {
+    color: var(--color-sale);
+  }
+
+  .original {
+    color: var(--color-text-muted);
+    font-weight: var(--text-weight-body);
+    font-variant-numeric: tabular-nums;
+    text-decoration-thickness: 1px;
+    overflow-wrap: anywhere;
+  }
+
+  .from,
+  .interval,
+  .trial,
+  .unit {
+    color: var(--color-text-muted);
+    font-weight: var(--text-weight-body);
+  }
+
+  .unit {
+    font-size: var(--text-size-xs);
+  }
+
+  .sm .current {
+    font-size: var(--text-size-md);
+  }
+  .sm :is(.from, .interval, .trial, .original) {
+    font-size: var(--text-size-sm);
+  }
+
+  .md .current {
+    font-size: var(--text-size-xl);
+  }
+  .md :is(.from, .interval, .trial, .original) {
+    font-size: var(--text-size-md);
+  }
+
+  .lg .current {
+    font-size: var(--text-size-3xl);
+  }
+  .lg :is(.from, .interval, .trial, .original) {
+    font-size: var(--text-size-lg);
+  }
+
+  .visuallyHidden {
+    position: absolute;
+    inline-size: 1px;
+    block-size: 1px;
+    overflow: hidden;
+    clip-path: inset(50%);
+    white-space: nowrap;
+  }
+}

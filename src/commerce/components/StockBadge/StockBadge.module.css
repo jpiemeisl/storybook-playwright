@@ -1,0 +1,35 @@
+@layer components {
+  .badge {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--gap-xs);
+    max-inline-size: 100%;
+    font-weight: var(--text-weight-strong);
+    line-height: 1.3;
+  }
+
+  .icon {
+    flex-shrink: 0;
+  }
+
+  .sm {
+    font-size: var(--text-size-xs);
+  }
+
+  .md {
+    font-size: var(--text-size-sm);
+  }
+
+  .success {
+    color: var(--color-success);
+  }
+  .warning {
+    color: var(--color-warning);
+  }
+  .danger {
+    color: var(--color-danger);
+  }
+  .info {
+    color: var(--color-info);
+  }
+}
