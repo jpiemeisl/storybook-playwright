@@ -1,0 +1,207 @@
+/* Element selectors are scoped under .prose with :where() so they stay low-specificity and easy to override. */
+@layer components {
+  .prose {
+    max-inline-size: var(--measure);
+    color: var(--color-text);
+    font-size: var(--text-size-md);
+    line-height: 1.7;
+    overflow-wrap: break-word;
+  }
+
+  .large {
+    font-size: var(--text-size-lg);
+  }
+
+  /* Vertical rhythm: space between siblings, none at the edges. */
+  .prose > :where(* + *) {
+    margin-block-start: 1.25em;
+  }
+
+  .prose > :first-child {
+    margin-block-start: 0;
+  }
+
+  .prose :where(h2, h3, h4, h5, h6) {
+    font-family: var(--text-font-heading);
+    font-weight: var(--text-weight-heading);
+    line-height: var(--text-leading-heading);
+    /* Anchor jumps land below a sticky header. */
+    scroll-margin-block-start: calc(var(--header-height) + var(--gap-md));
+    text-wrap: balance;
+  }
+
+  .prose :where(h2) {
+    margin-block-start: 2em;
+    font-size: var(--text-size-2xl);
+  }
+  .prose :where(h3) {
+    margin-block-start: 1.75em;
+    font-size: var(--text-size-xl);
+  }
+  .prose :where(h4) {
+    margin-block-start: 1.5em;
+    font-size: var(--text-size-lg);
+  }
+  .prose :where(h5, h6) {
+    margin-block-start: 1.5em;
+    font-size: var(--text-size-md);
+  }
+
+  /* Tighter gap after a heading than before it. */
+  .prose :where(h2, h3, h4, h5, h6) + * {
+    margin-block-start: 0.6em;
+  }
+
+  .prose :where(a) {
+    color: var(--color-action);
+    text-decoration-line: underline;
+    text-decoration-thickness: 1px;
+    text-underline-offset: 0.2em;
+  }
+
+  .prose :where(a:hover) {
+    color: var(--color-action-hover);
+    text-decoration-thickness: 2px;
+  }
+
+  .prose :where(a:focus-visible) {
+    border-radius: var(--radius-1);
+    outline: var(--focus-ring-width) solid var(--color-focus-ring);
+    outline-offset: var(--focus-ring-offset);
+  }
+
+  .prose :where(strong, b) {
+    font-weight: var(--text-weight-strong);
+  }
+
+  .prose :where(ul, ol) {
+    padding-inline-start: 1.5em;
+  }
+
+  .prose :where(li + li),
+  .prose :where(li > ul, li > ol) {
+    margin-block-start: 0.4em;
+  }
+
+  .prose :where(li)::marker {
+    color: var(--color-text-muted);
+  }
+
+  .prose :where(blockquote) {
+    margin-inline: 0;
+    padding-inline-start: 1.25em;
+    border-inline-start: 4px solid var(--color-quote-border);
+    color: var(--color-text-muted);
+    font-size: 1.1em;
+    font-style: italic;
+  }
+
+  .prose :where(blockquote > * + *) {
+    margin-block-start: 0.75em;
+  }
+
+  .prose :where(code, kbd, samp, pre) {
+    font-family: var(--text-font-code);
+    font-size: 0.9em;
+  }
+
+  .prose :where(:not(pre) > code) {
+    padding: 0.1em 0.35em;
+    border-radius: var(--radius-1);
+    background-color: var(--color-code-bg);
+    color: var(--color-code-text);
+  }
+
+  .prose :where(kbd) {
+    padding: 0.1em 0.4em;
+    border: var(--border-1) solid var(--color-border-strong);
+    border-block-end-width: 2px;
+    border-radius: var(--radius-2);
+    background-color: var(--color-bg-subtle);
+  }
+
+  .prose :where(pre, table):focus-visible {
+    outline: var(--focus-ring-width) solid var(--color-focus-ring);
+    outline-offset: var(--focus-ring-offset);
+  }
+
+  .prose :where(pre) {
+    overflow-x: auto;
+    padding: var(--gap-md);
+    border-radius: var(--radius-control);
+    background-color: var(--color-code-bg);
+    color: var(--color-code-text);
+    line-height: 1.5;
+    tab-size: 2;
+  }
+
+  .prose :where(hr) {
+    margin-block: 2.5em;
+    border: 0;
+    border-block-start: var(--border-1) solid var(--color-border);
+  }
+
+  .prose :where(img, video) {
+    max-inline-size: 100%;
+    block-size: auto;
+    border-radius: var(--radius-control);
+  }
+
+  .prose :where(figure) {
+    margin-inline: 0;
+  }
+
+  .prose :where(figcaption) {
+    margin-block-start: 0.5em;
+    color: var(--color-text-muted);
+    font-size: var(--text-size-sm);
+  }
+
+  /* Wide tables scroll inside the column (CSS only: content HTML can't be wrapped from here). */
+  .prose :where(table) {
+    display: block;
+    max-inline-size: 100%;
+    overflow-x: auto;
+    border-collapse: collapse;
+    font-size: var(--text-size-sm);
+    line-height: 1.5;
+  }
+
+  .prose :where(caption) {
+    padding-block-end: var(--space-2);
+    color: var(--color-text-muted);
+    font-weight: var(--text-weight-strong);
+    text-align: start;
+  }
+
+  .prose :where(th, td) {
+    padding: var(--space-2) var(--space-3);
+    border-block-end: var(--border-1) solid var(--color-border);
+    text-align: start;
+    vertical-align: top;
+  }
+
+  .prose :where(thead th) {
+    background-color: var(--color-table-header-bg);
+    font-weight: var(--text-weight-strong);
+    white-space: nowrap;
+  }
+
+  .prose :where(dl) {
+    display: grid;
+    gap: 0.25em;
+  }
+
+  .prose :where(dt) {
+    font-weight: var(--text-weight-strong);
+  }
+
+  .prose :where(dd) {
+    margin-inline-start: 1.25em;
+    color: var(--color-text-muted);
+  }
+
+  .prose :where(dd + dt) {
+    margin-block-start: 0.75em;
+  }
+}

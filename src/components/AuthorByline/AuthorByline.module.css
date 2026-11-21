@@ -1,0 +1,91 @@
+@layer components {
+  .byline {
+    display: flex;
+    align-items: center;
+    gap: var(--gap-sm);
+    color: var(--color-text);
+  }
+
+  .block {
+    align-items: flex-start;
+    gap: var(--gap-md);
+    padding: var(--gap-md);
+    border: var(--border-1) solid var(--color-border);
+    border-radius: var(--radius-surface);
+    background-color: var(--color-surface);
+  }
+
+  /* Two classes so these win over Image's own sizing. */
+  .byline .avatar {
+    flex-shrink: 0;
+    inline-size: var(--space-10);
+    block-size: var(--space-10);
+    border-radius: var(--radius-full);
+    object-fit: cover;
+  }
+
+  .block .avatar {
+    inline-size: var(--space-16);
+    block-size: var(--space-16);
+  }
+
+  .initials {
+    display: inline-grid;
+    place-items: center;
+    background-color: var(--color-action-subtle);
+    color: var(--color-action);
+    font-weight: var(--text-weight-strong);
+    font-size: var(--text-size-sm);
+  }
+
+  .block .initials {
+    font-size: var(--text-size-lg);
+  }
+
+  .text {
+    display: grid;
+    gap: 2px;
+    min-inline-size: 0;
+  }
+
+  .line {
+    margin: 0;
+    overflow-wrap: anywhere;
+  }
+
+  .name {
+    font-weight: var(--text-weight-strong);
+  }
+
+  .byline .nameLink {
+    color: inherit;
+  }
+
+  .role {
+    color: var(--color-text-muted);
+  }
+
+  .role::before {
+    content: ', ';
+  }
+
+  .block .role::before {
+    content: '';
+  }
+
+  .block .role {
+    display: block;
+    font-size: var(--text-size-sm);
+  }
+
+  .meta {
+    color: var(--color-text-muted);
+    font-size: var(--text-size-sm);
+  }
+
+  .bio {
+    margin-block-start: var(--gap-xs);
+    color: var(--color-text-muted);
+    font-size: var(--text-size-sm);
+  }
+}

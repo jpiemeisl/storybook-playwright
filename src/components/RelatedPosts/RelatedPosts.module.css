@@ -1,0 +1,7 @@
+@layer components {
+  .related {
+    display: grid;
+    gap: var(--gap-lg);
+    color: var(--color-text);
+  }
+}
