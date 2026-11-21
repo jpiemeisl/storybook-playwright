@@ -67,7 +67,9 @@ export default meta;
 type Story = StoryObj<typeof meta>;
 
 /** Sale, stock and product type badges on default, subtle, accent and inverse backgrounds. */
-export const AllTogether: Story = {};
+export const AllTogether: Story = {
+  parameters: { vrt: { viewports: [{ width: 375, fullPage: true }, { width: 1280, fullPage: true }] } },
+};
 
 export const Sale: Story = { render: () => <div className={layout.row}><SaleBadge percent={20} /><SaleBadge label="Sale" /></div>, parameters: { layout: 'padded' } };
 export const Stock: Story = {

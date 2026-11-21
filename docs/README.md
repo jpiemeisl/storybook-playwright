@@ -48,3 +48,14 @@ Phase 8 (branch `phase-8-templates`): site layout and page templates (`src/templ
 - template fixtures, stories and a Legal print visual test
 
 See [`templates.md`](templates.md), including the gap report.
+
+Phase 9 (branch `phase-9-commerce-foundations`): commerce foundations in `src/commerce`. It has its
+own barrel and is not exported from `src/index.ts`. It adds:
+
+- serializable commerce types
+- pure money, cart and pricing math, variant helpers and validators
+- Price, SaleBadge, StockBadge, ProductTypeBadge and Rating, plus the `--color-sale` and
+  `--color-rating` tokens and star, download and repeat icons
+- fixtures for a fictional store (19 products, carts, orders, subscriptions)
+- the Storybook-only demo cart in `demo/`
+- the `check:boundaries` import check

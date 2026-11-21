@@ -32,6 +32,8 @@ const cases: [string, PriceProps][] = [
 /** Every state at each size. Below 48rem the matrix becomes a single column. */
 export const Matrix: Story = {
   tags: ['vrt-mobile'],
+  // Full page at both widths so the narrow-container row is captured too.
+  parameters: { vrt: { viewports: [{ width: 375, fullPage: true }, { width: 1280, fullPage: true }] } },
   render: () => (
     <div className={layout.stack}>
       <div className={layout.matrix}>

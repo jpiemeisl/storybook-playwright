@@ -43,8 +43,8 @@
   .current {
     font-weight: var(--text-weight-heading);
     font-variant-numeric: tabular-nums;
-    /* Extreme amounts break inside the number rather than overflow a narrow container. */
-    overflow-wrap: anywhere;
+    /* Amounts wrap after group separators (<wbr>); breaking anywhere is the last resort. */
+    overflow-wrap: break-word;
     min-inline-size: 0;
   }
 

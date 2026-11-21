@@ -1,3 +1,4 @@
+import { Fragment, type ReactNode } from 'react';
 import type { Money } from '../../../content-types/money';
 import { formatMoney } from '../../../utils/formatMoney';
 import { formatInterval, formatTrial } from '../../logic/pricing';
@@ -21,6 +22,17 @@ export interface PriceProps {
   align?: 'start' | 'center' | 'end';
 }
 
+/** A formatted amount with break opportunities after group separators: "$12,499.00" wraps as "$12," / "499.00". */
+function breakable(text: string): ReactNode {
+  const parts = text.split(/(?<=,)/);
+  return parts.map((part, i) => (
+    <Fragment key={i}>
+      {part}
+      {i < parts.length - 1 && <wbr />}
+    </Fragment>
+  ));
+}
+
 /**
  * A price with sale, recurring, trial, "from" and unit-price variants. Sale prices announce both
  * amounts ("Sale price $19.00, regular price $25.00") through visually hidden text. Long amounts wrap
@@ -39,15 +51,15 @@ export function Price({ price, compareAt, interval, trialDays, size = 'md', from
         {from && <span className={styles.from}>From </span>}
         <span className={[styles.current, onSale && styles.sale].filter(Boolean).join(' ')}>
           {onSale && <span className={styles.visuallyHidden}>Sale price </span>}
-          {free ? 'Free' : formatMoney(price)}
+          {free ? 'Free' : breakable(formatMoney(price))}
         </span>
-        {per && <span className={styles.interval}> {per}</span>}
         {onSale && (
           <s className={styles.original}>
             <span className={styles.visuallyHidden}>, regular price </span>
-            {formatMoney(compareAt)}
+            {breakable(formatMoney(compareAt))}
           </s>
         )}
+        {per && <span className={styles.interval}> {per}</span>}
       </span>
       {unitPrice && (
         <span className={styles.unit}>
