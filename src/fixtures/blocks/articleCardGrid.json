@@ -1,0 +1,76 @@
+{
+  "id": "articles",
+  "type": "articleCardGrid",
+  "heading": "From the blog",
+  "items": [
+    {
+      "title": "Five receipts you can stop keeping",
+      "href": "/blog/receipts-you-can-stop-keeping",
+      "excerpt": "Digital copies are fine for most of them.",
+      "category": "Tax",
+      "publishedAt": "2026-03-14",
+      "readingTimeMinutes": 4,
+      "author": {
+        "name": "Ana Ruiz",
+        "avatar": {
+          "src": "/fixtures/images/avatar-ana.svg",
+          "alt": "",
+          "width": 160,
+          "height": 160
+        }
+      },
+      "image": {
+        "src": "/fixtures/images/hero-desk-3x2.svg",
+        "alt": "Printed invoices and a calculator on a desk",
+        "width": 1200,
+        "height": 800
+      }
+    },
+    {
+      "title": "Cash flow forecasting in an afternoon",
+      "href": "/blog/cash-flow-forecast",
+      "excerpt": "A 13-week forecast from last month’s bank statement.",
+      "category": "Planning",
+      "publishedAt": "2026-02-02",
+      "readingTimeMinutes": 7,
+      "author": {
+        "name": "Marcus Webb",
+        "avatar": {
+          "src": "/fixtures/images/avatar-marcus.svg",
+          "alt": "",
+          "width": 160,
+          "height": 160
+        }
+      },
+      "image": {
+        "src": "/fixtures/images/hero-office-16x9.svg",
+        "alt": "A tidy office with a laptop showing a chart, a wall clock and a coffee mug",
+        "width": 1600,
+        "height": 900
+      }
+    },
+    {
+      "title": "When to hire a bookkeeper",
+      "href": "/blog/when-to-hire",
+      "excerpt": "Signs you have outgrown doing it yourself.",
+      "category": "Growth",
+      "publishedAt": "2025-11-20",
+      "readingTimeMinutes": 5,
+      "author": {
+        "name": "Ana Ruiz",
+        "avatar": {
+          "src": "/fixtures/images/avatar-ana.svg",
+          "alt": "",
+          "width": 160,
+          "height": 160
+        }
+      },
+      "image": {
+        "src": "/fixtures/images/studio-4x3.svg",
+        "alt": "Geometric shapes arranged on a light grey studio floor",
+        "width": 800,
+        "height": 600
+      }
+    }
+  ]
+}

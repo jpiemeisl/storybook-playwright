@@ -1,0 +1,26 @@
+{
+  "id": "page-single",
+  "slug": "edge/single",
+  "seo": {
+    "title": "Single block",
+    "description": "Single block | Brightside Bookkeeping"
+  },
+  "blocks": [
+    {
+      "id": "only-hero",
+      "type": "hero",
+      "headline": "Bookkeeping that keeps up with your business",
+      "subhead": "Monthly books, payroll and tax-ready reports for small businesses, handled by a named accountant who answers within one working day.",
+      "primaryAction": {
+        "label": "Book a free consultation",
+        "href": "/consultation"
+      },
+      "secondaryAction": {
+        "label": "See pricing",
+        "href": "/pricing",
+        "variant": "secondary"
+      },
+      "variant": "centered"
+    }
+  ]
+}

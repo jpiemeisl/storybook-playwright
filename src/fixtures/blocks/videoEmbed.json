@@ -1,0 +1,13 @@
+{
+  "id": "video",
+  "type": "videoEmbed",
+  "provider": "youtube",
+  "videoId": "bS2kLx9QpE4",
+  "title": "How a five-day close works",
+  "poster": {
+    "src": "/fixtures/images/video-poster.svg",
+    "alt": "",
+    "width": 1280,
+    "height": 720
+  }
+}

@@ -1,0 +1,45 @@
+{
+  "id": "gallery",
+  "type": "gallery",
+  "heading": "Inside the studio",
+  "columns": 3,
+  "images": [
+    {
+      "src": "/fixtures/images/gallery/harbour.svg",
+      "alt": "Harbour at dawn with a low yellow sun",
+      "width": 1200,
+      "height": 800,
+      "caption": "Our first client, a harbour-side café."
+    },
+    {
+      "src": "/fixtures/images/gallery/desk.svg",
+      "alt": "A tidy desk with a teal notebook",
+      "width": 1000,
+      "height": 1000
+    },
+    {
+      "src": "/fixtures/images/gallery/market.svg",
+      "alt": "A busy market stall with red awnings",
+      "width": 1200,
+      "height": 900
+    },
+    {
+      "src": "/fixtures/images/gallery/lake.svg",
+      "alt": "A calm lake with teal hills",
+      "width": 1500,
+      "height": 1000
+    },
+    {
+      "src": "/fixtures/images/gallery/forest.svg",
+      "alt": "Pine forest on a green hillside",
+      "width": 1000,
+      "height": 800
+    },
+    {
+      "src": "/fixtures/images/gallery/kiln.svg",
+      "alt": "A pottery kiln glowing orange",
+      "width": 800,
+      "height": 800
+    }
+  ]
+}

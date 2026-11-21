@@ -1,0 +1,26 @@
+{
+  "id": "story",
+  "type": "timeline",
+  "heading": "Our story",
+  "items": [
+    {
+      "label": "2015",
+      "title": "Founded in a spare room",
+      "description": "Three clients and a borrowed laptop."
+    },
+    {
+      "label": "2018",
+      "title": "First office on Harbour Street",
+      "description": "The team grows to six and takes on payroll."
+    },
+    {
+      "label": "2022",
+      "title": "1,000 clients",
+      "description": "Remote-first, with clients in 38 states."
+    },
+    {
+      "label": "2026",
+      "title": "Tax filing partnership"
+    }
+  ]
+}

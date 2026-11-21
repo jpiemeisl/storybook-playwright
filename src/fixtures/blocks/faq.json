@@ -1,0 +1,48 @@
+{
+  "id": "faq",
+  "type": "faq",
+  "anchorId": "faq",
+  "heading": "Frequently asked questions",
+  "items": [
+    {
+      "id": "switch",
+      "question": "Can you take over from my current bookkeeper mid-year?",
+      "answer": {
+        "format": "html",
+        "html": "<p>Yes. We start from your last reconciled month and catch up the rest, usually within three weeks.</p>"
+      }
+    },
+    {
+      "id": "software",
+      "question": "Which accounting software do you use?",
+      "answer": {
+        "format": "html",
+        "html": "<p>We work in QuickBooks Online and Xero, and migrate you for free on annual plans.</p>"
+      }
+    },
+    {
+      "id": "taxes",
+      "question": "Do you file my taxes?",
+      "answer": {
+        "format": "html",
+        "html": "<p>We prepare tax-ready reports for your tax preparer. Growth includes filing through a partner CPA.</p>"
+      }
+    },
+    {
+      "id": "access",
+      "question": "Who can see my financial data?",
+      "answer": {
+        "format": "html",
+        "html": "<p>Only your named accountant and their reviewer. Bank feeds are read-only.</p>"
+      }
+    },
+    {
+      "id": "cancel",
+      "question": "What happens if I cancel?",
+      "answer": {
+        "format": "html",
+        "html": "<p>You keep full access to your books and we send a final export. No cancellation fee on monthly plans.</p>"
+      }
+    }
+  ]
+}

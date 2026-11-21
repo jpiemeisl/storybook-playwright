@@ -1,0 +1,257 @@
+{
+  "id": "page-service-bookkeeping",
+  "slug": "services/bookkeeping",
+  "seo": {
+    "title": "Monthly bookkeeping",
+    "description": "Monthly bookkeeping | Brightside Bookkeeping"
+  },
+  "blocks": [
+    {
+      "id": "svc-header",
+      "type": "pageHeader",
+      "title": "Monthly bookkeeping",
+      "description": "Books reconciled by the 10th, a named accountant and a one-page summary every month.",
+      "breadcrumbs": [
+        {
+          "label": "Home",
+          "href": "/"
+        },
+        {
+          "label": "Services",
+          "href": "/services"
+        },
+        {
+          "label": "Monthly bookkeeping"
+        }
+      ],
+      "actions": [
+        {
+          "label": "Book a consultation",
+          "href": "/consultation"
+        },
+        {
+          "label": "See pricing",
+          "href": "/pricing",
+          "variant": "secondary"
+        }
+      ]
+    },
+    {
+      "id": "svc-features",
+      "type": "featureGrid",
+      "heading": "What’s included",
+      "intro": "One flat monthly fee. No hourly billing, no surprise invoices at year end.",
+      "columns": 2,
+      "items": [
+        {
+          "icon": "check",
+          "title": "Monthly reconciliation",
+          "description": "Every account matched to receipts by the 10th of the following month."
+        },
+        {
+          "icon": "mail",
+          "title": "A named accountant",
+          "description": "One person who knows your books, with replies within a working day.",
+          "link": {
+            "label": "Meet the team",
+            "href": "/about#team"
+          }
+        },
+        {
+          "icon": "search",
+          "title": "Receipt capture",
+          "description": "Snap a photo or forward an email; we file it against the right transaction."
+        },
+        {
+          "icon": "phone",
+          "title": "Quarterly check-ins",
+          "description": "A 30-minute call each quarter to walk through profit and cash flow."
+        },
+        {
+          "icon": "external-link",
+          "title": "Works with your bank",
+          "description": "Secure read-only feeds from over 9,000 banks and card providers."
+        },
+        {
+          "icon": "calendar",
+          "title": "Year-end handover",
+          "description": "Tax-ready reports delivered to you or your tax preparer by mid-February."
+        }
+      ],
+      "layout": "inline-icon"
+    },
+    {
+      "id": "svc-tabs",
+      "type": "tabs",
+      "heading": "What’s included",
+      "label": "Service details",
+      "tabs": [
+        {
+          "id": "overview",
+          "label": "Overview",
+          "richText": {
+            "format": "html",
+            "html": "<p>Monthly bookkeeping with a named accountant, reconciled by the 10th of each month, plus a one-page summary of how the business did.</p>"
+          }
+        },
+        {
+          "id": "results",
+          "label": "Results",
+          "blocks": [
+            {
+              "id": "tab-stats",
+              "type": "stats",
+              "items": [
+                {
+                  "value": "10th",
+                  "label": "Books closed by"
+                },
+                {
+                  "value": "1 day",
+                  "label": "Reply time"
+                },
+                {
+                  "value": "98%",
+                  "label": "On-time filings"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "limits",
+          "label": "Plan limits",
+          "blocks": [
+            {
+              "id": "tab-table",
+              "type": "table",
+              "caption": "Plan limits",
+              "columns": [
+                {
+                  "key": "plan",
+                  "header": "Plan"
+                },
+                {
+                  "key": "accounts",
+                  "header": "Bank accounts",
+                  "align": "center"
+                },
+                {
+                  "key": "price",
+                  "header": "Monthly price",
+                  "numeric": true
+                }
+              ],
+              "rows": [
+                {
+                  "plan": "Starter",
+                  "accounts": "1",
+                  "price": "$0"
+                },
+                {
+                  "plan": "Essentials",
+                  "accounts": "3",
+                  "price": "$49"
+                },
+                {
+                  "plan": "Growth",
+                  "accounts": "Unlimited",
+                  "price": "$129"
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "background": "subtle"
+    },
+    {
+      "id": "svc-quote",
+      "type": "testimonial",
+      "testimonial": {
+        "quote": "We went from dreading month-end to barely noticing it. Ana spotted a duplicate supplier payment in the first week that more than covered the fee.",
+        "author": {
+          "name": "Priya Natarajan",
+          "role": "Owner",
+          "company": "Copperleaf Studio",
+          "avatar": {
+            "src": "/fixtures/images/avatar-ana.svg",
+            "alt": "",
+            "width": 160,
+            "height": 160
+          }
+        },
+        "companyLogo": {
+          "src": "/fixtures/images/logo-copperleaf.svg",
+          "alt": "Copperleaf Studio",
+          "width": 160,
+          "height": 48
+        }
+      }
+    },
+    {
+      "id": "svc-faq",
+      "type": "faq",
+      "anchorId": "questions",
+      "heading": "Frequently asked questions",
+      "items": [
+        {
+          "id": "switch",
+          "question": "Can you take over from my current bookkeeper mid-year?",
+          "answer": {
+            "format": "html",
+            "html": "<p>Yes. We start from your last reconciled month and catch up the rest, usually within three weeks.</p>"
+          }
+        },
+        {
+          "id": "software",
+          "question": "Which accounting software do you use?",
+          "answer": {
+            "format": "html",
+            "html": "<p>We work in QuickBooks Online and Xero, and migrate you for free on annual plans.</p>"
+          }
+        },
+        {
+          "id": "taxes",
+          "question": "Do you file my taxes?",
+          "answer": {
+            "format": "html",
+            "html": "<p>We prepare tax-ready reports for your tax preparer. Growth includes filing through a partner CPA.</p>"
+          }
+        },
+        {
+          "id": "access",
+          "question": "Who can see my financial data?",
+          "answer": {
+            "format": "html",
+            "html": "<p>Only your named accountant and their reviewer. Bank feeds are read-only.</p>"
+          }
+        },
+        {
+          "id": "cancel",
+          "question": "What happens if I cancel?",
+          "answer": {
+            "format": "html",
+            "html": "<p>You keep full access to your books and we send a final export. No cancellation fee on monthly plans.</p>"
+          }
+        }
+      ],
+      "background": "subtle"
+    },
+    {
+      "id": "svc-cta",
+      "type": "ctaBanner",
+      "heading": "Ready for books you don’t have to think about?",
+      "body": "Book a free 30-minute consultation. We’ll tell you honestly whether we can help.",
+      "primaryAction": {
+        "label": "Book a consultation",
+        "href": "/consultation"
+      },
+      "secondaryAction": {
+        "label": "Email us",
+        "href": "mailto:hello@brightside.example"
+      },
+      "layout": "split"
+    }
+  ]
+}

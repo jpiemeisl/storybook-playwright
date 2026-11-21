@@ -1,0 +1,54 @@
+{
+  "id": "team",
+  "type": "team",
+  "anchorId": "team",
+  "heading": "The team",
+  "columns": 4,
+  "members": [
+    {
+      "name": "Ana Ruiz",
+      "role": "Senior Accountant",
+      "photo": {
+        "src": "/fixtures/images/avatar-ana.svg",
+        "alt": "",
+        "width": 160,
+        "height": 160
+      },
+      "bio": "Leads month-end close for retail and hospitality clients.",
+      "social": [
+        {
+          "platform": "linkedin",
+          "href": "https://linkedin.example/in/anaruiz",
+          "label": "Ana Ruiz on LinkedIn"
+        }
+      ]
+    },
+    {
+      "name": "Marcus Webb",
+      "role": "Founder",
+      "photo": {
+        "src": "/fixtures/images/avatar-marcus.svg",
+        "alt": "",
+        "width": 160,
+        "height": 160
+      },
+      "bio": "Started Brightside in 2015 after a decade in audit."
+    },
+    {
+      "name": "Jordan Ellis",
+      "role": "Payroll Specialist",
+      "photo": {
+        "src": "/fixtures/images/avatar-jordan.svg",
+        "alt": "",
+        "width": 400,
+        "height": 400
+      },
+      "bio": "Runs payroll for 140 businesses."
+    },
+    {
+      "name": "Priya Natarajan",
+      "role": "Bookkeeper",
+      "bio": "No photo yet: initials are shown instead."
+    }
+  ]
+}

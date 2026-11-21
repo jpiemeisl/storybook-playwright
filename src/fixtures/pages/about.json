@@ -1,0 +1,174 @@
+{
+  "id": "page-about",
+  "slug": "about",
+  "seo": {
+    "title": "About Brightside",
+    "description": "About Brightside | Brightside Bookkeeping"
+  },
+  "blocks": [
+    {
+      "id": "about-header",
+      "type": "pageHeader",
+      "title": "About Brightside",
+      "description": "A small team of accountants who think month-end should be boring, in the best way.",
+      "breadcrumbs": [
+        {
+          "label": "Home",
+          "href": "/"
+        },
+        {
+          "label": "About"
+        }
+      ],
+      "variant": "with-media",
+      "media": {
+        "src": "/fixtures/images/hero-office-16x9.svg",
+        "alt": "A tidy office with a laptop showing a chart, a wall clock and a coffee mug",
+        "width": 1600,
+        "height": 900
+      }
+    },
+    {
+      "id": "about-approach",
+      "type": "mediaText",
+      "eyebrow": "Our approach",
+      "heading": "One named accountant, every month",
+      "body": {
+        "format": "html",
+        "html": "<p>Every client works with one person who knows their books. No ticket queues, no starting from scratch each time you ask a question.</p>"
+      },
+      "media": {
+        "src": "/fixtures/images/hero-desk-3x2.svg",
+        "alt": "Printed invoices and a calculator on a desk",
+        "width": 1200,
+        "height": 800
+      },
+      "actions": [],
+      "background": "subtle"
+    },
+    {
+      "id": "about-stats",
+      "type": "stats",
+      "heading": "Brightside in numbers",
+      "items": [
+        {
+          "value": "1,200+",
+          "label": "Small businesses served",
+          "description": "Across retail, trades, hospitality and services."
+        },
+        {
+          "value": "98%",
+          "label": "Filings on time",
+          "description": "Measured over the last three tax years."
+        },
+        {
+          "value": "1 day",
+          "label": "Typical reply time",
+          "description": "From your named accountant."
+        },
+        {
+          "value": "$0",
+          "label": "Setup fees",
+          "description": "For businesses with up to three accounts."
+        }
+      ]
+    },
+    {
+      "id": "about-team",
+      "type": "team",
+      "anchorId": "team",
+      "heading": "The team",
+      "columns": 4,
+      "members": [
+        {
+          "name": "Ana Ruiz",
+          "role": "Senior Accountant",
+          "photo": {
+            "src": "/fixtures/images/avatar-ana.svg",
+            "alt": "",
+            "width": 160,
+            "height": 160
+          },
+          "bio": "Leads month-end close for retail and hospitality clients.",
+          "social": [
+            {
+              "platform": "linkedin",
+              "href": "https://linkedin.example/in/anaruiz",
+              "label": "Ana Ruiz on LinkedIn"
+            }
+          ]
+        },
+        {
+          "name": "Marcus Webb",
+          "role": "Founder",
+          "photo": {
+            "src": "/fixtures/images/avatar-marcus.svg",
+            "alt": "",
+            "width": 160,
+            "height": 160
+          },
+          "bio": "Started Brightside in 2015 after a decade in audit."
+        },
+        {
+          "name": "Jordan Ellis",
+          "role": "Payroll Specialist",
+          "photo": {
+            "src": "/fixtures/images/avatar-jordan.svg",
+            "alt": "",
+            "width": 400,
+            "height": 400
+          },
+          "bio": "Runs payroll for 140 businesses."
+        },
+        {
+          "name": "Priya Natarajan",
+          "role": "Bookkeeper",
+          "bio": "No photo yet: initials are shown instead."
+        }
+      ],
+      "background": "subtle"
+    },
+    {
+      "id": "about-story",
+      "type": "timeline",
+      "heading": "Our story",
+      "items": [
+        {
+          "label": "2015",
+          "title": "Founded in a spare room",
+          "description": "Three clients and a borrowed laptop."
+        },
+        {
+          "label": "2018",
+          "title": "First office on Harbour Street",
+          "description": "The team grows to six and takes on payroll."
+        },
+        {
+          "label": "2022",
+          "title": "1,000 clients",
+          "description": "Remote-first, with clients in 38 states."
+        },
+        {
+          "label": "2026",
+          "title": "Tax filing partnership"
+        }
+      ]
+    },
+    {
+      "id": "about-cta",
+      "type": "ctaBanner",
+      "heading": "Want to work with us?",
+      "body": "Book a free 30-minute consultation. We’ll tell you honestly whether we can help.",
+      "primaryAction": {
+        "label": "Book a consultation",
+        "href": "/consultation"
+      },
+      "secondaryAction": {
+        "label": "Email us",
+        "href": "mailto:hello@brightside.example"
+      },
+      "layout": "split",
+      "background": "subtle"
+    }
+  ]
+}

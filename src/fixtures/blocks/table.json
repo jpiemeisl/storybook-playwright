@@ -1,0 +1,53 @@
+{
+  "id": "comparison",
+  "type": "table",
+  "caption": "Monthly expense comparison (USD)",
+  "striped": true,
+  "columns": [
+    {
+      "key": "account",
+      "header": "Account"
+    },
+    {
+      "key": "jan",
+      "header": "Jan",
+      "numeric": true
+    },
+    {
+      "key": "feb",
+      "header": "Feb",
+      "numeric": true
+    },
+    {
+      "key": "mar",
+      "header": "Mar",
+      "numeric": true
+    }
+  ],
+  "rows": [
+    {
+      "account": "Rent",
+      "jan": "4,200",
+      "feb": "4,200",
+      "mar": "4,200"
+    },
+    {
+      "account": "Software",
+      "jan": "648",
+      "feb": "651",
+      "mar": "1,302"
+    },
+    {
+      "account": "Contractors",
+      "jan": "2,900",
+      "feb": "4,100",
+      "mar": null
+    },
+    {
+      "account": "Travel",
+      "jan": "1,480",
+      "feb": "310",
+      "mar": "265"
+    }
+  ]
+}

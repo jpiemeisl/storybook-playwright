@@ -1,0 +1,128 @@
+{
+  "id": "pricing",
+  "type": "pricingTable",
+  "anchorId": "plans",
+  "heading": "Simple monthly pricing",
+  "intro": "Every plan includes a named accountant from Essentials up.",
+  "annualSavingsLabel": "Save 20%",
+  "tiers": [
+    {
+      "id": "starter",
+      "name": "Starter",
+      "description": "For sole traders with simple books.",
+      "price": {
+        "amount": 0,
+        "currency": "USD"
+      },
+      "interval": "month",
+      "annualPrice": {
+        "amount": 0,
+        "currency": "USD"
+      },
+      "features": [
+        {
+          "label": "1 bank account",
+          "included": true
+        },
+        {
+          "label": "Receipt capture",
+          "included": true
+        },
+        {
+          "label": "Named accountant",
+          "included": false
+        }
+      ],
+      "cta": {
+        "label": "Start free",
+        "href": "/signup?plan=starter"
+      }
+    },
+    {
+      "id": "essentials",
+      "name": "Essentials",
+      "description": "Monthly bookkeeping for growing businesses.",
+      "price": {
+        "amount": 4900,
+        "currency": "USD"
+      },
+      "interval": "month",
+      "annualPrice": {
+        "amount": 47000,
+        "currency": "USD"
+      },
+      "features": [
+        {
+          "label": "Up to 3 bank accounts",
+          "included": true
+        },
+        {
+          "label": "Named accountant",
+          "included": true
+        },
+        {
+          "label": "Payroll",
+          "included": false
+        }
+      ],
+      "cta": {
+        "label": "Choose Essentials",
+        "href": "/signup?plan=essentials"
+      }
+    },
+    {
+      "id": "growth",
+      "name": "Growth",
+      "description": "Books, payroll and tax filing in one plan.",
+      "price": {
+        "amount": 12900,
+        "currency": "USD"
+      },
+      "interval": "month",
+      "annualPrice": {
+        "amount": 123800,
+        "currency": "USD"
+      },
+      "highlighted": true,
+      "badge": "Most popular",
+      "features": [
+        {
+          "label": "Unlimited bank accounts",
+          "included": true
+        },
+        {
+          "label": "Payroll for up to 25 people",
+          "included": true
+        },
+        {
+          "label": "Tax filing via partner CPA",
+          "included": true
+        }
+      ],
+      "cta": {
+        "label": "Choose Growth",
+        "href": "/signup?plan=growth"
+      }
+    },
+    {
+      "id": "multi",
+      "name": "Multi-location",
+      "description": "For groups with several entities.",
+      "price": null,
+      "features": [
+        {
+          "label": "Consolidated reporting",
+          "included": true
+        },
+        {
+          "label": "Dedicated team",
+          "included": true
+        }
+      ],
+      "cta": {
+        "label": "Talk to us",
+        "href": "/contact?plan=multi"
+      }
+    }
+  ]
+}

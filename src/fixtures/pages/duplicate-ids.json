@@ -1,0 +1,60 @@
+{
+  "id": "page-dupes",
+  "slug": "edge/duplicates",
+  "seo": {
+    "title": "Duplicate ids",
+    "description": "Duplicate ids | Brightside Bookkeeping"
+  },
+  "blocks": [
+    {
+      "id": "dup",
+      "type": "pageHeader",
+      "title": "Duplicate ids",
+      "description": "Two blocks share an id and two share an anchor."
+    },
+    {
+      "id": "dup",
+      "type": "stats",
+      "heading": "Brightside in numbers",
+      "items": [
+        {
+          "value": "1,200+",
+          "label": "Small businesses served",
+          "description": "Across retail, trades, hospitality and services."
+        },
+        {
+          "value": "98%",
+          "label": "Filings on time",
+          "description": "Measured over the last three tax years."
+        },
+        {
+          "value": "1 day",
+          "label": "Typical reply time",
+          "description": "From your named accountant."
+        },
+        {
+          "value": "$0",
+          "label": "Setup fees",
+          "description": "For businesses with up to three accounts."
+        }
+      ],
+      "anchorId": "numbers"
+    },
+    {
+      "id": "dup-cta",
+      "type": "ctaBanner",
+      "heading": "Ready for books you don’t have to think about?",
+      "body": "Book a free 30-minute consultation. We’ll tell you honestly whether we can help.",
+      "primaryAction": {
+        "label": "Book a consultation",
+        "href": "/consultation"
+      },
+      "secondaryAction": {
+        "label": "Email us",
+        "href": "mailto:hello@brightside.example"
+      },
+      "layout": "split",
+      "anchorId": "numbers"
+    }
+  ]
+}

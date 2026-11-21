@@ -1,0 +1,178 @@
+{
+  "id": "page-blog",
+  "slug": "blog",
+  "seo": {
+    "title": "Blog",
+    "description": "Blog | Brightside Bookkeeping"
+  },
+  "blocks": [
+    {
+      "id": "blog-header",
+      "type": "pageHeader",
+      "title": "The Brightside blog",
+      "description": "Practical advice on bookkeeping, payroll and running a small business.",
+      "breadcrumbs": [
+        {
+          "label": "Home",
+          "href": "/"
+        },
+        {
+          "label": "Blog"
+        }
+      ]
+    },
+    {
+      "id": "blog-latest",
+      "type": "articleCardGrid",
+      "heading": "Latest articles",
+      "items": [
+        {
+          "title": "Five receipts you can stop keeping",
+          "href": "/blog/receipts-you-can-stop-keeping",
+          "excerpt": "Digital copies are fine for most of them.",
+          "category": "Tax",
+          "publishedAt": "2026-03-14",
+          "readingTimeMinutes": 4,
+          "author": {
+            "name": "Ana Ruiz",
+            "avatar": {
+              "src": "/fixtures/images/avatar-ana.svg",
+              "alt": "",
+              "width": 160,
+              "height": 160
+            }
+          },
+          "image": {
+            "src": "/fixtures/images/hero-desk-3x2.svg",
+            "alt": "Printed invoices and a calculator on a desk",
+            "width": 1200,
+            "height": 800
+          }
+        },
+        {
+          "title": "Cash flow forecasting in an afternoon",
+          "href": "/blog/cash-flow-forecast",
+          "excerpt": "A 13-week forecast from last month’s bank statement.",
+          "category": "Planning",
+          "publishedAt": "2026-02-02",
+          "readingTimeMinutes": 7,
+          "author": {
+            "name": "Marcus Webb",
+            "avatar": {
+              "src": "/fixtures/images/avatar-marcus.svg",
+              "alt": "",
+              "width": 160,
+              "height": 160
+            }
+          },
+          "image": {
+            "src": "/fixtures/images/hero-office-16x9.svg",
+            "alt": "A tidy office with a laptop showing a chart, a wall clock and a coffee mug",
+            "width": 1600,
+            "height": 900
+          }
+        },
+        {
+          "title": "When to hire a bookkeeper",
+          "href": "/blog/when-to-hire",
+          "excerpt": "Signs you have outgrown doing it yourself.",
+          "category": "Growth",
+          "publishedAt": "2025-11-20",
+          "readingTimeMinutes": 5,
+          "author": {
+            "name": "Ana Ruiz",
+            "avatar": {
+              "src": "/fixtures/images/avatar-ana.svg",
+              "alt": "",
+              "width": 160,
+              "height": 160
+            }
+          },
+          "image": {
+            "src": "/fixtures/images/studio-4x3.svg",
+            "alt": "Geometric shapes arranged on a light grey studio floor",
+            "width": 800,
+            "height": 600
+          }
+        },
+        {
+          "title": "Five receipts you can stop keeping",
+          "href": "/blog/receipts-you-can-stop-keeping-3",
+          "excerpt": "Digital copies are fine for most of them.",
+          "category": "Tax",
+          "publishedAt": "2026-03-14",
+          "readingTimeMinutes": 4,
+          "author": {
+            "name": "Ana Ruiz",
+            "avatar": {
+              "src": "/fixtures/images/avatar-ana.svg",
+              "alt": "",
+              "width": 160,
+              "height": 160
+            }
+          },
+          "image": {
+            "src": "/fixtures/images/hero-desk-3x2.svg",
+            "alt": "Printed invoices and a calculator on a desk",
+            "width": 1200,
+            "height": 800
+          }
+        },
+        {
+          "title": "Cash flow forecasting in an afternoon",
+          "href": "/blog/cash-flow-forecast-4",
+          "excerpt": "A 13-week forecast from last month’s bank statement.",
+          "category": "Planning",
+          "publishedAt": "2026-02-02",
+          "readingTimeMinutes": 7,
+          "author": {
+            "name": "Marcus Webb",
+            "avatar": {
+              "src": "/fixtures/images/avatar-marcus.svg",
+              "alt": "",
+              "width": 160,
+              "height": 160
+            }
+          },
+          "image": {
+            "src": "/fixtures/images/hero-office-16x9.svg",
+            "alt": "A tidy office with a laptop showing a chart, a wall clock and a coffee mug",
+            "width": 1600,
+            "height": 900
+          }
+        },
+        {
+          "title": "When to hire a bookkeeper",
+          "href": "/blog/when-to-hire-5",
+          "excerpt": "Signs you have outgrown doing it yourself.",
+          "category": "Growth",
+          "publishedAt": "2025-11-20",
+          "readingTimeMinutes": 5,
+          "author": {
+            "name": "Ana Ruiz",
+            "avatar": {
+              "src": "/fixtures/images/avatar-ana.svg",
+              "alt": "",
+              "width": 160,
+              "height": 160
+            }
+          },
+          "image": {
+            "src": "/fixtures/images/studio-4x3.svg",
+            "alt": "Geometric shapes arranged on a light grey studio floor",
+            "width": 800,
+            "height": 600
+          }
+        }
+      ]
+    },
+    {
+      "id": "blog-newsletter",
+      "type": "newsletterSignup",
+      "heading": "One practical tip a month",
+      "description": "Short, useful and never more than once a month.",
+      "showName": true,
+      "background": "subtle"
+    }
+  ]
+}

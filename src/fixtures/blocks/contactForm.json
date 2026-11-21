@@ -1,0 +1,25 @@
+{
+  "id": "contact-form",
+  "type": "contactForm",
+  "heading": "Send us a message",
+  "intro": "We reply within one working day.",
+  "subjectOptions": [
+    {
+      "value": "new-client",
+      "label": "Becoming a new client"
+    },
+    {
+      "value": "existing",
+      "label": "Question about my account"
+    },
+    {
+      "value": "billing",
+      "label": "Billing and invoices"
+    },
+    {
+      "value": "other",
+      "label": "Something else"
+    }
+  ],
+  "consentLabel": "I agree to Brightside storing my details to reply to this message."
+}

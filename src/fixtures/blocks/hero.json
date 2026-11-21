@@ -1,0 +1,22 @@
+{
+  "id": "hero",
+  "type": "hero",
+  "headline": "Bookkeeping that keeps up with your business",
+  "subhead": "Monthly books, payroll and tax-ready reports for small businesses, handled by a named accountant who answers within one working day.",
+  "primaryAction": {
+    "label": "Book a free consultation",
+    "href": "/consultation"
+  },
+  "secondaryAction": {
+    "label": "See pricing",
+    "href": "/pricing",
+    "variant": "secondary"
+  },
+  "media": {
+    "src": "/fixtures/images/hero-desk-3x2.svg",
+    "alt": "Printed invoices and a calculator on a desk",
+    "width": 1200,
+    "height": 800
+  },
+  "variant": "split"
+}

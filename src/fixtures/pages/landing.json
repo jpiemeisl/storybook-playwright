@@ -1,0 +1,170 @@
+{
+  "id": "page-landing-payroll",
+  "slug": "lp/payroll",
+  "seo": {
+    "title": "Payroll for seasonal businesses",
+    "description": "Payroll for seasonal businesses | Brightside Bookkeeping"
+  },
+  "blocks": [
+    {
+      "id": "lp-hero",
+      "type": "hero",
+      "headline": "Payroll that scales with your busy season",
+      "subhead": "Hire forty people in April and let them go in September without a single late payslip.",
+      "primaryAction": {
+        "label": "Book a free consultation",
+        "href": "/consultation"
+      },
+      "secondaryAction": {
+        "label": "See pricing",
+        "href": "/pricing",
+        "variant": "secondary"
+      },
+      "media": {
+        "src": "/fixtures/images/hero-office-16x9.svg",
+        "alt": "A tidy office with a laptop showing a chart, a wall clock and a coffee mug",
+        "width": 1600,
+        "height": 900
+      },
+      "variant": "background"
+    },
+    {
+      "id": "lp-logos",
+      "type": "logoStrip",
+      "heading": "Trusted by 1,200 small businesses",
+      "items": [
+        {
+          "name": "Northwind Outfitters",
+          "image": {
+            "src": "/fixtures/images/logo-northwind.svg",
+            "alt": "",
+            "width": 180,
+            "height": 48
+          }
+        },
+        {
+          "name": "Copperleaf Studio",
+          "image": {
+            "src": "/fixtures/images/logo-copperleaf.svg",
+            "alt": "",
+            "width": 160,
+            "height": 48
+          }
+        },
+        {
+          "name": "Tidewater Marine",
+          "image": {
+            "src": "/fixtures/images/logo-tidewater.svg",
+            "alt": "",
+            "width": 170,
+            "height": 48
+          }
+        },
+        {
+          "name": "Quarry Supply Co.",
+          "image": {
+            "src": "/fixtures/images/logo-quarry.svg",
+            "alt": "",
+            "width": 150,
+            "height": 48
+          }
+        }
+      ]
+    },
+    {
+      "id": "lp-steps",
+      "type": "steps",
+      "heading": "Set up in three steps",
+      "items": [
+        {
+          "title": "Book a call",
+          "description": "30 minutes to understand your business."
+        },
+        {
+          "title": "Connect your accounts",
+          "description": "Read-only bank feeds in about ten minutes."
+        },
+        {
+          "title": "Get your first close",
+          "description": "Reconciled books by the 10th of next month."
+        }
+      ],
+      "background": "subtle"
+    },
+    {
+      "id": "lp-video",
+      "type": "videoEmbed",
+      "provider": "youtube",
+      "videoId": "bS2kLx9QpE4",
+      "title": "How a five-day close works",
+      "poster": {
+        "src": "/fixtures/images/video-poster.svg",
+        "alt": "",
+        "width": 1280,
+        "height": 720
+      }
+    },
+    {
+      "id": "lp-testimonials",
+      "type": "testimonialGrid",
+      "heading": "What clients say",
+      "items": [
+        {
+          "quote": "Payroll for forty seasonal staff used to take my whole Sunday. Now it just happens.",
+          "author": {
+            "name": "Marcus Webb",
+            "role": "Operations Manager",
+            "company": "Tidewater Marine",
+            "avatar": {
+              "src": "/fixtures/images/avatar-marcus.svg",
+              "alt": "",
+              "width": 160,
+              "height": 160
+            }
+          }
+        },
+        {
+          "quote": "The quarterly calls are the most useful hour of my quarter.",
+          "author": {
+            "name": "Jordan Ellis",
+            "role": "Founder",
+            "company": "Quarry Supply Co."
+          }
+        },
+        {
+          "quote": "Our lender asked for three reports with two days’ notice. Brightside had them ready the next morning.",
+          "author": {
+            "name": "Sam Okafor",
+            "role": "Director",
+            "company": "Northwind Outfitters"
+          }
+        }
+      ],
+      "background": "subtle"
+    },
+    {
+      "id": "lp-newsletter",
+      "type": "newsletterSignup",
+      "heading": "Get the seasonal payroll checklist",
+      "description": "Sent once. No follow-up spam.",
+      "showName": true
+    },
+    {
+      "id": "lp-cta",
+      "type": "ctaBanner",
+      "heading": "Ready for books you don’t have to think about?",
+      "body": "Book a free 30-minute consultation. We’ll tell you honestly whether we can help.",
+      "primaryAction": {
+        "label": "Book a consultation",
+        "href": "/consultation"
+      },
+      "secondaryAction": {
+        "label": "Email us",
+        "href": "mailto:hello@brightside.example"
+      },
+      "layout": "split",
+      "variant": "inverse"
+    }
+  ],
+  "template": "landing"
+}

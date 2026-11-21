@@ -1,0 +1,7 @@
+{
+  "id": "newsletter",
+  "type": "newsletterSignup",
+  "heading": "One practical tip a month",
+  "description": "Short, useful and never more than once a month.",
+  "showName": true
+}

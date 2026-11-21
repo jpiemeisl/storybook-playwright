@@ -1,0 +1,43 @@
+{
+  "id": "features",
+  "type": "featureGrid",
+  "heading": "Everything your books need, every month",
+  "intro": "One flat monthly fee. No hourly billing, no surprise invoices at year end.",
+  "columns": 3,
+  "items": [
+    {
+      "icon": "check",
+      "title": "Monthly reconciliation",
+      "description": "Every account matched to receipts by the 10th of the following month."
+    },
+    {
+      "icon": "mail",
+      "title": "A named accountant",
+      "description": "One person who knows your books, with replies within a working day.",
+      "link": {
+        "label": "Meet the team",
+        "href": "/about#team"
+      }
+    },
+    {
+      "icon": "search",
+      "title": "Receipt capture",
+      "description": "Snap a photo or forward an email; we file it against the right transaction."
+    },
+    {
+      "icon": "phone",
+      "title": "Quarterly check-ins",
+      "description": "A 30-minute call each quarter to walk through profit and cash flow."
+    },
+    {
+      "icon": "external-link",
+      "title": "Works with your bank",
+      "description": "Secure read-only feeds from over 9,000 banks and card providers."
+    },
+    {
+      "icon": "calendar",
+      "title": "Year-end handover",
+      "description": "Tax-ready reports delivered to you or your tax preparer by mid-February."
+    }
+  ]
+}

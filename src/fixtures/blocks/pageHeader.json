@@ -1,0 +1,32 @@
+{
+  "id": "page-header",
+  "type": "pageHeader",
+  "title": "How to close your books in five working days",
+  "description": "A routine for small businesses that turns month-end from a chore into numbers you can act on.",
+  "breadcrumbs": [
+    {
+      "label": "Home",
+      "href": "/"
+    },
+    {
+      "label": "Blog",
+      "href": "/blog"
+    },
+    {
+      "label": "Five-day close"
+    }
+  ],
+  "author": {
+    "name": "Ana Ruiz",
+    "role": "Senior Accountant",
+    "avatar": {
+      "src": "/fixtures/images/avatar-ana.svg",
+      "alt": "",
+      "width": 160,
+      "height": 160
+    },
+    "href": "/team/ana-ruiz"
+  },
+  "publishedAt": "2026-03-14",
+  "readingTime": "8 min read"
+}

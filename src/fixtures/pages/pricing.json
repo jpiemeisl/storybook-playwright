@@ -1,0 +1,263 @@
+{
+  "id": "page-pricing",
+  "slug": "pricing",
+  "seo": {
+    "title": "Pricing",
+    "description": "Pricing | Brightside Bookkeeping"
+  },
+  "blocks": [
+    {
+      "id": "pricing-header",
+      "type": "pageHeader",
+      "title": "Pricing",
+      "description": "One flat monthly fee. No hourly billing, no surprises.",
+      "variant": "centered"
+    },
+    {
+      "id": "pricing-table",
+      "type": "pricingTable",
+      "anchorId": "plans",
+      "heading": "Choose a plan",
+      "intro": "Every plan includes a named accountant from Essentials up.",
+      "annualSavingsLabel": "Save 20%",
+      "tiers": [
+        {
+          "id": "starter",
+          "name": "Starter",
+          "description": "For sole traders with simple books.",
+          "price": {
+            "amount": 0,
+            "currency": "USD"
+          },
+          "interval": "month",
+          "annualPrice": {
+            "amount": 0,
+            "currency": "USD"
+          },
+          "features": [
+            {
+              "label": "1 bank account",
+              "included": true
+            },
+            {
+              "label": "Receipt capture",
+              "included": true
+            },
+            {
+              "label": "Named accountant",
+              "included": false
+            }
+          ],
+          "cta": {
+            "label": "Start free",
+            "href": "/signup?plan=starter"
+          }
+        },
+        {
+          "id": "essentials",
+          "name": "Essentials",
+          "description": "Monthly bookkeeping for growing businesses.",
+          "price": {
+            "amount": 4900,
+            "currency": "USD"
+          },
+          "interval": "month",
+          "annualPrice": {
+            "amount": 47000,
+            "currency": "USD"
+          },
+          "features": [
+            {
+              "label": "Up to 3 bank accounts",
+              "included": true
+            },
+            {
+              "label": "Named accountant",
+              "included": true
+            },
+            {
+              "label": "Payroll",
+              "included": false
+            }
+          ],
+          "cta": {
+            "label": "Choose Essentials",
+            "href": "/signup?plan=essentials"
+          }
+        },
+        {
+          "id": "growth",
+          "name": "Growth",
+          "description": "Books, payroll and tax filing in one plan.",
+          "price": {
+            "amount": 12900,
+            "currency": "USD"
+          },
+          "interval": "month",
+          "annualPrice": {
+            "amount": 123800,
+            "currency": "USD"
+          },
+          "highlighted": true,
+          "badge": "Most popular",
+          "features": [
+            {
+              "label": "Unlimited bank accounts",
+              "included": true
+            },
+            {
+              "label": "Payroll for up to 25 people",
+              "included": true
+            },
+            {
+              "label": "Tax filing via partner CPA",
+              "included": true
+            }
+          ],
+          "cta": {
+            "label": "Choose Growth",
+            "href": "/signup?plan=growth"
+          }
+        },
+        {
+          "id": "multi",
+          "name": "Multi-location",
+          "description": "For groups with several entities.",
+          "price": null,
+          "features": [
+            {
+              "label": "Consolidated reporting",
+              "included": true
+            },
+            {
+              "label": "Dedicated team",
+              "included": true
+            }
+          ],
+          "cta": {
+            "label": "Talk to us",
+            "href": "/contact?plan=multi"
+          }
+        }
+      ]
+    },
+    {
+      "id": "pricing-compare",
+      "type": "table",
+      "caption": "Compare plan limits",
+      "striped": true,
+      "columns": [
+        {
+          "key": "feature",
+          "header": "Feature"
+        },
+        {
+          "key": "starter",
+          "header": "Starter",
+          "align": "center"
+        },
+        {
+          "key": "essentials",
+          "header": "Essentials",
+          "align": "center"
+        },
+        {
+          "key": "growth",
+          "header": "Growth",
+          "align": "center"
+        }
+      ],
+      "rows": [
+        {
+          "feature": "Bank accounts",
+          "starter": "1",
+          "essentials": "3",
+          "growth": "Unlimited"
+        },
+        {
+          "feature": "Named accountant",
+          "starter": "–",
+          "essentials": "Yes",
+          "growth": "Yes"
+        },
+        {
+          "feature": "Payroll",
+          "starter": "–",
+          "essentials": "–",
+          "growth": "Up to 25 people"
+        },
+        {
+          "feature": "Tax filing",
+          "starter": null,
+          "essentials": null,
+          "growth": "Via partner CPA"
+        }
+      ],
+      "background": "subtle"
+    },
+    {
+      "id": "pricing-faq",
+      "type": "faq",
+      "anchorId": "faq",
+      "heading": "Frequently asked questions",
+      "items": [
+        {
+          "id": "switch",
+          "question": "Can you take over from my current bookkeeper mid-year?",
+          "answer": {
+            "format": "html",
+            "html": "<p>Yes. We start from your last reconciled month and catch up the rest, usually within three weeks.</p>"
+          }
+        },
+        {
+          "id": "software",
+          "question": "Which accounting software do you use?",
+          "answer": {
+            "format": "html",
+            "html": "<p>We work in QuickBooks Online and Xero, and migrate you for free on annual plans.</p>"
+          }
+        },
+        {
+          "id": "taxes",
+          "question": "Do you file my taxes?",
+          "answer": {
+            "format": "html",
+            "html": "<p>We prepare tax-ready reports for your tax preparer. Growth includes filing through a partner CPA.</p>"
+          }
+        },
+        {
+          "id": "access",
+          "question": "Who can see my financial data?",
+          "answer": {
+            "format": "html",
+            "html": "<p>Only your named accountant and their reviewer. Bank feeds are read-only.</p>"
+          }
+        },
+        {
+          "id": "cancel",
+          "question": "What happens if I cancel?",
+          "answer": {
+            "format": "html",
+            "html": "<p>You keep full access to your books and we send a final export. No cancellation fee on monthly plans.</p>"
+          }
+        }
+      ]
+    },
+    {
+      "id": "pricing-cta",
+      "type": "ctaBanner",
+      "heading": "Ready for books you don’t have to think about?",
+      "body": "Book a free 30-minute consultation. We’ll tell you honestly whether we can help.",
+      "primaryAction": {
+        "label": "Book a consultation",
+        "href": "/consultation"
+      },
+      "secondaryAction": {
+        "label": "Email us",
+        "href": "mailto:hello@brightside.example"
+      },
+      "layout": "split",
+      "background": "subtle"
+    }
+  ]
+}

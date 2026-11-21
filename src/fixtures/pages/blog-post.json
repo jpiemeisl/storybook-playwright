@@ -1,0 +1,139 @@
+{
+  "id": "page-post-close",
+  "slug": "blog/five-day-close",
+  "seo": {
+    "title": "How to close your books in five working days",
+    "description": "How to close your books in five working days | Brightside Bookkeeping"
+  },
+  "blocks": [
+    {
+      "id": "post-header",
+      "type": "pageHeader",
+      "title": "How to close your books in five working days",
+      "description": "A routine for small businesses that turns month-end from a chore into numbers you can act on.",
+      "breadcrumbs": [
+        {
+          "label": "Home",
+          "href": "/"
+        },
+        {
+          "label": "Blog",
+          "href": "/blog"
+        },
+        {
+          "label": "Five-day close"
+        }
+      ],
+      "author": {
+        "name": "Ana Ruiz",
+        "role": "Senior Accountant",
+        "avatar": {
+          "src": "/fixtures/images/avatar-ana.svg",
+          "alt": "",
+          "width": 160,
+          "height": 160
+        },
+        "href": "/team/ana-ruiz"
+      },
+      "publishedAt": "2026-03-14",
+      "readingTime": "8 min read"
+    },
+    {
+      "id": "post-body",
+      "type": "richText",
+      "content": {
+        "format": "html",
+        "html": "<p>Most small businesses close their books weeks after the month ends. By then the numbers are history: useful for tax, useless for decisions. A five-day close is achievable for almost any business with fewer than fifty employees.</p><h2 id=\"day-one\">Day 1: Reconcile bank and cards</h2><p>Reconcile every account to its statement balance on the last day of the month. Anything you cannot explain in two minutes goes on a <strong>questions list</strong> rather than blocking the reconciliation.</p><ul><li>Connect every account to a live bank feed.</li><li>Forward supplier invoices to your receipts address.</li><li>Create matching rules for regular payments:<ul><li>rent and utilities</li><li>software subscriptions</li></ul></li></ul><h3 id=\"rules\">Matching rules that save time</h3><p>A good rule matches on the payee name and an amount range, and assigns both the account and the tax code. Review your rules every quarter.</p><blockquote><p>The goal of a monthly close is not perfect books. It is books good enough to make a decision on.</p></blockquote><h2 id=\"day-two\">Day 2: Receivables and payables</h2><p>Chase anything more than thirty days overdue today, not at the end of the quarter. Make sure every supplier invoice for the month is entered, even if you will pay it later. <a href=\"/guides/accruals\">Read our guide to accruals</a>.</p><ol><li>Export the aged receivables report.</li><li>Send reminders for overdue invoices.</li><li>Enter outstanding supplier bills.</li></ol><h2 id=\"day-five\">Day 5: Report and lock</h2><p>Send a one-page summary, then lock the period so nobody changes it by accident. <em>If something needs fixing later, record an adjustment in the current month.</em></p>"
+      }
+    },
+    {
+      "id": "post-divider",
+      "type": "divider"
+    },
+    {
+      "id": "post-related",
+      "type": "articleCardGrid",
+      "heading": "Related articles",
+      "items": [
+        {
+          "title": "Five receipts you can stop keeping",
+          "href": "/blog/receipts-you-can-stop-keeping",
+          "excerpt": "Digital copies are fine for most of them.",
+          "category": "Tax",
+          "publishedAt": "2026-03-14",
+          "readingTimeMinutes": 4,
+          "author": {
+            "name": "Ana Ruiz",
+            "avatar": {
+              "src": "/fixtures/images/avatar-ana.svg",
+              "alt": "",
+              "width": 160,
+              "height": 160
+            }
+          },
+          "image": {
+            "src": "/fixtures/images/hero-desk-3x2.svg",
+            "alt": "Printed invoices and a calculator on a desk",
+            "width": 1200,
+            "height": 800
+          }
+        },
+        {
+          "title": "Cash flow forecasting in an afternoon",
+          "href": "/blog/cash-flow-forecast",
+          "excerpt": "A 13-week forecast from last month’s bank statement.",
+          "category": "Planning",
+          "publishedAt": "2026-02-02",
+          "readingTimeMinutes": 7,
+          "author": {
+            "name": "Marcus Webb",
+            "avatar": {
+              "src": "/fixtures/images/avatar-marcus.svg",
+              "alt": "",
+              "width": 160,
+              "height": 160
+            }
+          },
+          "image": {
+            "src": "/fixtures/images/hero-office-16x9.svg",
+            "alt": "A tidy office with a laptop showing a chart, a wall clock and a coffee mug",
+            "width": 1600,
+            "height": 900
+          }
+        },
+        {
+          "title": "When to hire a bookkeeper",
+          "href": "/blog/when-to-hire",
+          "excerpt": "Signs you have outgrown doing it yourself.",
+          "category": "Growth",
+          "publishedAt": "2025-11-20",
+          "readingTimeMinutes": 5,
+          "author": {
+            "name": "Ana Ruiz",
+            "avatar": {
+              "src": "/fixtures/images/avatar-ana.svg",
+              "alt": "",
+              "width": 160,
+              "height": 160
+            }
+          },
+          "image": {
+            "src": "/fixtures/images/studio-4x3.svg",
+            "alt": "Geometric shapes arranged on a light grey studio floor",
+            "width": 800,
+            "height": 600
+          }
+        }
+      ],
+      "background": "subtle"
+    },
+    {
+      "id": "post-newsletter",
+      "type": "newsletterSignup",
+      "heading": "One practical tip a month",
+      "description": "Short, useful and never more than once a month.",
+      "showName": true
+    }
+  ],
+  "template": "article"
+}
