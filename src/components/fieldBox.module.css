@@ -1,0 +1,112 @@
+/* Shared visual box for Input, Textarea and Select. States are styled off the control's attributes
+   (scoped to .control, so e.g. a disabled placeholder <option> does not mark the box disabled). */
+@layer components {
+  .box {
+    position: relative;
+    display: flex;
+    align-items: center;
+    gap: var(--gap-sm);
+    min-inline-size: 0;
+    min-block-size: var(--field-height-md);
+    padding-inline: var(--field-padding-inline);
+    border: var(--border-1) solid var(--color-field-border);
+    border-radius: var(--radius-control);
+    background-color: var(--color-field-bg);
+    color: var(--color-text);
+    font-size: var(--text-size-md);
+  }
+
+  .box:hover {
+    border-color: var(--color-field-border-hover);
+  }
+
+  .box:has(:focus-visible) {
+    border-color: var(--color-field-border-focus);
+    outline: var(--focus-ring-width) solid var(--color-focus-ring);
+    outline-offset: var(--focus-ring-offset);
+  }
+
+  /* Invalid: thicker danger border (inset shadow, so no layout shift). The FieldError text + icon is the
+     non-colour signal. */
+  .box:has(.control[aria-invalid='true']) {
+    border-color: var(--color-danger);
+    box-shadow: inset 0 0 0 1px var(--color-danger);
+  }
+
+  .box:has(.control:disabled) {
+    border-color: var(--color-border);
+    background-color: var(--color-field-disabled-bg);
+    color: var(--color-text-muted);
+    cursor: not-allowed;
+  }
+
+  /* Read-only: still readable and focusable, but visibly not editable. */
+  .box:has(.control[readonly]) {
+    border-style: dashed;
+    background-color: var(--color-bg-subtle);
+  }
+
+  .sm {
+    min-block-size: var(--field-height-sm);
+    font-size: var(--text-size-sm);
+  }
+
+  .lg {
+    min-block-size: var(--field-height-lg);
+    font-size: var(--text-size-lg);
+  }
+
+  /* The native control fills the box and draws nothing itself. */
+  .control {
+    flex: 1;
+    min-inline-size: 0;
+    align-self: stretch;
+    margin: 0;
+    padding: 0;
+    border: 0;
+    background: transparent;
+    color: inherit;
+    font: inherit;
+    outline: none;
+    text-overflow: ellipsis;
+  }
+
+  .control::placeholder {
+    color: var(--color-text-muted);
+    opacity: 1;
+  }
+
+  .control:disabled {
+    cursor: not-allowed;
+  }
+
+  .adornment {
+    display: inline-flex;
+    flex-shrink: 0;
+    align-items: center;
+    color: var(--color-text-muted);
+    font-size: var(--text-size-sm);
+    white-space: nowrap;
+  }
+
+  @media (prefers-reduced-motion: no-preference) {
+    .box {
+      transition: border-color var(--transition-fast) var(--transition-easing);
+    }
+  }
+
+  /* Windows high contrast: keep a visible border in every state. */
+  @media (forced-colors: active) {
+    .box {
+      border-color: FieldText;
+    }
+
+    .box:has(.control[aria-invalid='true']) {
+      border-width: var(--border-2);
+    }
+
+    .box:has(.control:disabled) {
+      border-color: GrayText;
+    }
+  }
+}

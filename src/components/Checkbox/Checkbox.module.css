@@ -1,0 +1,136 @@
+@layer components {
+  .checkbox {
+    display: flex;
+    align-items: flex-start;
+    gap: var(--gap-sm);
+    color: var(--color-text);
+  }
+
+  .control {
+    position: relative;
+    display: inline-grid;
+    flex-shrink: 0;
+    place-items: center;
+    /* Align the box with the first line of the label. */
+    margin-block-start: calc((1lh - var(--icon-size-md)) / 2);
+  }
+
+  .input {
+    appearance: none;
+    inline-size: var(--icon-size-md);
+    block-size: var(--icon-size-md);
+    margin: 0;
+    border: var(--border-2) solid var(--color-field-border);
+    border-radius: var(--radius-2);
+    background-color: var(--color-field-bg);
+    cursor: pointer;
+  }
+
+  .input:hover {
+    border-color: var(--color-field-border-hover);
+  }
+
+  .input:checked,
+  .input:indeterminate {
+    border-color: var(--color-action);
+    background-color: var(--color-action);
+  }
+
+  .input:focus-visible {
+    outline: var(--focus-ring-width) solid var(--color-focus-ring);
+    outline-offset: var(--focus-ring-offset);
+  }
+
+  .input[aria-invalid='true'] {
+    border-color: var(--color-danger);
+  }
+
+  .input:disabled {
+    border-color: var(--color-border);
+    background-color: var(--color-field-disabled-bg);
+    cursor: not-allowed;
+  }
+
+  .input:disabled:checked,
+  .input:disabled:indeterminate {
+    background-color: var(--color-text-muted);
+    border-color: var(--color-text-muted);
+  }
+
+  /* Check and dash are icons drawn over the box, shown by state. */
+  .mark {
+    position: absolute;
+    display: none;
+    color: var(--color-action-text);
+    pointer-events: none;
+  }
+
+  .input:checked:not(:indeterminate) ~ .check,
+  .input:indeterminate ~ .dash {
+    display: block;
+  }
+
+  .text {
+    display: grid;
+    gap: 2px;
+    min-inline-size: 0;
+  }
+
+  .label {
+    cursor: pointer;
+    overflow-wrap: anywhere;
+  }
+
+  .input:disabled ~ * {
+    cursor: not-allowed;
+  }
+
+  .checkbox:has(.input:disabled) .label {
+    color: var(--color-text-muted);
+    cursor: not-allowed;
+  }
+
+  .required {
+    color: var(--color-danger);
+  }
+
+  .description {
+    color: var(--color-text-muted);
+    font-size: var(--text-size-sm);
+  }
+
+  @media (prefers-reduced-motion: no-preference) {
+    .input {
+      transition:
+        background-color var(--transition-fast) var(--transition-easing),
+        border-color var(--transition-fast) var(--transition-easing);
+    }
+  }
+
+  /* Windows high contrast: use system colours explicitly so the checked state never disappears. */
+  @media (forced-colors: active) {
+    .input,
+    .mark {
+      forced-color-adjust: none;
+    }
+
+    .input {
+      border-color: FieldText;
+      background-color: Field;
+    }
+
+    .input:checked,
+    .input:indeterminate {
+      border-color: Highlight;
+      background-color: Highlight;
+    }
+
+    .input:disabled {
+      border-color: GrayText;
+    }
+
+    .mark {
+      color: HighlightText;
+    }
+  }
+}
