@@ -4,3 +4,4 @@
 export * from './subscriptions';
 export * from './library';
 export * from './orders';
+export * from './pages';
