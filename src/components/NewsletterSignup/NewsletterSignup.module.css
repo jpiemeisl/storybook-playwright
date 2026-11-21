@@ -1,0 +1,35 @@
+@layer components {
+  .form {
+    container-type: inline-size;
+    display: grid;
+    gap: var(--gap-md);
+    color: var(--color-text);
+  }
+
+  .row {
+    display: grid;
+    gap: var(--gap-md);
+  }
+
+  .submit {
+    justify-self: start;
+  }
+
+  /* Inline: fields and button share a row once there is room. The button is offset by one label
+     line so it lines up with the inputs, and stays put when an error appears under a field. */
+  @container (min-width: 32rem) {
+    .inline .row {
+      display: flex;
+      align-items: flex-start;
+    }
+
+    .inline .row > :not(.submit) {
+      flex: 1;
+    }
+
+    .inline .submit {
+      flex-shrink: 0;
+      margin-block-start: calc(1lh + var(--gap-xs));
+    }
+  }
+}
