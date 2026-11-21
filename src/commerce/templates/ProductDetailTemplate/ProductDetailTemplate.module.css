@@ -1,0 +1,77 @@
+@layer components {
+  .root {
+    display: grid;
+    gap: var(--gap-lg);
+    container-type: inline-size;
+  }
+
+  .layout {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    gap: var(--gap-xl);
+  }
+
+  .gallery {
+    min-inline-size: 0;
+  }
+
+  .info {
+    display: grid;
+    align-content: start;
+    gap: var(--gap-md);
+    min-inline-size: 0;
+  }
+
+  .title {
+    overflow-wrap: anywhere;
+  }
+
+  .badges {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: var(--gap-sm);
+  }
+
+  .badges:empty {
+    display: none;
+  }
+
+  .buy {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
+    align-items: start;
+    gap: var(--gap-sm);
+  }
+
+  @container (min-width: 56rem) {
+    .layout {
+      grid-template-columns: minmax(0, 7fr) minmax(0, 5fr);
+    }
+
+    /* Below the sticky site header, never under it. */
+    .gallery {
+      position: sticky;
+      inset-block-start: calc(var(--header-height) + var(--gap-md));
+      align-self: start;
+    }
+  }
+
+  .reviews {
+    display: grid;
+    gap: var(--gap-lg);
+    container-type: inline-size;
+  }
+
+  .reviewsLayout {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    gap: var(--gap-xl);
+  }
+
+  @container (min-width: 48rem) {
+    .reviewsLayout {
+      grid-template-columns: 18rem minmax(0, 1fr);
+    }
+  }
+}

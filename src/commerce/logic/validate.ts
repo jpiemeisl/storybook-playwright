@@ -149,7 +149,7 @@ export function validateProduct(product: unknown): ValidationIssue[] {
     if (types.filter((t) => t === 'one-time').length > 1) c.report('duplicate-id', 'purchaseOptions', 'Only one one-time purchase option is allowed.');
 
     c.child('digital', c.value.kind === 'digital', (d) => {
-      if (c.value.kind !== 'digital') d.report('invalid-field', '', '"digital" is only for digital products.');
+      if (c.value.kind !== 'digital') c.report('invalid-field', 'digital', '"digital" is only for digital products.');
       d.each('files', 1, 50, (f) => {
         f.str('id');
         f.str('name');
@@ -205,7 +205,7 @@ export function validateReviewsData(data: unknown): ValidationIssue[] {
           if (!isInt(d.value[star], 0)) d.report('invalid-field', star, `Count for ${star} stars must be a whole number.`);
           else total += d.value[star] as number;
         }
-        if (isInt(s.value.count, 0) && total !== s.value.count) d.report('invalid-field', '', `Distribution adds up to ${total}, not ${String(s.value.count)}.`);
+        if (isInt(s.value.count, 0) && total !== s.value.count) s.report('invalid-field', 'distribution', `Distribution adds up to ${total}, not ${String(s.value.count)}.`);
       });
     });
     c.each('reviews', 0, 500, (r) => {

@@ -41,3 +41,5 @@ export * from './logic/reviews';
 export * from './logic/collection';
 export type * from './types/pages';
 export type { CommerceContext } from './types/context';
+export * from './templates';
+export * from './logic/validatePages';

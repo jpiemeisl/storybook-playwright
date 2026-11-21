@@ -1,0 +1,79 @@
+@layer components {
+  /* Container queries below respond to the template's width, not the viewport. */
+  .root {
+    display: grid;
+    gap: var(--gap-xl);
+    container-type: inline-size;
+  }
+
+  .section {
+    display: grid;
+    gap: var(--gap-md);
+  }
+
+  .tiles {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .layout {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    gap: var(--gap-xl);
+  }
+
+  .sidebar {
+    display: none;
+  }
+
+  .main {
+    display: grid;
+    align-content: start;
+    gap: var(--gap-md);
+    min-inline-size: 0;
+  }
+
+  .toolbar {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: flex-end;
+    justify-content: space-between;
+    gap: var(--gap-sm);
+  }
+
+  .sortForm {
+    display: flex;
+    align-items: flex-end;
+    gap: var(--gap-xs);
+    margin-inline-start: auto;
+  }
+
+  @container (min-width: 60rem) {
+    .layout {
+      grid-template-columns: 16rem minmax(0, 1fr);
+    }
+
+    .sidebar {
+      display: block;
+      align-self: start;
+    }
+
+    .drawer {
+      display: none;
+    }
+
+    .toolbar {
+      justify-content: flex-end;
+    }
+  }
+
+  .visuallyHidden {
+    position: absolute;
+    inline-size: 1px;
+    block-size: 1px;
+    overflow: hidden;
+    clip-path: inset(50%);
+    white-space: nowrap;
+  }
+}
