@@ -1,6 +1,6 @@
 /*
  * Site-wide chrome (header, footer, announcement): serializable versions of the navigation props.
- * Used by page templates (Phase 8).
+ * Rendered by SiteLayout (via chromeToProps).
  */
 import type { NavItem, SocialLink } from './navigation';
 import type { ImageRef, LinkRef } from './shared';
@@ -47,8 +47,10 @@ export interface AnnouncementContent {
   message: string;
   /** Optional link after the message. */
   link?: LinkRef;
-  /** Default "info". */
-  tone?: 'info' | 'success' | 'warning';
+  /** Colour treatment. Default "accent". */
+  tone?: 'accent' | 'inverse' | 'subtle';
+  /** Show a dismiss button. Dismissal is kept in memory only unless the host app controls it. */
+  dismissible?: boolean;
 }
 
 /** Header, footer and optional announcement for every page. */
