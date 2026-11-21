@@ -1,0 +1,43 @@
+{
+  "id": "logos",
+  "type": "logoStrip",
+  "heading": "Trusted by 1,200 small businesses",
+  "items": [
+    {
+      "name": "Northwind Outfitters",
+      "image": {
+        "src": "/fixtures/images/logo-northwind.svg",
+        "alt": "",
+        "width": 180,
+        "height": 48
+      }
+    },
+    {
+      "name": "Copperleaf Studio",
+      "image": {
+        "src": "/fixtures/images/logo-copperleaf.svg",
+        "alt": "",
+        "width": 160,
+        "height": 48
+      }
+    },
+    {
+      "name": "Tidewater Marine",
+      "image": {
+        "src": "/fixtures/images/logo-tidewater.svg",
+        "alt": "",
+        "width": 170,
+        "height": 48
+      }
+    },
+    {
+      "name": "Quarry Supply Co.",
+      "image": {
+        "src": "/fixtures/images/logo-quarry.svg",
+        "alt": "",
+        "width": 150,
+        "height": 48
+      }
+    }
+  ]
+}

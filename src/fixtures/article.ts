@@ -3,7 +3,7 @@
  * and as an HTML string (Prose sanitizedHtml). Inline markup: `code` and [text](href).
  */
 import { createElement as h, Fragment, type ReactNode } from 'react';
-import type { TocItem } from '../content-types/content';
+import type { TocItem } from '../component-types/content';
 import { fixtureImages } from './images';
 
 type ListItem = string | { text: string; children: string[] };

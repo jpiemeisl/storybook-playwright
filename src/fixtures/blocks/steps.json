@@ -1,0 +1,19 @@
+{
+  "id": "onboarding",
+  "type": "steps",
+  "heading": "Getting started takes a week",
+  "items": [
+    {
+      "title": "Book a call",
+      "description": "30 minutes to understand your business."
+    },
+    {
+      "title": "Connect your accounts",
+      "description": "Read-only bank feeds in about ten minutes."
+    },
+    {
+      "title": "Get your first close",
+      "description": "Reconciled books by the 10th of next month."
+    }
+  ]
+}

@@ -1,0 +1,9 @@
+{
+  "id": "page-empty",
+  "slug": "edge/empty",
+  "seo": {
+    "title": "Empty page",
+    "description": "Empty page | Brightside Bookkeeping"
+  },
+  "blocks": []
+}

@@ -1,0 +1,15 @@
+{
+  "id": "cta",
+  "type": "ctaBanner",
+  "heading": "Ready for books you don’t have to think about?",
+  "body": "Book a free 30-minute consultation. We’ll tell you honestly whether we can help.",
+  "primaryAction": {
+    "label": "Book a consultation",
+    "href": "/consultation"
+  },
+  "secondaryAction": {
+    "label": "Email us",
+    "href": "mailto:hello@brightside.example"
+  },
+  "layout": "split"
+}

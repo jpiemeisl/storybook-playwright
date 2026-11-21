@@ -1,5 +1,5 @@
 import type { FocusEvent } from 'react';
-import type { CategoryItem, TagItem } from '../../content-types/content';
+import type { CategoryItem, TagItem } from '../../component-types/content';
 import { Link } from '../Link';
 import styles from './TagList.module.css';
 

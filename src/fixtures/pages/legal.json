@@ -1,0 +1,37 @@
+{
+  "id": "page-privacy",
+  "slug": "legal/privacy",
+  "seo": {
+    "title": "Privacy policy",
+    "description": "Privacy policy | Brightside Bookkeeping"
+  },
+  "blocks": [
+    {
+      "id": "legal-header",
+      "type": "pageHeader",
+      "title": "Privacy policy",
+      "description": "Last updated 1 March 2026.",
+      "breadcrumbs": [
+        {
+          "label": "Home",
+          "href": "/"
+        },
+        {
+          "label": "Legal",
+          "href": "/legal"
+        },
+        {
+          "label": "Privacy policy"
+        }
+      ]
+    },
+    {
+      "id": "legal-body",
+      "type": "richText",
+      "content": {
+        "format": "html",
+        "html": "<h2>Who we are</h2><p>Brightside Bookkeeping Ltd. (\"we\") provides bookkeeping services to small businesses.</p><h2>What we collect</h2><ul><li>Contact details you give us.</li><li>Financial records you share for bookkeeping.</li><li>Basic analytics about how our website is used.</li></ul><h2>How we use it</h2><p>Only to provide our services, meet legal obligations and, with your consent, send our newsletter.</p><h3>Retention</h3><p>We keep financial records for seven years, as required by law.</p><h2>Your rights</h2><p>You can ask for a copy of your data or ask us to delete it. Email <a href=\"mailto:privacy@brightside.example\">privacy@brightside.example</a>.</p>"
+      }
+    }
+  ]
+}

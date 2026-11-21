@@ -1,5 +1,5 @@
 import type { ReactNode } from 'react';
-import type { PageHeaderContent } from '../../content-types/content';
+import type { PageHeaderContent } from '../../component-types/content';
 import { Heading } from '../Heading';
 import { Text } from '../Text';
 import styles from './PageHeader.module.css';
@@ -33,7 +33,7 @@ export function PageHeader({
     <header className={[styles.root, styles[variant], withMedia && styles.hasMedia].filter(Boolean).join(' ')}>
       <div className={styles.layout}>
         <div className={styles.text}>
-          {breadcrumbs}
+          {breadcrumbs && <div className={styles.breadcrumbs}>{breadcrumbs}</div>}
           <Heading as={`h${headingLevel}` as const} size="4xl" className={styles.title}>
             {title}
           </Heading>

@@ -15,8 +15,8 @@ import type {
   TeamMemberContent,
   TimelineItem,
   VideoContent,
-} from '../content-types/content';
-import type { ArticleCardContent } from '../content-types/sections';
+} from '../component-types/content';
+import type { ArticleCardContent } from '../component-types/sections';
 import { fixtureImages } from './images';
 import avatarJordan from './images/avatar-jordan.svg';
 import avatarLee from './images/avatar-lee.svg';

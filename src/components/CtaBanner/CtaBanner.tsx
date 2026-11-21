@@ -1,4 +1,4 @@
-import type { CtaContent } from '../../content-types/sections';
+import type { CtaContent } from '../../component-types/sections';
 import { ActionGroup } from '../ActionGroup';
 import { Heading } from '../Heading';
 import { Text } from '../Text';

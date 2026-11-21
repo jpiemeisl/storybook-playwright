@@ -1,0 +1,37 @@
+{
+  "id": "testimonials",
+  "type": "testimonialGrid",
+  "heading": "What clients say",
+  "items": [
+    {
+      "quote": "Payroll for forty seasonal staff used to take my whole Sunday. Now it just happens.",
+      "author": {
+        "name": "Marcus Webb",
+        "role": "Operations Manager",
+        "company": "Tidewater Marine",
+        "avatar": {
+          "src": "/fixtures/images/avatar-marcus.svg",
+          "alt": "",
+          "width": 160,
+          "height": 160
+        }
+      }
+    },
+    {
+      "quote": "The quarterly calls are the most useful hour of my quarter.",
+      "author": {
+        "name": "Jordan Ellis",
+        "role": "Founder",
+        "company": "Quarry Supply Co."
+      }
+    },
+    {
+      "quote": "Our lender asked for three reports with two days’ notice. Brightside had them ready the next morning.",
+      "author": {
+        "name": "Sam Okafor",
+        "role": "Director",
+        "company": "Northwind Outfitters"
+      }
+    }
+  ]
+}

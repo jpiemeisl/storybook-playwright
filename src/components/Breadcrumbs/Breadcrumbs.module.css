@@ -8,6 +8,8 @@
     display: flex;
     flex-wrap: wrap;
     align-items: baseline;
+    /* Containers can centre the trail (e.g. a centered PageHeader). */
+    justify-content: var(--breadcrumbs-justify, flex-start);
     row-gap: var(--gap-xs);
     margin: 0;
     padding: 0;
@@ -37,8 +39,11 @@
   }
 
   .current {
+    min-inline-size: 0;
     color: var(--color-text);
     font-weight: var(--text-weight-strong);
+    /* break-word, not anywhere: only an overflowing word breaks; normal items keep their natural width. */
+    overflow-wrap: break-word;
   }
 
   .list > .ellipsis {

@@ -1,4 +1,4 @@
-import type { ArticleCardContent } from '../../content-types/sections';
+import type { ArticleCardContent } from '../../component-types/sections';
 import { ArticleCard } from '../ArticleCard';
 import { CardGrid } from '../Card';
 import { Heading } from '../Heading';

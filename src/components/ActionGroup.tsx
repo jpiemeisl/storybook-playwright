@@ -1,4 +1,4 @@
-import type { ActionLink } from '../content-types/sections';
+import type { ActionLink } from '../component-types/sections';
 import { ButtonLink } from './Button';
 import { Stack } from './Stack';
 

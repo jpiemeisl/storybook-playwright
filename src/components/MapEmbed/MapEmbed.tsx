@@ -1,6 +1,6 @@
 import { useState } from 'react';
-import type { MapContent } from '../../content-types/content';
-import type { ImageContent } from '../../content-types/sections';
+import type { MapContent } from '../../component-types/content';
+import type { ImageContent } from '../../component-types/sections';
 import { Button } from '../Button';
 import { Icon } from '../Icon';
 import { Image } from '../Image';

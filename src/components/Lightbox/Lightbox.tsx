@@ -1,5 +1,5 @@
 import { useEffect } from 'react';
-import type { GalleryImage } from '../../content-types/content';
+import type { GalleryImage } from '../../component-types/content';
 import { Icon } from '../Icon';
 import { Image } from '../Image';
 import { Modal } from '../Modal';

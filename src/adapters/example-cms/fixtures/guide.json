@@ -1,0 +1,229 @@
+{
+  "sys": {
+    "id": "cms-guide",
+    "content_type": "page"
+  },
+  "fields": {
+    "title": "Five-day close guide",
+    "slug": "guides/five-day-close",
+    "seo_title": "How to close your books in five days",
+    "no_index": false,
+    "page_template": "article",
+    "sections": [
+      {
+        "sys": {
+          "id": "cms-guide-hero",
+          "content_type": "hero_section"
+        },
+        "fields": {
+          "headline": "How to close your books in five working days",
+          "display_style": "centered"
+        }
+      },
+      {
+        "sys": {
+          "id": "cms-guide-body",
+          "content_type": "rich_text_section"
+        },
+        "fields": {
+          "body": [
+            {
+              "node_type": "paragraph",
+              "content": [
+                {
+                  "node_type": "text",
+                  "value": "Most small businesses close their books "
+                },
+                {
+                  "node_type": "text",
+                  "value": "weeks",
+                  "marks": [
+                    "italic"
+                  ]
+                },
+                {
+                  "node_type": "text",
+                  "value": " after the month ends."
+                }
+              ]
+            },
+            {
+              "node_type": "heading_2",
+              "content": [
+                {
+                  "node_type": "text",
+                  "value": "Day 1: Reconcile"
+                }
+              ]
+            },
+            {
+              "node_type": "unordered_list",
+              "content": [
+                {
+                  "node_type": "list_item",
+                  "content": [
+                    {
+                      "node_type": "paragraph",
+                      "content": [
+                        {
+                          "node_type": "text",
+                          "value": "Connect every account to a bank feed."
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "node_type": "list_item",
+                  "content": [
+                    {
+                      "node_type": "paragraph",
+                      "content": [
+                        {
+                          "node_type": "text",
+                          "value": "Match receipts "
+                        },
+                        {
+                          "node_type": "text",
+                          "value": "the same day",
+                          "marks": [
+                            "bold",
+                            "italic"
+                          ]
+                        },
+                        {
+                          "node_type": "text",
+                          "value": "."
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "node_type": "blockquote",
+              "content": [
+                {
+                  "node_type": "paragraph",
+                  "content": [
+                    {
+                      "node_type": "text",
+                      "value": "Good enough to decide on beats perfect but late."
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "node_type": "heading_3",
+              "content": [
+                {
+                  "node_type": "text",
+                  "value": "Further reading"
+                }
+              ]
+            },
+            {
+              "node_type": "paragraph",
+              "content": [
+                {
+                  "node_type": "text",
+                  "value": "See our "
+                },
+                {
+                  "node_type": "hyperlink",
+                  "url": "/guides/accruals",
+                  "content": [
+                    {
+                      "node_type": "text",
+                      "value": "guide to accruals"
+                    }
+                  ]
+                },
+                {
+                  "node_type": "text",
+                  "value": " or "
+                },
+                {
+                  "node_type": "hyperlink",
+                  "url": "javascript:alert(1)",
+                  "content": [
+                    {
+                      "node_type": "text",
+                      "value": "this unsafe link"
+                    }
+                  ]
+                },
+                {
+                  "node_type": "text",
+                  "value": "."
+                }
+              ]
+            },
+            {
+              "node_type": "embedded_entry",
+              "content": [
+                {
+                  "node_type": "text",
+                  "value": "Dropped: embeds are not supported."
+                }
+              ]
+            }
+          ]
+        }
+      },
+      {
+        "sys": {
+          "id": "cms-guide-faq",
+          "content_type": "faq_section"
+        },
+        "fields": {
+          "title": "Questions",
+          "questions": [
+            {
+              "sys": {
+                "id": "q1",
+                "content_type": "faq_item"
+              },
+              "fields": {
+                "question": "Does this work for one-person businesses?",
+                "answer": [
+                  {
+                    "node_type": "paragraph",
+                    "content": [
+                      {
+                        "node_type": "text",
+                        "value": "Yes, even more so."
+                      }
+                    ]
+                  }
+                ]
+              }
+            },
+            {
+              "sys": {
+                "id": "q2",
+                "content_type": "faq_item"
+              },
+              "fields": {
+                "question": "What software do I need?",
+                "answer": [
+                  {
+                    "node_type": "paragraph",
+                    "content": [
+                      {
+                        "node_type": "text",
+                        "value": "Any software with bank feeds."
+                      }
+                    ]
+                  }
+                ]
+              }
+            }
+          ]
+        }
+      }
+    ]
+  }
+}

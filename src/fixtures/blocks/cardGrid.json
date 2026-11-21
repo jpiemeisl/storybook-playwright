@@ -1,0 +1,53 @@
+{
+  "id": "case-studies",
+  "type": "cardGrid",
+  "heading": "Recent client stories",
+  "columns": 3,
+  "items": [
+    {
+      "title": "Cleaning up two years of books",
+      "eyebrow": "Case study",
+      "description": "How a family-run bakery went from a shoebox of receipts to reconciled accounts in six weeks.",
+      "image": {
+        "src": "/fixtures/images/studio-4x3.svg",
+        "alt": "Geometric shapes arranged on a light grey studio floor",
+        "width": 800,
+        "height": 600
+      },
+      "link": {
+        "label": "Read the bakery case study",
+        "href": "/work/cleanup"
+      }
+    },
+    {
+      "title": "Payroll for seasonal staff",
+      "eyebrow": "Case study",
+      "description": "Running payroll for a garden centre that triples its headcount every spring.",
+      "image": {
+        "src": "/fixtures/images/landscape-16x9.svg",
+        "alt": "Teal mountains under a yellow sun",
+        "width": 1280,
+        "height": 720
+      },
+      "link": {
+        "label": "Read the garden centre case study",
+        "href": "/work/seasonal-payroll"
+      }
+    },
+    {
+      "title": "Preparing for a bank loan",
+      "eyebrow": "Case study",
+      "description": "The three reports a lender asked for, and how we produced them in a week.",
+      "image": {
+        "src": "/fixtures/images/portrait-3x4.svg",
+        "alt": "Framed abstract portrait on a dark wall",
+        "width": 600,
+        "height": 800
+      },
+      "link": {
+        "label": "Read the bank loan case study",
+        "href": "/work/loan"
+      }
+    }
+  ]
+}

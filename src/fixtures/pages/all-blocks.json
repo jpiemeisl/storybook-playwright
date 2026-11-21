@@ -1,0 +1,959 @@
+{
+  "id": "page-all-blocks",
+  "slug": "edge/all-blocks",
+  "seo": {
+    "title": "Every block type",
+    "description": "Every block type | Brightside Bookkeeping"
+  },
+  "blocks": [
+    {
+      "id": "all-hero",
+      "type": "hero",
+      "headline": "Bookkeeping that keeps up with your business",
+      "subhead": "Monthly books, payroll and tax-ready reports for small businesses, handled by a named accountant who answers within one working day.",
+      "primaryAction": {
+        "label": "Book a free consultation",
+        "href": "/consultation"
+      },
+      "secondaryAction": {
+        "label": "See pricing",
+        "href": "/pricing",
+        "variant": "secondary"
+      },
+      "media": {
+        "src": "/fixtures/images/hero-desk-3x2.svg",
+        "alt": "Printed invoices and a calculator on a desk",
+        "width": 1200,
+        "height": 800
+      },
+      "variant": "split",
+      "background": "default"
+    },
+    {
+      "id": "all-pageHeader",
+      "type": "pageHeader",
+      "title": "How to close your books in five working days",
+      "description": "A routine for small businesses that turns month-end from a chore into numbers you can act on.",
+      "breadcrumbs": [
+        {
+          "label": "Home",
+          "href": "/"
+        },
+        {
+          "label": "Blog",
+          "href": "/blog"
+        },
+        {
+          "label": "Five-day close"
+        }
+      ],
+      "author": {
+        "name": "Ana Ruiz",
+        "role": "Senior Accountant",
+        "avatar": {
+          "src": "/fixtures/images/avatar-ana.svg",
+          "alt": "",
+          "width": 160,
+          "height": 160
+        },
+        "href": "/team/ana-ruiz"
+      },
+      "publishedAt": "2026-03-14",
+      "readingTime": "8 min read",
+      "background": "subtle"
+    },
+    {
+      "id": "all-featureGrid",
+      "type": "featureGrid",
+      "heading": "Everything your books need, every month",
+      "intro": "One flat monthly fee. No hourly billing, no surprise invoices at year end.",
+      "columns": 3,
+      "items": [
+        {
+          "icon": "check",
+          "title": "Monthly reconciliation",
+          "description": "Every account matched to receipts by the 10th of the following month."
+        },
+        {
+          "icon": "mail",
+          "title": "A named accountant",
+          "description": "One person who knows your books, with replies within a working day.",
+          "link": {
+            "label": "Meet the team",
+            "href": "/about#team"
+          }
+        },
+        {
+          "icon": "search",
+          "title": "Receipt capture",
+          "description": "Snap a photo or forward an email; we file it against the right transaction."
+        },
+        {
+          "icon": "phone",
+          "title": "Quarterly check-ins",
+          "description": "A 30-minute call each quarter to walk through profit and cash flow."
+        },
+        {
+          "icon": "external-link",
+          "title": "Works with your bank",
+          "description": "Secure read-only feeds from over 9,000 banks and card providers."
+        },
+        {
+          "icon": "calendar",
+          "title": "Year-end handover",
+          "description": "Tax-ready reports delivered to you or your tax preparer by mid-February."
+        }
+      ],
+      "background": "default"
+    },
+    {
+      "id": "all-cardGrid",
+      "type": "cardGrid",
+      "heading": "Recent client stories",
+      "columns": 3,
+      "items": [
+        {
+          "title": "Cleaning up two years of books",
+          "eyebrow": "Case study",
+          "description": "How a family-run bakery went from a shoebox of receipts to reconciled accounts in six weeks.",
+          "image": {
+            "src": "/fixtures/images/studio-4x3.svg",
+            "alt": "Geometric shapes arranged on a light grey studio floor",
+            "width": 800,
+            "height": 600
+          },
+          "link": {
+            "label": "Read the bakery case study",
+            "href": "/work/cleanup"
+          }
+        },
+        {
+          "title": "Payroll for seasonal staff",
+          "eyebrow": "Case study",
+          "description": "Running payroll for a garden centre that triples its headcount every spring.",
+          "image": {
+            "src": "/fixtures/images/landscape-16x9.svg",
+            "alt": "Teal mountains under a yellow sun",
+            "width": 1280,
+            "height": 720
+          },
+          "link": {
+            "label": "Read the garden centre case study",
+            "href": "/work/seasonal-payroll"
+          }
+        },
+        {
+          "title": "Preparing for a bank loan",
+          "eyebrow": "Case study",
+          "description": "The three reports a lender asked for, and how we produced them in a week.",
+          "image": {
+            "src": "/fixtures/images/portrait-3x4.svg",
+            "alt": "Framed abstract portrait on a dark wall",
+            "width": 600,
+            "height": 800
+          },
+          "link": {
+            "label": "Read the bank loan case study",
+            "href": "/work/loan"
+          }
+        }
+      ],
+      "background": "subtle"
+    },
+    {
+      "id": "all-articleCardGrid",
+      "type": "articleCardGrid",
+      "heading": "From the blog",
+      "items": [
+        {
+          "title": "Five receipts you can stop keeping",
+          "href": "/blog/receipts-you-can-stop-keeping",
+          "excerpt": "Digital copies are fine for most of them.",
+          "category": "Tax",
+          "publishedAt": "2026-03-14",
+          "readingTimeMinutes": 4,
+          "author": {
+            "name": "Ana Ruiz",
+            "avatar": {
+              "src": "/fixtures/images/avatar-ana.svg",
+              "alt": "",
+              "width": 160,
+              "height": 160
+            }
+          },
+          "image": {
+            "src": "/fixtures/images/hero-desk-3x2.svg",
+            "alt": "Printed invoices and a calculator on a desk",
+            "width": 1200,
+            "height": 800
+          }
+        },
+        {
+          "title": "Cash flow forecasting in an afternoon",
+          "href": "/blog/cash-flow-forecast",
+          "excerpt": "A 13-week forecast from last month’s bank statement.",
+          "category": "Planning",
+          "publishedAt": "2026-02-02",
+          "readingTimeMinutes": 7,
+          "author": {
+            "name": "Marcus Webb",
+            "avatar": {
+              "src": "/fixtures/images/avatar-marcus.svg",
+              "alt": "",
+              "width": 160,
+              "height": 160
+            }
+          },
+          "image": {
+            "src": "/fixtures/images/hero-office-16x9.svg",
+            "alt": "A tidy office with a laptop showing a chart, a wall clock and a coffee mug",
+            "width": 1600,
+            "height": 900
+          }
+        },
+        {
+          "title": "When to hire a bookkeeper",
+          "href": "/blog/when-to-hire",
+          "excerpt": "Signs you have outgrown doing it yourself.",
+          "category": "Growth",
+          "publishedAt": "2025-11-20",
+          "readingTimeMinutes": 5,
+          "author": {
+            "name": "Ana Ruiz",
+            "avatar": {
+              "src": "/fixtures/images/avatar-ana.svg",
+              "alt": "",
+              "width": 160,
+              "height": 160
+            }
+          },
+          "image": {
+            "src": "/fixtures/images/studio-4x3.svg",
+            "alt": "Geometric shapes arranged on a light grey studio floor",
+            "width": 800,
+            "height": 600
+          }
+        }
+      ],
+      "background": "default"
+    },
+    {
+      "id": "all-mediaText",
+      "type": "mediaText",
+      "eyebrow": "How it works",
+      "heading": "Connect your accounts once, and we take it from there",
+      "body": {
+        "format": "html",
+        "html": "<p>Link your bank and card accounts in about ten minutes. Each month we categorise transactions, chase missing receipts and send you a one-page summary.</p>"
+      },
+      "media": {
+        "src": "/fixtures/images/hero-office-16x9.svg",
+        "alt": "A tidy office with a laptop showing a chart, a wall clock and a coffee mug",
+        "width": 1600,
+        "height": 900
+      },
+      "actions": [
+        {
+          "label": "Start onboarding",
+          "href": "/onboarding"
+        },
+        {
+          "label": "Watch a 2-minute tour",
+          "href": "/tour"
+        }
+      ],
+      "background": "subtle"
+    },
+    {
+      "id": "all-ctaBanner",
+      "type": "ctaBanner",
+      "heading": "Ready for books you don’t have to think about?",
+      "body": "Book a free 30-minute consultation. We’ll tell you honestly whether we can help.",
+      "primaryAction": {
+        "label": "Book a consultation",
+        "href": "/consultation"
+      },
+      "secondaryAction": {
+        "label": "Email us",
+        "href": "mailto:hello@brightside.example"
+      },
+      "layout": "split",
+      "background": "default"
+    },
+    {
+      "id": "all-stats",
+      "type": "stats",
+      "heading": "Brightside in numbers",
+      "items": [
+        {
+          "value": "1,200+",
+          "label": "Small businesses served",
+          "description": "Across retail, trades, hospitality and services."
+        },
+        {
+          "value": "98%",
+          "label": "Filings on time",
+          "description": "Measured over the last three tax years."
+        },
+        {
+          "value": "1 day",
+          "label": "Typical reply time",
+          "description": "From your named accountant."
+        },
+        {
+          "value": "$0",
+          "label": "Setup fees",
+          "description": "For businesses with up to three accounts."
+        }
+      ],
+      "background": "subtle"
+    },
+    {
+      "id": "all-testimonial",
+      "type": "testimonial",
+      "testimonial": {
+        "quote": "We went from dreading month-end to barely noticing it. Ana spotted a duplicate supplier payment in the first week that more than covered the fee.",
+        "author": {
+          "name": "Priya Natarajan",
+          "role": "Owner",
+          "company": "Copperleaf Studio",
+          "avatar": {
+            "src": "/fixtures/images/avatar-ana.svg",
+            "alt": "",
+            "width": 160,
+            "height": 160
+          }
+        },
+        "companyLogo": {
+          "src": "/fixtures/images/logo-copperleaf.svg",
+          "alt": "Copperleaf Studio",
+          "width": 160,
+          "height": 48
+        }
+      },
+      "background": "default"
+    },
+    {
+      "id": "all-testimonialGrid",
+      "type": "testimonialGrid",
+      "heading": "What clients say",
+      "items": [
+        {
+          "quote": "Payroll for forty seasonal staff used to take my whole Sunday. Now it just happens.",
+          "author": {
+            "name": "Marcus Webb",
+            "role": "Operations Manager",
+            "company": "Tidewater Marine",
+            "avatar": {
+              "src": "/fixtures/images/avatar-marcus.svg",
+              "alt": "",
+              "width": 160,
+              "height": 160
+            }
+          }
+        },
+        {
+          "quote": "The quarterly calls are the most useful hour of my quarter.",
+          "author": {
+            "name": "Jordan Ellis",
+            "role": "Founder",
+            "company": "Quarry Supply Co."
+          }
+        },
+        {
+          "quote": "Our lender asked for three reports with two days’ notice. Brightside had them ready the next morning.",
+          "author": {
+            "name": "Sam Okafor",
+            "role": "Director",
+            "company": "Northwind Outfitters"
+          }
+        }
+      ],
+      "background": "subtle"
+    },
+    {
+      "id": "all-logoStrip",
+      "type": "logoStrip",
+      "heading": "Trusted by 1,200 small businesses",
+      "items": [
+        {
+          "name": "Northwind Outfitters",
+          "image": {
+            "src": "/fixtures/images/logo-northwind.svg",
+            "alt": "",
+            "width": 180,
+            "height": 48
+          }
+        },
+        {
+          "name": "Copperleaf Studio",
+          "image": {
+            "src": "/fixtures/images/logo-copperleaf.svg",
+            "alt": "",
+            "width": 160,
+            "height": 48
+          }
+        },
+        {
+          "name": "Tidewater Marine",
+          "image": {
+            "src": "/fixtures/images/logo-tidewater.svg",
+            "alt": "",
+            "width": 170,
+            "height": 48
+          }
+        },
+        {
+          "name": "Quarry Supply Co.",
+          "image": {
+            "src": "/fixtures/images/logo-quarry.svg",
+            "alt": "",
+            "width": 150,
+            "height": 48
+          }
+        }
+      ],
+      "background": "default"
+    },
+    {
+      "id": "all-faq",
+      "type": "faq",
+      "heading": "Frequently asked questions",
+      "items": [
+        {
+          "id": "switch",
+          "question": "Can you take over from my current bookkeeper mid-year?",
+          "answer": {
+            "format": "html",
+            "html": "<p>Yes. We start from your last reconciled month and catch up the rest, usually within three weeks.</p>"
+          }
+        },
+        {
+          "id": "software",
+          "question": "Which accounting software do you use?",
+          "answer": {
+            "format": "html",
+            "html": "<p>We work in QuickBooks Online and Xero, and migrate you for free on annual plans.</p>"
+          }
+        },
+        {
+          "id": "taxes",
+          "question": "Do you file my taxes?",
+          "answer": {
+            "format": "html",
+            "html": "<p>We prepare tax-ready reports for your tax preparer. Growth includes filing through a partner CPA.</p>"
+          }
+        },
+        {
+          "id": "access",
+          "question": "Who can see my financial data?",
+          "answer": {
+            "format": "html",
+            "html": "<p>Only your named accountant and their reviewer. Bank feeds are read-only.</p>"
+          }
+        },
+        {
+          "id": "cancel",
+          "question": "What happens if I cancel?",
+          "answer": {
+            "format": "html",
+            "html": "<p>You keep full access to your books and we send a final export. No cancellation fee on monthly plans.</p>"
+          }
+        }
+      ],
+      "background": "subtle"
+    },
+    {
+      "id": "all-pricingTable",
+      "type": "pricingTable",
+      "heading": "Simple monthly pricing",
+      "intro": "Every plan includes a named accountant from Essentials up.",
+      "annualSavingsLabel": "Save 20%",
+      "tiers": [
+        {
+          "id": "starter",
+          "name": "Starter",
+          "description": "For sole traders with simple books.",
+          "price": {
+            "amount": 0,
+            "currency": "USD"
+          },
+          "interval": "month",
+          "annualPrice": {
+            "amount": 0,
+            "currency": "USD"
+          },
+          "features": [
+            {
+              "label": "1 bank account",
+              "included": true
+            },
+            {
+              "label": "Receipt capture",
+              "included": true
+            },
+            {
+              "label": "Named accountant",
+              "included": false
+            }
+          ],
+          "cta": {
+            "label": "Start free",
+            "href": "/signup?plan=starter"
+          }
+        },
+        {
+          "id": "essentials",
+          "name": "Essentials",
+          "description": "Monthly bookkeeping for growing businesses.",
+          "price": {
+            "amount": 4900,
+            "currency": "USD"
+          },
+          "interval": "month",
+          "annualPrice": {
+            "amount": 47000,
+            "currency": "USD"
+          },
+          "features": [
+            {
+              "label": "Up to 3 bank accounts",
+              "included": true
+            },
+            {
+              "label": "Named accountant",
+              "included": true
+            },
+            {
+              "label": "Payroll",
+              "included": false
+            }
+          ],
+          "cta": {
+            "label": "Choose Essentials",
+            "href": "/signup?plan=essentials"
+          }
+        },
+        {
+          "id": "growth",
+          "name": "Growth",
+          "description": "Books, payroll and tax filing in one plan.",
+          "price": {
+            "amount": 12900,
+            "currency": "USD"
+          },
+          "interval": "month",
+          "annualPrice": {
+            "amount": 123800,
+            "currency": "USD"
+          },
+          "highlighted": true,
+          "badge": "Most popular",
+          "features": [
+            {
+              "label": "Unlimited bank accounts",
+              "included": true
+            },
+            {
+              "label": "Payroll for up to 25 people",
+              "included": true
+            },
+            {
+              "label": "Tax filing via partner CPA",
+              "included": true
+            }
+          ],
+          "cta": {
+            "label": "Choose Growth",
+            "href": "/signup?plan=growth"
+          }
+        },
+        {
+          "id": "multi",
+          "name": "Multi-location",
+          "description": "For groups with several entities.",
+          "price": null,
+          "features": [
+            {
+              "label": "Consolidated reporting",
+              "included": true
+            },
+            {
+              "label": "Dedicated team",
+              "included": true
+            }
+          ],
+          "cta": {
+            "label": "Talk to us",
+            "href": "/contact?plan=multi"
+          }
+        }
+      ],
+      "background": "default"
+    },
+    {
+      "id": "all-richText",
+      "type": "richText",
+      "content": {
+        "format": "html",
+        "html": "<p>Most small businesses close their books weeks after the month ends. By then the numbers are history: useful for tax, useless for decisions. A five-day close is achievable for almost any business with fewer than fifty employees.</p><h2 id=\"day-one\">Day 1: Reconcile bank and cards</h2><p>Reconcile every account to its statement balance on the last day of the month. Anything you cannot explain in two minutes goes on a <strong>questions list</strong> rather than blocking the reconciliation.</p><ul><li>Connect every account to a live bank feed.</li><li>Forward supplier invoices to your receipts address.</li><li>Create matching rules for regular payments:<ul><li>rent and utilities</li><li>software subscriptions</li></ul></li></ul><h3 id=\"rules\">Matching rules that save time</h3><p>A good rule matches on the payee name and an amount range, and assigns both the account and the tax code. Review your rules every quarter.</p><blockquote><p>The goal of a monthly close is not perfect books. It is books good enough to make a decision on.</p></blockquote><h2 id=\"day-two\">Day 2: Receivables and payables</h2><p>Chase anything more than thirty days overdue today, not at the end of the quarter. Make sure every supplier invoice for the month is entered, even if you will pay it later. <a href=\"/guides/accruals\">Read our guide to accruals</a>.</p><ol><li>Export the aged receivables report.</li><li>Send reminders for overdue invoices.</li><li>Enter outstanding supplier bills.</li></ol><h2 id=\"day-five\">Day 5: Report and lock</h2><p>Send a one-page summary, then lock the period so nobody changes it by accident. <em>If something needs fixing later, record an adjustment in the current month.</em></p>"
+      },
+      "background": "subtle"
+    },
+    {
+      "id": "all-gallery",
+      "type": "gallery",
+      "heading": "Inside the studio",
+      "columns": 3,
+      "images": [
+        {
+          "src": "/fixtures/images/gallery/harbour.svg",
+          "alt": "Harbour at dawn with a low yellow sun",
+          "width": 1200,
+          "height": 800,
+          "caption": "Our first client, a harbour-side café."
+        },
+        {
+          "src": "/fixtures/images/gallery/desk.svg",
+          "alt": "A tidy desk with a teal notebook",
+          "width": 1000,
+          "height": 1000
+        },
+        {
+          "src": "/fixtures/images/gallery/market.svg",
+          "alt": "A busy market stall with red awnings",
+          "width": 1200,
+          "height": 900
+        },
+        {
+          "src": "/fixtures/images/gallery/lake.svg",
+          "alt": "A calm lake with teal hills",
+          "width": 1500,
+          "height": 1000
+        },
+        {
+          "src": "/fixtures/images/gallery/forest.svg",
+          "alt": "Pine forest on a green hillside",
+          "width": 1000,
+          "height": 800
+        },
+        {
+          "src": "/fixtures/images/gallery/kiln.svg",
+          "alt": "A pottery kiln glowing orange",
+          "width": 800,
+          "height": 800
+        }
+      ],
+      "background": "default"
+    },
+    {
+      "id": "all-videoEmbed",
+      "type": "videoEmbed",
+      "provider": "youtube",
+      "videoId": "bS2kLx9QpE4",
+      "title": "How a five-day close works",
+      "poster": {
+        "src": "/fixtures/images/video-poster.svg",
+        "alt": "",
+        "width": 1280,
+        "height": 720
+      },
+      "background": "subtle"
+    },
+    {
+      "id": "all-mapEmbed",
+      "type": "mapEmbed",
+      "src": "https://maps.example/embed?q=12+Harbour+Street",
+      "title": "Map showing Brightside Bookkeeping, 12 Harbour Street",
+      "address": "Brightside Bookkeeping, 12 Harbour Street, Suite 4, Portland, ME 04101",
+      "directionsHref": "https://maps.example/directions?to=12+Harbour+Street",
+      "background": "default"
+    },
+    {
+      "id": "all-team",
+      "type": "team",
+      "heading": "The team",
+      "columns": 4,
+      "members": [
+        {
+          "name": "Ana Ruiz",
+          "role": "Senior Accountant",
+          "photo": {
+            "src": "/fixtures/images/avatar-ana.svg",
+            "alt": "",
+            "width": 160,
+            "height": 160
+          },
+          "bio": "Leads month-end close for retail and hospitality clients.",
+          "social": [
+            {
+              "platform": "linkedin",
+              "href": "https://linkedin.example/in/anaruiz",
+              "label": "Ana Ruiz on LinkedIn"
+            }
+          ]
+        },
+        {
+          "name": "Marcus Webb",
+          "role": "Founder",
+          "photo": {
+            "src": "/fixtures/images/avatar-marcus.svg",
+            "alt": "",
+            "width": 160,
+            "height": 160
+          },
+          "bio": "Started Brightside in 2015 after a decade in audit."
+        },
+        {
+          "name": "Jordan Ellis",
+          "role": "Payroll Specialist",
+          "photo": {
+            "src": "/fixtures/images/avatar-jordan.svg",
+            "alt": "",
+            "width": 400,
+            "height": 400
+          },
+          "bio": "Runs payroll for 140 businesses."
+        },
+        {
+          "name": "Priya Natarajan",
+          "role": "Bookkeeper",
+          "bio": "No photo yet: initials are shown instead."
+        }
+      ],
+      "background": "subtle"
+    },
+    {
+      "id": "all-timeline",
+      "type": "timeline",
+      "heading": "Our story",
+      "items": [
+        {
+          "label": "2015",
+          "title": "Founded in a spare room",
+          "description": "Three clients and a borrowed laptop."
+        },
+        {
+          "label": "2018",
+          "title": "First office on Harbour Street",
+          "description": "The team grows to six and takes on payroll."
+        },
+        {
+          "label": "2022",
+          "title": "1,000 clients",
+          "description": "Remote-first, with clients in 38 states."
+        },
+        {
+          "label": "2026",
+          "title": "Tax filing partnership"
+        }
+      ],
+      "background": "default"
+    },
+    {
+      "id": "all-steps",
+      "type": "steps",
+      "heading": "Getting started takes a week",
+      "items": [
+        {
+          "title": "Book a call",
+          "description": "30 minutes to understand your business."
+        },
+        {
+          "title": "Connect your accounts",
+          "description": "Read-only bank feeds in about ten minutes."
+        },
+        {
+          "title": "Get your first close",
+          "description": "Reconciled books by the 10th of next month."
+        }
+      ],
+      "background": "subtle"
+    },
+    {
+      "id": "all-tabs",
+      "type": "tabs",
+      "heading": "What’s included",
+      "label": "Service details",
+      "tabs": [
+        {
+          "id": "overview",
+          "label": "Overview",
+          "richText": {
+            "format": "html",
+            "html": "<p>Monthly bookkeeping with a named accountant, reconciled by the 10th of each month, plus a one-page summary of how the business did.</p>"
+          }
+        },
+        {
+          "id": "results",
+          "label": "Results",
+          "blocks": [
+            {
+              "id": "tab-stats",
+              "type": "stats",
+              "items": [
+                {
+                  "value": "10th",
+                  "label": "Books closed by"
+                },
+                {
+                  "value": "1 day",
+                  "label": "Reply time"
+                },
+                {
+                  "value": "98%",
+                  "label": "On-time filings"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "limits",
+          "label": "Plan limits",
+          "blocks": [
+            {
+              "id": "tab-table",
+              "type": "table",
+              "caption": "Plan limits",
+              "columns": [
+                {
+                  "key": "plan",
+                  "header": "Plan"
+                },
+                {
+                  "key": "accounts",
+                  "header": "Bank accounts",
+                  "align": "center"
+                },
+                {
+                  "key": "price",
+                  "header": "Monthly price",
+                  "numeric": true
+                }
+              ],
+              "rows": [
+                {
+                  "plan": "Starter",
+                  "accounts": "1",
+                  "price": "$0"
+                },
+                {
+                  "plan": "Essentials",
+                  "accounts": "3",
+                  "price": "$49"
+                },
+                {
+                  "plan": "Growth",
+                  "accounts": "Unlimited",
+                  "price": "$129"
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "background": "default"
+    },
+    {
+      "id": "all-table",
+      "type": "table",
+      "caption": "Monthly expense comparison (USD)",
+      "striped": true,
+      "columns": [
+        {
+          "key": "account",
+          "header": "Account"
+        },
+        {
+          "key": "jan",
+          "header": "Jan",
+          "numeric": true
+        },
+        {
+          "key": "feb",
+          "header": "Feb",
+          "numeric": true
+        },
+        {
+          "key": "mar",
+          "header": "Mar",
+          "numeric": true
+        }
+      ],
+      "rows": [
+        {
+          "account": "Rent",
+          "jan": "4,200",
+          "feb": "4,200",
+          "mar": "4,200"
+        },
+        {
+          "account": "Software",
+          "jan": "648",
+          "feb": "651",
+          "mar": "1,302"
+        },
+        {
+          "account": "Contractors",
+          "jan": "2,900",
+          "feb": "4,100",
+          "mar": null
+        },
+        {
+          "account": "Travel",
+          "jan": "1,480",
+          "feb": "310",
+          "mar": "265"
+        }
+      ],
+      "background": "subtle"
+    },
+    {
+      "id": "all-contactForm",
+      "type": "contactForm",
+      "heading": "Send us a message",
+      "intro": "We reply within one working day.",
+      "subjectOptions": [
+        {
+          "value": "new-client",
+          "label": "Becoming a new client"
+        },
+        {
+          "value": "existing",
+          "label": "Question about my account"
+        },
+        {
+          "value": "billing",
+          "label": "Billing and invoices"
+        },
+        {
+          "value": "other",
+          "label": "Something else"
+        }
+      ],
+      "consentLabel": "I agree to Brightside storing my details to reply to this message.",
+      "background": "default"
+    },
+    {
+      "id": "all-newsletterSignup",
+      "type": "newsletterSignup",
+      "heading": "One practical tip a month",
+      "description": "Short, useful and never more than once a month.",
+      "showName": true,
+      "background": "subtle"
+    },
+    {
+      "id": "all-divider",
+      "type": "divider",
+      "label": "or",
+      "background": "default"
+    },
+    {
+      "id": "all-spacer",
+      "type": "spacer",
+      "size": "md",
+      "background": "subtle"
+    }
+  ]
+}

@@ -5,7 +5,7 @@
 import type { ReactNode } from 'react';
 import type { IconName } from '../components/Icon';
 import type { ImageProps } from '../components/Image';
-import type { Money } from './money';
+import type { Money } from '../content-types/money';
 
 /** The parts of an Image a content editor supplies. */
 export type ImageContent = Pick<ImageProps, 'src' | 'alt' | 'width' | 'height' | 'srcSet' | 'sizes'>;

@@ -1,4 +1,4 @@
-import type { TeamMemberContent } from '../../content-types/content';
+import type { TeamMemberContent } from '../../component-types/content';
 import { initials } from '../AuthorByline';
 import { Grid } from '../Grid';
 import { Icon } from '../Icon';

@@ -39,6 +39,16 @@
     text-align: center;
   }
 
+  /* Full width even in the centered layout: Breadcrumbs is a size container, so shrink-to-fit would collapse it. */
+  .breadcrumbs {
+    justify-self: stretch;
+    min-inline-size: 0;
+  }
+
+  .centered .breadcrumbs {
+    --breadcrumbs-justify: center;
+  }
+
   .centered .meta,
   .centered .actions {
     justify-content: center;

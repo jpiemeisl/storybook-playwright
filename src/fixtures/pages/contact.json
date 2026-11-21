@@ -1,0 +1,91 @@
+{
+  "id": "page-contact",
+  "slug": "contact",
+  "seo": {
+    "title": "Contact us",
+    "description": "Contact us | Brightside Bookkeeping"
+  },
+  "blocks": [
+    {
+      "id": "contact-header",
+      "type": "pageHeader",
+      "title": "Contact us",
+      "description": "Questions about your books, or about working with us? We reply within one working day.",
+      "breadcrumbs": [
+        {
+          "label": "Home",
+          "href": "/"
+        },
+        {
+          "label": "Contact"
+        }
+      ]
+    },
+    {
+      "id": "contact-form-block",
+      "type": "contactForm",
+      "heading": "Send us a message",
+      "intro": "We reply within one working day.",
+      "subjectOptions": [
+        {
+          "value": "new-client",
+          "label": "Becoming a new client"
+        },
+        {
+          "value": "existing",
+          "label": "Question about my account"
+        },
+        {
+          "value": "billing",
+          "label": "Billing and invoices"
+        },
+        {
+          "value": "other",
+          "label": "Something else"
+        }
+      ],
+      "consentLabel": "I agree to Brightside storing my details to reply to this message."
+    },
+    {
+      "id": "contact-map",
+      "type": "mapEmbed",
+      "src": "https://maps.example/embed?q=12+Harbour+Street",
+      "title": "Map showing Brightside Bookkeeping, 12 Harbour Street",
+      "address": "Brightside Bookkeeping, 12 Harbour Street, Suite 4, Portland, ME 04101",
+      "directionsHref": "https://maps.example/directions?to=12+Harbour+Street",
+      "background": "subtle"
+    },
+    {
+      "id": "contact-faq",
+      "type": "faq",
+      "anchorId": "faq",
+      "heading": "Before you get in touch",
+      "items": [
+        {
+          "id": "switch",
+          "question": "Can you take over from my current bookkeeper mid-year?",
+          "answer": {
+            "format": "html",
+            "html": "<p>Yes. We start from your last reconciled month and catch up the rest, usually within three weeks.</p>"
+          }
+        },
+        {
+          "id": "software",
+          "question": "Which accounting software do you use?",
+          "answer": {
+            "format": "html",
+            "html": "<p>We work in QuickBooks Online and Xero, and migrate you for free on annual plans.</p>"
+          }
+        },
+        {
+          "id": "taxes",
+          "question": "Do you file my taxes?",
+          "answer": {
+            "format": "html",
+            "html": "<p>We prepare tax-ready reports for your tax preparer. Growth includes filing through a partner CPA.</p>"
+          }
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,8 @@
+{
+  "id": "map",
+  "type": "mapEmbed",
+  "src": "https://maps.example/embed?q=12+Harbour+Street",
+  "title": "Map showing Brightside Bookkeeping, 12 Harbour Street",
+  "address": "Brightside Bookkeeping, 12 Harbour Street, Suite 4, Portland, ME 04101",
+  "directionsHref": "https://maps.example/directions?to=12+Harbour+Street"
+}

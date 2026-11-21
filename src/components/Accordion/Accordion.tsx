@@ -1,5 +1,5 @@
 import { useId, useRef, useState, type KeyboardEvent, type ReactNode } from 'react';
-import type { FaqItem } from '../../content-types/sections';
+import type { FaqItem } from '../../component-types/sections';
 import { Heading } from '../Heading';
 import { Icon } from '../Icon';
 import { Text } from '../Text';

@@ -1,5 +1,5 @@
 import { useEffect, useId, useState } from 'react';
-import type { TocItem } from '../../content-types/content';
+import type { TocItem } from '../../component-types/content';
 import { Link } from '../Link';
 import styles from './TableOfContents.module.css';
 

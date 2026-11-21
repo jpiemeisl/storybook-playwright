@@ -1,4 +1,4 @@
-import type { StepItem, TimelineItem } from '../../content-types/content';
+import type { StepItem, TimelineItem } from '../../component-types/content';
 import { Icon } from '../Icon';
 import styles from './Timeline.module.css';
 

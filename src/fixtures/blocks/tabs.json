@@ -1,0 +1,84 @@
+{
+  "id": "service-tabs",
+  "type": "tabs",
+  "heading": "What’s included",
+  "label": "Service details",
+  "tabs": [
+    {
+      "id": "overview",
+      "label": "Overview",
+      "richText": {
+        "format": "html",
+        "html": "<p>Monthly bookkeeping with a named accountant, reconciled by the 10th of each month, plus a one-page summary of how the business did.</p>"
+      }
+    },
+    {
+      "id": "results",
+      "label": "Results",
+      "blocks": [
+        {
+          "id": "tab-stats",
+          "type": "stats",
+          "items": [
+            {
+              "value": "10th",
+              "label": "Books closed by"
+            },
+            {
+              "value": "1 day",
+              "label": "Reply time"
+            },
+            {
+              "value": "98%",
+              "label": "On-time filings"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "limits",
+      "label": "Plan limits",
+      "blocks": [
+        {
+          "id": "tab-table",
+          "type": "table",
+          "caption": "Plan limits",
+          "columns": [
+            {
+              "key": "plan",
+              "header": "Plan"
+            },
+            {
+              "key": "accounts",
+              "header": "Bank accounts",
+              "align": "center"
+            },
+            {
+              "key": "price",
+              "header": "Monthly price",
+              "numeric": true
+            }
+          ],
+          "rows": [
+            {
+              "plan": "Starter",
+              "accounts": "1",
+              "price": "$0"
+            },
+            {
+              "plan": "Essentials",
+              "accounts": "3",
+              "price": "$49"
+            },
+            {
+              "plan": "Growth",
+              "accounts": "Unlimited",
+              "price": "$129"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,27 @@
+{
+  "id": "numbers",
+  "type": "stats",
+  "heading": "Brightside in numbers",
+  "items": [
+    {
+      "value": "1,200+",
+      "label": "Small businesses served",
+      "description": "Across retail, trades, hospitality and services."
+    },
+    {
+      "value": "98%",
+      "label": "Filings on time",
+      "description": "Measured over the last three tax years."
+    },
+    {
+      "value": "1 day",
+      "label": "Typical reply time",
+      "description": "From your named accountant."
+    },
+    {
+      "value": "$0",
+      "label": "Setup fees",
+      "description": "For businesses with up to three accounts."
+    }
+  ]
+}

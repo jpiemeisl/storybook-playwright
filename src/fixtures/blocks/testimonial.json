@@ -1,0 +1,24 @@
+{
+  "id": "quote",
+  "type": "testimonial",
+  "testimonial": {
+    "quote": "We went from dreading month-end to barely noticing it. Ana spotted a duplicate supplier payment in the first week that more than covered the fee.",
+    "author": {
+      "name": "Priya Natarajan",
+      "role": "Owner",
+      "company": "Copperleaf Studio",
+      "avatar": {
+        "src": "/fixtures/images/avatar-ana.svg",
+        "alt": "",
+        "width": 160,
+        "height": 160
+      }
+    },
+    "companyLogo": {
+      "src": "/fixtures/images/logo-copperleaf.svg",
+      "alt": "Copperleaf Studio",
+      "width": 160,
+      "height": 48
+    }
+  }
+}

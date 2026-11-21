@@ -1,0 +1,159 @@
+{
+  "id": "page-services",
+  "slug": "services",
+  "seo": {
+    "title": "Services",
+    "description": "Services | Brightside Bookkeeping"
+  },
+  "blocks": [
+    {
+      "id": "services-header",
+      "type": "pageHeader",
+      "title": "Services",
+      "description": "Bookkeeping, payroll and tax-ready reporting for small businesses.",
+      "breadcrumbs": [
+        {
+          "label": "Home",
+          "href": "/"
+        },
+        {
+          "label": "Services"
+        }
+      ]
+    },
+    {
+      "id": "services-cards",
+      "type": "cardGrid",
+      "heading": "What we do",
+      "columns": 3,
+      "items": [
+        {
+          "title": "Monthly bookkeeping",
+          "description": "Reconciled books by the 10th of every month.",
+          "image": {
+            "src": "/fixtures/images/studio-4x3.svg",
+            "alt": "Geometric shapes arranged on a light grey studio floor",
+            "width": 800,
+            "height": 600
+          },
+          "link": {
+            "label": "Monthly bookkeeping",
+            "href": "/services/bookkeeping"
+          }
+        },
+        {
+          "title": "Payroll",
+          "description": "Accurate, on-time payroll for up to 25 people.",
+          "image": {
+            "src": "/fixtures/images/landscape-16x9.svg",
+            "alt": "Teal mountains under a yellow sun",
+            "width": 1280,
+            "height": 720
+          },
+          "link": {
+            "label": "Payroll",
+            "href": "/services/payroll"
+          }
+        },
+        {
+          "title": "Tax-ready reporting",
+          "description": "Year-end packs your tax preparer will thank you for.",
+          "image": {
+            "src": "/fixtures/images/portrait-3x4.svg",
+            "alt": "Framed abstract portrait on a dark wall",
+            "width": 600,
+            "height": 800
+          },
+          "link": {
+            "label": "Tax-ready reporting",
+            "href": "/services/tax"
+          }
+        }
+      ]
+    },
+    {
+      "id": "services-steps",
+      "type": "steps",
+      "heading": "Getting started takes a week",
+      "items": [
+        {
+          "title": "Book a call",
+          "description": "30 minutes to understand your business."
+        },
+        {
+          "title": "Connect your accounts",
+          "description": "Read-only bank feeds in about ten minutes."
+        },
+        {
+          "title": "Get your first close",
+          "description": "Reconciled books by the 10th of next month."
+        }
+      ],
+      "background": "subtle"
+    },
+    {
+      "id": "services-faq",
+      "type": "faq",
+      "anchorId": "faq",
+      "heading": "Frequently asked questions",
+      "items": [
+        {
+          "id": "switch",
+          "question": "Can you take over from my current bookkeeper mid-year?",
+          "answer": {
+            "format": "html",
+            "html": "<p>Yes. We start from your last reconciled month and catch up the rest, usually within three weeks.</p>"
+          }
+        },
+        {
+          "id": "software",
+          "question": "Which accounting software do you use?",
+          "answer": {
+            "format": "html",
+            "html": "<p>We work in QuickBooks Online and Xero, and migrate you for free on annual plans.</p>"
+          }
+        },
+        {
+          "id": "taxes",
+          "question": "Do you file my taxes?",
+          "answer": {
+            "format": "html",
+            "html": "<p>We prepare tax-ready reports for your tax preparer. Growth includes filing through a partner CPA.</p>"
+          }
+        },
+        {
+          "id": "access",
+          "question": "Who can see my financial data?",
+          "answer": {
+            "format": "html",
+            "html": "<p>Only your named accountant and their reviewer. Bank feeds are read-only.</p>"
+          }
+        },
+        {
+          "id": "cancel",
+          "question": "What happens if I cancel?",
+          "answer": {
+            "format": "html",
+            "html": "<p>You keep full access to your books and we send a final export. No cancellation fee on monthly plans.</p>"
+          }
+        }
+      ]
+    },
+    {
+      "id": "services-cta",
+      "type": "ctaBanner",
+      "heading": "Ready for books you don’t have to think about?",
+      "body": "Book a free 30-minute consultation. We’ll tell you honestly whether we can help.",
+      "primaryAction": {
+        "label": "Book a consultation",
+        "href": "/consultation"
+      },
+      "secondaryAction": {
+        "label": "Email us",
+        "href": "mailto:hello@brightside.example"
+      },
+      "layout": "split",
+      "background": "subtle"
+    }
+  ]
+}

@@ -1,0 +1,162 @@
+{
+  "id": "page-long",
+  "slug": "edge/long-text",
+  "seo": {
+    "title": "Very long text everywhere",
+    "description": "Very long text everywhere | Brightside Bookkeeping"
+  },
+  "blocks": [
+    {
+      "id": "l-header",
+      "type": "pageHeader",
+      "title": "Comprehensive month-end reconciliation, payroll processing and tax-ready reporting for growing multi-location retail and hospitality businesses across every state",
+      "description": "Comprehensive month-end reconciliation, payroll processing and tax-ready reporting for growing multi-location retail and hospitality businesses across every state. Comprehensive month-end reconciliation, payroll processing and tax-ready reporting for growing multi-location retail and hospitality businesses across every state. ",
+      "breadcrumbs": [
+        {
+          "label": "Home",
+          "href": "/"
+        },
+        {
+          "label": "Comprehensive month-end reconciliation, payroll processing and tax-ready reporting for growing multi-location retail and hospitality businesses across every state",
+          "href": "/long"
+        },
+        {
+          "label": "Supercalifragilisticexpialidociousbookkeepingreconciliationautomation"
+        }
+      ],
+      "author": {
+        "name": "Alexandra Montgomery-Fairweather-Okonkwo",
+        "role": "Head of Client Onboarding and Systems Migration"
+      },
+      "publishedAt": "2026-03-14",
+      "readingTime": "45 min read"
+    },
+    {
+      "id": "l-features",
+      "type": "featureGrid",
+      "heading": "Comprehensive month-end reconciliation, payroll processing and tax-ready reporting for growing multi-location retail and hospitality businesses across every state",
+      "intro": "One flat monthly fee. No hourly billing, no surprise invoices at year end.",
+      "columns": 3,
+      "items": [
+        {
+          "icon": "check",
+          "title": "Monthly reconciliation Supercalifragilisticexpialidociousbookkeepingreconciliationautomation",
+          "description": "Every account matched to receipts by the 10th of the following month. Every account matched to receipts by the 10th of the following month. Every account matched to receipts by the 10th of the following month. "
+        },
+        {
+          "icon": "mail",
+          "title": "A named accountant Supercalifragilisticexpialidociousbookkeepingreconciliationautomation",
+          "description": "One person who knows your books, with replies within a working day. One person who knows your books, with replies within a working day. One person who knows your books, with replies within a working day. ",
+          "link": {
+            "label": "Meet the team",
+            "href": "/about#team"
+          }
+        },
+        {
+          "icon": "search",
+          "title": "Receipt capture Supercalifragilisticexpialidociousbookkeepingreconciliationautomation",
+          "description": "Snap a photo or forward an email; we file it against the right transaction. Snap a photo or forward an email; we file it against the right transaction. Snap a photo or forward an email; we file it against the right transaction. "
+        },
+        {
+          "icon": "phone",
+          "title": "Quarterly check-ins Supercalifragilisticexpialidociousbookkeepingreconciliationautomation",
+          "description": "A 30-minute call each quarter to walk through profit and cash flow. A 30-minute call each quarter to walk through profit and cash flow. A 30-minute call each quarter to walk through profit and cash flow. "
+        },
+        {
+          "icon": "external-link",
+          "title": "Works with your bank Supercalifragilisticexpialidociousbookkeepingreconciliationautomation",
+          "description": "Secure read-only feeds from over 9,000 banks and card providers. Secure read-only feeds from over 9,000 banks and card providers. Secure read-only feeds from over 9,000 banks and card providers. "
+        },
+        {
+          "icon": "calendar",
+          "title": "Year-end handover Supercalifragilisticexpialidociousbookkeepingreconciliationautomation",
+          "description": "Tax-ready reports delivered to you or your tax preparer by mid-February. Tax-ready reports delivered to you or your tax preparer by mid-February. Tax-ready reports delivered to you or your tax preparer by mid-February. "
+        }
+      ]
+    },
+    {
+      "id": "l-cards",
+      "type": "cardGrid",
+      "heading": "Comprehensive month-end reconciliation, payroll processing and tax-ready reporting for growing multi-location retail and hospitality businesses across every state",
+      "columns": 3,
+      "items": [
+        {
+          "title": "Cleaning up two years of books: Comprehensive month-end reconciliation, payroll processing and tax-ready reporting for growing multi-location retail and hospitality businesses across every state",
+          "eyebrow": "Case study",
+          "description": "How a family-run bakery went from a shoebox of receipts to reconciled accounts in six weeks. How a family-run bakery went from a shoebox of receipts to reconciled accounts in six weeks. ",
+          "image": {
+            "src": "/fixtures/images/studio-4x3.svg",
+            "alt": "Geometric shapes arranged on a light grey studio floor",
+            "width": 800,
+            "height": 600
+          },
+          "link": {
+            "label": "Read the bakery case study",
+            "href": "/work/cleanup"
+          }
+        },
+        {
+          "title": "Payroll for seasonal staff: Comprehensive month-end reconciliation, payroll processing and tax-ready reporting for growing multi-location retail and hospitality businesses across every state",
+          "eyebrow": "Case study",
+          "description": "Running payroll for a garden centre that triples its headcount every spring. Running payroll for a garden centre that triples its headcount every spring. ",
+          "image": {
+            "src": "/fixtures/images/landscape-16x9.svg",
+            "alt": "Teal mountains under a yellow sun",
+            "width": 1280,
+            "height": 720
+          },
+          "link": {
+            "label": "Read the garden centre case study",
+            "href": "/work/seasonal-payroll"
+          }
+        },
+        {
+          "title": "Preparing for a bank loan: Comprehensive month-end reconciliation, payroll processing and tax-ready reporting for growing multi-location retail and hospitality businesses across every state",
+          "eyebrow": "Case study",
+          "description": "The three reports a lender asked for, and how we produced them in a week. The three reports a lender asked for, and how we produced them in a week. ",
+          "image": {
+            "src": "/fixtures/images/portrait-3x4.svg",
+            "alt": "Framed abstract portrait on a dark wall",
+            "width": 600,
+            "height": 800
+          },
+          "link": {
+            "label": "Read the bank loan case study",
+            "href": "/work/loan"
+          }
+        }
+      ],
+      "background": "subtle"
+    },
+    {
+      "id": "l-stats",
+      "type": "stats",
+      "heading": "Brightside in numbers",
+      "items": [
+        {
+          "value": "1,234,567,890+",
+          "label": "Comprehensive month-end reconciliation, payroll processing and tax-ready reporting for growing multi-location retail and hospitality businesses across every state"
+        },
+        {
+          "value": "Supercalifragilisticexpialidociousbookkeepingreconciliationautomation",
+          "label": "Unbroken value"
+        }
+      ]
+    },
+    {
+      "id": "l-cta",
+      "type": "ctaBanner",
+      "heading": "Comprehensive month-end reconciliation, payroll processing and tax-ready reporting for growing multi-location retail and hospitality businesses across every state",
+      "body": "Comprehensive month-end reconciliation, payroll processing and tax-ready reporting for growing multi-location retail and hospitality businesses across every state. Comprehensive month-end reconciliation, payroll processing and tax-ready reporting for growing multi-location retail and hospitality businesses across every state. ",
+      "primaryAction": {
+        "label": "Book a free thirty-minute consultation with a named accountant",
+        "href": "/consultation"
+      },
+      "secondaryAction": {
+        "label": "Email us",
+        "href": "mailto:hello@brightside.example"
+      },
+      "layout": "split"
+    }
+  ]
+}

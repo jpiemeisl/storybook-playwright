@@ -1,5 +1,5 @@
 import { useState, type CSSProperties } from 'react';
-import type { GalleryImage } from '../../content-types/content';
+import type { GalleryImage } from '../../component-types/content';
 import { Image } from '../Image';
 import { Lightbox } from '../Lightbox';
 import styles from './Gallery.module.css';

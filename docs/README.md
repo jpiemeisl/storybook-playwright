@@ -30,3 +30,9 @@ PageHeader, Prose, TableOfContents, AuthorByline, TagList/CategoryFilter, ShareL
 Gallery, Lightbox, VideoEmbed/Video, MapEmbed, Carousel, Tabs; Table, Timeline/Steps,
 TeamMember/TeamGrid; article/gallery/team fixtures; blog and about compositions. The VRT harness
 now fails on any external network request and supports `vrt.screenshot: false`.
+
+Phase 7 (branch `phase-7-content-model`): JSON-only content model (`src/content-types`: shared refs,
+26 block types, `PageContent`, `SiteChrome`, compile-time JSON guard); prop shapes with ReactNode moved
+to `src/component-types`; block registry, `BlockRenderer`, central heading levels, validators and link
+safety (`src/registry`); example CMS adapter with sanitizing rich-text conversion; JSON page/block
+fixtures; generated [`content-model.md`](content-model.md); Vitest unit tests (`npm run test:unit`).

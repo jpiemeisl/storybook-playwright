@@ -1,5 +1,5 @@
 import { Children, type ReactNode } from 'react';
-import type { CardContent } from '../../content-types/sections';
+import type { CardContent } from '../../component-types/sections';
 import { Grid } from '../Grid';
 import { Heading } from '../Heading';
 import { Image } from '../Image';

@@ -14,7 +14,7 @@ import type {
   PricingTier,
   StatItem,
   TestimonialContent,
-} from '../content-types/sections';
+} from '../component-types/sections';
 import { fixtureImages, fixtureLogos, missingImageSrc } from './images';
 
 const { heroOffice, heroDesk, standard, landscape, portrait, avatarAna, avatarMarcus } = fixtureImages;

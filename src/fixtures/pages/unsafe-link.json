@@ -1,0 +1,116 @@
+{
+  "id": "page-unsafe",
+  "slug": "edge/unsafe",
+  "seo": {
+    "title": "Unsafe links",
+    "description": "Unsafe links | Brightside Bookkeeping"
+  },
+  "blocks": [
+    {
+      "id": "x-hero",
+      "type": "hero",
+      "headline": "Links that must not work",
+      "subhead": "The secondary action, one feature link, one card link and a rich-text link use javascript: or data: URLs.",
+      "primaryAction": {
+        "label": "Book a free consultation",
+        "href": "/consultation"
+      },
+      "secondaryAction": {
+        "label": "Run script",
+        "href": "javascript:alert(1)"
+      },
+      "variant": "centered"
+    },
+    {
+      "id": "x-features",
+      "type": "featureGrid",
+      "heading": "Everything your books need, every month",
+      "intro": "One flat monthly fee. No hourly billing, no surprise invoices at year end.",
+      "columns": 3,
+      "items": [
+        {
+          "icon": "check",
+          "title": "Monthly reconciliation",
+          "description": "Every account matched to receipts by the 10th of the following month.",
+          "link": {
+            "label": "Data URL",
+            "href": "data:text/html,<script>alert(1)</script>"
+          }
+        },
+        {
+          "icon": "search",
+          "title": "Receipt capture",
+          "description": "Snap a photo or forward an email; we file it against the right transaction."
+        },
+        {
+          "icon": "phone",
+          "title": "Quarterly check-ins",
+          "description": "A 30-minute call each quarter to walk through profit and cash flow."
+        }
+      ],
+      "background": "subtle"
+    },
+    {
+      "id": "x-cards",
+      "type": "cardGrid",
+      "heading": "Recent client stories",
+      "columns": 3,
+      "items": [
+        {
+          "title": "Cleaning up two years of books",
+          "eyebrow": "Case study",
+          "description": "How a family-run bakery went from a shoebox of receipts to reconciled accounts in six weeks.",
+          "image": {
+            "src": "/fixtures/images/studio-4x3.svg",
+            "alt": "Geometric shapes arranged on a light grey studio floor",
+            "width": 800,
+            "height": 600
+          },
+          "link": {
+            "label": "Obfuscated",
+            "href": " JavaScript:void(0)"
+          }
+        },
+        {
+          "title": "Payroll for seasonal staff",
+          "eyebrow": "Case study",
+          "description": "Running payroll for a garden centre that triples its headcount every spring.",
+          "image": {
+            "src": "/fixtures/images/landscape-16x9.svg",
+            "alt": "Teal mountains under a yellow sun",
+            "width": 1280,
+            "height": 720
+          },
+          "link": {
+            "label": "Read the garden centre case study",
+            "href": "/work/seasonal-payroll"
+          }
+        },
+        {
+          "title": "Preparing for a bank loan",
+          "eyebrow": "Case study",
+          "description": "The three reports a lender asked for, and how we produced them in a week.",
+          "image": {
+            "src": "/fixtures/images/portrait-3x4.svg",
+            "alt": "Framed abstract portrait on a dark wall",
+            "width": 600,
+            "height": 800
+          },
+          "link": {
+            "label": "Read the bank loan case study",
+            "href": "/work/loan"
+          }
+        }
+      ]
+    },
+    {
+      "id": "x-text",
+      "type": "richText",
+      "content": {
+        "format": "html",
+        "html": "<p>This paragraph contains a <a href=\"javascript:alert(1)\">link that runs script</a>, which must render as plain text, and a <a href=\"/pricing\">normal link</a>.</p>"
+      },
+      "background": "subtle"
+    }
+  ]
+}

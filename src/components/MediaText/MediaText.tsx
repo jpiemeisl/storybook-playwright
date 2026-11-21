@@ -1,5 +1,5 @@
 import type { ReactNode } from 'react';
-import type { MediaTextContent } from '../../content-types/sections';
+import type { MediaTextContent } from '../../component-types/sections';
 import { ActionGroup } from '../ActionGroup';
 import { Heading } from '../Heading';
 import { Text } from '../Text';
