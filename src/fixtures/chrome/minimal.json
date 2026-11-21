@@ -1,0 +1,21 @@
+{
+  "header": {
+    "logo": {
+      "text": "Brightside",
+      "href": "/"
+    },
+    "items": []
+  },
+  "footer": {
+    "columns": [],
+    "legal": {
+      "copyright": "© 2026 Brightside Bookkeeping Ltd.",
+      "links": [
+        {
+          "label": "Privacy policy",
+          "href": "/legal/privacy"
+        }
+      ]
+    }
+  }
+}

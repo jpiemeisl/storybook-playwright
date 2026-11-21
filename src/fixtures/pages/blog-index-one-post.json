@@ -1,0 +1,88 @@
+{
+  "id": "page-blog-one",
+  "slug": "blog/category/payroll",
+  "template": "blog-index",
+  "seo": {
+    "title": "Payroll articles",
+    "description": "Payroll articles | Brightside Bookkeeping"
+  },
+  "heading": {
+    "title": "Payroll articles",
+    "breadcrumbs": [
+      {
+        "label": "Home",
+        "href": "/"
+      },
+      {
+        "label": "Blog",
+        "href": "/blog"
+      },
+      {
+        "label": "Payroll"
+      }
+    ]
+  },
+  "listing": {
+    "items": [
+      {
+        "id": "post-seasonal-payroll",
+        "title": "Payroll for seasonal staff without the April panic",
+        "href": "/blog/seasonal-payroll",
+        "excerpt": "Hiring forty people for the summer? Set up payroll before the first shift.",
+        "category": "Payroll",
+        "publishedAt": "2026-03-02",
+        "readingTime": 7,
+        "author": {
+          "name": "Marcus Webb",
+          "role": "Payroll Lead",
+          "avatar": {
+            "src": "/fixtures/images/avatar-marcus.svg",
+            "alt": "",
+            "width": 160,
+            "height": 160
+          },
+          "href": "/team/marcus-webb"
+        },
+        "image": {
+          "src": "/fixtures/images/gallery/orchard.svg",
+          "alt": "",
+          "width": 1200,
+          "height": 800
+        }
+      }
+    ],
+    "categories": [
+      {
+        "id": "all",
+        "label": "All posts",
+        "href": "/blog",
+        "count": 48
+      },
+      {
+        "id": "bookkeeping",
+        "label": "Bookkeeping",
+        "href": "/blog/category/bookkeeping",
+        "count": 16
+      },
+      {
+        "id": "payroll",
+        "label": "Payroll",
+        "href": "/blog/category/payroll",
+        "count": 16
+      },
+      {
+        "id": "tax",
+        "label": "Tax",
+        "href": "/blog/category/tax",
+        "count": 16
+      }
+    ],
+    "activeCategoryId": "payroll",
+    "pagination": {
+      "currentPage": 1,
+      "totalPages": 1,
+      "basePath": "/blog/category/payroll"
+    }
+  },
+  "blocks": []
+}

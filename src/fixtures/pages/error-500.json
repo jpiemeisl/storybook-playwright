@@ -1,0 +1,25 @@
+{
+  "id": "page-500",
+  "slug": "500",
+  "template": "error",
+  "seo": {
+    "title": "Something went wrong",
+    "description": "Something went wrong | Brightside Bookkeeping",
+    "noindex": true
+  },
+  "error": {
+    "code": 500,
+    "title": "Something went wrong on our side",
+    "message": "This is our fault, not yours. We have been told about it. Please try again in a few minutes.",
+    "primaryAction": {
+      "label": "Try again",
+      "href": "/"
+    },
+    "secondaryAction": {
+      "label": "Email support",
+      "href": "mailto:support@brightside.example"
+    },
+    "layout": "minimal"
+  },
+  "blocks": []
+}

@@ -1,0 +1,42 @@
+{
+  "id": "page-search-one",
+  "slug": "search",
+  "template": "search",
+  "seo": {
+    "title": "Search results",
+    "description": "Search results | Brightside Bookkeeping",
+    "noindex": true
+  },
+  "search": {
+    "pagination": {
+      "currentPage": 1,
+      "totalPages": 1,
+      "basePath": "/search"
+    },
+    "contactLink": {
+      "label": "Contact our team",
+      "href": "/contact"
+    },
+    "query": "kiln",
+    "total": 1,
+    "results": [
+      {
+        "id": "r1",
+        "title": "Job costing for a small builder",
+        "url": "/work/builder",
+        "type": "Case study",
+        "excerpt": "Kiln Construction caught overruns while jobs were still running.",
+        "trail": [
+          {
+            "label": "Home",
+            "href": "/"
+          },
+          {
+            "label": "Work"
+          }
+        ]
+      }
+    ]
+  },
+  "blocks": []
+}

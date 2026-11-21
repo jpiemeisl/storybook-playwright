@@ -1,0 +1,24 @@
+{
+  "id": "page-case-minimal",
+  "slug": "work/charity",
+  "template": "case-study",
+  "seo": {
+    "title": "Case study: Pier Community Trust",
+    "description": "Case study: Pier Community Trust | Brightside Bookkeeping"
+  },
+  "caseStudy": {
+    "title": "Restricted funds without the spreadsheet",
+    "client": "Pier Community Trust",
+    "body": [
+      {
+        "id": "charity-story",
+        "type": "richText",
+        "content": {
+          "format": "html",
+          "html": "<p>The trust tracked restricted grants in a spreadsheet that only one volunteer understood. We moved every grant into tracking categories, so each funder’s report now takes minutes.</p>"
+        }
+      }
+    ]
+  },
+  "blocks": []
+}

@@ -1,6 +1,7 @@
 {
   "id": "page-about",
   "slug": "about",
+  "template": "about",
   "seo": {
     "title": "About Brightside",
     "description": "About Brightside | Brightside Bookkeeping"

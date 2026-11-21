@@ -1,0 +1,27 @@
+{
+  "id": "page-post-minimal",
+  "slug": "blog/office-hours",
+  "template": "blog-post",
+  "seo": {
+    "title": "New office hours from April",
+    "description": "New office hours from April | Brightside Bookkeeping"
+  },
+  "article": {
+    "title": "New office hours from April",
+    "author": {
+      "name": "Brightside team"
+    },
+    "publishedAt": "2026-03-20",
+    "body": [
+      {
+        "id": "hours-body",
+        "type": "richText",
+        "content": {
+          "format": "html",
+          "html": "<p>From 1 April our phone lines are open from 8am to 6pm, Monday to Friday. Email replies still arrive within one working day.</p>"
+        }
+      }
+    ]
+  },
+  "blocks": []
+}

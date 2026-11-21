@@ -26,7 +26,16 @@ function pick<T>(record: Record<string, T>, name: string): T {
 const page = (name: string) => pick(pages, name);
 const block = (name: string) => pick(blocks, name);
 
-const MAIN_PAGES = ['home', 'about', 'services', 'service-detail', 'pricing', 'contact', 'blog-index', 'blog-post', 'case-study', 'landing', 'legal', 'not-found'];
+/** Composed template pages (blocks only). Structured template pages are covered by src/templates/templates.test.ts. */
+const MAIN_PAGES = ['home', 'about', 'services', 'service-detail', 'pricing', 'contact'];
+/** Template page fixtures (Phase 8). */
+const TEMPLATE_PAGES = [
+  ...MAIN_PAGES,
+  'blog-index', 'blog-index-empty', 'blog-index-one-post', 'blog-post', 'blog-post-short', 'blog-post-minimal', 'blog-post-long-titles',
+  'case-study-index', 'case-study', 'case-study-minimal', 'legal', 'landing', 'landing-with-sticky-cta',
+  'search-no-query', 'search-results', 'search-one-result', 'search-no-results', 'search-long-titles',
+  'error-404', 'error-500', 'error-503', 'thank-you',
+];
 const CLEAN_EDGE_CASES = ['empty', 'single-block', 'all-blocks', 'forty-blocks', 'long-text'];
 
 /** Renders through the real registry (toProps + components) and returns every issue reported. */
@@ -41,11 +50,11 @@ const codes = (issues: ValidationIssue[]) => issues.map((issue) => `${issue.bloc
 describe('page fixtures', () => {
   it('include every required page and edge case', () => {
     expect(Object.keys(pages).sort()).toEqual(
-      [...MAIN_PAGES, ...CLEAN_EDGE_CASES, 'unknown-block', 'broken-block', 'duplicate-ids', 'unsafe-link'].sort(),
+      [...TEMPLATE_PAGES, ...CLEAN_EDGE_CASES, 'unknown-block', 'broken-block', 'duplicate-ids', 'unsafe-link'].sort(),
     );
   });
 
-  it.each([...MAIN_PAGES, ...CLEAN_EDGE_CASES])('%s validates and renders with no issues at all', (name) => {
+  it.each([...TEMPLATE_PAGES, ...CLEAN_EDGE_CASES])('%s validates and its blocks render with no issues at all', (name) => {
     expect(validatePage(page(name))).toEqual([]);
     expect(renderIssues(page(name).blocks)).toEqual([]);
   });

@@ -1,6 +1,7 @@
 {
   "id": "page-services",
   "slug": "services",
+  "template": "services",
   "seo": {
     "title": "Services",
     "description": "Services | Brightside Bookkeeping"

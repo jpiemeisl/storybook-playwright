@@ -1,0 +1,201 @@
+{
+  "id": "page-search-results",
+  "slug": "search",
+  "template": "search",
+  "seo": {
+    "title": "Search results",
+    "description": "Search results | Brightside Bookkeeping",
+    "noindex": true
+  },
+  "search": {
+    "pagination": {
+      "currentPage": 1,
+      "totalPages": 5,
+      "basePath": "/search"
+    },
+    "contactLink": {
+      "label": "Contact our team",
+      "href": "/contact"
+    },
+    "query": "payroll",
+    "total": 48,
+    "results": [
+      {
+        "id": "r1",
+        "title": "Payroll for seasonal staff without the April panic",
+        "url": "/blog/seasonal-payroll",
+        "excerpt": "Hiring forty people for the summer? Set up payroll before the first shift, and keep a checklist for every new starter.",
+        "type": "Article",
+        "trail": [
+          {
+            "label": "Home",
+            "href": "/"
+          },
+          {
+            "label": "Blog"
+          },
+          {
+            "label": "Payroll"
+          }
+        ]
+      },
+      {
+        "id": "r2",
+        "title": "Payroll",
+        "url": "/services/payroll",
+        "excerpt": "Accurate, on-time payroll for teams of up to 60, including seasonal staff, benefits and year-end filings.",
+        "type": "Service",
+        "trail": [
+          {
+            "label": "Home",
+            "href": "/"
+          },
+          {
+            "label": "Services"
+          }
+        ]
+      },
+      {
+        "id": "r3",
+        "title": "Payroll for a growing physiotherapy clinic",
+        "url": "/work/clinic",
+        "excerpt": "Payroll time cut from two days to two hours for a clinic with three locations.",
+        "type": "Case study",
+        "trail": [
+          {
+            "label": "Home",
+            "href": "/"
+          },
+          {
+            "label": "Work"
+          }
+        ]
+      },
+      {
+        "id": "r4",
+        "title": "Planning pay rises when margins are tight",
+        "url": "/blog/pay-rises",
+        "excerpt": "Ways to reward people that the budget can actually carry.",
+        "type": "Article",
+        "trail": [
+          {
+            "label": "Home",
+            "href": "/"
+          },
+          {
+            "label": "Blog"
+          },
+          {
+            "label": "Payroll"
+          }
+        ]
+      },
+      {
+        "id": "r5",
+        "title": "Contractor or employee? Getting classification right",
+        "url": "/blog/contractors",
+        "excerpt": "The questions that decide whether someone belongs on payroll.",
+        "type": "Article",
+        "trail": [
+          {
+            "label": "Home",
+            "href": "/"
+          },
+          {
+            "label": "Blog"
+          },
+          {
+            "label": "Payroll"
+          }
+        ]
+      },
+      {
+        "id": "r6",
+        "title": "Pricing",
+        "url": "/pricing",
+        "excerpt": "Payroll is included in the Growth plan for up to 25 people.",
+        "type": "Page",
+        "trail": [
+          {
+            "label": "Home",
+            "href": "/"
+          }
+        ]
+      },
+      {
+        "id": "r7",
+        "title": "Seasonal payroll for sixty pickers",
+        "url": "/work/farm",
+        "excerpt": "Zero late payslips across the summer for a fruit farm.",
+        "type": "Case study",
+        "trail": [
+          {
+            "label": "Home",
+            "href": "/"
+          },
+          {
+            "label": "Work"
+          }
+        ]
+      },
+      {
+        "id": "r8",
+        "title": "Payroll benefits that cost less than you think",
+        "url": "/blog/benefits",
+        "excerpt": "Small perks with outsized effect on hiring and retention.",
+        "type": "Article",
+        "trail": [
+          {
+            "label": "Home",
+            "href": "/"
+          },
+          {
+            "label": "Blog"
+          },
+          {
+            "label": "Payroll"
+          }
+        ]
+      },
+      {
+        "id": "r9",
+        "title": "Payroll year-end checklist",
+        "url": "/help/payroll-year-end",
+        "excerpt": "What to check before you file your annual payroll returns.",
+        "type": "Help",
+        "trail": [
+          {
+            "label": "Home",
+            "href": "/"
+          },
+          {
+            "label": "Help"
+          },
+          {
+            "label": "Payroll"
+          }
+        ]
+      },
+      {
+        "id": "r10",
+        "title": "Switching payroll providers mid-year",
+        "url": "/help/switching-payroll",
+        "excerpt": "How to move to Brightside without re-entering year-to-date figures.",
+        "type": "Help",
+        "trail": [
+          {
+            "label": "Home",
+            "href": "/"
+          },
+          {
+            "label": "Help"
+          },
+          {
+            "label": "Payroll"
+          }
+        ]
+      }
+    ]
+  },
+  "blocks": []
+}

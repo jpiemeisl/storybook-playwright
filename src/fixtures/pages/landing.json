@@ -1,9 +1,11 @@
 {
   "id": "page-landing-payroll",
   "slug": "lp/payroll",
+  "template": "landing",
   "seo": {
     "title": "Payroll for seasonal businesses",
-    "description": "Payroll for seasonal businesses | Brightside Bookkeeping"
+    "description": "Payroll for seasonal businesses | Brightside Bookkeeping",
+    "noindex": true
   },
   "blocks": [
     {
@@ -22,7 +24,7 @@
       },
       "media": {
         "src": "/fixtures/images/hero-office-16x9.svg",
-        "alt": "A tidy office with a laptop showing a chart, a wall clock and a coffee mug",
+        "alt": "A tidy office with a laptop showing a chart",
         "width": 1600,
         "height": 900
       },
@@ -92,19 +94,6 @@
       "background": "subtle"
     },
     {
-      "id": "lp-video",
-      "type": "videoEmbed",
-      "provider": "youtube",
-      "videoId": "bS2kLx9QpE4",
-      "title": "How a five-day close works",
-      "poster": {
-        "src": "/fixtures/images/video-poster.svg",
-        "alt": "",
-        "width": 1280,
-        "height": 720
-      }
-    },
-    {
       "id": "lp-testimonials",
       "type": "testimonialGrid",
       "heading": "What clients say",
@@ -139,20 +128,61 @@
             "company": "Northwind Outfitters"
           }
         }
+      ]
+    },
+    {
+      "id": "lp-faq",
+      "type": "faq",
+      "anchorId": "faq",
+      "heading": "Frequently asked questions",
+      "items": [
+        {
+          "id": "switch",
+          "question": "Can you take over from my current bookkeeper mid-year?",
+          "answer": {
+            "format": "html",
+            "html": "<p>Yes. We start from your last reconciled month and catch up the rest, usually within three weeks.</p>"
+          }
+        },
+        {
+          "id": "software",
+          "question": "Which accounting software do you use?",
+          "answer": {
+            "format": "html",
+            "html": "<p>We work in QuickBooks Online and Xero, and migrate you for free on annual plans.</p>"
+          }
+        },
+        {
+          "id": "taxes",
+          "question": "Do you file my taxes?",
+          "answer": {
+            "format": "html",
+            "html": "<p>We prepare tax-ready reports for your tax preparer. Growth includes filing through a partner CPA.</p>"
+          }
+        },
+        {
+          "id": "access",
+          "question": "Who can see my financial data?",
+          "answer": {
+            "format": "html",
+            "html": "<p>Only your named accountant and their reviewer. Bank feeds are read-only.</p>"
+          }
+        },
+        {
+          "id": "cancel",
+          "question": "What happens if I cancel?",
+          "answer": {
+            "format": "html",
+            "html": "<p>You keep full access to your books and we send a final export. No cancellation fee on monthly plans.</p>"
+          }
+        }
       ],
       "background": "subtle"
     },
     {
-      "id": "lp-newsletter",
-      "type": "newsletterSignup",
-      "heading": "Get the seasonal payroll checklist",
-      "description": "Sent once. No follow-up spam.",
-      "showName": true
-    },
-    {
       "id": "lp-cta",
       "type": "ctaBanner",
-      "heading": "Ready for books you don’t have to think about?",
+      "heading": "Ready before your first seasonal hire?",
       "body": "Book a free 30-minute consultation. We’ll tell you honestly whether we can help.",
       "primaryAction": {
         "label": "Book a consultation",
@@ -165,6 +195,5 @@
       "layout": "split",
       "variant": "inverse"
     }
-  ],
-  "template": "landing"
+  ]
 }

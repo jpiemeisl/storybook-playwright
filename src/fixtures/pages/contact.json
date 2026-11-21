@@ -1,6 +1,7 @@
 {
   "id": "page-contact",
   "slug": "contact",
+  "template": "contact",
   "seo": {
     "title": "Contact us",
     "description": "Contact us | Brightside Bookkeeping"

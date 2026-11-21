@@ -1,0 +1,202 @@
+{
+  "id": "page-work",
+  "slug": "work",
+  "template": "case-study-index",
+  "seo": {
+    "title": "Case studies",
+    "description": "Case studies | Brightside Bookkeeping"
+  },
+  "heading": {
+    "title": "Case studies",
+    "description": "How small businesses use Brightside to close faster, pay people on time and stay ahead of tax.",
+    "breadcrumbs": [
+      {
+        "label": "Home",
+        "href": "/"
+      },
+      {
+        "label": "Work"
+      }
+    ]
+  },
+  "listing": {
+    "items": [
+      {
+        "id": "case-bakery",
+        "title": "Two years of books cleaned up in six weeks",
+        "href": "/work/bakery",
+        "client": "Hearth & Crumb Bakery",
+        "summary": "How Hearth & Crumb Bakery got their finances under control with a monthly routine and a named accountant.",
+        "image": {
+          "src": "/fixtures/images/gallery/studio.svg",
+          "alt": "",
+          "width": 1200,
+          "height": 800
+        },
+        "keyResult": "Reconciled 1,400 receipts before the tax deadline."
+      },
+      {
+        "id": "case-clinic",
+        "title": "Payroll for a growing physiotherapy clinic",
+        "href": "/work/clinic",
+        "client": "Northside Physio",
+        "summary": "How Northside Physio got their finances under control with a monthly routine and a named accountant.",
+        "image": {
+          "src": "/fixtures/images/gallery/lake.svg",
+          "alt": "",
+          "width": 1200,
+          "height": 800
+        },
+        "keyResult": "Payroll time cut from two days to two hours."
+      },
+      {
+        "id": "case-studio",
+        "title": "Monthly reporting a design studio actually reads",
+        "href": "/work/studio",
+        "client": "Quarry Design",
+        "summary": "How Quarry Design got their finances under control with a monthly routine and a named accountant.",
+        "image": {
+          "src": "/fixtures/images/gallery/tower.svg",
+          "alt": "",
+          "width": 1200,
+          "height": 800
+        },
+        "keyResult": "Profit per project visible for the first time."
+      },
+      {
+        "id": "case-farm",
+        "title": "Seasonal payroll for sixty pickers",
+        "href": "/work/farm",
+        "client": "Tidewater Orchards",
+        "summary": "How Tidewater Orchards got their finances under control with a monthly routine and a named accountant.",
+        "image": {
+          "src": "/fixtures/images/gallery/orchard.svg",
+          "alt": "",
+          "width": 1200,
+          "height": 800
+        },
+        "keyResult": "Zero late payslips across the summer."
+      },
+      {
+        "id": "case-shop",
+        "title": "Sales tax across eleven states",
+        "href": "/work/shop",
+        "client": "Copperleaf Goods",
+        "summary": "How Copperleaf Goods got their finances under control with a monthly routine and a named accountant.",
+        "image": {
+          "src": "/fixtures/images/gallery/market.svg",
+          "alt": "",
+          "width": 1200,
+          "height": 800
+        },
+        "keyResult": "Registered and filing in every state with nexus."
+      },
+      {
+        "id": "case-cafe",
+        "title": "Three cafés, one set of books",
+        "href": "/work/cafe",
+        "client": "Harbour Coffee",
+        "summary": "How Harbour Coffee got their finances under control with a monthly routine and a named accountant.",
+        "image": {
+          "src": "/fixtures/images/gallery/harbour.svg",
+          "alt": "",
+          "width": 1200,
+          "height": 800
+        },
+        "keyResult": "Books closed in five days, down from twenty-five."
+      },
+      {
+        "id": "case-builder",
+        "title": "Job costing for a small builder",
+        "href": "/work/builder",
+        "client": "Kiln Construction",
+        "summary": "How Kiln Construction got their finances under control with a monthly routine and a named accountant.",
+        "image": {
+          "src": "/fixtures/images/gallery/kiln.svg",
+          "alt": "",
+          "width": 1200,
+          "height": 800
+        },
+        "keyResult": "Overruns caught while jobs were still running."
+      },
+      {
+        "id": "case-charity",
+        "title": "Restricted funds without the spreadsheet",
+        "href": "/work/charity",
+        "client": "Pier Community Trust",
+        "summary": "How Pier Community Trust got their finances under control with a monthly routine and a named accountant.",
+        "image": {
+          "src": "/fixtures/images/gallery/pier.svg",
+          "alt": "",
+          "width": 1200,
+          "height": 800
+        },
+        "keyResult": "Clean audit two years running."
+      },
+      {
+        "id": "case-agency",
+        "title": "Cash flow forecasting for a growing agency",
+        "href": "/work/agency",
+        "client": "Northwind Digital",
+        "summary": "How Northwind Digital got their finances under control with a monthly routine and a named accountant.",
+        "image": {
+          "src": "/fixtures/images/gallery/forest.svg",
+          "alt": "",
+          "width": 1200,
+          "height": 800
+        },
+        "keyResult": "A thirteen-week forecast reviewed every Monday."
+      }
+    ],
+    "filters": [
+      {
+        "id": "all",
+        "label": "All industries",
+        "href": "/work"
+      },
+      {
+        "id": "food",
+        "label": "Food and drink",
+        "href": "/work/industry/food",
+        "count": 2
+      },
+      {
+        "id": "creative",
+        "label": "Creative services",
+        "href": "/work/industry/creative",
+        "count": 2
+      },
+      {
+        "id": "retail",
+        "label": "Retail",
+        "href": "/work/industry/retail",
+        "count": 1
+      }
+    ],
+    "activeFilterId": "all",
+    "filterLabel": "Filter by industry",
+    "pagination": {
+      "currentPage": 1,
+      "totalPages": 2,
+      "basePath": "/work"
+    }
+  },
+  "blocks": [
+    {
+      "id": "work-cta",
+      "type": "ctaBanner",
+      "heading": "Want results like these?",
+      "body": "Book a free 30-minute consultation. We’ll tell you honestly whether we can help.",
+      "primaryAction": {
+        "label": "Book a consultation",
+        "href": "/consultation"
+      },
+      "secondaryAction": {
+        "label": "Email us",
+        "href": "mailto:hello@brightside.example"
+      },
+      "layout": "split",
+      "background": "subtle"
+    }
+  ]
+}

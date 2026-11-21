@@ -1,6 +1,7 @@
 {
   "id": "page-home",
   "slug": "",
+  "template": "home",
   "seo": {
     "title": "Brightside Bookkeeping",
     "description": "Brightside Bookkeeping | Brightside Bookkeeping"
@@ -299,6 +300,5 @@
       },
       "layout": "split"
     }
-  ],
-  "template": "landing"
+  ]
 }
