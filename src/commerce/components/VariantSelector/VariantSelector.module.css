@@ -1,0 +1,118 @@
+@layer components {
+  .root {
+    display: grid;
+    gap: var(--gap-md);
+  }
+
+  .group {
+    min-inline-size: 0;
+    margin: 0;
+    padding: 0;
+    border: 0;
+  }
+
+  .legend {
+    margin-block-end: var(--gap-xs);
+    padding: 0;
+    font-weight: var(--text-weight-strong);
+  }
+
+  .selected {
+    font-weight: var(--text-weight-body);
+    color: var(--color-text-muted);
+  }
+
+  .values {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--gap-xs);
+  }
+
+  .value {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    gap: var(--gap-xs);
+    max-inline-size: 100%;
+    min-block-size: var(--control-height-md);
+    padding-inline: var(--space-3);
+    border: var(--border-1) solid var(--color-border-strong);
+    border-radius: var(--radius-control);
+    background-color: var(--color-surface);
+    color: var(--color-text);
+    cursor: pointer;
+  }
+
+  .text {
+    overflow-wrap: anywhere;
+  }
+
+  /* The native radio stays in the page (keyboard, forms) but is invisible; the label shows its state. */
+  .input {
+    position: absolute;
+    inset: 0;
+    inline-size: 100%;
+    block-size: 100%;
+    margin: 0;
+    opacity: 0;
+    cursor: inherit;
+  }
+
+  /* Checked: thick border plus a tick, never colour alone. */
+  .value:has(.input:checked) {
+    border-color: var(--color-text);
+    border-width: var(--border-width-emphasis);
+    font-weight: var(--text-weight-strong);
+  }
+
+  .value:has(.input:checked)::after {
+    content: '✓';
+  }
+
+  .value:has(.input:focus-visible) {
+    outline: var(--focus-ring-width) solid var(--color-focus-ring);
+    outline-offset: var(--focus-ring-offset);
+  }
+
+  .out-of-stock .text {
+    color: var(--color-text-muted);
+    text-decoration-line: line-through;
+  }
+
+  .none {
+    border-style: dashed;
+    color: var(--color-disabled-text);
+    cursor: not-allowed;
+  }
+
+  .none .text {
+    text-decoration-line: line-through;
+  }
+
+  .swatch {
+    flex-shrink: 0;
+    inline-size: var(--icon-size-md);
+    block-size: var(--icon-size-md);
+    border: var(--border-1) solid var(--color-border-strong);
+    border-radius: var(--radius-pill);
+  }
+
+  .visuallyHidden {
+    position: absolute;
+    inline-size: 1px;
+    block-size: 1px;
+    overflow: hidden;
+    clip-path: inset(50%);
+    white-space: nowrap;
+  }
+
+  @media (forced-colors: active) {
+    .value:has(.input:checked) {
+      border-color: Highlight;
+    }
+
+    .swatch {
+      forced-color-adjust: none;
+    }
+  }
+}

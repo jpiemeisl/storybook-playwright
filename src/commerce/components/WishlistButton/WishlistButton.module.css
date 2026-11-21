@@ -1,0 +1,24 @@
+@layer components {
+  .button {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--gap-xs);
+    min-block-size: var(--control-height-md);
+    padding-inline: var(--space-3);
+    border: var(--border-1) solid var(--color-border-strong);
+    border-radius: var(--radius-control);
+    background-color: var(--color-surface);
+    color: var(--color-text);
+    font-weight: var(--text-weight-strong);
+  }
+
+  .button[aria-pressed='true'] {
+    border-color: var(--color-sale);
+    color: var(--color-sale);
+  }
+
+  .button:focus-visible {
+    outline: var(--focus-ring-width) solid var(--color-focus-ring);
+    outline-offset: var(--focus-ring-offset);
+  }
+}

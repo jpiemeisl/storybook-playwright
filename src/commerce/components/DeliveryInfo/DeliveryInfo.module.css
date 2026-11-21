@@ -1,0 +1,35 @@
+@layer components {
+  .list {
+    display: grid;
+    gap: var(--gap-xs);
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    font-size: var(--text-size-sm);
+  }
+
+  .item {
+    display: flex;
+    align-items: flex-start;
+    gap: var(--gap-sm);
+  }
+
+  .icon {
+    flex-shrink: 0;
+    margin-block-start: 0.15em;
+    color: var(--color-text-muted);
+  }
+
+  .trial {
+    display: flex;
+    align-items: flex-start;
+    gap: var(--gap-sm);
+    margin: 0;
+    padding: var(--gap-sm) var(--gap-md);
+    border: var(--border-1) solid var(--color-info);
+    border-radius: var(--radius-control);
+    background-color: var(--color-info-subtle);
+    color: var(--color-text);
+    font-size: var(--text-size-sm);
+  }
+}
