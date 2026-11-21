@@ -51,6 +51,7 @@ fetching in components.
 | Primitives | Button, Text, Heading, Link (+ LinkProvider), Icon, Image, Badge, Divider |
 | Layout     | Container, Section, Stack, Grid                                    |
 | Navigation | SkipLink, Header, MobileMenu, Footer, Breadcrumbs, Pagination      |
+| Sections   | Hero, FeatureGrid, Card + CardGrid, ArticleCard, MediaText, CtaBanner, Stats, Testimonial + TestimonialGrid, LogoStrip, Accordion + FaqSection, PricingTable |
 
 Navigation components take plain data from `src/content-types/navigation.ts` (`NavItem`,
 `SocialLink`, `BreadcrumbItem`); map your CMS or router data into those shapes.
@@ -73,6 +74,27 @@ Navigation components take plain data from `src/content-types/navigation.ts` (`N
 - **Breadcrumbs** and **Pagination** use container queries: below 40rem the trail collapses its
   middle items (still announced) and pagination switches to "Page X of Y" with previous/next.
 - All transitions sit inside `@media (prefers-reduced-motion: no-preference)`.
+
+### Content sections
+
+Section components take the plain shapes in `src/content-types/sections.ts` (rich text is a
+`ReactNode` until a Prose component exists). Most are **content blocks**: put them inside
+`<Section background="…"><Container>…</Container></Section>`, and they follow that background's
+tokens. The exception is `<Hero variant="background">`, which is full-bleed and brings its own
+Container, so place it directly in the page.
+
+- **Money** (`src/content-types/money.ts`) is an integer `amount` in minor units plus an ISO
+  `currency`. `formatMoney` (`src/utils`) takes the number of minor digits from `Intl` (USD 2,
+  JPY 0, KWD 3). Its checks live in the `Utilities/formatMoney` story and run with `test:vrt`.
+- **ButtonLink** is a Link (through LinkProvider) styled as a Button. `Link` has an `unstyled` option
+  so `className` fully controls the look.
+- **Card** with `href`: the title is the only link, and its hit area is stretched over the card. There
+  are no nested links, and the focus ring wraps the whole card.
+- **Surfaces**: `data-surface="inverse"` remaps colour tokens for a dark area, and
+  `data-surface="default"` resets them for a light panel inside one (used by the accent CtaBanner).
+- **Accordion** uses the WAI-ARIA button pattern, not `<details>`, for arrow/Home/End navigation
+  and a consistent height animation.
+- **PricingTable** shows its Monthly/Annual toggle (native radios) when any tier has `annualPrice`.
 
 ## Visual regression testing
 

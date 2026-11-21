@@ -1,0 +1,28 @@
+@layer components {
+  .meta {
+    display: flex;
+    align-items: center;
+    gap: var(--gap-sm);
+    color: var(--color-text-muted);
+    font-size: var(--text-size-sm);
+  }
+
+  /* Two classes so these win over Image's own sizing. */
+  .meta .avatar {
+    flex-shrink: 0;
+    inline-size: var(--space-8);
+    block-size: var(--space-8);
+    border-radius: var(--radius-full);
+    object-fit: cover;
+  }
+
+  .metaText {
+    display: grid;
+    min-inline-size: 0;
+  }
+
+  .author {
+    color: var(--color-text);
+    font-weight: var(--text-weight-strong);
+  }
+}

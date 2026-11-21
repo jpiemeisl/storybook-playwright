@@ -16,6 +16,8 @@ export interface LinkProps extends Omit<AnchorHTMLAttributes<HTMLAnchorElement>,
   external?: boolean;
   /** Show the external-link icon on external links. Turn off for icon-only links. Default true. */
   externalIcon?: boolean;
+  /** Drop the Link's own styling so `className` fully controls the look (e.g. ButtonLink, card titles). */
+  unstyled?: boolean;
 }
 
 const ABSOLUTE_URL = /^(https?:)?\/\//i;
@@ -25,6 +27,7 @@ export function Link({
   variant = 'inline',
   external,
   externalIcon = true,
+  unstyled = false,
   className,
   rel,
   target,
@@ -33,7 +36,7 @@ export function Link({
 }: LinkProps) {
   const LinkComponent = useLinkComponent();
   const isExternal = external ?? ABSOLUTE_URL.test(href);
-  const classes = [styles.link, styles[variant], className].filter(Boolean).join(' ');
+  const classes = (unstyled ? [className] : [styles.link, styles[variant], className]).filter(Boolean).join(' ');
 
   if (!isExternal) {
     return (

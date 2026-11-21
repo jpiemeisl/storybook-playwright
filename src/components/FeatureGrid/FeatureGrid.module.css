@@ -1,0 +1,43 @@
+@layer components {
+  .root {
+    display: grid;
+    gap: var(--gap-xl);
+    color: var(--color-text);
+  }
+
+  .header {
+    display: grid;
+    gap: var(--gap-sm);
+    max-inline-size: 44rem;
+  }
+
+  .item {
+    display: grid;
+    align-content: start;
+    gap: var(--gap-sm);
+    min-inline-size: 0;
+  }
+
+  .inline-icon {
+    grid-template-columns: auto minmax(0, 1fr);
+    align-items: start;
+    gap: var(--gap-md);
+  }
+
+  .icon {
+    display: inline-grid;
+    place-items: center;
+    inline-size: var(--control-height-lg);
+    block-size: var(--control-height-lg);
+    border-radius: var(--radius-surface);
+    background-color: var(--color-action-subtle);
+    color: var(--color-action);
+  }
+
+  .content {
+    display: grid;
+    gap: var(--gap-xs);
+    min-inline-size: 0;
+    overflow-wrap: anywhere;
+  }
+}

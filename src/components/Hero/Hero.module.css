@@ -1,0 +1,96 @@
+@layer components {
+  .hero {
+    container-type: inline-size;
+    color: var(--color-text);
+  }
+
+  .layout {
+    display: grid;
+    gap: var(--gap-xl);
+    align-items: center;
+  }
+
+  .text {
+    display: grid;
+    gap: var(--gap-md);
+    min-inline-size: 0;
+  }
+
+  .subhead {
+    max-inline-size: 40rem;
+  }
+
+  .actions {
+    margin-block-start: var(--gap-sm);
+  }
+
+  .media {
+    min-inline-size: 0;
+    overflow: hidden;
+    border-radius: var(--radius-surface);
+  }
+
+  /* Centered: text block centred, media full width below. */
+  .centered .text {
+    justify-items: center;
+    max-inline-size: 48rem;
+    margin-inline: auto;
+    text-align: center;
+  }
+
+  /* Split: stacked on narrow slots, side by side from 48rem. */
+  .split[data-mobile-media-order='first'] .media {
+    order: -1;
+  }
+
+  @container (min-width: 48rem) {
+    .split .layout {
+      grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+      gap: var(--gap-xl);
+    }
+
+    .split .media {
+      order: 0;
+    }
+
+    .split[data-media-position='start'] .media {
+      order: -1;
+    }
+  }
+
+  /* Background: full-bleed image, dark scrim, inverse surface (data-surface="inverse") for the text. */
+  .background {
+    position: relative;
+    display: grid;
+    align-items: center;
+    min-block-size: 28rem;
+    overflow: hidden;
+    background-color: var(--color-bg);
+    color: var(--color-text);
+    isolation: isolate;
+  }
+
+  .background .backgroundImage {
+    position: absolute;
+    inset: 0;
+    z-index: -2;
+    inline-size: 100%;
+    block-size: 100%;
+  }
+
+  .background::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    background-color: var(--color-overlay-media);
+  }
+
+  .backgroundInner {
+    padding-block: var(--section-padding-lg);
+  }
+
+  .background .text {
+    max-inline-size: 44rem;
+  }
+}

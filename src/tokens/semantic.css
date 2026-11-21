@@ -3,7 +3,9 @@
  * Themes override this tier only, by redefining these under [data-theme='<name>'].
  */
 :root,
-[data-theme='default'] {
+[data-theme='default'],
+/* A light panel inside an inverse area (e.g. the accent CtaBanner) resets to the default surface. */
+[data-surface='default'] {
   /* Surfaces */
   --color-bg: var(--neutral-0);
   --color-bg-subtle: var(--neutral-50);
@@ -113,6 +115,15 @@
   --z-header: 100;
   --z-overlay: 200;
   --z-drawer: 300;
+
+  /* Content sections */
+  /* Scrim between a background image and text. Dark enough that inverse text passes 4.5:1 over any image. */
+  --color-overlay-media: var(--black-alpha-72);
+  /* Emphasis outline, e.g. the highlighted pricing tier (paired with a text badge, never colour alone). */
+  --border-width-emphasis: var(--border-2);
+  /* Logo strip: uniform logo height and the muted (grayscale) treatment that clears on hover/focus. */
+  --logo-height: var(--space-10);
+  --logo-filter-muted: grayscale(1) opacity(0.75);
 }
 
 /*
@@ -143,6 +154,9 @@
   --color-danger-subtle: var(--red-700);
   --color-success: var(--green-100);
   --color-success-subtle: var(--green-700);
+
+  /* Muted logos become light silhouettes so dark marks stay visible on a dark surface. */
+  --logo-filter-muted: grayscale(1) brightness(0) invert(1) opacity(0.8);
 
   color: var(--color-text);
 }

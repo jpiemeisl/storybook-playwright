@@ -1,0 +1,95 @@
+@layer components {
+  .accordion {
+    border-block-start: var(--border-1) solid var(--color-border);
+    color: var(--color-text);
+  }
+
+  .item {
+    border-block-end: var(--border-1) solid var(--color-border);
+  }
+
+  .heading {
+    margin: 0;
+  }
+
+  .trigger {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--gap-md);
+    inline-size: 100%;
+    min-block-size: var(--control-height-lg);
+    padding-block: var(--gap-sm);
+    padding-inline: var(--gap-xs);
+    color: var(--color-text);
+    font-weight: var(--text-weight-strong);
+    text-align: start;
+    overflow-wrap: anywhere;
+  }
+
+  .trigger:hover {
+    color: var(--color-action);
+  }
+
+  .trigger:focus-visible {
+    outline: var(--focus-ring-width) solid var(--color-focus-ring);
+    outline-offset: calc(-1 * var(--focus-ring-width));
+  }
+
+  .chevron {
+    flex-shrink: 0;
+  }
+
+  .trigger[aria-expanded='true'] .chevron {
+    rotate: 180deg;
+  }
+
+  /* Height animates via grid rows 0fr → 1fr; visibility removes closed content from the a11y tree and tab order. */
+  .panel {
+    display: grid;
+    grid-template-rows: 0fr;
+    visibility: hidden;
+  }
+
+  .panel[data-open='true'] {
+    grid-template-rows: 1fr;
+    visibility: visible;
+  }
+
+  .panelInner {
+    min-block-size: 0;
+    overflow: hidden;
+  }
+
+  .panelContent {
+    display: grid;
+    gap: var(--gap-sm);
+    padding-block: 0 var(--gap-md);
+    padding-inline: var(--gap-xs);
+    color: var(--color-text-muted);
+  }
+
+  @media (prefers-reduced-motion: no-preference) {
+    .panel {
+      transition:
+        grid-template-rows var(--transition-base) var(--transition-easing),
+        visibility var(--transition-base);
+    }
+
+    .chevron {
+      transition: rotate var(--transition-base) var(--transition-easing);
+    }
+  }
+
+  /* FaqSection */
+  .faq {
+    display: grid;
+    gap: var(--gap-lg);
+    max-inline-size: 48rem;
+  }
+
+  .faqHeader {
+    display: grid;
+    gap: var(--gap-sm);
+  }
+}
