@@ -71,6 +71,7 @@ export * from './components/TeamMember';
 
 // Content types and utilities
 export type * from './content-types';
+export { blockTypes } from './content-types';
 export type * from './component-types';
 export * from './utils';
 

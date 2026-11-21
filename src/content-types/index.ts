@@ -5,3 +5,7 @@
 export type { Money } from './money';
 export type { BreadcrumbItem, NavItem, SocialLink } from './navigation';
 export type { ActionRef, AuthorRef, ImageRef, LinkRef, RichText, SeoMeta } from './shared';
+export type * from './blocks';
+export { blockTypes } from './blocks';
+export type { AnnouncementContent, FooterContent, HeaderContent, LogoContent, SiteChrome } from './chrome';
+export type { IsJson } from './json';
