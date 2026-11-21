@@ -50,6 +50,6 @@ export const customerSubscriptions = {
   trialing: { id: 'sub-1', productTitle: 'Garden planner app', plan: 'Monthly', price: usd(600), interval: { unit: 'month', count: 1 }, status: 'trialing', startedAt: '2026-03-14', trialEndsAt: '2026-03-28', nextBillingAt: '2026-03-28' },
   active: { id: 'sub-2', productTitle: 'Seasonal seed box', plan: 'Monthly', price: usd(1800), interval: { unit: 'month', count: 1 }, status: 'active', startedAt: '2025-09-01', nextBillingAt: '2026-04-01' },
   pastDue: { id: 'sub-3', productTitle: 'House coffee beans', plan: 'Every week (250 g)', price: usd(1260), interval: { unit: 'week', count: 1 }, status: 'past-due', startedAt: '2025-11-03', nextBillingAt: '2026-03-17' },
-  paused: { id: 'sub-4', productTitle: 'Grower club membership', plan: 'Quarterly', price: usd(5400), interval: { unit: 'month', count: 3 }, status: 'paused', startedAt: '2025-06-01', nextBillingAt: '2026-06-01' },
+  paused: { id: 'sub-4', productTitle: 'Grower club membership', plan: 'Quarterly', price: usd(5400), interval: { unit: 'month', count: 3 }, status: 'paused', startedAt: '2025-06-01', nextBillingAt: '2026-06-01', pausedUntil: '2026-06-01' },
   cancelled: { id: 'sub-5', productTitle: 'Grower club membership', plan: 'Annual', price: usd(19200), interval: { unit: 'year', count: 1 }, status: 'cancelled', startedAt: '2024-03-01', cancelledAt: '2026-02-28' },
 } satisfies Record<string, CustomerSubscription>;

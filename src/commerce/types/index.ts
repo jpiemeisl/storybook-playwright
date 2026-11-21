@@ -21,4 +21,5 @@ export type {
 export type { Cart, CartLine, CartLineSnapshot, PromoCode, ShippingMethod } from './cart';
 export type { Address, CustomerSubscription, Order, OrderRecurringLine, OrderStatus, OrderTotals } from './order';
 export type * from './checkout';
+export type * from './account';
 export type { Money } from '../../content-types/money';

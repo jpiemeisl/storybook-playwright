@@ -10,6 +10,7 @@ const KINDS = ['physical', 'digital', 'subscription'] as const;
 const UNITS = ['week', 'month', 'year'] as const;
 const ORDER_STATUS = ['processing', 'shipped', 'delivered', 'cancelled', 'refunded'] as const;
 const SUB_STATUS = ['trialing', 'active', 'past-due', 'paused', 'cancelled'] as const;
+const INVOICE_STATUS = ['paid', 'open', 'failed', 'refunded'] as const;
 
 /** Deliberately simple: something@something.tld, no spaces. Real checks happen when mail is sent. */
 export const EMAIL = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -332,6 +333,7 @@ export function validateOrder(order: unknown): ValidationIssue[] {
       d.date('expiresAt', false);
       d.str('format', false);
       intField(d, 'sizeBytes', 0);
+      d.str('reason', false);
     });
   });
 }
@@ -352,6 +354,115 @@ export function validateCustomerSubscription(subscription: unknown): ValidationI
     c.date('nextBillingAt', c.value.status !== 'cancelled');
     c.date('trialEndsAt', c.value.status === 'trialing');
     c.date('cancelledAt', c.value.status === 'cancelled');
+    c.str('productId', false);
+    c.date('pausedUntil', false);
+    c.date('currentPeriodEnd', !!c.value.cancelAtPeriodEnd);
+    c.str('paymentMethodSummary', false);
+    const status = c.value.status;
+    if (status === 'paused' && !c.value.pausedUntil && c.value.pauseOpenEnded !== true) c.report('missing-field', 'pausedUntil', 'A paused subscription needs "pausedUntil" or "pauseOpenEnded": true.');
+    if (status !== 'paused' && (c.value.pausedUntil !== undefined || c.value.pauseOpenEnded)) c.report('invalid-field', 'pausedUntil', 'Only paused subscriptions have "pausedUntil" or "pauseOpenEnded".');
+    if (c.value.cancelAtPeriodEnd && status !== 'active' && status !== 'trialing') c.report('invalid-field', 'cancelAtPeriodEnd', '"cancelAtPeriodEnd" is only for active or trialing subscriptions.');
+    if (status !== 'cancelled' && c.value.cancelledAt !== undefined) c.report('invalid-field', 'cancelledAt', 'Only cancelled subscriptions have "cancelledAt".');
+    if (typeof c.value.paymentMethodSummary === 'string' && /\d{8,}/.test(c.value.paymentMethodSummary.replace(/[\s-]/g, ''))) c.report('invalid-field', 'paymentMethodSummary', '"paymentMethodSummary" must not contain a full card number (use "Card ending 4242").');
+    const currency = isObj(c.value.price) && typeof c.value.price.currency === 'string' ? c.value.price.currency : undefined;
+    c.each('availablePlans', 0, 12, (p) => {
+      p.str('id');
+      p.str('name');
+      moneyField(p, 'price', true, currency);
+      p.child('interval', true, (i) => {
+        i.oneOf('unit', UNITS);
+        intField(i, 'count', 1, true);
+      });
+      p.strings('features', true);
+    });
+    uniqueIds(c, 'availablePlans');
+    if (Array.isArray(c.value.availablePlans) && c.value.availablePlans.length > 0) {
+      const current = c.value.availablePlans.filter((p) => isObj(p) && p.current === true).length;
+      if (current !== 1) c.report('invalid-field', 'availablePlans', `"availablePlans" must have exactly one current plan (found ${current}).`);
+    }
+  });
+}
+
+/** Customer: id, name, email and creation date. */
+export function validateCustomer(customer: unknown): ValidationIssue[] {
+  return run(customer, (c) => {
+    c.str('id');
+    c.str('name');
+    c.str('email');
+    if (typeof c.value.email === 'string' && !EMAIL.test(c.value.email)) c.report('invalid-field', 'email', '"email" must be an email address.');
+    c.date('createdAt');
+  });
+}
+
+/** Invoice: number, date, amount, status and a safe href. */
+export function validateInvoice(invoice: unknown): ValidationIssue[] {
+  return run(invoice, (c) => {
+    c.str('id');
+    c.str('number');
+    c.date('issuedAt');
+    c.str('description');
+    moneyField(c, 'amount', true);
+    c.oneOf('status', INVOICE_STATUS);
+    c.href('href', false);
+    c.str('subscriptionId', false);
+    c.str('orderId', false);
+  });
+}
+
+/** Saved address: an address plus id, optional label and default flags. */
+export function validateSavedAddress(address: unknown): ValidationIssue[] {
+  return run(address, (c) => {
+    c.str('id');
+    c.str('label', false);
+    c.str('name');
+    c.str('line1');
+    c.str('city');
+    c.str('postalCode');
+    if (typeof c.value.country !== 'string' || !/^[A-Z]{2}$/.test(c.value.country)) c.report('invalid-field', 'country', '"country" must be an ISO 3166-1 alpha-2 code such as "US".');
+    for (const key of ['isDefaultShipping', 'isDefaultBilling']) if (c.value[key] !== undefined && typeof c.value[key] !== 'boolean') c.report('invalid-field', key, `"${key}" must be true or false.`);
+  });
+}
+
+/** An address book: each address validates, unique ids, at most one default per kind. */
+export function validateAddressBook(addresses: unknown): ValidationIssue[] {
+  if (!Array.isArray(addresses)) return [{ code: 'invalid-field', severity: 'error', message: 'Expected an array of addresses.', path: '' }];
+  const issues = addresses.flatMap((a, i) => validateSavedAddress(a).map((issue) => ({ ...issue, path: issue.path ? `[${i}].${issue.path}` : `[${i}]` })));
+  const ids = addresses.map((a) => (isObj(a) ? a.id : undefined));
+  ids.forEach((id, i) => ids.indexOf(id) !== i && issues.push({ code: 'duplicate-id', severity: 'error', message: `id ${JSON.stringify(id)} is used more than once.`, path: `[${i}].id` }));
+  for (const key of ['isDefaultShipping', 'isDefaultBilling']) {
+    const count = addresses.filter((a) => isObj(a) && a[key] === true).length;
+    if (count > 1) issues.push({ code: 'invalid-field', severity: 'error', message: `More than one address has "${key}".`, path: '' });
+  }
+  return issues;
+}
+
+/** Wishlist item: product id and date added. */
+export function validateWishlistItem(item: unknown): ValidationIssue[] {
+  return run(item, (c) => {
+    c.str('productId');
+    c.date('addedAt');
+  });
+}
+
+/** Library item: product, order, files (each like an order download) and an optional licence. */
+export function validateLibraryItem(item: unknown): ValidationIssue[] {
+  return run(item, (c) => {
+    for (const key of ['productId', 'productTitle', 'orderId', 'orderNumber']) c.str(key);
+    c.date('purchasedAt');
+    c.each('files', 1, 50, (d) => {
+      d.str('fileId');
+      d.str('name');
+      if (typeof d.value.available !== 'boolean') d.report('missing-field', 'available', '"available" is required (true or false).');
+      if (d.value.available === false && typeof d.value.reason !== 'string') d.report('missing-field', 'reason', 'Unavailable files need a "reason".');
+      d.date('expiresAt', false);
+      intField(d, 'sizeBytes', 0);
+    });
+    uniqueIds(c, 'files', 'fileId');
+    c.child('licence', false, (l) => {
+      l.oneOf('type', ['single', 'team', 'unlimited']);
+      l.str('summary');
+    });
+    c.str('licenseKey', false);
   });
 }
 
