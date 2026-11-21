@@ -2,6 +2,7 @@ import type { Meta, StoryObj } from '@storybook/react-vite';
 import { testimonialLongLabels, testimonials } from '../../fixtures/sections';
 import { inSection } from '../../stories/inSection';
 import { Testimonial, TestimonialGrid } from './Testimonial';
+import { vrtEdges } from '../../stories/vrt';
 
 const meta = {
   title: 'Sections/Testimonial',
@@ -15,9 +16,12 @@ const meta = {
 export default meta;
 type Story = StoryObj<typeof meta>;
 
-export const Single: Story = {};
+export const Single: Story = {
+  parameters: { ...vrtEdges },
+};
 
 export const SingleWithoutAvatarOrLogo: Story = {
+  parameters: { ...vrtEdges },
   args: { ...testimonials[2]! },
 };
 
@@ -26,6 +30,7 @@ export const SingleLongLabels: Story = {
 };
 
 export const Card: Story = {
+  parameters: { ...vrtEdges },
   args: { variant: 'card' },
   render: (args) => (
     <div style={{ maxInlineSize: '26rem' }}>

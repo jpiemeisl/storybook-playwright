@@ -169,6 +169,15 @@ harness reads them from the loaded story. The first load (at the tag viewport) i
 `vrt` parameter is present, and the story is then reloaded at each requested viewport so play
 functions and media queries run at that size.
 
+For low-risk variants of a `vrt-full` component (state or colour variants whose 768 layout is already
+covered by a sibling story), spread `vrtEdges` from `src/stories/vrt.ts` into the story's parameters:
+full-page shots at 375 and 1280 only.
+
+Between viewports the harness does not reload the page: it resizes and asks Storybook to remount the
+story in place (`forceRemount`), which re-runs the play function and the a11y check at the new size
+and produces the same screenshots as a fresh load, at a fraction of the cost. A probe load at the
+wrong viewport (see above) is followed by a fresh load instead.
+
 Play functions in `vrt-full` stories run at 375, 768 and 1280. Write them so they work at every width
 (query elements that are visible at all sizes, or use `{ hidden: true }` when only asserting attributes),
 or pin the story's viewports with the `vrt` parameter.

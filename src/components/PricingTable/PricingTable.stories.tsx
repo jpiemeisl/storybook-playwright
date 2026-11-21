@@ -3,6 +3,7 @@ import { expect, userEvent, within } from 'storybook/test';
 import { pricingEdgeCases, pricingTiers } from '../../fixtures/sections';
 import { inSection } from '../../stories/inSection';
 import { PricingTable } from './PricingTable';
+import { vrtEdges } from '../../stories/vrt';
 
 const meta = {
   title: 'Sections/PricingTable',
@@ -45,6 +46,7 @@ export const AnnualSelected: Story = {
 
 /** Controlled: the parent owns the period (fixed to annual here). */
 export const ControlledAnnual: Story = {
+  parameters: { ...vrtEdges },
   args: { billingPeriod: 'year' },
 };
 
@@ -63,6 +65,7 @@ export const TwoTiers: Story = {
 };
 
 export const OneTier: Story = {
+  parameters: { ...vrtEdges },
   args: { tiers: pricingTiers.slice(2, 3), annualSavingsLabel: undefined },
 };
 

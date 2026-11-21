@@ -12,6 +12,7 @@ import {
 } from '../../fixtures/forms';
 import { inSection } from '../../stories/inSection';
 import { ContactForm } from './ContactForm';
+import { vrtEdges } from '../../stories/vrt';
 
 const meta = {
   title: 'Forms/ContactForm',
@@ -33,6 +34,7 @@ type Story = StoryObj<typeof meta>;
 export const Idle: Story = {};
 
 export const WithoutConsent: Story = {
+  parameters: { ...vrtEdges },
   args: { consentLabel: undefined },
 };
 
@@ -104,11 +106,13 @@ export const ValidSubmit: Story = {
 };
 
 export const Submitting: Story = {
+  parameters: { ...vrtEdges },
   args: { status: 'submitting', defaultValues: { ...filledContact, consent: true } },
 };
 
 /** Success keeps the values visible but disabled; onReset adds "Send another message". */
 export const Success: Story = {
+  parameters: { ...vrtEdges },
   args: { status: 'success', successMessage, onReset: fn(), defaultValues: { ...filledContact, consent: true } },
   play: async ({ canvasElement }) => {
     const canvas = within(canvasElement);
@@ -119,6 +123,7 @@ export const Success: Story = {
 };
 
 export const ServerError: Story = {
+  parameters: { ...vrtEdges },
   args: { status: 'error', errorMessage: serverErrorMessage, defaultValues: { ...filledContact, consent: true } },
   play: async ({ canvasElement }) => {
     const canvas = within(canvasElement);
@@ -133,5 +138,5 @@ export const LongValues: Story = {
 };
 
 export const OnSubtleSection: Story = {
-  parameters: { surface: 'subtle' },
+  parameters: { ...vrtEdges, surface: 'subtle' },
 };

@@ -5,6 +5,7 @@ import { inSection } from '../../stories/inSection';
 import { Badge } from '../Badge';
 import { Link } from '../Link';
 import { Card, CardGrid } from './Card';
+import { vrtEdges } from '../../stories/vrt';
 
 const meta = {
   title: 'Sections/Card',
@@ -24,6 +25,7 @@ export default meta;
 type Story = StoryObj<typeof meta>;
 
 export const Outlined: Story = {
+  parameters: { ...vrtEdges },
   play: async ({ canvasElement }) => {
     // The whole card is clickable through exactly one real link (the title).
     const links = within(canvasElement).getAllByRole('link');
@@ -33,19 +35,23 @@ export const Outlined: Story = {
 };
 
 export const Elevated: Story = {
+  parameters: { ...vrtEdges },
   args: { variant: 'elevated' },
 };
 
 export const Flat: Story = {
+  parameters: { ...vrtEdges },
   args: { variant: 'flat' },
 };
 
 export const WithBadgeEyebrow: Story = {
+  parameters: { ...vrtEdges },
   args: { eyebrow: <Badge tone="accent" size="sm">New</Badge> },
 };
 
 /** Footer content sits at the bottom; links in it stay clickable above the stretched card link. */
 export const WithFooter: Story = {
+  parameters: { ...vrtEdges },
   args: {
     footer: (
       <Link href="/work/cleanup/download" variant="standalone">
@@ -67,6 +73,7 @@ export const Horizontal: Story = {
 
 /** Keyboard focus on the title link draws the focus ring around the whole card. */
 export const FocusState: Story = {
+  parameters: { ...vrtEdges },
   play: async ({ canvasElement }) => {
     await userEvent.tab();
     await expect(within(canvasElement).getByRole('link')).toHaveFocus();

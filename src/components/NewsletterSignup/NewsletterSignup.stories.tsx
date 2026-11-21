@@ -7,6 +7,7 @@ import { Heading } from '../Heading';
 import { Section, type SectionBackground } from '../Section';
 import { Stack } from '../Stack';
 import { NewsletterSignup } from './NewsletterSignup';
+import { vrtEdges } from '../../stories/vrt';
 
 const meta = {
   title: 'Forms/NewsletterSignup',
@@ -60,10 +61,12 @@ export const ValidSubmit: Story = {
 };
 
 export const Submitting: Story = {
+  parameters: { ...vrtEdges },
   args: { status: 'submitting' },
 };
 
 export const Success: Story = {
+  parameters: { ...vrtEdges },
   args: { status: 'success' },
   play: async ({ canvasElement }) => {
     const status = within(canvasElement).getByRole('status');
@@ -73,6 +76,7 @@ export const Success: Story = {
 };
 
 export const ServerError: Story = {
+  parameters: { ...vrtEdges },
   args: { status: 'error', errorMessage: 'We couldn’t reach our mailing list provider. Please try again.' },
   play: async ({ canvasElement }) => {
     const alert = within(canvasElement).getByRole('alert');

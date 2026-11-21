@@ -2,6 +2,7 @@ import type { Meta, StoryObj } from '@storybook/react-vite';
 import { cta } from '../../fixtures/sections';
 import { inSection } from '../../stories/inSection';
 import { CtaBanner } from './CtaBanner';
+import { vrtEdges } from '../../stories/vrt';
 
 const meta = {
   title: 'Sections/CtaBanner',
@@ -15,13 +16,17 @@ const meta = {
 export default meta;
 type Story = StoryObj<typeof meta>;
 
-export const Accent: Story = {};
+export const Accent: Story = {
+  parameters: { ...vrtEdges },
+};
 
 export const Inverse: Story = {
+  parameters: { ...vrtEdges },
   args: { variant: 'inverse' },
 };
 
 export const Subtle: Story = {
+  parameters: { ...vrtEdges },
   args: { variant: 'subtle' },
 };
 
@@ -31,6 +36,7 @@ export const Split: Story = {
 };
 
 export const SingleAction: Story = {
+  parameters: { ...vrtEdges },
   args: { secondaryAction: undefined, body: undefined },
 };
 
