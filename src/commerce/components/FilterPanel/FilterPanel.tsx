@@ -30,6 +30,7 @@ const label = (facet: FacetValue) => `${facet.label} (${facet.count})`;
  * Filters as a real `<form method="get">` with native, named controls, so it works without JavaScript
  * (Apply submits the query parameters parseFilters reads). With `onChange` it is also live.
  * Facet counts are in the labels; zero-count values are disabled but visible (unless selected).
+ * Groups are native <details>: the first group and any group with a selection start open.
  */
 export function FilterPanel({ facets, value, onChange, action = '', sort, currencySymbol = '$', id }: FilterPanelProps) {
   const live = !!onChange;
@@ -46,12 +47,13 @@ export function FilterPanel({ facets, value, onChange, action = '', sort, curren
     set({ price: price.min === undefined && price.max === undefined ? undefined : price });
   };
 
-  const groups: { key: string; title: string; content: ReactNode }[] = [];
+  const groups: { key: string; title: string; content: ReactNode; active?: boolean }[] = [];
 
   if (facets.kinds.length > 1) {
     groups.push({
       key: 'kind',
       title: 'Product type',
+      active: value.kinds.length > 0,
       content: (
         <List
           values={facets.kinds}
@@ -79,6 +81,7 @@ export function FilterPanel({ facets, value, onChange, action = '', sort, curren
     groups.push({
       key: `o.${option.name}`,
       title: option.name,
+      active: selected.length > 0,
       content: (
         <List
           values={option.values}
@@ -116,6 +119,7 @@ export function FilterPanel({ facets, value, onChange, action = '', sort, curren
     groups.push({
       key: 'tag',
       title: 'Tags',
+      active: value.tags.length > 0,
       content: (
         <List
           values={facets.tags}
@@ -131,6 +135,7 @@ export function FilterPanel({ facets, value, onChange, action = '', sort, curren
   groups.push({
     key: 'price',
     title: 'Price',
+    active: value.price !== undefined,
     content: (
       <div className={styles.price}>
         <Field label="Minimum" hint={`In ${currencySymbol}, whole amounts`} id={minId}>
@@ -169,6 +174,7 @@ export function FilterPanel({ facets, value, onChange, action = '', sort, curren
   groups.push({
     key: 'availability',
     title: 'Availability',
+    active: value.availability === 'in-stock' || value.onSale,
     content: (
       <div className={styles.list}>
         <Checkbox name="in_stock" value="1" label={`In stock only (${facets.inStock})`} {...checkedProps(value.availability === 'in-stock')} onChange={(e) => set({ availability: e.target.checked ? 'in-stock' : 'all' })} />
@@ -180,6 +186,7 @@ export function FilterPanel({ facets, value, onChange, action = '', sort, curren
   groups.push({
     key: 'rating',
     title: 'Customer rating',
+    active: value.minRating !== undefined,
     content: (
       <RadioGroup
         legend="Minimum rating"
@@ -200,7 +207,7 @@ export function FilterPanel({ facets, value, onChange, action = '', sort, curren
       {value.query && <input type="hidden" name="q" value={value.query} />}
       {sort && sort !== 'featured' && <input type="hidden" name="sort" value={sort} />}
       {groups.map((group, index) => (
-        <details key={group.key} className={styles.group} open={index === 0 || undefined}>
+        <details key={group.key} className={styles.group} open={index === 0 || group.active || undefined}>
           <summary className={styles.summary}>{group.title}</summary>
           <fieldset className={styles.fieldset}>
             <legend className={styles.visuallyHidden}>{group.title}</legend>

@@ -23,7 +23,9 @@ export function ReviewSummary({ summary, action }: { summary: ProductReviewsData
       <ul className={styles.bars} aria-label="Ratings breakdown">
         {([5, 4, 3, 2, 1] as const).map((star) => (
           <li key={star} className={styles.bar}>
-            <span>{star} stars</span>
+            <span>
+              {star} {star === 1 ? 'star' : 'stars'}
+            </span>
             <span className={styles.track} aria-hidden="true">
               <span className={styles.fill} style={{ inlineSize: `${(summary.distribution[star] / max) * 100}%` }} />
             </span>

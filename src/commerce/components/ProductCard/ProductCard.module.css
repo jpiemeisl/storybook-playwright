@@ -1,4 +1,10 @@
 @layer components {
+  .root {
+    block-size: 100%;
+    min-inline-size: 0;
+    container-type: inline-size;
+  }
+
   .card {
     position: relative;
     display: flex;
@@ -10,7 +16,6 @@
     border-radius: var(--radius-surface);
     background-color: var(--color-surface);
     color: var(--color-text);
-    container-type: inline-size;
   }
 
   .media {
@@ -130,6 +135,15 @@
       flex: 0 0 40%;
       align-self: stretch;
     }
+  }
+
+  .visuallyHidden {
+    position: absolute;
+    inline-size: 1px;
+    block-size: 1px;
+    overflow: hidden;
+    clip-path: inset(50%);
+    white-space: nowrap;
   }
 
   /* Skeleton */

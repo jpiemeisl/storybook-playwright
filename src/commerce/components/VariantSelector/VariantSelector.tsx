@@ -59,10 +59,18 @@ function OptionGroup({ option, value, availability, onChange }: { option: Produc
           const colour = display === 'swatches' ? option.swatches?.[v] : undefined;
           return (
             <label key={v} className={[styles.value, styles[state]].join(' ')}>
-              <input type="radio" className={styles.input} name={name} value={v} checked={value === v} disabled={state === 'none'} onChange={() => onChange(v)} />
+              <input
+                type="radio"
+                className={styles.input}
+                name={name}
+                value={v}
+                checked={value === v}
+                disabled={state === 'none'}
+                aria-label={state === 'in-stock' ? undefined : `${v}, ${stateText[state]}`}
+                onChange={() => onChange(v)}
+              />
               {colour && <span className={styles.swatch} style={{ backgroundColor: colour }} aria-hidden="true" />}
               <span className={styles.text}>{v}</span>
-              {state !== 'in-stock' && <span className={styles.visuallyHidden}>, {stateText[state]}</span>}
             </label>
           );
         })}

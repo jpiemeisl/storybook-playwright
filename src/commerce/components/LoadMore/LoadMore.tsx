@@ -33,7 +33,7 @@ export function LoadMore({ shown, total, href, onLoadMore, loading = false, noun
       <p id={statusId} className={styles.status} role="status">
         Showing {shown} of {total} {noun}
       </p>
-      <progress className={styles.progress} max={total} value={shown} aria-labelledby={statusId} />
+      <progress className={styles.progress} max={total} value={shown} aria-labelledby={statusId} aria-valuemin={0} aria-valuemax={total} aria-valuenow={shown} />
       <ButtonLink href={href} variant="secondary" onClick={onClick} aria-busy={loading || undefined} aria-disabled={loading || undefined}>
         {loading ? 'Loading…' : `Load more ${noun}`}
       </ButtonLink>

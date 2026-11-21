@@ -20,7 +20,7 @@ export function RelatedProducts({ products, hrefFor, heading = 'You might also l
       <Heading as="h2" size="xl" id="related-products">
         {heading}
       </Heading>
-      <Carousel label={heading} slidesPerView={{ base: 2, md: 3, lg: 4 }}>
+      <Carousel label="Related products" slidesPerView={{ base: 2, md: 3, lg: 4 }}>
         {shown.map((product) => (
           <ProductCard key={product.id} product={product} href={hrefFor(product)} quickAction={onQuickAdd ? 'add' : undefined} onQuickAdd={onQuickAdd} />
         ))}

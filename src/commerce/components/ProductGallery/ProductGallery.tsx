@@ -71,6 +71,8 @@ export function ProductGallery({ images, index, onIndexChange, title }: ProductG
           ref={stripRef}
           className={styles.strip}
           aria-label={`${title} images`}
+          // Scrollable, so it must be reachable by keyboard (arrow keys scroll it).
+          tabIndex={0}
           onScroll={(event) => {
             const strip = event.currentTarget;
             const next = Math.round(strip.scrollLeft / Math.max(strip.clientWidth, 1));

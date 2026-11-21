@@ -65,6 +65,7 @@
     border-color: var(--color-action);
   }
 
+  .strip:focus-visible,
   .main:focus-visible,
   .thumb:focus-visible,
   .dot:focus-visible {

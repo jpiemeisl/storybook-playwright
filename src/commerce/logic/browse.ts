@@ -286,7 +286,7 @@ export function computeFacets(products: readonly Product[], state: FilterState):
     };
   });
 
-  const ratings = [4, 3, 2, 1].map((stars) => ({ value: String(stars), label: `${stars} stars and up`, count: count({ minRating: stars }, () => true) }));
+  const ratings = [4, 3, 2, 1].map((stars) => ({ value: String(stars), label: `${stars} ${stars === 1 ? 'star' : 'stars'} and up`, count: count({ minRating: stars }, () => true) }));
   return {
     kinds,
     tags,
@@ -347,7 +347,7 @@ export function describeFilters(state: FilterState, options: { baseHref?: string
   }
   if (state.availability === 'in-stock') chips.push({ id: 'availability:', label: 'In stock only', group: 'Availability' });
   if (state.onSale) chips.push({ id: 'sale:', label: 'On sale', group: 'Sale' });
-  if (state.minRating) chips.push({ id: 'rating:', label: `${state.minRating} stars and up`, group: 'Rating' });
+  if (state.minRating) chips.push({ id: 'rating:', label: `${state.minRating} ${state.minRating === 1 ? 'star' : 'stars'} and up`, group: 'Rating' });
   if (!options.baseHref) return chips;
   return chips.map((chip) => {
     const query = serializeFilters(removeFilter(state, chip.id), { sort: options.sort });
