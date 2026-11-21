@@ -6,3 +6,5 @@ export type * from './types';
 export * from './logic/money';
 export * from './logic/pricing';
 export * from './logic/cart';
+export * from './logic/variants';
+export { useVariantSelection } from './hooks/useVariantSelection';
