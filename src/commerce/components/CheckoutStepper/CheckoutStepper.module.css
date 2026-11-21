@@ -1,0 +1,128 @@
+@layer components {
+  .root {
+    container-type: inline-size;
+  }
+
+  /* Narrow: "Step 2 of 4: Shipping" and a link back. */
+  .list {
+    display: none;
+  }
+
+  .compact {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: var(--gap-xs) var(--gap-md);
+  }
+
+  .position {
+    margin: 0;
+    font-weight: var(--text-weight-strong);
+  }
+
+  .back {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--gap-xs);
+    font-size: var(--text-size-sm);
+  }
+
+  /* Wide: every step with its label; a rule joins them. */
+  @container (min-width: 34rem) {
+    .list {
+      display: flex;
+      gap: var(--gap-sm);
+      margin: 0;
+      padding: 0;
+      list-style: none;
+    }
+
+    .compact {
+      display: none;
+    }
+  }
+
+  .step {
+    display: flex;
+    flex: 1 1 0;
+    align-items: center;
+    gap: var(--gap-xs);
+    min-inline-size: 0;
+    font-size: var(--text-size-sm);
+  }
+
+  .step:not(:last-child)::after {
+    flex: 1;
+    min-inline-size: var(--gap-sm);
+    block-size: var(--border-2);
+    background-color: var(--color-border);
+    content: '';
+  }
+
+  .step[data-state='complete']:not(:last-child)::after {
+    background-color: var(--color-action);
+  }
+
+  .marker {
+    display: inline-grid;
+    flex-shrink: 0;
+    place-items: center;
+    inline-size: var(--space-6);
+    block-size: var(--space-6);
+    border: var(--border-2) solid var(--color-border-strong);
+    border-radius: var(--radius-pill);
+    color: var(--color-text-muted);
+    font-size: var(--text-size-xs);
+    font-weight: var(--text-weight-strong);
+  }
+
+  .step[data-state='complete'] .marker {
+    border-color: var(--color-action);
+    background-color: var(--color-action);
+    color: var(--color-action-text);
+  }
+
+  /* Current: filled ring and bold label (shape and weight, not colour alone). */
+  .step[data-state='current'] .marker {
+    border-color: var(--color-text);
+    background-color: var(--color-text);
+    color: var(--color-surface);
+  }
+
+  .label {
+    min-inline-size: 0;
+    overflow-wrap: anywhere;
+  }
+
+  .step[data-state='upcoming'] .label {
+    color: var(--color-text-muted);
+  }
+
+  .step[data-state='current'] .label {
+    font-weight: var(--text-weight-strong);
+  }
+
+  .visuallyHidden {
+    position: absolute;
+    inline-size: 1px;
+    block-size: 1px;
+    overflow: hidden;
+    clip-path: inset(50%);
+    white-space: nowrap;
+  }
+
+  @media (forced-colors: active) {
+    .step[data-state='complete'] .marker,
+    .step[data-state='current'] .marker {
+      border-color: Highlight;
+      background-color: Highlight;
+      color: HighlightText;
+      forced-color-adjust: none;
+    }
+
+    .step:not(:last-child)::after {
+      background-color: CanvasText;
+    }
+  }
+}

@@ -1,0 +1,34 @@
+@layer components {
+  .root {
+    display: grid;
+    gap: var(--gap-md);
+  }
+
+  .label {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--gap-sm);
+  }
+
+  .fields {
+    display: grid;
+  }
+
+  .demo {
+    display: flex;
+    align-items: flex-start;
+    gap: var(--gap-sm);
+    padding: var(--gap-md);
+    border: var(--border-2) dashed var(--color-border-strong);
+    border-radius: var(--radius-control);
+    background-color: var(--color-bg-muted);
+  }
+
+  .demo p {
+    margin: 0;
+  }
+
+  .demo svg {
+    flex-shrink: 0;
+  }
+}
