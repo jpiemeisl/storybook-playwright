@@ -1,0 +1,59 @@
+@layer components {
+  .nav {
+    display: grid;
+    gap: var(--gap-md);
+  }
+
+  @media (min-width: 48rem) {
+    .nav {
+      grid-template-columns: 1fr 1fr;
+    }
+
+    .next {
+      grid-column: 2;
+      text-align: end;
+    }
+
+    .next .label {
+      justify-self: end;
+    }
+  }
+
+  .nav .link {
+    display: grid;
+    align-content: start;
+    gap: var(--gap-xs);
+    padding: var(--gap-md);
+    border: var(--border-1) solid var(--color-border);
+    border-radius: var(--radius-surface);
+    color: var(--color-text);
+    text-decoration: none;
+  }
+
+  .nav .link:hover {
+    border-color: var(--color-action);
+  }
+
+  .nav .link:hover .title {
+    color: var(--color-action);
+    text-decoration-line: underline;
+  }
+
+  .nav .link:focus-visible {
+    outline: var(--focus-ring-width) solid var(--color-focus-ring);
+    outline-offset: var(--focus-ring-offset);
+  }
+
+  .label {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--gap-xs);
+    color: var(--color-text-muted);
+    font-size: var(--text-size-sm);
+  }
+
+  .title {
+    font-weight: var(--text-weight-strong);
+    overflow-wrap: anywhere;
+  }
+}

@@ -1,0 +1,46 @@
+@layer components {
+  .layout {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    gap: var(--gap-lg);
+  }
+
+  .main {
+    min-inline-size: 0;
+  }
+
+  @media (min-width: 64rem) {
+    .layout {
+      column-gap: var(--gap-xl);
+    }
+
+    .end {
+      grid-template-columns: minmax(0, 1fr) 16rem;
+    }
+
+    .start {
+      grid-template-columns: 16rem minmax(0, 1fr);
+    }
+
+    .end .aside {
+      grid-column: 2;
+      grid-row: 1;
+    }
+
+    .end .main {
+      grid-column: 1;
+      grid-row: 1;
+    }
+  }
+
+  /* The aside is a navigation aid (e.g. a table of contents): not printed; the main column takes the page. */
+  @media print {
+    .layout {
+      display: block;
+    }
+
+    .aside {
+      display: none;
+    }
+  }
+}

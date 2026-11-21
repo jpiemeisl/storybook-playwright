@@ -1,0 +1,28 @@
+@layer components {
+  .list {
+    display: flex;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .column {
+    flex-direction: column;
+    gap: var(--gap-sm);
+  }
+
+  .row {
+    flex-wrap: wrap;
+    column-gap: var(--gap-md);
+    row-gap: var(--gap-xs);
+  }
+
+  .sm {
+    font-size: var(--text-size-sm);
+  }
+
+  .list > li {
+    min-inline-size: 0;
+    overflow-wrap: anywhere;
+  }
+}

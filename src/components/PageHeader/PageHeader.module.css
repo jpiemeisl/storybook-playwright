@@ -6,12 +6,15 @@
 
   .layout {
     display: grid;
+    /* minmax(0, …): long unbreakable content (tags, breadcrumbs) must not widen the column past its slot. */
+    grid-template-columns: minmax(0, 1fr);
     gap: var(--gap-xl);
     align-items: center;
   }
 
   .text {
     display: grid;
+    grid-template-columns: minmax(0, 1fr);
     gap: var(--gap-md);
     min-inline-size: 0;
   }

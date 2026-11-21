@@ -186,6 +186,12 @@
     visibility: hidden;
   }
 
+  /* Logo-only header (no items): the CTA, if any, is always visible at the end. */
+  .header[data-no-nav] .cta {
+    display: inline-flex;
+    margin-inline-start: auto;
+  }
+
   @media (prefers-reduced-motion: no-preference) {
     .header .navLink,
     .header .panelLink,

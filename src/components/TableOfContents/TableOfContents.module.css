@@ -30,6 +30,7 @@
     border-inline-start: var(--border-2) solid var(--color-border);
     color: var(--color-text-muted);
     text-decoration: none;
+    overflow-wrap: anywhere;
   }
 
   .toc .link:hover {

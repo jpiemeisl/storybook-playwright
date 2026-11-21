@@ -140,6 +140,8 @@
   --z-header: 100;
   --z-overlay: 200;
   --z-drawer: 300;
+  /* Height reserved for StickyActionBar (landing pages, below 48rem); also its scroll-padding-bottom. */
+  --sticky-action-bar-height: calc(var(--control-height-lg) + 2 * var(--space-2));
 
   /* Content sections */
   /* Scrim between a background image and text. Dark enough that inverse text passes 4.5:1 over any image. */

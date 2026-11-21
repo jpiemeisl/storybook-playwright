@@ -1,7 +1,7 @@
 import type { ArticleCardContent } from '../../component-types/sections';
 import { formatIsoDate } from '../../utils/formatDate';
 import { Badge } from '../Badge';
-import { Card, type CardOrientation, type CardVariant } from '../Card';
+import { Card, type CardOrientation, type CardSize, type CardVariant } from '../Card';
 import { Image } from '../Image';
 import styles from './ArticleCard.module.css';
 
@@ -10,10 +10,12 @@ export interface ArticleCardProps {
   variant?: CardVariant;
   orientation?: CardOrientation;
   headingLevel?: 2 | 3 | 4;
+  /** `lg` for a featured article (larger title, more padding). */
+  size?: CardSize;
 }
 
 /** Blog/news card built on Card: category badge, author, publish date and reading time. */
-export function ArticleCard({ article, variant = 'outlined', orientation = 'vertical', headingLevel = 3 }: ArticleCardProps) {
+export function ArticleCard({ article, variant = 'outlined', orientation = 'vertical', headingLevel = 3, size = 'md' }: ArticleCardProps) {
   const { title, href, excerpt, category, publishedAt, readingTimeMinutes, author, image } = article;
 
   return (
@@ -26,6 +28,7 @@ export function ArticleCard({ article, variant = 'outlined', orientation = 'vert
       variant={variant}
       orientation={orientation}
       headingLevel={headingLevel}
+      size={size}
       footer={
         <div className={styles.meta}>
           {author?.avatar && <Image {...author.avatar} alt="" width={32} height={32} className={styles.avatar} />}

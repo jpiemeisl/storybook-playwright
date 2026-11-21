@@ -1,0 +1,46 @@
+@layer components {
+  .bar {
+    position: sticky;
+    inset-block-end: 0;
+    z-index: var(--z-header);
+    display: flex;
+    align-items: center;
+    gap: var(--gap-sm);
+    min-block-size: var(--sticky-action-bar-height);
+    padding: var(--gap-sm) var(--gutter);
+    border-block-start: var(--border-1) solid var(--color-border);
+    background-color: var(--color-surface);
+    box-shadow: var(--elevation-high);
+  }
+
+  .message {
+    flex: 1;
+    min-inline-size: 0;
+    margin: 0;
+    font-size: var(--text-size-sm);
+    font-weight: var(--text-weight-strong);
+  }
+
+  .button {
+    flex: 1;
+  }
+
+  .message + .button {
+    flex: 0 1 auto;
+  }
+
+  /* Keep focused and anchored content clear of the bar while it is shown. */
+  :global(html):has(.bar) {
+    scroll-padding-block-end: calc(var(--sticky-action-bar-height) + var(--gap-sm));
+  }
+
+  @media (min-width: 48rem) {
+    .bar {
+      display: none;
+    }
+
+    :global(html):has(.bar) {
+      scroll-padding-block-end: 0;
+    }
+  }
+}
