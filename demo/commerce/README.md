@@ -23,3 +23,15 @@ a server, which validates promo codes, stock and prices.
   `demo: { failPlaceOrder: true }` to make placing the order fail. No timers, no randomness.
 - `useDemoToasts()`: toasts for cart actions (added, removed, promo applied or rejected). Render them with
   `<ToastRegion toasts={toasts} onDismiss={dismiss} />`.
+
+## Account (Phase 12)
+
+DEMO ONLY: never ship this as account logic.
+
+- `DemoAccountProvider` and `useDemoAccount()` keep the customer, orders, subscriptions, invoices,
+  downloads, addresses and wishlist in memory.
+- `perform(action)` runs the pure `applyAccountAction`, which validates subscription actions with
+  `getSubscriptionActions` and dates them from `DEMO_NOW`. It returns a typed result and shows a Toast.
+- Story parameters: `demoAccount: { data }` (an `accountData` key) and `demo: { failAction: true }`
+  to simulate server errors.
+- No storage, network or timers. Plan changes apply immediately, with no proration.

@@ -24,6 +24,7 @@ npx playwright install chromium
 | `npm run test:vrt:report` | Opens the HTML report from the last run (diffs for any failures)             |
 | `npm run test:unit`       | Vitest unit tests for pure logic (validators, registry, adapter, fixtures)   |
 | `npm run docs:content-model` | Regenerates `docs/content-model.md` from the content-type JSDoc           |
+| `npm run check:story-tags` | After a Storybook build: fails when a main template story lacks its expected `vrt-full` tag (tags spread from shared objects are silently dropped) |
 | `npm run check:boundaries` | Fails if core code imports `src/commerce` or anything under `src/` imports `demo/` |
 
 ## Project layout
@@ -299,6 +300,15 @@ backend: the types are the contract for future adapters.
   static demo panel with no inputs.
 
   See [`docs/commerce-checkout.md`](docs/commerce-checkout.md).
+- **Account area (Phase 12):**
+  - auth forms (real POST forms, hidden-field slot for CSRF tokens, non-enumerating errors, password
+    checklist) and the account templates (overview, orders, order, downloads, subscriptions,
+    subscription, addresses, wishlist)
+  - subscription management driven by pure logic (`getSubscriptionActions`, status text from a
+    passed-in `now`), invoices, a masked `LicenseKey`, an address book and a wishlist
+  - no payment fields: "Update payment method" is a callback with a slot for the provider's fields
+
+  See [`docs/commerce-account.md`](docs/commerce-account.md).
 
 ## Visual regression testing
 

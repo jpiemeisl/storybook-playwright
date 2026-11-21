@@ -24,6 +24,8 @@ export const EXPECTED_TAGS = [
   { title: 'Commerce/Templates/Cart', tag: 'vrt-full', stories: ['Physical', 'Mixed', 'Empty'] },
   { title: 'Commerce/Templates/Checkout', tag: 'vrt-full', stories: ['Mixed Information', 'Mixed Payment', 'Mixed Review', 'Digital Payment'] },
   { title: 'Commerce/Templates/Order confirmation', tag: 'vrt-full', stories: ['Mixed'] },
+  { title: 'Commerce/Templates/Auth', tag: 'vrt-full', stories: ['Login'] },
+  { title: 'Commerce/Templates/Account', tag: 'vrt-full', stories: ['Dashboard Rich', 'Orders', 'Order Detail Mixed', 'Downloads', 'Subscriptions', 'Subscription Active', 'Addresses'] },
 ];
 
 /**
