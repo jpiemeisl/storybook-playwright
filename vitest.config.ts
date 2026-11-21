@@ -4,7 +4,7 @@ import { defineConfig } from 'vitest/config';
 // covered by Storybook interaction tests and the Playwright visual suite.
 export default defineConfig({
   test: {
-    include: ['src/**/*.test.ts'],
+    include: ['src/**/*.test.ts', 'demo/**/*.test.ts', 'scripts/**/*.test.ts'],
     environment: 'node',
   },
 });
