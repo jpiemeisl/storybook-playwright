@@ -7,12 +7,16 @@
  *   orderNumber "FH-<n>"            e.g. FH-2001
  *   placedAt    DEMO_NOW            2026-03-21T09:00:00Z (trial and renewal dates count from here)
  */
+import { computeCartTotals } from '../logic/cart';
+import { getCartIssues, getCartNotes } from '../logic/cartLines';
 import { createOrderFromCart, emptyCheckoutValues, type OrderContext } from '../logic/checkout';
+import type { CheckoutStepId } from '../types/checkout';
+import type { CartPage, CheckoutPage, OrderConfirmationPage } from '../types/pages';
 import type { Cart, ShippingMethod } from '../types/cart';
 import type { CheckoutValues } from '../types/checkout';
 import type { Address, Order } from '../types/order';
 import { carts, type CartFixtureKey } from './carts';
-import { products } from './products';
+import { candle, guide, products, seedPacket, tote } from './products';
 import { DEMO_NOW, promoDefinitions, shippingMethods } from './store';
 
 export { US_STATES } from '../logic/usStates';
@@ -96,3 +100,56 @@ export const confirmationOrders = {
   /** No email supplied: the confirmation leaves out the "would be emailed" line. */
   noEmail: withoutEmail(confirmed(2006, carts.oneLine, checkoutValues.physical)),
 } satisfies Record<string, Order>;
+
+/** The cart context fixtures and stories use for totals (demo promo codes, shipping methods, DEMO_NOW). */
+export const demoCartContext = { promoDefinitions, shippingMethods, now: DEMO_NOW };
+
+/** "Complete your order" products for cart pages. */
+export const crossSellProducts = [candle, seedPacket, tote, guide];
+
+/** A cart page for a cart fixture, with totals, issues and notes computed from it. */
+export function cartPage(key: CartFixtureKey, extra: Partial<CartPage> = {}): CartPage {
+  const cart = carts[key];
+  return {
+    id: `page-cart-${key}`,
+    slug: 'cart',
+    template: 'cart',
+    seo: { title: 'Your cart' },
+    blocks: [],
+    cart,
+    totals: computeCartTotals(cart, demoCartContext),
+    issues: getCartIssues(cart, products),
+    notes: getCartNotes(cart, products),
+    crossSell: crossSellProducts,
+    ...extra,
+  };
+}
+
+/** A checkout page at `step` for a cart fixture. Totals use the values' shipping method, like the demo. */
+export function checkoutPage(key: CartFixtureKey, step: CheckoutStepId, values: CheckoutValues, extra: Partial<CheckoutPage> = {}): CheckoutPage {
+  const base = carts[key];
+  const cart = values.shippingMethodId ? { ...base, shippingMethodId: values.shippingMethodId } : base;
+  return {
+    id: `page-checkout-${key}-${step}`,
+    slug: 'checkout',
+    template: 'checkout',
+    seo: { title: 'Checkout' },
+    blocks: [],
+    cart,
+    totals: computeCartTotals(cart, demoCartContext),
+    step,
+    values,
+    shippingMethods,
+    issues: getCartIssues(cart, products),
+    notes: getCartNotes(cart, products),
+    ...extra,
+  };
+}
+
+export type ConfirmationOrderKey = keyof typeof confirmationOrders;
+
+/** An order confirmation page. */
+export function confirmationPage(key: ConfirmationOrderKey): OrderConfirmationPage {
+  const order = confirmationOrders[key];
+  return { id: `page-order-${order.number}`, slug: `order/${order.number}`, template: 'order-confirmation', seo: { title: `Order ${order.number}` }, blocks: [], order };
+}

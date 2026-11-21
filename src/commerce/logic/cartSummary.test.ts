@@ -13,9 +13,10 @@ describe('summaryRows', () => {
     expect(keysOf('subscriptionOnly')).toEqual(['subtotal', 'tax', 'dueToday']);
   });
 
-  it('shows "Calculated at checkout" before an address is known', () => {
+  it('labels shipping as an estimate before an address is known, and keeps the rows adding up', () => {
     const shipping = summaryRows(totalsOf('physicalOnly'), { shippingKnown: false }).find((r) => r.key === 'shipping');
-    expect(shipping).toEqual({ key: 'shipping', label: 'Shipping', text: 'Calculated at checkout' });
+    expect(shipping).toEqual({ key: 'shipping', label: 'Estimated shipping', amount: { amount: 595, currency: 'USD' }, note: 'Standard. Calculated at checkout from your address.' });
+    expect(summaryRows(totalsOf('freeShippingAt'), { shippingKnown: false }).find((r) => r.key === 'shipping')).toMatchObject({ text: 'Free' });
   });
 
   it('shows the amount and method, or "Free" with the reason', () => {
@@ -28,15 +29,16 @@ describe('summaryRows', () => {
     expect(summaryRows(totalsOf('withPromo')).filter((r) => r.key === 'discount').map((r) => r.label)).toEqual(['Discount (WELCOME10)']);
   });
 
-  it('adds a trial deduction so the rows add up to Due today', () => {
+  it('adds a trial deduction so the rows add up to Due today, with shipping known or estimated', () => {
     for (const key of Object.keys(carts) as CartFixtureKey[]) {
       const totals = totalsOf(key);
-      const rows = summaryRows(totals);
-      const sum = rows.reduce((acc, row) => {
-        if (row.key === 'dueToday' || !row.amount) return acc;
-        return row.key === 'discount' || row.key === 'trial' ? subtract(acc, row.amount) : add(acc, row.amount);
-      }, zero('USD'));
-      expect(sum, key).toEqual(totals.dueToday);
+      for (const shippingKnown of [true, false]) {
+        const sum = summaryRows(totals, { shippingKnown }).reduce((acc, row) => {
+          if (row.key === 'dueToday' || !row.amount) return acc;
+          return row.key === 'discount' || row.key === 'trial' ? subtract(acc, row.amount) : add(acc, row.amount);
+        }, zero('USD'));
+        expect(sum, `${key} ${shippingKnown}`).toEqual(totals.dueToday);
+      }
     }
     expect(keysOf('subscriptionWithTrial')).toEqual(['subtotal', 'trial', 'tax', 'dueToday']);
   });

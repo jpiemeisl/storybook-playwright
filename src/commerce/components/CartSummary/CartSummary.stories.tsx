@@ -16,7 +16,7 @@ const bulk: Cart = { ...carts.twentyLines, lines: carts.twentyLines.lines.map((l
 
 const cases: [string, ReturnType<typeof totalsFor>, boolean?][] = [
   ['Physical only', totalsFor(carts.physicalOnly)],
-  ['Shipping unknown (before an address)', totalsFor(carts.physicalOnly), false],
+  ['Shipping estimated (before an address)', totalsFor(carts.mixed), false],
   ['Free shipping unlocked ($75.00)', totalsFor(carts.freeShippingAt)],
   ['Promo applied (WELCOME10 + SHIPFREE)', totalsFor(carts.withPromo)],
   ['Digital only (no shipping row)', totalsFor(carts.digitalOnly)],

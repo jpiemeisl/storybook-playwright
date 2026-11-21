@@ -9,8 +9,8 @@ export interface ShippingMethodSelectorProps {
   /** Selected method id. */
   value?: string;
   onChange: (methodId: string) => void;
-  /** The method free shipping applies to (e.g. Standard over $75): shown as "Free" and marked. */
-  freeMethodId?: string;
+  /** Methods free shipping applies to (a free-shipping code or the $75 threshold): shown as "Free" and marked. */
+  freeMethodIds?: string[];
   error?: string;
   /** Field name. Default "shippingMethodId". */
   name?: string;
@@ -20,7 +20,7 @@ export interface ShippingMethodSelectorProps {
  * Shipping methods as radio cards (label and price as the name, estimate and description as the
  * description). The free-shipping method is marked in text. With no methods, an Alert explains.
  */
-export function ShippingMethodSelector({ methods, value, onChange, freeMethodId, error, name = 'shippingMethodId' }: ShippingMethodSelectorProps) {
+export function ShippingMethodSelector({ methods, value, onChange, freeMethodIds = [], error, name = 'shippingMethodId' }: ShippingMethodSelectorProps) {
   if (methods.length === 0) {
     return (
       <Alert tone="warning" title="No shipping methods available">
@@ -31,7 +31,8 @@ export function ShippingMethodSelector({ methods, value, onChange, freeMethodId,
   return (
     <RadioGroup legend="Shipping method" name={name} variant="card" value={value ?? ''} onChange={onChange} error={error} required>
       {methods.map((method) => {
-        const free = method.id === freeMethodId || method.price.amount === 0;
+        const applied = freeMethodIds.includes(method.id) && method.price.amount > 0;
+        const free = applied || method.price.amount === 0;
         return (
           <Radio
             key={method.id}
@@ -45,7 +46,7 @@ export function ShippingMethodSelector({ methods, value, onChange, freeMethodId,
             description={
               <>
                 {[method.estimate, method.description].filter(Boolean).join(' · ')}
-                {method.id === freeMethodId && method.price.amount > 0 && <span className={styles.badge}>Free shipping applied (was {formatMoney(method.price)})</span>}
+                {applied && <span className={styles.badge}>Free shipping applied (was {formatMoney(method.price)})</span>}
               </>
             }
           />

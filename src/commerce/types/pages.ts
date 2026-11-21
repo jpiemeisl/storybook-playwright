@@ -6,7 +6,12 @@ import type { PageContent } from '../../content-types/blocks';
 import type { BreadcrumbItem } from '../../content-types/navigation';
 import type { ImageRef } from '../../content-types/shared';
 import type { Facets, FilterState, SortKey } from '../logic/browse';
+import type { CartTotals } from '../logic/cart';
+import type { CartIssue, CartLineNote } from '../logic/cartLines';
 import type { Selection } from '../logic/variants';
+import type { Cart, ShippingMethod } from './cart';
+import type { CheckoutErrors, CheckoutStepId, CheckoutValues } from './checkout';
+import type { Order } from './order';
 import type { Product, ProductReviewsData, PurchaseOption } from './product';
 
 /** One page of a filtered, sorted collection. */
@@ -45,4 +50,60 @@ export interface ProductPage extends PageContent {
   breadcrumbs?: BreadcrumbItem[];
   initialSelection?: Selection;
   initialPurchaseOption?: PurchaseOption;
+}
+
+/** Links the cart, checkout and confirmation pages use. Defaults: "/shop", "/cart", "/checkout". */
+export interface CommerceLinks {
+  shop?: string;
+  cart?: string;
+  checkout?: string;
+  /** Terms of sale, linked from the payment step. Default "/terms". */
+  terms?: string;
+  /** Order details page on the confirmation. Default "/account/orders/<number>". */
+  order?: string;
+}
+
+/** The cart page. Totals come from computeCartTotals; the template does no pricing. */
+export interface CartPage extends PageContent {
+  template: 'cart';
+  cart: Cart;
+  totals: CartTotals;
+  /** From getCartIssues. Blocking issues disable checkout. */
+  issues: CartIssue[];
+  /** Catalogue-aware notes per line id (getCartNotes). Default: notes from the line alone. */
+  notes?: Record<string, CartLineNote[]>;
+  /** "Complete your order" products. */
+  crossSell?: Product[];
+  /** `loading` shows a skeleton, `error` a page-level alert. */
+  status?: 'idle' | 'loading' | 'error';
+  /** Per-line update state while the host saves a change. */
+  lineStatus?: Record<string, 'updating' | 'error'>;
+  links?: CommerceLinks;
+}
+
+/** One checkout step. The host owns values, step and status; the template validates and calls back. */
+export interface CheckoutPage extends PageContent {
+  template: 'checkout';
+  cart: Cart;
+  totals: CartTotals;
+  step: CheckoutStepId;
+  values: CheckoutValues;
+  /** Errors from the host (e.g. a server check), shown until the next continue. */
+  errors?: CheckoutErrors;
+  shippingMethods: ShippingMethod[];
+  /** From getCartIssues: blocking issues send the customer back to the cart. */
+  issues?: CartIssue[];
+  notes?: Record<string, CartLineNote[]>;
+  /** Placing the order. */
+  status?: 'idle' | 'submitting' | 'error';
+  /** Shown when status is `error`. */
+  errorMessage?: string;
+  links?: CommerceLinks;
+}
+
+/** The order confirmation. */
+export interface OrderConfirmationPage extends PageContent {
+  template: 'order-confirmation';
+  order: Order;
+  links?: CommerceLinks;
 }

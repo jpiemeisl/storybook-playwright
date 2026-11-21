@@ -21,7 +21,7 @@ export type SummaryRow =
   | { key: 'dueToday'; label: string; amount: Money };
 
 export interface SummaryOptions {
-  /** False before the customer has given an address: shipping shows "Calculated at checkout". Default true. */
+  /** False before the customer has given an address: shipping is labelled as an estimate, "Calculated at checkout from your address". Default true. */
   shippingKnown?: boolean;
 }
 
@@ -33,10 +33,12 @@ export function summaryRows(totals: CartTotals, options: SummaryOptions = {}): S
   }
   if (totals.flags.hasShippable) {
     const freeCode = totals.appliedPromos.find((p) => p.kind === 'free-shipping');
-    if (options.shippingKnown === false) rows.push({ key: 'shipping', label: 'Shipping', text: 'Calculated at checkout' });
-    else if (totals.shipping.amount === 0) {
+    if (totals.shipping.amount === 0 && (freeCode || totals.freeShippingProgress.reached || options.shippingKnown !== false)) {
       const note = freeCode ? `${freeCode.code} applied` : totals.freeShippingProgress.reached ? `Orders over ${formatMoney(totals.freeShippingProgress.threshold)} ship free` : undefined;
       rows.push({ key: 'shipping', label: freeCode ? `Shipping (${freeCode.code})` : 'Shipping', text: 'Free', ...(note ? { note } : {}) });
+    } else if (options.shippingKnown === false) {
+      // Before an address: the estimate is in the total, so show it, labelled as an estimate.
+      rows.push({ key: 'shipping', label: 'Estimated shipping', ...(totals.shipping.amount > 0 ? { amount: totals.shipping } : { text: 'Calculated at checkout' }), note: `${totals.shippingMethod ? `${totals.shippingMethod.label}. ` : ''}Calculated at checkout from your address.` });
     } else {
       rows.push({ key: 'shipping', label: 'Shipping', amount: totals.shipping, ...(totals.shippingMethod ? { note: totals.shippingMethod.label } : {}) });
     }

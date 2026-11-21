@@ -11,7 +11,7 @@ type Story = StoryObj<Record<string, never>>;
 
 function Live({ free, initial }: { free?: string; initial?: string }) {
   const [value, setValue] = useState(initial);
-  return <ShippingMethodSelector methods={shippingMethods} value={value} onChange={setValue} freeMethodId={free} name={`ship-${free ?? 'none'}`} />;
+  return <ShippingMethodSelector methods={shippingMethods} value={value} onChange={setValue} freeMethodIds={free ? [free] : undefined} name={`ship-${free ?? 'none'}`} />;
 }
 
 /** Three methods; free shipping applied to Standard; no methods available. */

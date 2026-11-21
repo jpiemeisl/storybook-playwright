@@ -14,8 +14,9 @@ import type { Cart } from '../types/cart';
 import type { CheckoutErrors, CheckoutStepId, CheckoutValues } from '../types/checkout';
 import type { Address, Order, OrderRecurringLine } from '../types/order';
 import type { Product } from '../types/product';
-import { computeCartTotals, type CartContext, type CartFlags } from './cart';
-import { addDays, addInterval, formatCommerceDate, formatRecurring } from './pricing';
+import { computeCartTotals, type CartContext, type CartFlags, type CartTotals } from './cart';
+import { multiply } from './money';
+import { addDays, addInterval, formatCommerceDate, formatRecurring, subscriptionUnitPrice } from './pricing';
 import { EMAIL } from './validate';
 import { usStateName, US_ZIP } from './usStates';
 
@@ -196,3 +197,12 @@ export function createOrderFromCart(cart: Cart, values: CheckoutValues, ctx: Ord
   };
 }
 
+
+/** Per-line amounts for an order (unit price after subscription discount, line total), in the CartTotals line shape. */
+export function orderLineAmounts(order: Pick<Order, 'lines'>): CartTotals['lines'] {
+  return order.lines.map((line) => {
+    const unitPrice = subscriptionUnitPrice(line.snapshot.unitPrice, line.purchaseOption);
+    const trialDays = line.purchaseOption.type === 'subscription' ? (line.purchaseOption.trialDays ?? 0) : 0;
+    return { lineId: line.id, unitPrice, total: multiply(unitPrice, line.quantity), ...(trialDays ? { trialDays } : {}) };
+  });
+}
