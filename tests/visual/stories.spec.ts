@@ -36,9 +36,12 @@ type ViewportParam = number | { width: number; height?: number; fullPage?: boole
 
 interface StoryResult {
   status: 'success' | 'error' | 'missing';
-  vrt: { viewports?: ViewportParam[] } | null;
+  /** viewports: override the tag viewports. screenshot: false runs play + a11y checks only. */
+  vrt: { viewports?: ViewportParam[]; screenshot?: boolean } | null;
   problems: string[];
 }
+
+const PORT = 6007;
 
 const indexPath = resolve(process.cwd(), 'storybook-static', 'index.json');
 
@@ -179,6 +182,13 @@ for (const story of stories) {
   test(`${story.title} / ${story.name}`, async ({ page }) => {
     await page.addInitScript(installStoryListener);
 
+    // Stories must never reach the network beyond the local Storybook server.
+    const external: string[] = [];
+    page.on('request', (request) => {
+      const url = request.url();
+      if (!/^(data|blob|about):/.test(url) && !url.startsWith(`http://localhost:${PORT}/`)) external.push(url);
+    });
+
     // First load at the tag-derived viewport; this also tells us whether parameters.vrt overrides it.
     // If it does, this load was only a probe (its play function may assume another viewport), so its
     // result is checked only when the probe viewport is also the first one we capture.
@@ -186,6 +196,12 @@ for (const story of stories) {
     let loaded: Capture | null = tagCaptures[0]!;
     await page.setViewportSize({ width: loaded.width, height: loaded.height });
     const probe = await openStory(page, story.id);
+    if (probe.vrt?.screenshot === false) {
+      // Interaction-only story (e.g. activating an embed): check it, never capture it.
+      expectClean(probe, story.id, loaded.width);
+      expect(external, 'external network requests').toEqual([]);
+      return;
+    }
     const captures = probe.vrt?.viewports?.length ? capturesFromParam(probe.vrt.viewports) : tagCaptures;
     if (captures[0]!.width === loaded.width && captures[0]!.height === loaded.height) {
       expectClean(probe, story.id, loaded.width);
@@ -206,5 +222,6 @@ for (const story of stories) {
         await expect(page).toHaveScreenshot(`${story.id}-${capture.width}.png`, { fullPage: capture.fullPage });
       });
     }
+    expect(external, 'external network requests').toEqual([]);
   });
 }

@@ -24,3 +24,9 @@ SectionBackgrounds composition stories.
 Phase 5 (branch `phase-5-forms`): field/warning tokens; validation helpers; Label, HelpText,
 FieldError, Field; Input, Textarea, Select, Checkbox, Radio/RadioGroup; Alert; Button `loading`;
 SearchInput, NewsletterSignup, ContactForm; form fixtures, kitchen-sink and validation-check stories.
+
+Phase 6 (branch `phase-6-content-media`): content/media tokens and icons; content types; Modal;
+PageHeader, Prose, TableOfContents, AuthorByline, TagList/CategoryFilter, ShareLinks, RelatedPosts;
+Gallery, Lightbox, VideoEmbed/Video, MapEmbed, Carousel, Tabs; Table, Timeline/Steps,
+TeamMember/TeamGrid; article/gallery/team fixtures; blog and about compositions. The VRT harness
+now fails on any external network request and supports `vrt.screenshot: false`.

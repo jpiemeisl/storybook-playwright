@@ -1,0 +1,103 @@
+@layer components {
+  /* Scroll region with CSS-only edge shadows: the "local" gradients cover the shadows at the ends. */
+  .scroller {
+    max-inline-size: 100%;
+    overflow: auto;
+    border: var(--border-1) solid var(--color-border);
+    border-radius: var(--radius-control);
+    background:
+      linear-gradient(to right, var(--color-surface) 30%, transparent) left / 2.5rem 100% no-repeat local,
+      linear-gradient(to left, var(--color-surface) 30%, transparent) right / 2.5rem 100% no-repeat local,
+      radial-gradient(farthest-side at 0 50%, var(--color-scroll-shadow), transparent) left / 0.875rem 100% no-repeat scroll,
+      radial-gradient(farthest-side at 100% 50%, var(--color-scroll-shadow), transparent) right / 0.875rem 100% no-repeat scroll,
+      var(--color-surface);
+    color: var(--color-text);
+  }
+
+  .scroller:focus-visible {
+    outline: var(--focus-ring-width) solid var(--color-focus-ring);
+    outline-offset: var(--focus-ring-offset);
+  }
+
+  /* Sticky header needs a vertical scroll container: cap the height. */
+  .sticky {
+    max-block-size: min(32rem, 70vh);
+  }
+
+  .table {
+    inline-size: 100%;
+    border-collapse: separate;
+    border-spacing: 0;
+    font-size: var(--text-size-sm);
+    line-height: 1.5;
+  }
+
+  .caption {
+    padding: var(--space-3) var(--space-4);
+    font-weight: var(--text-weight-strong);
+    text-align: start;
+  }
+
+  .table th,
+  .table td {
+    padding: var(--space-3) var(--space-4);
+    border-block-start: var(--border-1) solid var(--color-border);
+    vertical-align: top;
+  }
+
+  .dense th,
+  .dense td {
+    padding-block: var(--space-1);
+    padding-inline: var(--space-3);
+  }
+
+  .table thead th {
+    background-color: var(--color-table-header-bg);
+    font-weight: var(--text-weight-strong);
+    white-space: nowrap;
+  }
+
+  .sticky thead th {
+    position: sticky;
+    inset-block-start: 0;
+    z-index: 1;
+    box-shadow: 0 1px 0 var(--color-border);
+  }
+
+  .table tbody th {
+    font-weight: var(--text-weight-strong);
+  }
+
+  .striped tbody tr:nth-child(even) > * {
+    background-color: var(--color-table-stripe);
+  }
+
+  .align-start {
+    text-align: start;
+  }
+  .align-center {
+    text-align: center;
+  }
+  .align-end {
+    text-align: end;
+  }
+
+  .numeric {
+    text-align: end;
+    font-variant-numeric: tabular-nums;
+    white-space: nowrap;
+  }
+
+  .empty {
+    color: var(--color-text-muted);
+  }
+
+  .visuallyHidden {
+    position: absolute;
+    inline-size: 1px;
+    block-size: 1px;
+    overflow: hidden;
+    clip-path: inset(50%);
+    white-space: nowrap;
+  }
+}

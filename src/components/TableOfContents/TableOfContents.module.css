@@ -1,0 +1,101 @@
+@layer components {
+  .toc {
+    color: var(--color-text);
+    font-size: var(--text-size-sm);
+  }
+
+  .title {
+    margin: 0 0 var(--gap-sm);
+    font-weight: var(--text-weight-strong);
+  }
+
+  .list,
+  .sublist {
+    display: grid;
+    gap: 2px;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .sublist {
+    margin-block-start: 2px;
+    padding-inline-start: var(--gap-md);
+  }
+
+  .toc .link {
+    display: block;
+    padding-block: var(--space-1);
+    padding-inline: var(--space-3);
+    border-inline-start: var(--border-2) solid var(--color-border);
+    color: var(--color-text-muted);
+    text-decoration: none;
+  }
+
+  .toc .link:hover {
+    color: var(--color-action);
+  }
+
+  .toc .link:focus-visible {
+    outline: var(--focus-ring-width) solid var(--color-focus-ring);
+    outline-offset: 0;
+  }
+
+  /* Active: thicker action-coloured rule plus weight, not colour alone. */
+  .toc .link[aria-current='location'] {
+    border-inline-start-color: var(--color-action);
+    border-inline-start-width: 4px;
+    color: var(--color-text);
+    font-weight: var(--text-weight-strong);
+  }
+
+  /* Narrow screens: collapsible. */
+  .wide {
+    display: none;
+  }
+
+  .narrow {
+    border: var(--border-1) solid var(--color-border);
+    border-radius: var(--radius-control);
+    background-color: var(--color-surface);
+  }
+
+  .summary {
+    padding: var(--gap-sm) var(--gap-md);
+    font-weight: var(--text-weight-strong);
+    cursor: pointer;
+  }
+
+  .summary:focus-visible {
+    outline: var(--focus-ring-width) solid var(--color-focus-ring);
+    outline-offset: 0;
+  }
+
+  .narrow[open] > .list {
+    padding: 0 var(--gap-sm) var(--gap-sm);
+  }
+
+  /* Wide screens: always open and sticky beside the article. */
+  @media (min-width: 64rem) {
+    .toc {
+      position: sticky;
+      inset-block-start: calc(var(--header-height) + var(--gap-md));
+      max-block-size: calc(100dvh - var(--header-height) - 2 * var(--gap-md));
+      overflow-y: auto;
+    }
+
+    .wide {
+      display: block;
+    }
+
+    .narrow {
+      display: none;
+    }
+  }
+
+  @media (forced-colors: active) {
+    .toc .link[aria-current='location'] {
+      border-inline-start-color: Highlight;
+    }
+  }
+}

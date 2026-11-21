@@ -56,6 +56,16 @@
   --color-field-border-hover: var(--neutral-700);
   --color-field-border-focus: var(--teal-600);
   --color-field-disabled-bg: var(--neutral-100);
+
+  /* Long-form content and data display */
+  --measure: 65ch; /* comfortable reading line length */
+  --color-code-bg: var(--neutral-100);
+  --color-code-text: var(--neutral-900);
+  --color-quote-border: var(--teal-600);
+  --color-table-header-bg: var(--neutral-100);
+  --color-table-stripe: var(--neutral-50);
+  /* Edge shadow on horizontally scrollable areas (tables, carousels). */
+  --color-scroll-shadow: var(--black-alpha-20);
   --field-height-sm: var(--control-height-sm);
   --field-height-md: var(--control-height-md);
   --field-height-lg: var(--control-height-lg);
@@ -179,6 +189,13 @@
   --color-field-border-hover: var(--neutral-300);
   --color-field-border-focus: var(--teal-200);
   --color-field-disabled-bg: var(--neutral-700);
+
+  --color-code-bg: var(--neutral-800);
+  --color-code-text: var(--neutral-50);
+  --color-quote-border: var(--teal-200);
+  --color-table-header-bg: var(--neutral-800);
+  --color-table-stripe: rgb(255 255 255 / 0.04);
+  --color-scroll-shadow: var(--black-alpha-50);
 
   /* Muted logos become light silhouettes so dark marks stay visible on a dark surface. */
   --logo-filter-muted: grayscale(1) brightness(0) invert(1) opacity(0.8);

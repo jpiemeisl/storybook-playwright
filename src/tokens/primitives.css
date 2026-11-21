@@ -112,6 +112,7 @@
   --radius-full: 9999px;
 
   /* Overlay */
+  --black-alpha-20: rgb(11 13 14 / 0.2);
   --black-alpha-50: rgb(11 13 14 / 0.5);
   --black-alpha-72: rgb(11 13 14 / 0.72);
 

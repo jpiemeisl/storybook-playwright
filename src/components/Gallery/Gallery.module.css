@@ -1,0 +1,82 @@
+@layer components {
+  .root {
+    container-type: inline-size;
+  }
+
+  .list {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  /* Grid: uniform crops. 2 columns on narrow slots, 3 from 30rem, the requested count from 48rem. */
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: var(--gap-sm);
+  }
+
+  /* Columns: natural aspect ratios in CSS columns. */
+  .columns {
+    column-count: 1;
+    column-gap: var(--gap-sm);
+  }
+
+  .columns .item {
+    break-inside: avoid;
+    margin-block-end: var(--gap-sm);
+  }
+
+  @container (min-width: 30rem) {
+    .grid {
+      grid-template-columns: repeat(min(var(--gallery-columns), 3), minmax(0, 1fr));
+    }
+
+    .columns {
+      column-count: 2;
+    }
+  }
+
+  @container (min-width: 48rem) {
+    .grid {
+      grid-template-columns: repeat(var(--gallery-columns), minmax(0, 1fr));
+    }
+
+    .columns {
+      column-count: var(--gallery-columns);
+    }
+  }
+
+  .figure {
+    display: grid;
+    gap: var(--gap-xs);
+    margin: 0;
+  }
+
+  /* Two classes so these win over Image's own styles. */
+  .figure .thumbnail {
+    border-radius: var(--radius-control);
+  }
+
+  .open {
+    display: block;
+    inline-size: 100%;
+    padding: 0;
+    border-radius: var(--radius-control);
+    cursor: zoom-in;
+  }
+
+  .open:focus-visible {
+    outline: var(--focus-ring-width) solid var(--color-focus-ring);
+    outline-offset: var(--focus-ring-offset);
+  }
+
+  .open:hover .thumbnail {
+    opacity: 0.9;
+  }
+
+  .caption {
+    color: var(--color-text-muted);
+    font-size: var(--text-size-sm);
+  }
+}

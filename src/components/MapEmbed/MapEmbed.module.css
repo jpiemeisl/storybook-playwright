@@ -1,0 +1,87 @@
+@layer components {
+  .root {
+    display: grid;
+    gap: var(--gap-sm);
+    color: var(--color-text);
+  }
+
+  .frame {
+    position: relative;
+    display: grid;
+    place-items: center;
+    min-block-size: 14rem;
+    overflow: hidden;
+    border: var(--border-1) solid var(--color-border);
+    border-radius: var(--radius-surface);
+    background-color: var(--color-bg-subtle);
+  }
+
+  .frame > * {
+    grid-area: 1 / 1;
+  }
+
+  /* A local, CSS-only "street grid" so nothing is fetched before activation. */
+  .pattern {
+    inline-size: 100%;
+    block-size: 100%;
+    background:
+      linear-gradient(90deg, var(--color-border) 2px, transparent 2px) 0 0 / 48px 48px,
+      linear-gradient(0deg, var(--color-border) 2px, transparent 2px) 0 0 / 48px 48px,
+      linear-gradient(35deg, transparent 46%, var(--color-bg-muted) 46%, var(--color-bg-muted) 54%, transparent 54%),
+      var(--color-bg-subtle);
+  }
+
+  /* Two classes so these win over Image's own sizing. */
+  .frame .placeholderImage {
+    inline-size: 100%;
+    block-size: 100%;
+  }
+
+  .panel {
+    display: grid;
+    justify-items: center;
+    gap: var(--gap-sm);
+    padding: var(--gap-md) var(--gap-lg);
+    border-radius: var(--radius-surface);
+    background-color: var(--color-surface);
+    box-shadow: var(--elevation-mid);
+    text-align: center;
+  }
+
+  .pin {
+    color: var(--color-action);
+  }
+
+  .note {
+    margin: 0;
+    color: var(--color-text-muted);
+    font-size: var(--text-size-xs);
+  }
+
+  .iframe {
+    inline-size: 100%;
+    block-size: 100%;
+    border: 0;
+  }
+
+  .details {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--gap-sm) var(--gap-md);
+  }
+
+  .address {
+    display: flex;
+    align-items: flex-start;
+    gap: var(--gap-xs);
+    font-style: normal;
+    overflow-wrap: anywhere;
+  }
+
+  .address > svg {
+    margin-block-start: 0.2em;
+    color: var(--color-text-muted);
+  }
+}
