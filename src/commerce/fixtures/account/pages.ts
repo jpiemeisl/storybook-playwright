@@ -38,6 +38,8 @@ export const accountData = {
   rich: { orders: orderHistories.twelve, subscriptions: [accountSubscriptions.active, accountSubscriptions.withPlans, accountSubscriptions.trialing, accountSubscriptions.pastDue], invoices: invoiceSets.statuses, downloads: libraries.six, addresses: addressBooks.three, wishlist: wishlists.three },
   /** Rich but nothing needs attention. */
   calm: { orders: orderHistories.three, subscriptions: [accountSubscriptions.active, accountSubscriptions.trialing], invoices: invoiceSets.three.filter((i) => i.status !== 'failed'), downloads: libraries.one, addresses: addressBooks.one, wishlist: wishlists.three },
+  /** Every subscription status, for the demo flows. */
+  everySubscription: { orders: orderHistories.three, subscriptions: Object.values(accountSubscriptions), invoices: [...invoiceSets.twentyFour, ...invoiceSets.statuses], downloads: libraries.six, addresses: addressBooks.three, wishlist: wishlists.three },
   /** Just signed up. */
   fresh: { orders: [], subscriptions: [], invoices: [], downloads: [], addresses: [], wishlist: [] },
 } satisfies Record<string, AccountData>;
