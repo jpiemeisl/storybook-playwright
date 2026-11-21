@@ -39,12 +39,14 @@ src/index.ts          Public entry point; re-exports components, content types a
 src/content-types/    JSON-only content model (blocks, pages, site chrome) a CMS adapter produces
 src/component-types/  Component prop shapes that may contain ReactNode
 src/registry/         Block registry, BlockRenderer, validators and link safety
+src/templates/        SiteLayout, PageRenderer, templates registry and page templates (docs/templates.md)
 src/adapters/         Example CMS adapter (reference only; not exported)
 src/fixtures/pages/   Page fixtures as JSON (plus edge cases); fixtures/blocks/ has one per block
+src/fixtures/chrome/  Site chrome fixtures (default and minimal) as JSON
 scripts/              Docs generator for docs/content-model.md
 src/fixtures/images/  Local deterministic placeholder images for stories (no remote URLs)
 src/stories/          Story-only helpers (Placeholder, Ruler); not exported
-tests/visual/         Playwright VRT spec and committed baselines (__screenshots__/)
+tests/visual/         Playwright VRT specs (stories, Legal print) and committed baselines (__screenshots__/)
 ```
 
 Rules: components use **semantic tokens only**, never primitives, and logical properties
@@ -235,6 +237,21 @@ validatePage(page, { knownTypes: registry.types() });
 ```
 
 A definition with an existing `type` replaces the built-in one; `defaultRegistry` is never mutated.
+
+### Whole pages: templates
+
+`<PageRenderer page={page} chrome={chrome} ctx={{ currentPath }} />` picks a template from
+`page.template` and renders the complete page. That includes the skip link, announcement, header,
+a single `<main>` and the footer, from the serializable `SiteChrome`.
+
+- Composed templates (`home`, `about`, `pricing`, …) are blocks only.
+- Structured templates have typed data of their own: `blog-index`, `blog-post`,
+  `case-study-index`, `case-study`, `legal`, `search`, `error`, `thank-you` and `landing`.
+- `createTemplates()` adds or replaces templates, in the same pattern as `createRegistry`.
+- `getDocumentMeta(page)` returns `<head>` values for the host to render; the library never touches
+  `<head>`.
+
+Details, data shapes and the gap report: [`docs/templates.md`](docs/templates.md).
 
 ## Visual regression testing
 

@@ -36,3 +36,15 @@ Phase 7 (branch `phase-7-content-model`): JSON-only content model (`src/content-
 to `src/component-types`; block registry, `BlockRenderer`, central heading levels, validators and link
 safety (`src/registry`); example CMS adapter with sanitizing rich-text conversion; JSON page/block
 fixtures; generated [`content-model.md`](content-model.md); Vitest unit tests (`npm run test:unit`).
+
+Phase 8 (branch `phase-8-templates`): site layout and page templates (`src/templates`). It adds:
+
+- `SiteLayout` (default, minimal and bare), `chromeToProps` and current-path matching
+- the `PageRenderer` and templates registry, `getDocumentMeta`, and heading helpers for TOCs
+- a composed `DefaultTemplate` plus nine structured templates, with typed page data
+  (`src/content-types/templates.ts`) and template validation
+- new components: AnnouncementBar, SiteLogo, LinkList, EmptyState, DescriptionList, PrevNextNav,
+  SidebarLayout and StickyActionBar
+- template fixtures, stories and a Legal print visual test
+
+See [`templates.md`](templates.md), including the gap report.
