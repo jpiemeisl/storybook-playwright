@@ -1,0 +1,118 @@
+import { useId, useRef, useState, type KeyboardEvent, type ReactNode } from 'react';
+import styles from './Tabs.module.css';
+
+export interface TabItem {
+  id: string;
+  label: ReactNode;
+  content: ReactNode;
+}
+
+export interface TabsProps {
+  tabs: TabItem[];
+  /** Accessible name of the tab list. */
+  label: string;
+  /** Controlled selected tab id. */
+  value?: string;
+  /** Uncontrolled initial tab id. Default: the first tab. */
+  defaultValue?: string;
+  onChange?: (id: string) => void;
+  /** `automatic`: arrow keys select. `manual`: arrow keys move focus; Enter/Space select. */
+  activation?: 'automatic' | 'manual';
+  orientation?: 'horizontal' | 'vertical';
+}
+
+/**
+ * WAI-ARIA tabs with roving tabindex. ArrowLeft/ArrowRight (ArrowUp/ArrowDown when vertical), Home and
+ * End move between tabs. The tab list scrolls horizontally on narrow containers.
+ */
+export function Tabs({
+  tabs,
+  label,
+  value,
+  defaultValue,
+  onChange,
+  activation = 'automatic',
+  orientation = 'horizontal',
+}: TabsProps) {
+  const baseId = useId();
+  const listRef = useRef<HTMLDivElement>(null);
+  const [internal, setInternal] = useState(defaultValue ?? tabs[0]?.id);
+  const selected = value ?? internal;
+  const [focused, setFocused] = useState(selected);
+  const tabId = (id: string) => `${baseId}-tab-${id}`;
+  const panelId = (id: string) => `${baseId}-panel-${id}`;
+
+  const select = (id: string) => {
+    if (value === undefined) setInternal(id);
+    onChange?.(id);
+  };
+
+  const onKeyDown = (event: KeyboardEvent<HTMLButtonElement>) => {
+    const index = tabs.findIndex((tab) => tab.id === event.currentTarget.dataset.tabId);
+    const last = tabs.length - 1;
+    const prevKey = orientation === 'vertical' ? 'ArrowUp' : 'ArrowLeft';
+    const nextKey = orientation === 'vertical' ? 'ArrowDown' : 'ArrowRight';
+    const targets: Record<string, number> = {
+      [prevKey]: index === 0 ? last : index - 1,
+      [nextKey]: index === last ? 0 : index + 1,
+      Home: 0,
+      End: last,
+    };
+    const next = targets[event.key];
+    if (next === undefined) return;
+    event.preventDefault();
+    const nextTab = tabs[next]!;
+    setFocused(nextTab.id);
+    listRef.current?.querySelector<HTMLButtonElement>(`[data-tab-id="${CSS.escape(nextTab.id)}"]`)?.focus();
+    if (activation === 'automatic') select(nextTab.id);
+  };
+
+  return (
+    // Outer element is the query container; the inner one changes layout (a container can't query itself).
+    <div className={styles.root}>
+      <div className={[styles.tabs, styles[orientation]].join(' ')}>
+        <div ref={listRef} role="tablist" aria-label={label} aria-orientation={orientation} className={styles.list}>
+          {tabs.map((tab) => {
+            const isSelected = tab.id === selected;
+            // Roving tabindex: only the selected tab (or, mid-navigation in manual mode, the focused one) is tabbable.
+            const tabbable = activation === 'manual' ? tab.id === (focused ?? selected) : isSelected;
+            return (
+              <button
+                key={tab.id}
+                type="button"
+                role="tab"
+                id={tabId(tab.id)}
+                data-tab-id={tab.id}
+                aria-selected={isSelected}
+                aria-controls={panelId(tab.id)}
+                tabIndex={tabbable ? 0 : -1}
+                className={styles.tab}
+                onClick={() => {
+                  setFocused(tab.id);
+                  select(tab.id);
+                }}
+                onKeyDown={onKeyDown}
+                onBlur={() => setFocused(selected)}
+              >
+                {tab.label}
+              </button>
+            );
+          })}
+        </div>
+        {tabs.map((tab) => (
+          <div
+            key={tab.id}
+            role="tabpanel"
+            id={panelId(tab.id)}
+            aria-labelledby={tabId(tab.id)}
+            hidden={tab.id !== selected}
+            tabIndex={0}
+            className={styles.panel}
+          >
+            {tab.content}
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+}

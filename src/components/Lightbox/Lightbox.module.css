@@ -1,0 +1,74 @@
+@layer components {
+  .viewer {
+    display: grid;
+    grid-template-rows: minmax(0, 1fr) auto;
+    gap: var(--gap-md);
+    block-size: 100%;
+  }
+
+  .figure {
+    display: grid;
+    grid-template-rows: minmax(0, 1fr) auto;
+    gap: var(--gap-sm);
+    min-block-size: 0;
+    margin: 0;
+  }
+
+  /* Two classes so these win over Image's own sizing: the whole image fits, centred. */
+  .figure .image {
+    inline-size: 100%;
+    block-size: 100%;
+    max-block-size: calc(100dvh - 12rem);
+    background-color: transparent;
+  }
+
+  .caption {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: var(--gap-sm) var(--gap-md);
+    color: var(--color-text-muted);
+    font-size: var(--text-size-sm);
+    text-align: center;
+  }
+
+  .counter {
+    color: var(--color-text);
+    font-weight: var(--text-weight-strong);
+    font-variant-numeric: tabular-nums;
+  }
+
+  .controls {
+    display: flex;
+    justify-content: center;
+    gap: var(--gap-md);
+  }
+
+  .nav {
+    display: inline-grid;
+    place-items: center;
+    inline-size: var(--control-height-lg);
+    block-size: var(--control-height-lg);
+    border: var(--border-1) solid var(--color-field-border);
+    border-radius: var(--radius-full);
+    background-color: var(--color-surface);
+    color: var(--color-text);
+    cursor: pointer;
+  }
+
+  .nav:hover:not([aria-disabled='true']) {
+    border-color: var(--color-action);
+    color: var(--color-action);
+  }
+
+  .nav:focus-visible {
+    outline: var(--focus-ring-width) solid var(--color-focus-ring);
+    outline-offset: var(--focus-ring-offset);
+  }
+
+  .nav[aria-disabled='true'] {
+    border-color: var(--color-border);
+    color: var(--color-disabled-text);
+    cursor: not-allowed;
+  }
+}

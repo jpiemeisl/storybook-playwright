@@ -1,0 +1,110 @@
+@layer components {
+  .tabs {
+    display: grid;
+    gap: var(--gap-md);
+    min-inline-size: 0;
+    color: var(--color-text);
+  }
+
+  /* Horizontal list scrolls on narrow containers; padding keeps focus rings visible. */
+  .list {
+    display: flex;
+    gap: var(--gap-xs);
+    padding: calc(var(--focus-ring-width) + var(--focus-ring-offset));
+    padding-block-end: 0;
+    overflow-x: auto;
+    border-block-end: var(--border-1) solid var(--color-border);
+    scrollbar-width: thin;
+  }
+
+  .tab {
+    flex-shrink: 0;
+    min-block-size: var(--control-height-md);
+    padding-inline: var(--space-4);
+    border-block-end: 3px solid transparent;
+    color: var(--color-text-muted);
+    font-weight: var(--text-weight-strong);
+    white-space: nowrap;
+    cursor: pointer;
+  }
+
+  .tab:hover {
+    color: var(--color-text);
+  }
+
+  /* Selected: underline bar plus full-strength text (not colour alone). */
+  .tab[aria-selected='true'] {
+    border-block-end-color: var(--color-action);
+    color: var(--color-text);
+  }
+
+  .tab:focus-visible,
+  .panel:focus-visible {
+    border-radius: var(--radius-control);
+    outline: var(--focus-ring-width) solid var(--color-focus-ring);
+    outline-offset: var(--focus-ring-offset);
+  }
+
+  .panel {
+    min-inline-size: 0;
+  }
+
+  .root {
+    container-type: inline-size;
+    min-inline-size: 0;
+  }
+
+  /* Vertical: tabs in a column beside the panel on wide containers. */
+  @container (min-width: 40rem) {
+    .vertical {
+      grid-template-columns: max-content minmax(0, 1fr);
+      align-items: start;
+    }
+
+    .vertical .list {
+      flex-direction: column;
+      padding-block-end: calc(var(--focus-ring-width) + var(--focus-ring-offset));
+      overflow-x: visible;
+      border-block-end: 0;
+      border-inline-end: var(--border-1) solid var(--color-border);
+    }
+
+    .vertical .tab {
+      border-block-end: 0;
+      border-inline-end: 3px solid transparent;
+      text-align: start;
+    }
+
+    .vertical .tab[aria-selected='true'] {
+      border-inline-end-color: var(--color-action);
+    }
+  }
+
+  @media (prefers-reduced-motion: no-preference) {
+    .tab {
+      transition:
+        color var(--transition-fast) var(--transition-easing),
+        border-color var(--transition-fast) var(--transition-easing);
+    }
+  }
+
+  /* Forced colours draw "transparent" borders, so give unselected tabs an invisible Canvas-coloured
+     bar and only the selected tab a Highlight bar. */
+  @media (forced-colors: active) {
+    .tab {
+      border-block-end-color: Canvas;
+    }
+
+    .tab[aria-selected='true'] {
+      border-block-end-color: Highlight;
+    }
+
+    .vertical .tab {
+      border-inline-end-color: Canvas;
+    }
+
+    .vertical .tab[aria-selected='true'] {
+      border-inline-end-color: Highlight;
+    }
+  }
+}
