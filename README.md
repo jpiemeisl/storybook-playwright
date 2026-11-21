@@ -24,6 +24,7 @@ npx playwright install chromium
 | `npm run test:vrt:report` | Opens the HTML report from the last run (diffs for any failures)             |
 | `npm run test:unit`       | Vitest unit tests for pure logic (validators, registry, adapter, fixtures)   |
 | `npm run docs:content-model` | Regenerates `docs/content-model.md` from the content-type JSDoc           |
+| `npm run check:boundaries` | Fails if core code imports `src/commerce` or anything under `src/` imports `demo/` |
 
 ## Project layout
 
@@ -41,6 +42,9 @@ src/component-types/  Component prop shapes that may contain ReactNode
 src/registry/         Block registry, BlockRenderer, validators and link safety
 src/templates/        SiteLayout, PageRenderer, templates registry and page templates (docs/templates.md)
 src/adapters/         Example CMS adapter (reference only; not exported)
+src/commerce/         Commerce foundations (own barrel, not exported from src/index.ts): types, pure
+                      money/cart/variant logic, validators, display components, fixtures
+demo/                 Storybook-only demo cart provider ("Demo only"); never imported by src/
 src/fixtures/pages/   Page fixtures as JSON (plus edge cases); fixtures/blocks/ has one per block
 src/fixtures/chrome/  Site chrome fixtures (default and minimal) as JSON
 scripts/              Docs generator for docs/content-model.md
@@ -252,6 +256,26 @@ a single `<main>` and the footer, from the serializable `SiteChrome`.
   `<head>`.
 
 Details, data shapes and the gap report: [`docs/templates.md`](docs/templates.md).
+
+## Commerce foundations
+
+`src/commerce` is the base for the ecommerce phases. There is no shop UI yet, and there is no
+backend: the types are the contract for future adapters.
+
+- **Types** (`src/commerce/types`): Product, Variant, StockInfo, PurchaseOption, Cart, CartLine
+  (with a display snapshot), Order, CustomerSubscription, ShippingMethod, PromoCode, Review and
+  Address. All JSON, with integer minor-unit Money.
+- **Pure logic** (`src/commerce/logic`):
+  - money arithmetic: BigInt percentages, rounded half away from zero; throws on currency mismatch
+  - `percentOff`, `subscriptionUnitPrice`, `formatInterval` and `formatTrial`
+  - `computeCartTotals`: promos, shipping, a demo 8% tax estimate, due today, recurring charges and
+    flags. It takes `now`; nothing reads the clock.
+  - variant selection helpers, plus the `useVariantSelection` hook
+  - validators that reuse the core `ValidationIssue` shape
+- **Display components:** Price, SaleBadge, StockBadge, ProductTypeBadge and Rating. They are
+  controlled and presentational.
+- **Rules:** only `src/commerce` and `demo/` may import from `src/commerce`, and nothing under
+  `src/` may import `demo/`. `npm run check:boundaries` enforces both.
 
 ## Visual regression testing
 
