@@ -113,3 +113,9 @@ What the library lacked and how it was filled:
 - **Price range slider:** two number inputs instead, as the brief asked.
 - **URL syncing** inside the templates: by design, the host does it.
 - **Review submission:** `ReviewSummary` takes an `action` slot for a "Write a review" link; there is no form.
+
+## Known limitations and open items
+
+- **URL price filters use whole currency units and assume two decimals.** `price_min=20` means 2000 minor units. That is right for the single-currency USD demo; revisit it before supporting currencies with zero or three decimals (JPY, KWD).
+- **Deferred:** the sticky mobile add-to-cart bar and the review submission form.
+- **"Choose options" on ProductCard is a visual cue inside the single title link,** not a second link. Cards keep exactly one link plus at most one separate button.
