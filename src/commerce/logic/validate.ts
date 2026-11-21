@@ -39,6 +39,7 @@ function purchaseOption(c: Checker) {
   const discount = c.value.discountPercent;
   if (discount !== undefined && (typeof discount !== 'number' || discount < 0 || discount > 100)) c.report('invalid-field', 'discountPercent', '"discountPercent" must be between 0 and 100.');
   intField(c, 'trialDays', 0);
+  intField(c, 'priceMultiplier', 1);
 }
 
 /** Item ids must be unique in a list. */

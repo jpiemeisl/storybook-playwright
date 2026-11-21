@@ -29,6 +29,11 @@ describe('subscriptionUnitPrice', () => {
     expect(subscriptionUnitPrice(usd(1500), { type: 'subscription', interval: { unit: 'month', count: 3 }, discountPercent: 15 })).toEqual(usd(1275));
   });
 
+  it('multiplies the variant price for longer cycles before discounting', () => {
+    expect(subscriptionUnitPrice(usd(2000), { type: 'subscription', interval: { unit: 'month', count: 3 }, priceMultiplier: 3, discountPercent: 10 })).toEqual(usd(5400));
+    expect(subscriptionUnitPrice(usd(2000), { type: 'subscription', interval: { unit: 'year', count: 1 }, priceMultiplier: 12, discountPercent: 20 })).toEqual(usd(19200));
+  });
+
   it('leaves one-time and undiscounted options alone', () => {
     expect(subscriptionUnitPrice(usd(1995), { type: 'one-time' })).toEqual(usd(1995));
     expect(subscriptionUnitPrice(usd(1995), { type: 'subscription', interval: { unit: 'week', count: 1 } })).toEqual(usd(1995));

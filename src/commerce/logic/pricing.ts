@@ -2,7 +2,7 @@ import type { Money } from '../../content-types/money';
 import type { BillingInterval, PurchaseOption } from '../types/product';
 import { formatIsoDate } from '../../utils/formatDate';
 import { formatMoney } from '../../utils/formatMoney';
-import { percentOf, subtract } from './money';
+import { multiply, percentOf, subtract } from './money';
 
 /**
  * Whole percent saved versus the compare-at price, rounded down so "Save 20%" is never overstated.
@@ -15,10 +15,14 @@ export function percentOff(price: Money, compareAt: Money | undefined): number {
   return Math.floor(((compareAt.amount - price.amount) * 100) / compareAt.amount);
 }
 
-/** Unit price for a purchase option: subscription discounts are applied (rounded half away from zero). */
+/**
+ * Price per cycle for a purchase option: variant price × priceMultiplier, minus discountPercent
+ * (rounded half away from zero). One-time options return the variant price.
+ */
 export function subscriptionUnitPrice(variantPrice: Money, option: PurchaseOption): Money {
-  if (option.type !== 'subscription' || !option.discountPercent) return variantPrice;
-  return subtract(variantPrice, percentOf(variantPrice, option.discountPercent));
+  if (option.type !== 'subscription') return variantPrice;
+  const cycle = multiply(variantPrice, option.priceMultiplier ?? 1);
+  return option.discountPercent ? subtract(cycle, percentOf(cycle, option.discountPercent)) : cycle;
 }
 
 /** "week", "month", "year" for one unit; "every 2 weeks", "every 3 months" otherwise. */

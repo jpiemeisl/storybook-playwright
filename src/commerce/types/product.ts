@@ -75,6 +75,12 @@ export interface SubscriptionPurchase {
   discountPercent?: number;
   /** Free trial length in days, integer >= 0. Nothing is charged until it ends. */
   trialDays?: number;
+  /**
+   * How many variant prices one cycle costs before the discount. Integer >= 1, default 1. Use it when
+   * one product offers several intervals: with a monthly variant price of $20, quarterly is
+   * priceMultiplier 3 (and a discount), annual is 12. Subscribe-and-save deliveries leave it at 1.
+   */
+  priceMultiplier?: number;
 }
 
 /**
