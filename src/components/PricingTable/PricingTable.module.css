@@ -1,0 +1,160 @@
+@layer components {
+  .root {
+    display: grid;
+    gap: var(--gap-lg);
+    color: var(--color-text);
+  }
+
+  /* Segmented control built from native radios. */
+  .toggle {
+    display: inline-flex;
+    justify-self: center;
+    gap: var(--gap-xs);
+    margin: 0;
+    padding: var(--gap-xs);
+    border: var(--border-1) solid var(--color-border);
+    border-radius: var(--radius-pill);
+    background-color: var(--color-surface);
+  }
+
+  .option {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    gap: var(--gap-sm);
+    min-block-size: var(--control-height-sm);
+    padding-inline: var(--space-4);
+    border-radius: var(--radius-pill);
+    color: var(--color-text);
+    font-weight: var(--text-weight-strong);
+    cursor: pointer;
+  }
+
+  .radio {
+    position: absolute;
+    inset: 0;
+    margin: 0;
+    opacity: 0;
+    cursor: pointer;
+  }
+
+  .option:has(.radio:checked) {
+    background-color: var(--color-action);
+    color: var(--color-action-text);
+  }
+
+  .option:has(.radio:focus-visible) {
+    outline: var(--focus-ring-width) solid var(--color-focus-ring);
+    outline-offset: var(--focus-ring-offset);
+  }
+
+  .savings {
+    font-size: var(--text-size-xs);
+    font-weight: var(--text-weight-body);
+  }
+
+  .grid > li {
+    display: flex;
+  }
+
+  .tier {
+    display: flex;
+    flex: 1;
+    flex-direction: column;
+    gap: var(--gap-md);
+    min-inline-size: 0;
+    padding: var(--gap-lg);
+    border: var(--border-1) solid var(--color-border);
+    border-radius: var(--radius-surface);
+    background-color: var(--color-surface);
+    color: var(--color-text);
+  }
+
+  /* Highlighted: thicker action-coloured border and elevation, plus a text badge (never colour alone). */
+  .highlighted {
+    border: var(--border-width-emphasis) solid var(--color-action);
+    box-shadow: var(--elevation-high);
+  }
+
+  .header {
+    display: grid;
+    gap: var(--gap-xs);
+  }
+
+  /* Sits on the top border so tier names stay aligned across a row. */
+  .tier {
+    position: relative;
+  }
+
+  .header .badge {
+    position: absolute;
+    inset-block-start: 0;
+    inset-inline-start: var(--gap-lg);
+    translate: 0 -50%;
+    background-color: var(--color-surface);
+  }
+
+  :dir(rtl) .header .badge {
+    translate: 0 -50%;
+  }
+
+  .price {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    gap: var(--gap-xs);
+    margin: 0;
+  }
+
+  .amount {
+    font-size: var(--text-size-3xl);
+    font-weight: var(--text-weight-heading);
+    line-height: var(--text-leading-heading);
+    overflow-wrap: anywhere;
+  }
+
+  .interval {
+    color: var(--color-text-muted);
+  }
+
+  .features {
+    display: grid;
+    gap: var(--gap-sm);
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    font-size: var(--text-size-sm);
+  }
+
+  .features li {
+    display: flex;
+    align-items: flex-start;
+    gap: var(--gap-sm);
+  }
+
+  .featureIcon {
+    margin-block-start: 0.15em;
+  }
+
+  .included .featureIcon {
+    color: var(--color-success);
+  }
+
+  .excluded {
+    color: var(--color-text-muted);
+  }
+
+  .cta {
+    margin-block-start: auto;
+    inline-size: 100%;
+  }
+
+  .visuallyHidden {
+    position: absolute;
+    inline-size: 1px;
+    block-size: 1px;
+    overflow: hidden;
+    clip-path: inset(50%);
+    white-space: nowrap;
+  }
+}

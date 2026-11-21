@@ -22,8 +22,22 @@ export * from './components/Footer';
 export * from './components/Breadcrumbs';
 export * from './components/Pagination';
 
-// Content types
-export type { BreadcrumbItem, NavItem, SocialLink } from './content-types';
+// Content sections
+export * from './components/Hero';
+export * from './components/FeatureGrid';
+export * from './components/Card';
+export * from './components/ArticleCard';
+export * from './components/MediaText';
+export * from './components/CtaBanner';
+export * from './components/Stats';
+export * from './components/Testimonial';
+export * from './components/LogoStrip';
+export * from './components/Accordion';
+export * from './components/PricingTable';
+
+// Content types and utilities
+export type * from './content-types';
+export * from './utils';
 
 // Shared types
 export type { Gap } from './components/gap';
