@@ -52,6 +52,7 @@ fetching in components.
 | Layout     | Container, Section, Stack, Grid                                    |
 | Navigation | SkipLink, Header, MobileMenu, Footer, Breadcrumbs, Pagination      |
 | Forms      | Label, HelpText, FieldError, Field, Input, Textarea, Select, Checkbox, Radio + RadioGroup, Alert, SearchInput, NewsletterSignup, ContactForm (Button gains `loading`) |
+| Content & media | PageHeader, Prose, TableOfContents, AuthorByline, TagList, CategoryFilter, ShareLinks, RelatedPosts, Modal, Gallery, Lightbox, VideoEmbed, Video, MapEmbed, Carousel, Tabs, Table, Timeline, Steps, TeamMember + TeamGrid |
 | Sections   | Hero, FeatureGrid, Card + CardGrid, ArticleCard, MediaText, CtaBanner, Stats, Testimonial + TestimonialGrid, LogoStrip, Accordion + FaqSection, PricingTable |
 
 Navigation components take plain data from `src/content-types/navigation.ts` (`NavItem`,
@@ -75,6 +76,23 @@ Navigation components take plain data from `src/content-types/navigation.ts` (`N
 - **Breadcrumbs** and **Pagination** use container queries: below 40rem the trail collapses its
   middle items (still announced) and pagination switches to "Page X of Y" with previous/next.
 - All transitions sit inside `@media (prefers-reduced-motion: no-preference)`.
+
+### Content and media
+
+- **No third-party loading.** Nothing makes a network request on its own. VideoEmbed and MapEmbed
+  render a local poster or placeholder, and only create their iframe after the user activates them.
+  VideoEmbed uses `youtube-nocookie.com` and Vimeo with `dnt=1`. Share links are plain URLs, with no
+  SDKs or scripts.
+- **Prose** styles plain HTML elements. `sanitizedHtml` is inserted as-is: the caller must sanitize
+  it, because this library does not and has no dependency to do so. Wide `<pre>` and `<table>` elements
+  scroll sideways (CSS), and an effect makes the overflowing ones focusable so keyboard users can
+  scroll them.
+- **TableOfContents** is a sticky list on wide screens (64rem+) and a `<details>` on narrow ones.
+  `observe` tracks the heading in view with IntersectionObserver. `buildTocFromHeadings` is a pure
+  helper.
+- **Modal** and **Lightbox** use `<dialog>.showModal()`. **Carousel** is CSS scroll-snap with
+  buttons and dots, and has no autoplay. **Tabs** use a roving tabindex. **Table** wraps the table in a
+  focusable, caption-labelled scroll region; `stickyHeader` caps its height so the header can stick.
 
 ### Forms
 
@@ -177,6 +195,14 @@ Between viewports the harness does not reload the page: it resizes and asks Stor
 story in place (`forceRemount`), which re-runs the play function and the a11y check at the new size
 and produces the same screenshots as a fresh load, at a fraction of the cost. A probe load at the
 wrong viewport (see above) is followed by a fresh load instead.
+
+`parameters: { vrt: { screenshot: false } }` runs a story's play function and a11y check without
+capturing it. Use it for states that must never be screenshotted, such as an activated third-party
+embed. Those stories intercept the iframe's `src` before the browser can load it
+(`src/stories/embedTestUtils.ts`).
+
+**Network guard:** every test fails if the page requests anything other than the local Storybook
+server, so stories cannot silently depend on remote images, fonts, scripts or embeds.
 
 Play functions in `vrt-full` stories run at 375, 768 and 1280. Write them so they work at every width
 (query elements that are visible at all sizes, or use `{ hidden: true }` when only asserting attributes),
