@@ -59,3 +59,14 @@ own barrel and is not exported from `src/index.ts`. It adds:
 - fixtures for a fictional store (19 products, carts, orders, subscriptions)
 - the Storybook-only demo cart in `demo/`
 - the `check:boundaries` import check
+
+Phase 10 (branch `phase-10-product-browsing`): product browsing in `src/commerce`. It adds:
+
+- browse logic: filters, a URL format, disjunctive facets, sorting and pagination
+- listing, filtering and product page components
+- `CollectionTemplate` and `ProductDetailTemplate` (registry entries via `commerceTemplates`), plus
+  page validators
+- browsing fixtures, including a seeded 48-product catalogue
+- stories wired to the demo cart
+
+See [`commerce-browsing.md`](commerce-browsing.md).
