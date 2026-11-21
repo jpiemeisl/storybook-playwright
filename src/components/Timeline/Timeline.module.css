@@ -1,0 +1,212 @@
+@layer components {
+  .root {
+    container-type: inline-size;
+    color: var(--color-text);
+  }
+
+  .timeline,
+  .steps {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .title {
+    margin: 0;
+    font-size: var(--text-size-lg);
+    line-height: var(--text-leading-heading);
+    overflow-wrap: anywhere;
+  }
+
+  .description {
+    color: var(--color-text-muted);
+    font-size: var(--text-size-sm);
+  }
+
+  /* ----- Timeline: line on the inline-start side, marker per event ----- */
+  .timeline {
+    position: relative;
+    display: grid;
+    gap: var(--gap-lg);
+  }
+
+  .timeline::before {
+    content: '';
+    position: absolute;
+    inset-block: 0;
+    inset-inline-start: 7px;
+    border-inline-start: var(--border-2) solid var(--color-border);
+  }
+
+  .event {
+    position: relative;
+    display: grid;
+    grid-template-columns: 16px minmax(0, 1fr);
+    gap: var(--gap-md);
+  }
+
+  /* Ring drawn with a border so it stays visible in forced-colors mode. */
+  .marker {
+    position: relative;
+    z-index: 1;
+    inline-size: 16px;
+    block-size: 16px;
+    margin-block-start: 0.2em;
+    border: 3px solid var(--color-action);
+    border-radius: var(--radius-full);
+    background-color: var(--color-bg);
+  }
+
+  .card {
+    display: grid;
+    gap: var(--gap-xs);
+    min-inline-size: 0;
+  }
+
+  .label {
+    margin: 0;
+    color: var(--color-action);
+    font-size: var(--text-size-sm);
+    font-weight: var(--text-weight-strong);
+  }
+
+  /* Wide: centre line, events alternate sides. */
+  @container (min-width: 48rem) {
+    .timeline::before {
+      inset-inline-start: calc(50% - 1px);
+    }
+
+    .event {
+      grid-template-columns: minmax(0, 1fr) 16px minmax(0, 1fr);
+    }
+
+    .marker {
+      grid-column: 2;
+      grid-row: 1;
+    }
+
+    .event:nth-child(odd) .card {
+      grid-column: 1;
+      grid-row: 1;
+      text-align: end;
+    }
+
+    .event:nth-child(even) .card {
+      grid-column: 3;
+      grid-row: 1;
+    }
+  }
+
+  /* ----- Steps: numbered sequence ----- */
+  .steps {
+    display: grid;
+    gap: var(--gap-md);
+    counter-reset: none;
+  }
+
+  .step {
+    position: relative;
+    display: grid;
+    grid-template-columns: var(--control-height-md) minmax(0, 1fr);
+    gap: var(--gap-md);
+  }
+
+  /* Connector between numbers (vertical layout). */
+  .step:not(:last-child)::after {
+    content: '';
+    position: absolute;
+    inset-block: var(--control-height-md) calc(var(--gap-md) * -1);
+    inset-inline-start: calc(var(--control-height-md) / 2 - 1px);
+    border-inline-start: var(--border-2) solid var(--color-border);
+  }
+
+  .number {
+    position: relative;
+    z-index: 1;
+    display: inline-grid;
+    place-items: center;
+    inline-size: var(--control-height-md);
+    block-size: var(--control-height-md);
+    border: var(--border-2) solid var(--color-field-border);
+    border-radius: var(--radius-full);
+    background-color: var(--color-bg);
+    font-weight: var(--text-weight-strong);
+    font-variant-numeric: tabular-nums;
+  }
+
+  .step[data-state='done'] .number {
+    border-color: var(--color-action);
+    background-color: var(--color-action);
+    color: var(--color-action-text);
+  }
+
+  .step[data-state='current'] .number {
+    border-width: 3px;
+    border-color: var(--color-action);
+    color: var(--color-action);
+  }
+
+  .step[data-state='current'] .title {
+    color: var(--color-action);
+  }
+
+  .stepText {
+    display: grid;
+    gap: var(--gap-xs);
+    padding-block-start: 0.4em;
+    min-inline-size: 0;
+  }
+
+  /* Wide: horizontal, numbers on a shared line. */
+  @container (min-width: 48rem) {
+    .steps {
+      grid-auto-columns: minmax(0, 1fr);
+      grid-auto-flow: column;
+    }
+
+    .step {
+      grid-template-columns: none;
+      grid-template-rows: auto 1fr;
+      justify-items: start;
+    }
+
+    .step:not(:last-child)::after {
+      inset-block: calc(var(--control-height-md) / 2 - 1px) auto;
+      inset-inline: var(--control-height-md) calc(var(--gap-md) * -1);
+      border-inline-start: 0;
+      border-block-start: var(--border-2) solid var(--color-border);
+    }
+
+    .stepText {
+      padding-block-start: 0;
+      padding-inline-end: var(--gap-sm);
+    }
+  }
+
+  @media (forced-colors: active) {
+    .marker,
+    .number {
+      border-color: CanvasText;
+    }
+
+    .step[data-state='current'] .number,
+    .step[data-state='done'] .number {
+      forced-color-adjust: none;
+      border-color: Highlight;
+    }
+
+    .step[data-state='done'] .number {
+      background-color: Highlight;
+      color: HighlightText;
+    }
+  }
+
+  .visuallyHidden {
+    position: absolute;
+    inline-size: 1px;
+    block-size: 1px;
+    overflow: hidden;
+    clip-path: inset(50%);
+    white-space: nowrap;
+  }
+}

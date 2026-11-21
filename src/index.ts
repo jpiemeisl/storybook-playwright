@@ -50,6 +50,25 @@ export * from './components/NewsletterSignup';
 export * from './components/ContactForm';
 export type { FormStatus } from './components/forms';
 
+// Content and media
+export * from './components/Modal';
+export * from './components/PageHeader';
+export * from './components/Prose';
+export * from './components/TableOfContents';
+export * from './components/AuthorByline';
+export * from './components/TagList';
+export * from './components/ShareLinks';
+export * from './components/RelatedPosts';
+export * from './components/Gallery';
+export * from './components/Lightbox';
+export * from './components/VideoEmbed';
+export * from './components/MapEmbed';
+export * from './components/Carousel';
+export * from './components/Tabs';
+export * from './components/Table';
+export * from './components/Timeline';
+export * from './components/TeamMember';
+
 // Content types and utilities
 export type * from './content-types';
 export * from './utils';
