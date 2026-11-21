@@ -45,6 +45,7 @@ export * from './components/Select';
 export * from './components/Checkbox';
 export * from './components/Radio';
 export * from './components/Alert';
+export * from './components/Toast';
 export * from './components/SearchInput';
 export * from './components/NewsletterSignup';
 export * from './components/ContactForm';

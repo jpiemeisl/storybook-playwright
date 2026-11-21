@@ -15,7 +15,7 @@ export interface StickyActionBarProps {
  */
 export function StickyActionBar({ action, message }: StickyActionBarProps) {
   return (
-    <div className={styles.bar}>
+    <div className={styles.bar} data-sticky-action-bar="">
       {message && <p className={styles.message}>{message}</p>}
       <ButtonLink href={action.href} size="lg" className={styles.button}>
         {action.label}

@@ -107,6 +107,45 @@ const paths = {
   ruler: <path d="M3 17L17 3l4 4L7 21zM7 13l2 2M10 10l2 2M13 7l2 2" />,
   download: <path d="M12 4v11M7 10l5 5 5-5M5 20h14" />,
   repeat: <path d="M17 2l3 3-3 3M4 11V9a4 4 0 0 1 4-4h12M7 22l-3-3 3-3M20 13v2a4 4 0 0 1-4 4H4" />,
+  cart: (
+    <>
+      <path d="M3 4h2l2.4 11h11l2-8H6.3" />
+      <circle cx="9" cy="19.5" r="1.5" />
+      <circle cx="17" cy="19.5" r="1.5" />
+    </>
+  ),
+  bag: (
+    <>
+      <path d="M5 8h14l-1 12H6L5 8z" />
+      <path d="M9 10V7a3 3 0 0 1 6 0v3" />
+    </>
+  ),
+  trash: <path d="M4 7h16M10 11v6M14 11v6M6 7l1 13h10l1-13M9 7V4h6v3" />,
+  lock: (
+    <>
+      <rect x="5" y="11" width="14" height="10" rx="2" />
+      <path d="M8 11V7a4 4 0 0 1 8 0v4" />
+    </>
+  ),
+  'credit-card': (
+    <>
+      <rect x="3" y="5" width="18" height="14" rx="2" />
+      <path d="M3 10h18M7 15h4" />
+    </>
+  ),
+  wallet: (
+    <>
+      <path d="M4 7a2 2 0 0 1 2-2h11v4" />
+      <rect x="4" y="7" width="16" height="13" rx="2" />
+      <path d="M16 13.5h2" />
+    </>
+  ),
+  package: (
+    <>
+      <path d="M12 3l8 4.5v9L12 21l-8-4.5v-9L12 3z" />
+      <path d="M4 7.5l8 4.5 8-4.5M12 12v9M8 5.3l8 4.4" />
+    </>
+  ),
   'check-circle': (
     <>
       <circle cx="12" cy="12" r="9" />
