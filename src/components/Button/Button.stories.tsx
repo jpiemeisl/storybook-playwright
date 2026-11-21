@@ -1,4 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
+import { expect, fn, userEvent, within } from 'storybook/test';
 import { Button } from './Button';
 
 const meta = {
@@ -85,4 +86,35 @@ export const FocusVisible: Story = {
 export const LongLabel: Story = {
   tags: ['vrt-mobile'],
   args: { children: 'Continue to payment and review your order details' },
+};
+
+/** Loading: spinner over the label, same width as the idle button, clicks ignored, aria-busy set. */
+export const Loading: Story = {
+  args: { onClick: fn() },
+  render: (args) => (
+    <div style={row}>
+      <Button {...args} data-testid="idle">
+        Send message
+      </Button>
+      <Button {...args} loading data-testid="loading">
+        Send message
+      </Button>
+      <Button {...args} variant="secondary" loading>
+        Save draft
+      </Button>
+    </div>
+  ),
+  play: async ({ canvasElement, args }) => {
+    const canvas = within(canvasElement);
+    const idle = canvas.getByTestId('idle');
+    const loading = canvas.getByTestId('loading');
+    await expect(loading.getBoundingClientRect().width).toBe(idle.getBoundingClientRect().width);
+    await expect(loading).toHaveAttribute('aria-busy', 'true');
+    await expect(loading).toHaveAttribute('aria-disabled', 'true');
+    await expect(loading).toHaveAccessibleName('Send message');
+    await userEvent.click(loading);
+    await expect(args.onClick).not.toHaveBeenCalled();
+    await userEvent.click(idle);
+    await expect(args.onClick).toHaveBeenCalledOnce();
+  },
 };

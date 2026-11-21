@@ -1,0 +1,10 @@
+@layer components {
+  /* Label, hint, control, error stacked with consistent spacing. */
+  .field {
+    display: grid;
+    gap: var(--gap-xs);
+    /* Don't stretch rows when a grid cell is taller (e.g. a neighbour has a hint and an error). */
+    align-content: start;
+    min-inline-size: 0;
+  }
+}

@@ -20,3 +20,7 @@ section content types; Link `unstyled` and ButtonLink; content-section tokens an
 reset; Hero, FeatureGrid, Card/CardGrid, ArticleCard, MediaText, CtaBanner, Stats,
 Testimonial/TestimonialGrid, LogoStrip, Accordion/FaqSection, PricingTable; Brightside fixtures and
 SectionBackgrounds composition stories.
+
+Phase 5 (branch `phase-5-forms`): field/warning tokens; validation helpers; Label, HelpText,
+FieldError, Field; Input, Textarea, Select, Checkbox, Radio/RadioGroup; Alert; Button `loading`;
+SearchInput, NewsletterSignup, ContactForm; form fixtures, kitchen-sink and validation-check stories.

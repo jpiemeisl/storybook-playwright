@@ -1,0 +1,52 @@
+@layer components {
+  .form {
+    display: flex;
+    gap: var(--gap-sm);
+    min-inline-size: 0;
+  }
+
+  .box {
+    flex: 1;
+    padding-inline-end: var(--space-1);
+  }
+
+  .icon {
+    flex-shrink: 0;
+    color: var(--color-text-muted);
+  }
+
+  /* Hide the browser's own clear control; we render an accessible one. */
+  .input::-webkit-search-cancel-button,
+  .input::-webkit-search-decoration {
+    appearance: none;
+  }
+
+  .clear {
+    display: inline-grid;
+    flex-shrink: 0;
+    place-items: center;
+    inline-size: var(--control-height-sm);
+    block-size: var(--control-height-sm);
+    border-radius: var(--radius-control);
+    color: var(--color-text-muted);
+  }
+
+  .clear:hover {
+    background-color: var(--color-bg-muted);
+    color: var(--color-text);
+  }
+
+  .clear:focus-visible {
+    outline: var(--focus-ring-width) solid var(--color-focus-ring);
+    outline-offset: 0;
+  }
+
+  .visuallyHidden {
+    position: absolute;
+    inline-size: 1px;
+    block-size: 1px;
+    overflow: hidden;
+    clip-path: inset(50%);
+    white-space: nowrap;
+  }
+}

@@ -1,0 +1,172 @@
+@layer components {
+  .group {
+    display: grid;
+    gap: var(--gap-sm);
+    min-inline-size: 0;
+    margin: 0;
+    padding: 0;
+    border: 0;
+    color: var(--color-text);
+  }
+
+  .legend {
+    padding: 0;
+    font-weight: var(--text-weight-strong);
+    overflow-wrap: anywhere;
+  }
+
+  .required {
+    color: var(--color-danger);
+  }
+
+  .options {
+    display: flex;
+    flex-direction: column;
+    gap: var(--gap-sm);
+  }
+
+  .horizontal {
+    flex-direction: row;
+    flex-wrap: wrap;
+    column-gap: var(--gap-lg);
+  }
+
+  .card.horizontal > * {
+    flex: 1 1 14rem;
+  }
+
+  .option {
+    display: flex;
+    align-items: flex-start;
+    gap: var(--gap-sm);
+    min-inline-size: 0;
+    cursor: pointer;
+  }
+
+  .input {
+    appearance: none;
+    flex-shrink: 0;
+    inline-size: var(--icon-size-md);
+    block-size: var(--icon-size-md);
+    margin: 0;
+    margin-block-start: calc((1lh - var(--icon-size-md)) / 2);
+    border: var(--border-2) solid var(--color-field-border);
+    border-radius: var(--radius-full);
+    background-color: var(--color-field-bg);
+    cursor: pointer;
+  }
+
+  .input:hover {
+    border-color: var(--color-field-border-hover);
+  }
+
+  /* Checked: action border plus a filled centre dot (inset ring of the field colour). */
+  .input:checked {
+    border-color: var(--color-action);
+    background-color: var(--color-action);
+    box-shadow: inset 0 0 0 3px var(--color-field-bg);
+  }
+
+  .input:focus-visible {
+    outline: var(--focus-ring-width) solid var(--color-focus-ring);
+    outline-offset: var(--focus-ring-offset);
+  }
+
+  .group[aria-invalid='true'] .input {
+    border-color: var(--color-danger);
+  }
+
+  .input:disabled {
+    border-color: var(--color-border);
+    background-color: var(--color-field-disabled-bg);
+    cursor: not-allowed;
+  }
+
+  .option:has(.input:disabled) {
+    color: var(--color-text-muted);
+    cursor: not-allowed;
+  }
+
+  .text {
+    display: grid;
+    gap: 2px;
+    min-inline-size: 0;
+    overflow-wrap: anywhere;
+  }
+
+  .description {
+    color: var(--color-text-muted);
+    font-size: var(--text-size-sm);
+  }
+
+  /* Card variant: the whole bordered card is the label. Checked = thick action border + check icon
+     (shape, not just colour). */
+  .cardOption {
+    position: relative;
+    padding: var(--gap-md);
+    padding-inline-end: calc(var(--gap-md) * 2 + var(--icon-size-md));
+    border: var(--border-1) solid var(--color-field-border);
+    border-radius: var(--radius-surface);
+    background-color: var(--color-field-bg);
+  }
+
+  .cardOption:hover {
+    border-color: var(--color-field-border-hover);
+  }
+
+  .cardOption:has(.input:checked) {
+    border-color: var(--color-action);
+    box-shadow: inset 0 0 0 1px var(--color-action);
+  }
+
+  .cardOption:has(.input:focus-visible) {
+    outline: var(--focus-ring-width) solid var(--color-focus-ring);
+    outline-offset: var(--focus-ring-offset);
+  }
+
+  .cardOption .input:focus-visible {
+    outline: none;
+  }
+
+  .cardOption .label {
+    font-weight: var(--text-weight-strong);
+  }
+
+  .checkedIcon {
+    position: absolute;
+    inset-block-start: var(--gap-md);
+    inset-inline-end: var(--gap-md);
+    visibility: hidden;
+    color: var(--color-action);
+  }
+
+  .cardOption:has(.input:checked) .checkedIcon {
+    visibility: visible;
+  }
+
+  @media (prefers-reduced-motion: no-preference) {
+    .input,
+    .cardOption {
+      transition: border-color var(--transition-fast) var(--transition-easing);
+    }
+  }
+
+  /* Windows high contrast: explicit system colours for the dot and the checked card. */
+  @media (forced-colors: active) {
+    .input {
+      forced-color-adjust: none;
+      border-color: FieldText;
+      background-color: Field;
+    }
+
+    .input:checked {
+      border-color: Highlight;
+      background-color: Highlight;
+      box-shadow: inset 0 0 0 3px Field;
+    }
+
+    .cardOption:has(.input:checked) {
+      border: var(--border-2) solid Highlight;
+    }
+  }
+}

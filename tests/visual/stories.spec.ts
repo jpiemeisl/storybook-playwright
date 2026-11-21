@@ -74,6 +74,8 @@ function capturesFromParam(viewports: ViewportParam[]): Capture[] {
 declare global {
   interface Window {
     __vrtStoryResult?: Promise<StoryResult>;
+    /** Starts waiting for the next storyFinished (used before a remount). */
+    __vrtArm?: () => Promise<StoryResult>;
     __STORYBOOK_PREVIEW__?: { currentRender?: { story?: { parameters?: Record<string, unknown> } } };
   }
 }
@@ -84,7 +86,8 @@ function installStoryListener() {
   type Channel = { on: (event: string, fn: (payload: never) => void) => void };
 
   let settle: (result: StoryResult) => void = () => {};
-  window.__vrtStoryResult = new Promise((done) => (settle = done));
+  window.__vrtArm = () => (window.__vrtStoryResult = new Promise((done) => (settle = done)));
+  window.__vrtArm();
 
   const vrtParam = () =>
     (window.__STORYBOOK_PREVIEW__?.currentRender?.story?.parameters?.vrt as StoryResult['vrt']) ?? null;
@@ -120,10 +123,8 @@ function installStoryListener() {
   });
 }
 
-async function openStory(page: Page, id: string): Promise<StoryResult> {
-  await page.goto(`/iframe.html?id=${id}&viewMode=story`);
-  const result = await page.evaluate(() => window.__vrtStoryResult!);
-
+/** Waits for fonts and images, then lets components react to load/error events before capturing. */
+async function settlePage(page: Page) {
   await page.evaluate(async () => {
     // Lazy images outside the viewport never start loading (and full-page shots would miss them).
     for (const img of document.querySelectorAll<HTMLImageElement>('img[loading="lazy"]')) img.loading = 'eager';
@@ -139,10 +140,33 @@ async function openStory(page: Page, id: string): Promise<StoryResult> {
             }),
         ),
     );
-    // Let components react to load/error events (e.g. Image's fallback) before capturing.
     await new Promise((done) => requestAnimationFrame(() => requestAnimationFrame(done)));
   });
+}
 
+/** First load of the story iframe. */
+async function openStory(page: Page, id: string): Promise<StoryResult> {
+  await page.goto(`/iframe.html?id=${id}&viewMode=story`);
+  const result = await page.evaluate(() => window.__vrtStoryResult!);
+  await settlePage(page);
+  return result;
+}
+
+/**
+ * Re-renders the story in place (Storybook's forceRemount) after a viewport change. Much cheaper than
+ * a page reload, and the story still mounts fresh at the new size: play function, a11y check and
+ * storyFinished all run again.
+ */
+async function remountStory(page: Page, id: string): Promise<StoryResult> {
+  const result = await page.evaluate((storyId) => {
+    window.scrollTo(0, 0);
+    const finished = window.__vrtArm!();
+    const channel = (window as unknown as { __STORYBOOK_ADDONS_CHANNEL__: { emit: (event: string, payload: unknown) => void } })
+      .__STORYBOOK_ADDONS_CHANNEL__;
+    channel.emit('forceRemount', { storyId });
+    return finished;
+  }, id);
+  await settlePage(page);
   return result;
 }
 
@@ -171,10 +195,12 @@ for (const story of stories) {
 
     for (const capture of captures) {
       await test.step(`${capture.width}px`, async () => {
-        // Reload at each viewport so play functions and media queries run at that size.
+        // New viewport: remount so play functions, media queries and the a11y check run at that size.
+        // After a probe at another viewport (whose play may have failed there by design), load fresh.
         if (!loaded || capture.width !== loaded.width || capture.height !== loaded.height) {
           await page.setViewportSize({ width: capture.width, height: capture.height });
-          expectClean(await openStory(page, story.id), story.id, capture.width);
+          const result = loaded ? await remountStory(page, story.id) : await openStory(page, story.id);
+          expectClean(result, story.id, capture.width);
           loaded = capture;
         }
         await expect(page).toHaveScreenshot(`${story.id}-${capture.width}.png`, { fullPage: capture.fullPage });

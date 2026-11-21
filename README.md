@@ -51,6 +51,7 @@ fetching in components.
 | Primitives | Button, Text, Heading, Link (+ LinkProvider), Icon, Image, Badge, Divider |
 | Layout     | Container, Section, Stack, Grid                                    |
 | Navigation | SkipLink, Header, MobileMenu, Footer, Breadcrumbs, Pagination      |
+| Forms      | Label, HelpText, FieldError, Field, Input, Textarea, Select, Checkbox, Radio + RadioGroup, Alert, SearchInput, NewsletterSignup, ContactForm (Button gains `loading`) |
 | Sections   | Hero, FeatureGrid, Card + CardGrid, ArticleCard, MediaText, CtaBanner, Stats, Testimonial + TestimonialGrid, LogoStrip, Accordion + FaqSection, PricingTable |
 
 Navigation components take plain data from `src/content-types/navigation.ts` (`NavItem`,
@@ -74,6 +75,31 @@ Navigation components take plain data from `src/content-types/navigation.ts` (`N
 - **Breadcrumbs** and **Pagination** use container queries: below 40rem the trail collapses its
   middle items (still announced) and pagination switches to "Page X of Y" with previous/next.
 - All transitions sit inside `@media (prefers-reduced-motion: no-preference)`.
+
+### Forms
+
+Forms are presentational and backend-free: they call `onSubmit(values)` and render the `status`
+(`'idle' | 'submitting' | 'success' | 'error'`) they are given. They are built on native controls and
+native constraint attributes (`required`, `type`, `minLength`, `pattern`, ...) with no form library.
+
+- **Controls** (Input, Textarea, Select, Checkbox, Radio) work controlled or uncontrolled, accept `ref`
+  (React 19 ref-as-prop), and spread other native props onto the native element. States are styled
+  from attributes (`aria-invalid`, `:disabled`, `[readonly]`), not classes.
+- **Field** wires label `for`/`id`, `aria-describedby` (hint, then error), `aria-invalid`, `required`
+  and `aria-required` onto its child control (or passes them to a render prop).
+- **Required** fields show a visual `*` hidden from screen readers, which announce the control's
+  native `required` state instead. Forms state "Required fields are marked with an asterisk".
+- **Validation** (`src/utils/validation.ts`): forms use `noValidate` and validate on submit (then on
+  blur), with messages built from each control's `ValidityState`. It also checks `minLength` and
+  `maxLength` itself, because browsers only report those for user-typed values. ContactForm shows a
+  focused error summary (`role="alert"`) whose links move focus to each field. FieldError is not a live
+  region.
+- **Textarea counter**: the visible "n / max" is `aria-hidden`; the limit is in the description, and a
+  polite live region announces the remaining characters once typing pauses for a second.
+- **Button `loading`** keeps the label in layout (so the width does not change), sets `aria-busy` and
+  `aria-disabled`, and swallows clicks. It does not use `disabled`, so keyboard focus stays put.
+- **Forced colors**: checkbox and radio marks switch to explicit system colours (`Highlight`,
+  `FieldText`) under `@media (forced-colors: active)`, and invalid fields get a 2px border.
 
 ### Content sections
 
@@ -142,6 +168,15 @@ A number means `{ width, height: 800, fullPage: false }`. Parameters are not in 
 harness reads them from the loaded story. The first load (at the tag viewport) is only a probe when a
 `vrt` parameter is present, and the story is then reloaded at each requested viewport so play
 functions and media queries run at that size.
+
+For low-risk variants of a `vrt-full` component (state or colour variants whose 768 layout is already
+covered by a sibling story), spread `vrtEdges` from `src/stories/vrt.ts` into the story's parameters:
+full-page shots at 375 and 1280 only.
+
+Between viewports the harness does not reload the page: it resizes and asks Storybook to remount the
+story in place (`forceRemount`), which re-runs the play function and the a11y check at the new size
+and produces the same screenshots as a fresh load, at a fraction of the cost. A probe load at the
+wrong viewport (see above) is followed by a fresh load instead.
 
 Play functions in `vrt-full` stories run at 375, 768 and 1280. Write them so they work at every width
 (query elements that are visible at all sizes, or use `{ hidden: true }` when only asserting attributes),

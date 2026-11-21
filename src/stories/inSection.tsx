@@ -18,3 +18,10 @@ export const inSection: Decorator = (Story, { parameters }) => {
     </Section>
   );
 };
+
+/** Story-only decorator: a realistic form-column width for single controls. */
+export const narrow: Decorator = (Story) => (
+  <div style={{ maxInlineSize: '24rem' }}>
+    <Story />
+  </div>
+);

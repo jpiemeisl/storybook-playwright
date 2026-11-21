@@ -1,0 +1,16 @@
+@layer components {
+  .label {
+    color: var(--color-text);
+    font-weight: var(--text-weight-strong);
+    overflow-wrap: anywhere;
+  }
+
+  .required {
+    color: var(--color-danger);
+  }
+
+  .optional {
+    color: var(--color-text-muted);
+    font-weight: var(--text-weight-body);
+  }
+}

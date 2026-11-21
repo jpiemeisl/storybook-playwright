@@ -25,6 +25,26 @@ const paths = {
   ),
   check: <path d="M5 12l5 5 9-10" />,
   'external-link': <path d="M14 4h6v6M20 4l-9 9M18 14v5a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V7a1 1 0 0 1 1-1h5" />,
+  minus: <path d="M6 12h12" />,
+  info: (
+    <>
+      <circle cx="12" cy="12" r="9" />
+      <path d="M12 11v5M12 8v.01" />
+    </>
+  ),
+  'alert-circle': (
+    <>
+      <circle cx="12" cy="12" r="9" />
+      <path d="M12 7.5v5M12 16v.01" />
+    </>
+  ),
+  'alert-triangle': <path d="M12 3.5 2.5 20h19zM12 10v4.5M12 17.5v.01" />,
+  'check-circle': (
+    <>
+      <circle cx="12" cy="12" r="9" />
+      <path d="M8 12.5l2.7 2.7L16.5 9.5" />
+    </>
+  ),
 
   /* Social: simplified glyphs, not official brand marks. */
   facebook: (
