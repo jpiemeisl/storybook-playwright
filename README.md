@@ -22,6 +22,8 @@ npx playwright install chromium
 | `npm run test:vrt`        | Builds Storybook, then compares every story against the committed baselines  |
 | `npm run test:vrt:update` | Builds Storybook, then rewrites the baselines                                |
 | `npm run test:vrt:report` | Opens the HTML report from the last run (diffs for any failures)             |
+| `npm run test:unit`       | Vitest unit tests for pure logic (validators, registry, adapter, fixtures)   |
+| `npm run docs:content-model` | Regenerates `docs/content-model.md` from the content-type JSDoc           |
 
 ## Project layout
 
@@ -33,7 +35,13 @@ src/tokens/           Design tokens and global CSS
   semantic.css        Tier 2: meaning-based aliases. Themes override this tier only
   Foundations.stories.tsx
 src/components/       One folder per component: .tsx, .module.css, .stories.tsx, index.ts
-src/index.ts          Public entry point; re-exports every component barrel
+src/index.ts          Public entry point; re-exports components, content types and the registry
+src/content-types/    JSON-only content model (blocks, pages, site chrome) a CMS adapter produces
+src/component-types/  Component prop shapes that may contain ReactNode
+src/registry/         Block registry, BlockRenderer, validators and link safety
+src/adapters/         Example CMS adapter (reference only; not exported)
+src/fixtures/pages/   Page fixtures as JSON (plus edge cases); fixtures/blocks/ has one per block
+scripts/              Docs generator for docs/content-model.md
 src/fixtures/images/  Local deterministic placeholder images for stories (no remote URLs)
 src/stories/          Story-only helpers (Placeholder, Ruler); not exported
 tests/visual/         Playwright VRT spec and committed baselines (__screenshots__/)
@@ -139,6 +147,88 @@ Container, so place it directly in the page.
 - **Accordion** uses the WAI-ARIA button pattern, not `<details>`, for arrow/Home/End navigation
   and a consistent height animation.
 - **PricingTable** shows its Monthly/Annual toggle (native radios) when any tier has `annualPrice`.
+
+## Using with a CMS
+
+The library ships a CMS-agnostic content model and a renderer; it contains no CMS-specific code.
+
+1. **Content model** (`src/content-types`): plain JSON types. A page is
+   `PageContent { id, slug, template?, seo, blocks }`, and each block is one of 26 types (`hero`,
+   `featureGrid`, `faq`, `richText`, `tabs`, ...). Field-by-field reference:
+   [`docs/content-model.md`](docs/content-model.md) (generated from the JSDoc).
+2. **Adapter** (your app): maps your CMS's payload to `PageContent`, including converting rich text
+   to sanitized HTML. [`src/adapters/example-cms`](src/adapters/example-cms) is a worked example for an
+   imaginary CMS, with tests.
+3. **Validation**: `validatePage(page)` returns issues (missing fields, unsafe links, missing alt
+   text, duplicate ids). Run it in CMS preview or CI.
+4. **Rendering**: `<BlockRenderer blocks={page.blocks} />` looks up each block in the registry, maps
+   content to props (`toProps`), assigns heading levels and wraps each block in a `Section` with the
+   right `Container`.
+
+```tsx
+import { BlockRenderer, validatePage, errorsOnly } from 'storybook-playwright';
+
+export function Page({ page }: { page: PageContent }) {
+  return (
+    <main id="main">
+      <BlockRenderer
+        blocks={page.blocks}
+        context={{ forms: { contact: { onSubmit: sendContact, status } } }}
+        onError={(issue) => log.warn(issue)}
+        showErrors={isPreview}
+      />
+    </main>
+  );
+}
+```
+
+Behaviour worth knowing:
+
+- **Headings** are assigned centrally: the first `hero` or `pageHeader` gets the `h1`, every other
+  block heading is `h2`, items inside blocks are `h3`. Authors never choose levels.
+- **Unknown or broken blocks** render nothing and are reported through `onError` (each block also has
+  an error boundary). With `showErrors` they render a visible placeholder instead.
+- **Links** other than relative, `http(s):`, `mailto:` and `tel:` are refused: the text renders without
+  a link and an `unsafe-href` issue is reported.
+- **Forms** are interactive only when `context.forms` provides handlers; otherwise they render as an
+  inert preview with a note.
+
+### Custom blocks
+
+`createRegistry` adds block types or replaces built-in ones. A custom block declares its own content
+type and maps it to any component's props:
+
+```tsx
+import { BlockRenderer, createRegistry, defineBlock, validatePage, type BlockLike } from 'storybook-playwright';
+
+interface QuoteOfTheDayBlock extends BlockLike {
+  type: 'quoteOfTheDay';
+  quote: string;
+  source?: string;
+}
+
+const registry = createRegistry([
+  defineBlock<QuoteOfTheDayBlock, { text: string; cite?: string }>({
+    type: 'quoteOfTheDay',
+    label: 'Quote of the day',
+    description: 'A short quote with its source.',
+    component: QuoteCard,
+    toProps: (content, ctx) => {
+      if (!content.quote) {
+        ctx.report({ code: 'missing-field', message: 'A quote is required.', path: 'quote' });
+        return null; // render nothing (or a placeholder with showErrors)
+      }
+      return { text: content.quote, cite: content.source };
+    },
+    layout: 'narrow',
+  }),
+]);
+
+validatePage(page, { knownTypes: registry.types() });
+<BlockRenderer blocks={page.blocks} registry={registry} />;
+```
+
+A definition with an existing `type` replaces the built-in one; `defaultRegistry` is never mutated.
 
 ## Visual regression testing
 

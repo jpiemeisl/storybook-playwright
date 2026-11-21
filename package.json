@@ -10,7 +10,8 @@
     "test:vrt": "storybook build && playwright test",
     "test:vrt:update": "storybook build && playwright test --update-snapshots",
     "test:vrt:report": "playwright show-report",
-    "test:unit": "vitest run"
+    "test:unit": "vitest run",
+    "docs:content-model": "node scripts/content-model-docs.mjs"
   },
   "dependencies": {
     "react": "^19.3.1",
