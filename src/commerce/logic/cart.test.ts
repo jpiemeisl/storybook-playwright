@@ -121,7 +121,7 @@ describe('computeCartTotals', () => {
     const t = computeCartTotals(cart([line('digital', 1000), line('subscription', 900, 1, monthly({ trialDays: 14 }))]), ctx);
     expect(t.subtotal).toEqual(usd(1900));
     expect(t.dueToday).toEqual(usd(1080)); // 1000 + 8%
-    expect(t.recurring).toEqual([{ interval: { unit: 'month', count: 1 }, amount: usd(900), startsAt: '2026-04-04', label: '$9.00 / month from Apr 4, 2026' }]);
+    expect(t.recurring).toEqual([{ interval: { unit: 'month', count: 1 }, amount: usd(900), startsAt: '2026-04-04', label: '$9.00 / month from Apr 4, 2026', trialDays: 14 }]);
   });
 
   it('a trial-only cart is due 0 today', () => {

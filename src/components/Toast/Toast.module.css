@@ -1,0 +1,172 @@
+@layer components {
+  /* No gap here: the live containers stay rendered (in the accessibility tree) even when empty. */
+  .region {
+    display: grid;
+  }
+
+  .region > * + *:not(:empty) {
+    margin-block-start: var(--gap-sm);
+  }
+
+  /*
+   * Pinned to the block-end edge with gutters and safe-area padding; from 48rem, the inline-end corner.
+   * The region itself lets clicks through: only toasts and the "+N more" button catch the pointer.
+   */
+  .fixed {
+    position: fixed;
+    z-index: var(--z-overlay);
+    inset-inline: max(var(--gutter), env(safe-area-inset-left, 0px)) max(var(--gutter), env(safe-area-inset-right, 0px));
+    inset-block-end: calc(var(--gap-sm) + env(safe-area-inset-bottom, 0px) + var(--toast-offset-block-end, 0px));
+    pointer-events: none;
+  }
+
+  .fixed > * > *,
+  .fixed > .more {
+    pointer-events: auto;
+  }
+
+  .inline {
+    max-inline-size: 26rem;
+  }
+
+  .stack {
+    display: grid;
+    gap: var(--gap-sm);
+  }
+
+  /* Focused and scrolled-to content stops above the stack (the size is measured in an effect). */
+  :global(html):has(.fixed[data-has-toasts]) {
+    scroll-padding-block-end: calc(var(--toast-stack-size, 0px) + var(--gap-md));
+  }
+
+  /* Above a StickyActionBar, which only shows below 48rem. */
+  @media (max-width: 47.99rem) {
+    :global(html):has([data-sticky-action-bar]) .fixed {
+      inset-block-end: calc(var(--gap-sm) + env(safe-area-inset-bottom, 0px) + var(--sticky-action-bar-height) + var(--toast-offset-block-end, 0px));
+    }
+  }
+
+  @media (min-width: 48rem) {
+    .fixed {
+      inset-inline: auto max(var(--gap-lg), env(safe-area-inset-right, 0px));
+      inline-size: min(24rem, 100vw - 2 * var(--gap-lg));
+    }
+  }
+
+  .more {
+    justify-self: end;
+    padding: var(--gap-xs) var(--gap-sm);
+    border: var(--border-1) solid var(--color-border);
+    border-radius: var(--radius-pill);
+    background-color: var(--color-surface);
+    color: var(--color-text);
+    font-size: var(--text-size-sm);
+    box-shadow: var(--elevation-low);
+  }
+
+  .more:focus-visible,
+  .dismiss:focus-visible {
+    outline: var(--focus-ring-width) solid var(--color-focus-ring);
+    outline-offset: var(--focus-ring-offset);
+  }
+
+  .toast {
+    display: flex;
+    align-items: flex-start;
+    gap: var(--gap-sm);
+    padding: var(--gap-sm) var(--gap-md);
+    border: var(--border-1) solid var(--color-border);
+    border-inline-start: 4px solid var(--toast-accent);
+    border-radius: var(--radius-control);
+    background-color: var(--color-surface);
+    color: var(--color-text);
+    box-shadow: var(--elevation-high);
+  }
+
+  .info {
+    --toast-accent: var(--color-info);
+  }
+
+  .success {
+    --toast-accent: var(--color-success);
+  }
+
+  .warning {
+    --toast-accent: var(--color-warning);
+  }
+
+  .danger {
+    --toast-accent: var(--color-danger);
+  }
+
+  .icon {
+    flex-shrink: 0;
+    margin-block-start: calc((1lh - var(--icon-size-md)) / 2);
+    color: var(--toast-accent);
+  }
+
+  .content {
+    display: grid;
+    flex: 1;
+    gap: var(--gap-xs);
+    min-inline-size: 0;
+    overflow-wrap: anywhere;
+  }
+
+  .title {
+    margin: 0;
+    font-weight: var(--text-weight-strong);
+  }
+
+  .message {
+    font-size: var(--text-size-sm);
+  }
+
+  .action {
+    margin-block-start: var(--gap-xs);
+  }
+
+  .dismiss {
+    display: inline-grid;
+    flex-shrink: 0;
+    place-items: center;
+    inline-size: var(--control-height-sm);
+    block-size: var(--control-height-sm);
+    margin-block: calc(var(--gap-xs) * -1);
+    margin-inline-end: calc(var(--gap-xs) * -1);
+    border-radius: var(--radius-control);
+    color: var(--color-text);
+  }
+
+  .dismiss:hover {
+    background-color: var(--color-bg-muted);
+  }
+
+  .visuallyHidden {
+    position: absolute;
+    inline-size: 1px;
+    block-size: 1px;
+    overflow: hidden;
+    clip-path: inset(50%);
+    white-space: nowrap;
+  }
+
+  /* Reduced motion gets no animation at all; otherwise a simple fade in. No slide. */
+  @media (prefers-reduced-motion: no-preference) {
+    .toast {
+      transition: opacity var(--transition-base) var(--transition-easing);
+    }
+
+    @starting-style {
+      .toast {
+        opacity: 0;
+      }
+    }
+  }
+
+  @media (forced-colors: active) {
+    .toast {
+      border-inline-start-color: CanvasText;
+    }
+  }
+}

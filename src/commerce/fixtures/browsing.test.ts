@@ -114,7 +114,7 @@ describe('commerce templates registry merge', () => {
   });
 
   it('unknown names and pages missing their data still fall back to default', () => {
-    expect(getTemplate('checkout', templates)).toBe(templates.default);
+    expect(getTemplate('wishlist', templates)).toBe(templates.default);
     expect(resolveTemplate({ id: 'x', slug: 'x', template: 'product-detail', seo: { title: 'X' }, blocks: [] }, templates).definition).toBe(templates.default);
   });
 

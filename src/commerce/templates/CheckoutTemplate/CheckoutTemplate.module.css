@@ -1,0 +1,126 @@
+@layer components {
+  .root {
+    display: grid;
+    gap: var(--gap-lg);
+  }
+
+  .back {
+    justify-self: start;
+    margin-inline-start: calc(var(--space-3) * -1);
+  }
+
+  .title {
+    margin: 0;
+    font-size: var(--text-size-2xl);
+    line-height: var(--text-leading-heading);
+  }
+
+  .title:focus-visible {
+    outline: var(--focus-ring-width) solid var(--color-focus-ring);
+    outline-offset: var(--focus-ring-offset);
+  }
+
+  /* Narrow: the summary (collapsed) above the form. Wide: form left, summary right. */
+  .layout {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    gap: var(--gap-lg);
+  }
+
+  @media (min-width: 64rem) {
+    .layout {
+      grid-template-columns: minmax(0, 1fr) minmax(20rem, 24rem);
+      gap: var(--gap-xl);
+    }
+
+    .layout.single {
+      grid-template-columns: minmax(0, 44rem);
+    }
+
+    .aside {
+      position: sticky;
+      inset-block-start: var(--gap-md);
+      grid-column: 2;
+      grid-row: 1;
+      align-self: start;
+    }
+
+    .form {
+      grid-column: 1;
+      grid-row: 1;
+    }
+  }
+
+  .form {
+    display: grid;
+    align-content: start;
+    gap: var(--gap-lg);
+    min-inline-size: 0;
+  }
+
+  .section {
+    display: grid;
+    gap: var(--gap-sm);
+    padding-block-end: var(--gap-md);
+    border-block-end: var(--border-1) solid var(--color-border);
+  }
+
+  .sectionHead {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: var(--gap-xs) var(--gap-md);
+  }
+
+  .sectionHead > * {
+    margin: 0;
+  }
+
+  .explain,
+  .value {
+    margin: 0;
+    overflow-wrap: anywhere;
+  }
+
+  .label {
+    margin: var(--gap-xs) 0 0;
+    color: var(--color-text-muted);
+    font-size: var(--text-size-sm);
+  }
+
+  .address {
+    display: grid;
+    font-style: normal;
+    overflow-wrap: anywhere;
+  }
+
+  .terms {
+    display: grid;
+    gap: var(--gap-md);
+  }
+
+  .lines {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .summaryList {
+    display: grid;
+    gap: var(--gap-xs);
+    margin: 0;
+    padding-inline-start: var(--space-5);
+  }
+
+  .actions {
+    display: grid;
+    justify-items: start;
+    gap: var(--gap-md);
+  }
+
+  .guard {
+    display: grid;
+    gap: var(--gap-lg);
+  }
+}

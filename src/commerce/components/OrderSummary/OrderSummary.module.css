@@ -1,0 +1,88 @@
+@layer components {
+  .root {
+    border: var(--border-1) solid var(--color-border);
+    border-radius: var(--radius-surface);
+    background-color: var(--color-surface);
+  }
+
+  .summary {
+    display: flex;
+    align-items: center;
+    gap: var(--gap-sm);
+    padding: var(--gap-md);
+    cursor: pointer;
+    list-style: none;
+  }
+
+  .summary::-webkit-details-marker {
+    display: none;
+  }
+
+  .summary:focus-visible {
+    outline: var(--focus-ring-width) solid var(--color-focus-ring);
+    outline-offset: calc(var(--focus-ring-width) * -1);
+  }
+
+  .heading {
+    display: flex;
+    flex: 1;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: var(--gap-xs) var(--gap-sm);
+    margin: 0;
+    font-size: var(--text-size-md);
+  }
+
+  .toggleText {
+    color: var(--color-action);
+    font-size: var(--text-size-sm);
+    font-weight: var(--text-weight-body);
+    text-decoration: underline;
+  }
+
+  .due {
+    font-size: var(--text-size-lg);
+    font-weight: var(--text-weight-strong);
+  }
+
+  .chevron {
+    flex-shrink: 0;
+  }
+
+  .root[open] .chevron {
+    transform: rotate(180deg);
+  }
+
+  /* Wide: always open, so the toggle affordances go. */
+  .root[data-wide] .summary {
+    cursor: default;
+  }
+
+  .root[data-wide] .toggleText,
+  .root[data-wide] .chevron,
+  .root[data-wide][open] .due {
+    display: none;
+  }
+
+  .body {
+    display: grid;
+    gap: var(--gap-md);
+    padding: 0 var(--gap-md) var(--gap-md);
+  }
+
+  .lines {
+    margin: 0;
+    padding: 0;
+    border-block-start: var(--border-1) solid var(--color-border);
+    list-style: none;
+  }
+
+  .visuallyHidden {
+    position: absolute;
+    inline-size: 1px;
+    block-size: 1px;
+    overflow: hidden;
+    clip-path: inset(50%);
+    white-space: nowrap;
+  }
+}

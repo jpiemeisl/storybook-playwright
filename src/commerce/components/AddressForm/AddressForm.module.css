@@ -1,0 +1,41 @@
+@layer components {
+  .root {
+    display: grid;
+    gap: var(--gap-sm);
+    min-inline-size: 0;
+    margin: 0;
+    padding: 0;
+    border: 0;
+    container-type: inline-size;
+  }
+
+  .legend {
+    padding: 0;
+    margin-block-end: var(--gap-xs);
+    font-size: var(--text-size-lg);
+    font-weight: var(--text-weight-strong);
+  }
+
+  .country {
+    margin: 0;
+    color: var(--color-text-muted);
+    font-size: var(--text-size-sm);
+  }
+
+  .grid {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    gap: var(--gap-md);
+  }
+
+  /* From 30rem: city, state and ZIP share a row. */
+  @container (min-width: 30rem) {
+    .grid {
+      grid-template-columns: minmax(0, 2fr) minmax(0, 2fr) minmax(0, 1.4fr);
+    }
+
+    .full {
+      grid-column: 1 / -1;
+    }
+  }
+}

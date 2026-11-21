@@ -12,6 +12,8 @@ export interface CartLineSnapshot {
   image?: ImageRef;
   /** Variant price per unit before any subscription discount. Integer minor units, cart currency. */
   unitPrice: Money;
+  /** Variant compare-at price when it was on sale. Same currency, higher than unitPrice. */
+  compareAtPrice?: Money;
   /** Product kind. */
   kind: ProductKind;
   /** Needs a delivery address (physical goods). */

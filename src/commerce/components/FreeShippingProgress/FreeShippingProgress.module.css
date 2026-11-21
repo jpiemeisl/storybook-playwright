@@ -1,0 +1,80 @@
+@layer components {
+  .root {
+    display: grid;
+    gap: var(--gap-xs);
+    padding: var(--gap-sm) var(--gap-md);
+    border: var(--border-1) solid var(--color-border);
+    border-radius: var(--radius-control);
+    background-color: var(--color-surface);
+  }
+
+  .root[data-reached] {
+    border-color: var(--color-success);
+    background-color: var(--color-success-subtle);
+  }
+
+  .text {
+    display: flex;
+    align-items: center;
+    gap: var(--gap-xs);
+    margin: 0;
+    font-size: var(--text-size-sm);
+    font-weight: var(--text-weight-strong);
+  }
+
+  .progress {
+    inline-size: 100%;
+    block-size: var(--space-2);
+    border: 0;
+    border-radius: var(--radius-pill);
+    background-color: var(--color-bg-muted);
+    accent-color: var(--color-action);
+    appearance: none;
+  }
+
+  .progress::-webkit-progress-bar {
+    border-radius: var(--radius-pill);
+    background-color: var(--color-bg-muted);
+  }
+
+  .progress::-webkit-progress-value {
+    border-radius: var(--radius-pill);
+    background-color: var(--color-action);
+  }
+
+  .progress::-moz-progress-bar {
+    border-radius: var(--radius-pill);
+    background-color: var(--color-action);
+  }
+
+  [data-reached] .progress::-webkit-progress-value {
+    background-color: var(--color-success);
+  }
+
+  [data-reached] .progress::-moz-progress-bar {
+    background-color: var(--color-success);
+  }
+
+  /* Forced colours replace the fill colour, so draw the bar with system colours instead. */
+  @media (forced-colors: active) {
+    .progress {
+      border: 1px solid CanvasText;
+      background-color: Canvas;
+      forced-color-adjust: none;
+    }
+
+    .progress::-webkit-progress-bar {
+      background-color: Canvas;
+    }
+
+    .progress::-webkit-progress-value,
+    [data-reached] .progress::-webkit-progress-value {
+      background-color: Highlight;
+    }
+
+    .progress::-moz-progress-bar,
+    [data-reached] .progress::-moz-progress-bar {
+      background-color: Highlight;
+    }
+  }
+}

@@ -39,6 +39,26 @@ export interface OrderTotals {
   tax: Money;
   /** Amount charged. */
   total: Money;
+  /**
+   * Charged when the order was placed, when it differs from `total` (free-trial lines are charged
+   * later). Omitted means `total` was charged.
+   */
+  dueToday?: Money;
+}
+
+/** A subscription line's billing after the order: first charge date, trial and amount per cycle. */
+export interface OrderRecurringLine {
+  /** The order line it belongs to. */
+  lineId: string;
+  /** Per cycle for the whole line (unit price × quantity). */
+  amount: Money;
+  interval: BillingInterval;
+  /** ISO date of the first recurring charge (trial end, or one interval after the order). */
+  firstBillingAt: string;
+  /** ISO date the free trial ends. */
+  trialEndsAt?: string;
+  /** Ready-made text, e.g. "Free until Apr 4, 2026, then $6.00 / month" or "Next charge $18.00 on Apr 21, 2026". */
+  note: string;
 }
 
 /** A placed order. */
@@ -63,8 +83,12 @@ export interface Order {
   shippingMethod?: ShippingMethod;
   /** Carrier tracking. */
   tracking?: { carrier: string; number: string; events: { at: string; label: string }[] };
-  /** Download links for digital lines. */
-  downloads?: { fileId: string; name: string; available: boolean; expiresAt?: string }[];
+  /** Download links for digital lines. `format` and `sizeBytes` are shown when present. */
+  downloads?: { fileId: string; name: string; available: boolean; expiresAt?: string; format?: string; sizeBytes?: number }[];
+  /** Billing for subscription lines. */
+  recurring?: OrderRecurringLine[];
+  /** Contact email given at checkout. */
+  email?: string;
 }
 
 /** A customer's subscription. */

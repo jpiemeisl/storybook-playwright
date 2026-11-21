@@ -1,0 +1,19 @@
+@layer components {
+  .label {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    gap: var(--gap-xs) var(--gap-md);
+  }
+
+  .price {
+    font-variant-numeric: tabular-nums;
+  }
+
+  .badge {
+    display: block;
+    margin-block-start: var(--gap-xs);
+    color: var(--color-success);
+    font-weight: var(--text-weight-strong);
+  }
+}

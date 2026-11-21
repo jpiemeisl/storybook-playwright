@@ -5,7 +5,11 @@
 import { Checker, isObj, type ValidationIssue } from '../../registry/checker';
 import { isSafeHref } from '../../registry/links';
 import type { Product } from '../types/product';
-import { validateProduct, validateReviewsData } from './validate';
+import type { Cart } from '../types/cart';
+import type { CheckoutStepId } from '../types/checkout';
+import { computeCartTotals, type CartContext, type CartTotals } from './cart';
+import { getCheckoutSteps } from './checkout';
+import { validateCart, validateOrder, validateProduct, validateReviewsData } from './validate';
 import { purchaseOptionKey } from './options';
 import { resolveVariant } from './variants';
 
@@ -91,5 +95,86 @@ export function validateProductPage(page: unknown): ValidationIssue[] {
         if (isObj(img) && typeof img.src === 'string' && !isSafeHref(img.src)) c.report('unsafe-src', `product.images[${i}].src`, 'Unsafe image source.');
       });
     }
+  });
+}
+
+const linkChecks = (c: Checker) =>
+  c.child('links', false, (l) => {
+    for (const key of ['shop', 'cart', 'checkout', 'terms', 'order']) l.href(key, false);
+  });
+
+/** Totals must equal computeCartTotals for the cart (the template trusts them and does no pricing). */
+function totalsMatch(c: Checker, cartContext: CartContext): CartTotals | undefined {
+  const cart = c.value.cart;
+  if (!isObj(cart)) {
+    c.report('missing-field', 'cart', '"cart" is required.');
+    return undefined;
+  }
+  c.issues.push(...prefix(validateCart(cart), 'cart'));
+  if (!isObj(c.value.totals)) {
+    c.report('missing-field', 'totals', '"totals" is required.');
+    return undefined;
+  }
+  let expected: CartTotals;
+  try {
+    expected = computeCartTotals(cart as unknown as Cart, cartContext);
+  } catch {
+    return undefined; // validateCart already reported why
+  }
+  const given = c.value.totals as unknown as CartTotals;
+  for (const key of ['subtotal', 'discount', 'shipping', 'tax', 'total', 'dueToday'] as const) {
+    if (JSON.stringify(given[key]) !== JSON.stringify(expected[key])) c.report('invalid-field', `totals.${key}`, `"totals.${key}" does not match computeCartTotals for this cart (${expected[key].amount}).`);
+  }
+  if (JSON.stringify(given.flags) !== JSON.stringify(expected.flags)) c.report('invalid-field', 'totals.flags', '"totals.flags" do not match the cart.');
+  return expected;
+}
+
+/** Cart page: cart validates, totals match computeCartTotals, issues point at real lines, safe links. */
+export function validateCartPage(page: unknown, cartContext: CartContext): ValidationIssue[] {
+  return base(page, (c) => {
+    if (c.value.template !== 'cart') c.report('invalid-field', 'template', 'template must be "cart".');
+    totalsMatch(c, cartContext);
+    const lineIds = new Set(isObj(c.value.cart) && Array.isArray(c.value.cart.lines) ? c.value.cart.lines.map((l) => (isObj(l) ? l.id : undefined)) : []);
+    if (!Array.isArray(c.value.issues)) c.report('missing-field', 'issues', '"issues" is required (it may be empty).');
+    else c.value.issues.forEach((issue, i) => isObj(issue) && !lineIds.has(issue.lineId) && c.report('invalid-field', `issues[${i}].lineId`, `Issue for unknown line ${JSON.stringify(issue.lineId)}.`));
+    if (Array.isArray(c.value.crossSell)) c.value.crossSell.forEach((p, i) => c.issues.push(...prefix(validateProduct(p), `crossSell[${i}]`)));
+    linkChecks(c);
+  });
+}
+
+const STEPS = ['information', 'shipping', 'payment', 'review'] as const;
+
+/** Checkout page: cart and totals as for the cart page, the step exists for this cart, the chosen shipping method exists, safe links. */
+export function validateCheckoutPage(page: unknown, cartContext: CartContext): ValidationIssue[] {
+  return base(page, (c) => {
+    if (c.value.template !== 'checkout') c.report('invalid-field', 'template', 'template must be "checkout".');
+    const totals = totalsMatch(c, cartContext);
+    c.oneOf('step', STEPS);
+    if (totals && typeof c.value.step === 'string' && STEPS.includes(c.value.step as never) && !getCheckoutSteps(totals.flags).includes(c.value.step as CheckoutStepId)) {
+      c.report('invalid-field', 'step', `This cart has no "${c.value.step}" step (steps: ${getCheckoutSteps(totals.flags).join(', ')}).`);
+    }
+    c.child('values', true, (v) => {
+      if (typeof v.value.email !== 'string') v.report('missing-field', 'email', '"email" is required (it may be empty).');
+      if (typeof v.value.billingSameAsShipping !== 'boolean') v.report('missing-field', 'billingSameAsShipping', '"billingSameAsShipping" is required.');
+      if (typeof v.value.termsAccepted !== 'boolean') v.report('missing-field', 'termsAccepted', '"termsAccepted" is required.');
+      if (v.value.paymentMethod !== undefined) v.oneOf('paymentMethod', ['card', 'wallet']);
+    });
+    if (!Array.isArray(c.value.shippingMethods)) c.report('missing-field', 'shippingMethods', '"shippingMethods" is required (it may be empty).');
+    const methodId = isObj(c.value.values) ? c.value.values.shippingMethodId : undefined;
+    if (typeof methodId === 'string' && Array.isArray(c.value.shippingMethods) && !c.value.shippingMethods.some((m) => isObj(m) && m.id === methodId)) {
+      c.report('invalid-field', 'values.shippingMethodId', `Shipping method ${JSON.stringify(methodId)} is not offered.`);
+    }
+    if (c.value.status !== undefined) c.oneOf('status', ['idle', 'submitting', 'error']);
+    linkChecks(c);
+  });
+}
+
+/** Confirmation page: the order validates; safe links. */
+export function validateConfirmationPage(page: unknown): ValidationIssue[] {
+  return base(page, (c) => {
+    if (c.value.template !== 'order-confirmation') c.report('invalid-field', 'template', 'template must be "order-confirmation".');
+    if (!isObj(c.value.order)) c.report('missing-field', 'order', '"order" is required.');
+    else c.issues.push(...prefix(validateOrder(c.value.order), 'order'));
+    linkChecks(c);
   });
 }
