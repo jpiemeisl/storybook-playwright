@@ -1,4 +1,4 @@
-export { BlockRenderer, renderBlocks, type BlockRendererProps } from './BlockRenderer';
+export { BlockRenderer, PageSection, renderBlocks, type BlockRendererProps, type PageSectionProps } from './BlockRenderer';
 export { assignHeadingLevels } from './headingLevels';
 export { clampLevel, HeadedBlock, richTextNode, safeHref, toActionLink, toIconName, toImage } from './helpers';
 export { isSafeAnchorId, isSafeHref, isSafeImageSrc, neutraliseUnsafeUrls } from './links';
