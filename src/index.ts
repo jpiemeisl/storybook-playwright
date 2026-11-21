@@ -69,6 +69,9 @@ export * from './components/Table';
 export * from './components/Timeline';
 export * from './components/TeamMember';
 
+// Content model: registry, renderer and validation
+export * from './registry';
+
 // Content types and utilities
 export type * from './content-types';
 export { blockTypes } from './content-types';
