@@ -4,6 +4,7 @@
  */
 import type { SiteChrome } from './chrome';
 import type { Block, PageContent } from './blocks';
+import type { TemplatePage } from './templates';
 
 type JsonPrimitive = string | number | boolean | null;
 
@@ -32,3 +33,4 @@ type Assert<T extends true> = T;
 export type _PageContentIsJson = Assert<IsJson<PageContent>>;
 export type _BlockIsJson = Assert<IsJson<Block>>;
 export type _SiteChromeIsJson = Assert<IsJson<SiteChrome>>;
+export type _TemplatePageIsJson = Assert<IsJson<TemplatePage>>;

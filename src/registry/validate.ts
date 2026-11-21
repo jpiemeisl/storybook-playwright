@@ -3,156 +3,11 @@
  * Used by BlockRenderer for error reporting and exported for adapter authors.
  */
 import { blockTypes, type Block, type PageContent } from '../content-types/blocks';
-import { isSafeAnchorId, isSafeHref, isSafeImageSrc, neutraliseUnsafeUrls } from './links';
+import { Checker, isNonEmptyString, isObj, type Obj, type ValidationIssue } from './checker';
+import { isSafeAnchorId, isSafeImageSrc } from './links';
+import { builtInTemplates, validateTemplateFields } from './validateTemplates';
 
-export type IssueCode =
-  | 'unknown-type'
-  | 'missing-field'
-  | 'invalid-field'
-  | 'too-few'
-  | 'too-many'
-  | 'nested-tabs'
-  | 'unsafe-href'
-  | 'unsafe-src'
-  | 'unsafe-anchor'
-  | 'missing-alt'
-  | 'duplicate-id'
-  | 'render-error';
-
-export interface ValidationIssue {
-  code: IssueCode;
-  severity: 'error' | 'warning';
-  /** Readable explanation for authors. */
-  message: string;
-  /** Path inside the block or page, e.g. "items[2].link.href". */
-  path: string;
-  blockId?: string;
-  blockType?: string;
-}
-
-/** Issues that make a block impossible to render; the renderer skips (or placeholders) such blocks. */
-export const FATAL_CODES: ReadonlySet<IssueCode> = new Set(['unknown-type', 'missing-field', 'invalid-field', 'too-few', 'nested-tabs', 'render-error']);
-
-export const isFatal = (issue: ValidationIssue) => FATAL_CODES.has(issue.code);
-
-type Obj = Record<string, unknown>;
-const isObj = (value: unknown): value is Obj => typeof value === 'object' && value !== null && !Array.isArray(value);
-const isNonEmptyString = (value: unknown): value is string => typeof value === 'string' && value.trim() !== '';
-
-/** Small helper bound to one object and path, collecting issues. */
-class Checker {
-  constructor(
-    private readonly target: Obj,
-    private readonly path: string,
-    private readonly issues: ValidationIssue[],
-    private readonly meta: { blockId?: string; blockType?: string },
-  ) {}
-
-  private at(key: string) {
-    return this.path ? `${this.path}.${key}` : key;
-  }
-
-  report(code: IssueCode, key: string, message: string, severity: 'error' | 'warning' = 'error') {
-    this.issues.push({ code, severity, message, path: this.at(key), ...this.meta });
-  }
-
-  str(key: string, required = true) {
-    const value = this.target[key];
-    if (value === undefined || value === null || value === '') {
-      if (required) this.report('missing-field', key, `"${key}" is required.`);
-      return;
-    }
-    if (typeof value !== 'string') this.report('invalid-field', key, `"${key}" must be text.`);
-    else if (required && value.trim() === '') this.report('missing-field', key, `"${key}" must not be blank.`);
-  }
-
-  num(key: string, required = false) {
-    const value = this.target[key];
-    if (value === undefined || value === null) {
-      if (required) this.report('missing-field', key, `"${key}" is required.`);
-      return;
-    }
-    if (typeof value !== 'number' || !Number.isFinite(value)) this.report('invalid-field', key, `"${key}" must be a number.`);
-  }
-
-  oneOf(key: string, allowed: readonly unknown[]) {
-    const value = this.target[key];
-    if (value !== undefined && !allowed.includes(value)) {
-      this.report('invalid-field', key, `"${key}" must be one of ${allowed.map((a) => JSON.stringify(a)).join(', ')}.`);
-    }
-  }
-
-  href(key: string, required = true) {
-    const value = this.target[key];
-    if (value === undefined || value === '') {
-      if (required) this.report('missing-field', key, `"${key}" is required.`);
-      return;
-    }
-    if (!isSafeHref(value)) this.report('unsafe-href', key, `Unsafe or invalid link target ${JSON.stringify(value)}. Only relative, http(s), mailto: and tel: links are allowed.`);
-  }
-
-  child(key: string, required: boolean, check: (c: Checker) => void) {
-    const value = this.target[key];
-    if (value === undefined || value === null) {
-      if (required) this.report('missing-field', key, `"${key}" is required.`);
-      return;
-    }
-    if (!isObj(value)) {
-      this.report('invalid-field', key, `"${key}" must be an object.`);
-      return;
-    }
-    check(new Checker(value, this.at(key), this.issues, this.meta));
-  }
-
-  link(key: string, required = false) {
-    this.child(key, required, (c) => {
-      c.str('label');
-      c.href('href');
-    });
-  }
-
-  image(key: string, required = false, altRequired = true) {
-    this.child(key, required, (c) => {
-      const value = c.target;
-      if (!isNonEmptyString(value.src)) c.report('missing-field', 'src', '"src" is required.');
-      else if (!isSafeImageSrc(value.src)) c.report('unsafe-src', 'src', `Unsafe image source ${JSON.stringify(value.src)}.`);
-      if (altRequired && typeof value.alt !== 'string') c.report('missing-alt', 'alt', 'Image alt text is required (use "" only for decorative images).');
-    });
-  }
-
-  richText(key: string, required = true) {
-    this.child(key, required, (c) => {
-      c.oneOf('format', ['html']);
-      if (typeof c.target.html !== 'string') c.report('missing-field', 'html', '"html" is required.');
-      else {
-        const { removed } = neutraliseUnsafeUrls(c.target.html);
-        if (removed.length > 0) c.report('unsafe-href', 'html', `Rich text contains ${removed.length} link or image URL(s) with an unsafe scheme; they will be removed.`);
-      }
-    });
-  }
-
-  each(key: string, min: number, max: number, check: (c: Checker, index: number) => void) {
-    const value = this.target[key];
-    if (value === undefined || value === null) {
-      if (min > 0) this.report('missing-field', key, `"${key}" is required (at least ${min}).`);
-      return;
-    }
-    if (!Array.isArray(value)) {
-      this.report('invalid-field', key, `"${key}" must be a list.`);
-      return;
-    }
-    if (value.length < min) this.report('too-few', key, `"${key}" needs at least ${min} item(s); it has ${value.length}.`);
-    if (value.length > max) this.report('too-many', key, `"${key}" has ${value.length} items; more than ${max} may not display well.`, 'warning');
-    value.forEach((item, index) => {
-      if (!isObj(item)) this.report('invalid-field', `${key}[${index}]`, `"${key}[${index}]" must be an object.`);
-      else check(new Checker(item, `${this.at(key)}[${index}]`, this.issues, this.meta), index);
-    });
-  }
-
-  get value() {
-    return this.target;
-  }
-}
+export { FATAL_CODES, isFatal, isIsoDate, type IssueCode, type ValidationIssue } from './checker';
 
 const backgrounds = ['default', 'subtle', 'accent', 'inverse'] as const;
 const paddings = ['none', 'sm', 'md', 'lg'] as const;
@@ -386,6 +241,8 @@ const rules: Record<Block['type'], (c: Checker) => void> = {
 export interface ValidateOptions {
   /** Block types the registry can render. Default: the built-in types. */
   knownTypes?: readonly string[];
+  /** Template names the templates registry knows. Default: the built-in templates. */
+  knownTemplates?: readonly string[];
 }
 
 /** Shared by top-level and nested (tab) blocks. `checker` writes issues at the right path. */
@@ -419,22 +276,44 @@ export function validateBlock(block: unknown, options: ValidateOptions = {}, pat
   return issues;
 }
 
-/** Collects every block id on the page, including blocks nested in tabs, with their paths. */
-function collectIds(page: PageContent): { id: string; path: string; type?: string }[] {
+/** Template data holding blocks of its own (rendered on the same page as `blocks`). */
+const bodyPaths = [
+  ['article', 'body'],
+  ['caseStudy', 'body'],
+] as const;
+
+/** Lists of blocks on the page with their paths: `blocks` plus any template body. */
+function blockLists(page: Obj): { blocks: unknown[]; path: string }[] {
+  const lists: { blocks: unknown[]; path: string }[] = [];
+  for (const [key, field] of bodyPaths) {
+    const holder = page[key];
+    if (isObj(holder) && Array.isArray(holder[field])) lists.push({ blocks: holder[field], path: `${key}.${field}` });
+  }
+  if (Array.isArray(page.blocks)) lists.push({ blocks: page.blocks, path: 'blocks' });
+  return lists;
+}
+
+/** Collects every block id on the page, including template bodies and blocks nested in tabs, with their paths. */
+function collectIds(page: Obj): { id: string; path: string; type?: string }[] {
   const ids: { id: string; path: string; type?: string }[] = [];
-  page.blocks?.forEach((block, i) => {
-    if (!isObj(block)) return;
-    ids.push({ id: String(block.id), path: `blocks[${i}].id`, type: block.type });
-    if (block.type === 'tabs' && Array.isArray(block.tabs)) {
-      block.tabs.forEach((tab, t) =>
-        tab?.blocks?.forEach((nested, n) => ids.push({ id: String(nested?.id), path: `blocks[${i}].tabs[${t}].blocks[${n}].id`, type: nested?.type })),
-      );
-    }
-  });
+  for (const list of blockLists(page)) {
+    (list.blocks as PageContent['blocks']).forEach((block, i) => {
+      if (!isObj(block)) return;
+      ids.push({ id: String(block.id), path: `${list.path}[${i}].id`, type: block.type });
+      if (block.type === 'tabs' && Array.isArray(block.tabs)) {
+        block.tabs.forEach((tab, t) =>
+          tab?.blocks?.forEach((nested, n) => ids.push({ id: String(nested?.id), path: `${list.path}[${i}].tabs[${t}].blocks[${n}].id`, type: nested?.type })),
+        );
+      }
+    });
+  }
   return ids;
 }
 
-/** Validates page metadata, every block, duplicate block ids and duplicate anchor ids. */
+/**
+ * Validates page metadata, every block, duplicate block ids and anchor ids, and the template: its
+ * name and the structured data it needs (required fields, ISO dates, pagination, listing links).
+ */
 export function validatePage(page: unknown, options: ValidateOptions = {}): ValidationIssue[] {
   const issues: ValidationIssue[] = [];
   if (!isObj(page)) return [{ code: 'invalid-field', severity: 'error', message: 'A page must be an object.', path: '' }];
@@ -451,20 +330,27 @@ export function validatePage(page: unknown, options: ValidateOptions = {}): Vali
     return issues;
   }
   page.blocks.forEach((block, i) => issues.push(...validateBlock(block, options, `blocks[${i}]`)));
+  validateTemplateFields(
+    c,
+    (blocks, path) => (blocks as unknown[]).flatMap((block, i) => validateBlock(block, options, `${path}[${i}]`)),
+    options.knownTemplates ?? builtInTemplates,
+  );
 
   const seen = new Map<string, string>();
-  for (const { id, path, type } of collectIds(page as unknown as PageContent)) {
+  for (const { id, path, type } of collectIds(page)) {
     const first = seen.get(id);
     if (first) issues.push({ code: 'duplicate-id', severity: 'error', message: `Block id "${id}" is already used at ${first}. Ids must be unique per page.`, path, blockId: id, blockType: type });
     else seen.set(id, path);
   }
-  const anchors = new Map<string, number>();
-  page.blocks.forEach((block, i) => {
-    if (!isObj(block) || typeof block.anchorId !== 'string') return;
-    if (anchors.has(block.anchorId)) {
-      issues.push({ code: 'duplicate-id', severity: 'error', message: `anchorId "${block.anchorId}" is used twice; element ids must be unique.`, path: `blocks[${i}].anchorId`, blockId: String(block.id), blockType: String(block.type) });
-    } else anchors.set(block.anchorId, i);
-  });
+  const anchors = new Set<string>();
+  for (const list of blockLists(page)) {
+    list.blocks.forEach((block, i) => {
+      if (!isObj(block) || typeof block.anchorId !== 'string') return;
+      if (anchors.has(block.anchorId)) {
+        issues.push({ code: 'duplicate-id', severity: 'error', message: `anchorId "${block.anchorId}" is used twice; element ids must be unique.`, path: `${list.path}[${i}].anchorId`, blockId: String(block.id), blockType: String(block.type) });
+      } else anchors.add(block.anchorId);
+    });
+  }
   return issues;
 }
 
