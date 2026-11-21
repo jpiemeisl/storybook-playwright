@@ -1,0 +1,24 @@
+@layer components {
+  .table {
+    border-collapse: collapse;
+    font-size: var(--text-size-sm);
+  }
+
+  .caption {
+    padding-block-end: var(--gap-sm);
+    font-weight: var(--text-weight-strong);
+    text-align: start;
+  }
+
+  .table th,
+  .table td {
+    padding-block: var(--space-2);
+    padding-inline: var(--space-3);
+    border-block-end: var(--border-1) solid var(--color-border);
+    text-align: start;
+  }
+
+  .table td:nth-child(3) {
+    font-family: var(--text-font-code);
+  }
+}
