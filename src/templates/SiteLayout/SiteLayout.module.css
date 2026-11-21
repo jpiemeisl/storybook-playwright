@@ -1,0 +1,17 @@
+@layer components {
+  /* Wrapper for header and footer that does not create a box, so the sticky header keeps working. */
+  .chrome {
+    display: contents;
+  }
+
+  /* <main> takes focus from the skip link; the focus ring would outline the whole page. */
+  .main:focus {
+    outline: none;
+  }
+
+  @media print {
+    .chrome {
+      display: none;
+    }
+  }
+}
