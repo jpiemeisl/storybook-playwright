@@ -104,3 +104,49 @@
     border-color: transparent;
   }
 }
+
+/* Label wrapper keeps icon + text layout identical with and without loading. */
+@layer components {
+  .label {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--gap-sm);
+  }
+
+  /* Loading: label stays in layout (opacity, not display) so width does not change; spinner on top. */
+  .loading {
+    position: relative;
+    cursor: progress;
+  }
+
+  .loading .label {
+    opacity: 0;
+  }
+
+  .spinner {
+    position: absolute;
+    inset: 0;
+    margin: auto;
+    inline-size: 1.1em;
+    block-size: 1.1em;
+    border: 2px solid currentColor;
+    border-inline-end-color: transparent;
+    border-radius: var(--radius-full);
+  }
+
+  @media (prefers-reduced-motion: no-preference) {
+    .spinner {
+      animation: spin 0.8s linear infinite;
+    }
+  }
+
+  @keyframes spin {
+    to {
+      rotate: 360deg;
+    }
+  }
+
+  .button[aria-disabled='true'] {
+    cursor: progress;
+  }
+}
