@@ -70,3 +70,13 @@ Phase 10 (branch `phase-10-product-browsing`): product browsing in `src/commerce
 - stories wired to the demo cart
 
 See [`commerce-browsing.md`](commerce-browsing.md).
+
+Phase 11 (branch `phase-11-cart-checkout`): cart and checkout in `src/commerce`, plus `Toast` in core. It adds:
+
+- cart and checkout logic: line notes, cart issues, checkout steps, step validation and `createOrderFromCart`
+- cart and checkout components, including a `paymentFields` slot that never renders card inputs
+- `CartTemplate`, `CheckoutTemplate` and `OrderConfirmationTemplate`, plus page validators
+- checkout fixtures with a deterministic order context
+- `useDemoCheckout` and `useDemoToasts` in the demo provider
+
+See [`commerce-checkout.md`](commerce-checkout.md).

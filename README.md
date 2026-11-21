@@ -283,6 +283,22 @@ backend: the types are the contract for future adapters.
     `createTemplates(Object.values(commerceTemplates))`
 
   See [`docs/commerce-browsing.md`](docs/commerce-browsing.md).
+- **Cart and checkout (Phase 11):**
+  - cart logic: line notes, stock issues, summary rows; checkout steps per cart kind, step
+    validation and `createOrderFromCart`
+  - cart components (CartIcon, CartLineItem, CartSummary, PromoCodeInput, MiniCart, ...) and
+    checkout components (CheckoutStepper, AddressForm, Shipping/PaymentMethodSelector,
+    OrderSummary, DownloadList, ...)
+  - `CartTemplate`, `CheckoutTemplate` and `OrderConfirmationTemplate` (`commerceTemplates` keys
+    `cart`, `checkout`, `order-confirmation`) and their page validators
+  - `Toast` / `ToastRegion` / `useToasts` in core
+
+  **Payment security rule:** the library never renders card number, expiry or CVC inputs.
+  `PaymentMethodSelector` has a `paymentFields` slot (`ctx.paymentFields` in the checkout template);
+  production hosts must put their payment provider's hosted fields there. `DemoPaymentFields` is a
+  static demo panel with no inputs.
+
+  See [`docs/commerce-checkout.md`](docs/commerce-checkout.md).
 
 ## Visual regression testing
 
