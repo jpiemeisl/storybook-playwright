@@ -7,6 +7,7 @@ import { formatMoney } from '../../utils/formatMoney';
 import type { CustomerSubscription, Order, OrderStatus } from '../types/order';
 import type { Invoice, LibraryItem, SavedAddress, SubscriptionPlanOption, WishlistItem } from '../types/account';
 import type { BillingInterval } from '../types/product';
+import type { SummaryRow } from './cartSummary';
 import { subtract } from './money';
 import { addInterval, formatCommerceDate, formatRecurring } from './pricing';
 
@@ -27,6 +28,9 @@ const orderStatus: Record<OrderStatus, StatusInfo> = {
   cancelled: { label: 'Cancelled', tone: 'neutral', description: 'This order was cancelled. You have not been charged.' },
   refunded: { label: 'Refunded', tone: 'neutral', description: 'This order was refunded to your original payment method.' },
 };
+
+/** The plain label for a status, e.g. for filters. */
+export const orderStatusLabel = (status: OrderStatus) => orderStatus[status].label;
 
 /** Label, tone and a sentence for an order's status. Digital-only orders read "Ready" instead of shipping words. */
 export function getOrderStatusInfo(order: Pick<Order, 'status' | 'lines'>): StatusInfo {
@@ -279,4 +283,40 @@ export function getAttentionItems(data: Pick<AccountData, 'subscriptions' | 'inv
     if (unavailable.length) items.push({ id: `dl-${item.productId}-${item.orderId}`, kind: 'download-unavailable', message: `${item.productTitle}: ${unavailable.length === 1 ? 'a download is' : `${unavailable.length} downloads are`} no longer available.`, href: `${base}/downloads` });
   }
   return items;
+}
+
+// ------------------------------------------------------------------------------------- order history
+
+export interface OrderFilter {
+  status?: OrderStatus;
+  /** "2026". */
+  year?: string;
+}
+
+/** Orders matching a status and/or year, order kept. */
+export const filterOrders = (orders: readonly Order[], filter: OrderFilter) =>
+  orders.filter((o) => (!filter.status || o.status === filter.status) && (!filter.year || o.placedAt.startsWith(filter.year)));
+
+/** Years that have orders, newest first. */
+export const orderYears = (orders: readonly Order[]) => [...new Set(orders.map((o) => o.placedAt.slice(0, 4)))].sort().reverse();
+
+/** "3 items: Waxed canvas tote, House coffee beans and 1 more". */
+export function orderItemsSummary(order: Pick<Order, 'lines'>): string {
+  const count = order.lines.reduce((n, l) => n + l.quantity, 0);
+  const titles = order.lines.map((l) => l.snapshot.title);
+  const shown = titles.slice(0, 2).join(', ');
+  const more = titles.length > 2 ? ` and ${titles.length - 2} more` : '';
+  return `${count} ${count === 1 ? 'item' : 'items'}: ${shown}${more}`;
+}
+
+/** Summary rows for a placed order (same shape as the cart's, so SummaryRows renders both); ends with "Billed today". */
+export function orderSummaryRows(order: Pick<Order, 'totals' | 'lines'>): SummaryRow[] {
+  const { totals } = order;
+  const rows: SummaryRow[] = [{ key: 'subtotal', label: 'Subtotal', amount: totals.subtotal }];
+  if (totals.discount.amount > 0) rows.push({ key: 'discount', label: 'Discount', code: 'order', amount: totals.discount });
+  if (order.lines.some((l) => l.snapshot.requiresShipping)) rows.push(totals.shipping.amount === 0 ? { key: 'shipping', label: 'Shipping', text: 'Free' } : { key: 'shipping', label: 'Shipping', amount: totals.shipping });
+  if (totals.dueToday && totals.dueToday.amount !== totals.total.amount) rows.push({ key: 'trial', label: 'Free trial (billed later)', amount: subtract(totals.total, totals.dueToday) });
+  rows.push({ key: 'tax', label: 'Tax', amount: totals.tax, note: '' });
+  rows.push({ key: 'dueToday', label: 'Billed today', amount: totals.dueToday ?? totals.total });
+  return rows;
 }

@@ -83,7 +83,7 @@ export interface Order {
   /** Shipping method used. */
   shippingMethod?: ShippingMethod;
   /** Carrier tracking. */
-  tracking?: { carrier: string; number: string; events: { at: string; label: string }[] };
+  tracking?: { carrier: string; number: string; events: { at: string; label: string }[]; /** Carrier tracking page. Must be a safe href. */ url?: string };
   /**
    * Download links for digital lines. `format` and `sizeBytes` are shown when present; `reason` explains
    * why an unavailable file cannot be downloaded (from data, e.g. an expired link).

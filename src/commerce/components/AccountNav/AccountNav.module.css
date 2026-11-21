@@ -1,0 +1,100 @@
+@layer components {
+  .root {
+    container-type: inline-size;
+  }
+
+  /*
+   * In the layout's sidebar (wide pages) the nav is a narrow container: a vertical list. Full width
+   * (narrow pages) it is 20rem or more: one horizontally scrollable row, where scroll-snap keeps items
+   * aligned and scroll-padding keeps the focus ring inside the scroller.
+   */
+  .list {
+    display: flex;
+    flex-direction: column;
+    gap: var(--gap-xs);
+    margin: 0;
+    padding: var(--space-1);
+    list-style: none;
+  }
+
+  .item {
+    flex-shrink: 0;
+    scroll-snap-align: start;
+  }
+
+  .link {
+    display: flex;
+    align-items: center;
+    gap: var(--gap-xs);
+    inline-size: 100%;
+    min-block-size: var(--control-height-md);
+    padding-inline: var(--space-3);
+    border: 0;
+    border-radius: var(--radius-control);
+    background: none;
+    color: var(--color-text);
+    font: inherit;
+    text-decoration: none;
+    white-space: nowrap;
+    cursor: pointer;
+  }
+
+  .link:hover {
+    background-color: var(--color-bg-muted);
+  }
+
+  .link:focus-visible {
+    outline: var(--focus-ring-width) solid var(--color-focus-ring);
+    outline-offset: calc(var(--focus-ring-width) * -1);
+  }
+
+  /* Current: bold plus a bar (start edge here, underline in the row), not colour alone. */
+  .link[aria-current='page'] {
+    background-color: var(--color-bg-muted);
+    font-weight: var(--text-weight-strong);
+    box-shadow: inset var(--border-2) 0 0 var(--color-action);
+  }
+
+  .count {
+    margin-inline-start: auto;
+  }
+
+  @container (min-width: 20rem) {
+    .list {
+      flex-direction: row;
+      overflow-x: auto;
+      scroll-snap-type: x proximity;
+      scroll-padding-inline: var(--space-1);
+      border-block-end: var(--border-1) solid var(--color-border);
+    }
+
+    .link {
+      inline-size: auto;
+    }
+
+    .count {
+      margin-inline-start: 0;
+    }
+
+    .link[aria-current='page'] {
+      background: none;
+      box-shadow: inset 0 calc(var(--border-2) * -1) 0 var(--color-action);
+    }
+  }
+
+  .visuallyHidden {
+    position: absolute;
+    inline-size: 1px;
+    block-size: 1px;
+    overflow: hidden;
+    clip-path: inset(50%);
+    white-space: nowrap;
+  }
+
+  @media (forced-colors: active) {
+    .link[aria-current='page'] {
+      outline: var(--border-2) solid Highlight;
+      outline-offset: calc(var(--border-2) * -1);
+    }
+  }
+}

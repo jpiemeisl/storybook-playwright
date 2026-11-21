@@ -1,5 +1,5 @@
 import type { Address } from '../../types/order';
-import styles from './CheckoutTemplate.module.css';
+import styles from './AddressBlock.module.css';
 
 /** A US address as lines: name, company, street, "City, ST 97201", country, phone. Shared by checkout and confirmation. */
 export function AddressBlock({ address }: { address: Address }) {

@@ -321,6 +321,7 @@ export function validateOrder(order: unknown): ValidationIssue[] {
     c.child('tracking', false, (t) => {
       t.str('carrier');
       t.str('number');
+      t.href('url', false);
       t.each('events', 0, 50, (e) => {
         e.date('at');
         e.str('label');

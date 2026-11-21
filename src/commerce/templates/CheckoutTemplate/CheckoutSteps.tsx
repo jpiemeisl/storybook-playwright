@@ -19,7 +19,7 @@ import { thenBilled } from '../../logic/cartSummary';
 import type { CheckoutErrors, CheckoutStepId, CheckoutValues } from '../../types/checkout';
 import { defaultLineHref, type CommerceContext } from '../../types/context';
 import type { CheckoutPage } from '../../types/pages';
-import { AddressBlock } from './AddressBlock';
+import { AddressBlock } from '../../components/AddressBlock';
 import styles from './CheckoutTemplate.module.css';
 
 export interface StepProps {
