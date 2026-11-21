@@ -19,5 +19,6 @@ export type {
   Variant,
 } from './product';
 export type { Cart, CartLine, CartLineSnapshot, PromoCode, ShippingMethod } from './cart';
-export type { Address, CustomerSubscription, Order, OrderStatus, OrderTotals } from './order';
+export type { Address, CustomerSubscription, Order, OrderRecurringLine, OrderStatus, OrderTotals } from './order';
+export type * from './checkout';
 export type { Money } from '../../content-types/money';

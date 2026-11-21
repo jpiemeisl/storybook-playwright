@@ -11,6 +11,9 @@ const UNITS = ['week', 'month', 'year'] as const;
 const ORDER_STATUS = ['processing', 'shipped', 'delivered', 'cancelled', 'refunded'] as const;
 const SUB_STATUS = ['trialing', 'active', 'past-due', 'paused', 'cancelled'] as const;
 
+/** Deliberately simple: something@something.tld, no spaces. Real checks happen when mail is sent. */
+export const EMAIL = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
 const isInt = (value: unknown, min = -Infinity) => typeof value === 'number' && Number.isSafeInteger(value) && value >= min;
 
 /** Money: integer minor units (>= 0 unless negative is allowed) and a 3-letter currency, matching `currency` when given. */
@@ -288,6 +291,22 @@ export function validateOrder(order: unknown): ValidationIssue[] {
       const amount = (key: string) => (isObj(t.value[key]) ? Number((t.value[key] as { amount: unknown }).amount) : NaN);
       const expected = amount('subtotal') - amount('discount') + amount('shipping') + amount('tax');
       if (Number.isFinite(expected) && expected !== amount('total')) t.report('invalid-field', 'total', `"total" should be subtotal - discount + shipping + tax (${expected}).`);
+      moneyField(t, 'dueToday', false, currency);
+      if (amount('dueToday') > amount('total')) t.report('invalid-field', 'dueToday', '"dueToday" cannot be more than "total".');
+    });
+    c.str('email', false);
+    if (typeof c.value.email === 'string' && !EMAIL.test(c.value.email)) c.report('invalid-field', 'email', '"email" must be an email address.');
+    const lineIds = new Set(Array.isArray(c.value.lines) ? c.value.lines.map((l) => (isObj(l) ? l.id : undefined)) : []);
+    c.each('recurring', 0, 100, (r) => {
+      if (!lineIds.has(r.value.lineId)) r.report('invalid-field', 'lineId', `"lineId" ${JSON.stringify(r.value.lineId)} is not a line in this order.`);
+      moneyField(r, 'amount', true, currency);
+      r.child('interval', true, (i) => {
+        i.oneOf('unit', UNITS);
+        intField(i, 'count', 1, true);
+      });
+      r.date('firstBillingAt');
+      r.date('trialEndsAt', false);
+      r.str('note');
     });
     const shippable = Array.isArray(c.value.lines) && c.value.lines.some((l) => isObj(l) && isObj(l.snapshot) && l.snapshot.requiresShipping === true);
     address(c, 'shippingAddress', shippable);
@@ -310,6 +329,8 @@ export function validateOrder(order: unknown): ValidationIssue[] {
       d.str('name');
       if (typeof d.value.available !== 'boolean') d.report('missing-field', 'available', '"available" is required (true or false).');
       d.date('expiresAt', false);
+      d.str('format', false);
+      intField(d, 'sizeBytes', 0);
     });
   });
 }
