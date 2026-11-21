@@ -77,3 +77,8 @@ export * from './components/StatusBadge';
 export * from './components/OrderHistory';
 export * from './components/OrderTimeline';
 export * from './components/OrderDetail';
+export * from './components/LicenseKey';
+export * from './components/DownloadsLibrary';
+export * from './components/SubscriptionCard';
+export * from './components/ManageSubscription';
+export * from './components/InvoiceList';

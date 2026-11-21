@@ -1,0 +1,113 @@
+@layer components {
+  .root {
+    display: grid;
+    gap: var(--gap-lg);
+    container-type: inline-size;
+  }
+
+  .year {
+    display: grid;
+    gap: var(--gap-sm);
+  }
+
+  .heading {
+    margin: 0;
+    font-size: var(--text-size-md);
+  }
+
+  .cards {
+    display: grid;
+    gap: var(--gap-sm);
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .card {
+    display: grid;
+    gap: var(--gap-xs);
+    padding: var(--gap-sm) var(--gap-md);
+    border: var(--border-1) solid var(--color-border);
+    border-radius: var(--radius-surface);
+  }
+
+  .cardHead {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--gap-xs);
+  }
+
+  .number {
+    font-weight: var(--text-weight-strong);
+  }
+
+  .description {
+    margin: 0;
+    overflow-wrap: anywhere;
+  }
+
+  .muted {
+    margin: 0;
+    color: var(--color-text-muted);
+    font-size: var(--text-size-sm);
+  }
+
+  .cardActions {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: var(--gap-sm);
+  }
+
+  .table {
+    display: none;
+  }
+
+  @container (min-width: 44rem) {
+    .cards {
+      display: none;
+    }
+
+    .table {
+      display: block;
+    }
+  }
+
+  .table table {
+    inline-size: 100%;
+    border-collapse: collapse;
+  }
+
+  .table th,
+  .table td {
+    padding: var(--gap-sm);
+    border-block-end: var(--border-1) solid var(--color-border);
+    text-align: start;
+    vertical-align: middle;
+  }
+
+  .table thead th {
+    color: var(--color-text-muted);
+    font-size: var(--text-size-sm);
+  }
+
+  .descriptionCell {
+    overflow-wrap: anywhere;
+  }
+
+  .table .numeric {
+    text-align: end;
+    font-variant-numeric: tabular-nums;
+  }
+
+  .visuallyHidden {
+    position: absolute;
+    inline-size: 1px;
+    block-size: 1px;
+    overflow: hidden;
+    clip-path: inset(50%);
+    white-space: nowrap;
+  }
+}
