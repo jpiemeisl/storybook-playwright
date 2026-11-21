@@ -243,6 +243,7 @@ function cartLine(l: Checker, currency: unknown) {
       imageSrc(img);
     });
     moneyField(s, 'unitPrice', true, typeof currency === 'string' ? currency : undefined);
+    moneyField(s, 'compareAtPrice', false, typeof currency === 'string' ? currency : undefined);
     s.oneOf('kind', KINDS);
     if (typeof s.value.requiresShipping !== 'boolean') s.report('missing-field', 'requiresShipping', '"requiresShipping" is required (true or false).');
     if (s.value.kind !== 'physical' && s.value.requiresShipping === true) s.report('invalid-field', 'requiresShipping', 'Only physical products require shipping.');

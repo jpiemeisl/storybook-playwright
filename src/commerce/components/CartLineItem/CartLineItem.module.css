@@ -1,0 +1,212 @@
+@layer components {
+  .root {
+    display: grid;
+    gap: var(--gap-sm);
+    container-type: inline-size;
+    padding-block: var(--gap-md);
+    border-block-end: var(--border-1) solid var(--color-border);
+  }
+
+  .root:focus-visible {
+    outline: var(--focus-ring-width) solid var(--color-focus-ring);
+    outline-offset: var(--focus-ring-offset);
+  }
+
+  /* Busy: a muted background, never reduced opacity (that would fail text contrast). */
+  .root[aria-busy='true'] {
+    background-color: var(--color-bg-muted);
+  }
+
+  .compact {
+    padding-block: var(--gap-sm);
+  }
+
+  /* Narrow: image beside the details, with quantity, total and remove below them. */
+  .line {
+    display: grid;
+    grid-template-areas:
+      'media details details'
+      'media quantity total'
+      'media remove remove';
+    grid-template-columns: 4.5rem minmax(0, 1fr) auto;
+    align-items: start;
+    gap: var(--gap-xs) var(--gap-md);
+  }
+
+  .compact .line {
+    grid-template-areas:
+      'media details total'
+      'media quantity remove';
+    grid-template-columns: 3.5rem minmax(0, 1fr) auto;
+  }
+
+  .media {
+    grid-area: media;
+  }
+
+  .image,
+  .placeholder {
+    display: block;
+    inline-size: 100%;
+    aspect-ratio: 1;
+    border-radius: var(--radius-control);
+    background-color: var(--color-bg-muted);
+  }
+
+  .details {
+    display: grid;
+    grid-area: details;
+    gap: var(--gap-xs);
+    min-inline-size: 0;
+  }
+
+  .title {
+    margin: 0;
+    font-size: var(--text-size-md);
+    line-height: var(--text-leading-heading);
+    overflow-wrap: anywhere;
+  }
+
+  .compact .title {
+    font-size: var(--text-size-sm);
+  }
+
+  .variant {
+    margin: 0;
+    color: var(--color-text-muted);
+    font-size: var(--text-size-sm);
+  }
+
+  .notes {
+    display: grid;
+    gap: var(--space-1);
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    color: var(--color-text-muted);
+    font-size: var(--text-size-sm);
+  }
+
+  .notes li {
+    display: flex;
+    align-items: flex-start;
+    gap: var(--gap-xs);
+  }
+
+  .notes li svg {
+    flex-shrink: 0;
+    margin-block-start: calc((1lh - var(--icon-size-sm)) / 2);
+  }
+
+  .quantity {
+    grid-area: quantity;
+    align-self: end;
+  }
+
+  .fixedQuantity {
+    margin: 0;
+    color: var(--color-text-muted);
+    font-size: var(--text-size-sm);
+  }
+
+  .total {
+    grid-area: total;
+    justify-self: end;
+    align-self: end;
+    text-align: end;
+    font-weight: var(--text-weight-strong);
+  }
+
+  .compact .total {
+    align-self: start;
+  }
+
+  .free {
+    font-size: var(--text-size-sm);
+  }
+
+  .remove {
+    grid-area: remove;
+    justify-self: start;
+    margin-inline-start: calc(var(--space-3) * -1);
+  }
+
+  .compact .remove {
+    justify-self: end;
+    margin-inline: 0 calc(var(--space-3) * -1);
+  }
+
+  /* Wide: one row. */
+  @container (min-width: 40rem) {
+    .full .line {
+      grid-template-areas: 'media details quantity total remove';
+      /* Fixed quantity and total columns so stacked lines align. */
+      grid-template-columns: 6rem minmax(0, 1fr) 9.5rem 9rem auto;
+      align-items: center;
+    }
+
+    .full .quantity,
+    .full .total {
+      align-self: center;
+    }
+
+    .full .quantity {
+      justify-self: end;
+    }
+
+    .full .remove {
+      margin-inline-start: 0;
+    }
+  }
+
+  .issue,
+  .error {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: var(--gap-xs) var(--gap-sm);
+    margin: 0;
+    padding: var(--gap-xs) var(--gap-sm);
+    border-inline-start: 4px solid var(--color-warning);
+    border-radius: var(--radius-control);
+    background-color: var(--color-warning-subtle);
+    font-size: var(--text-size-sm);
+  }
+
+  .issue p {
+    flex: 1 1 12rem;
+    margin: 0;
+  }
+
+  .error {
+    border-inline-start-color: var(--color-danger);
+    background-color: var(--color-danger-subtle);
+  }
+
+  .status {
+    margin: 0;
+    color: var(--color-text-muted);
+    font-size: var(--text-size-sm);
+  }
+
+  .status:empty {
+    display: none;
+  }
+
+  .visuallyHidden {
+    position: absolute;
+    inline-size: 1px;
+    block-size: 1px;
+    overflow: hidden;
+    clip-path: inset(50%);
+    white-space: nowrap;
+  }
+
+  @media (forced-colors: active) {
+    .issue,
+    .error {
+      border: var(--border-1) solid CanvasText;
+      border-inline-start-width: 4px;
+    }
+  }
+}

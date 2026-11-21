@@ -35,6 +35,7 @@ export function cartLineFromProduct(product: Product, variantId: string, quantit
       ...(product.options.length ? { variantTitle: variant.title } : {}),
       ...(image ? { image } : {}),
       unitPrice: variant.price,
+      ...(variant.compareAtPrice ? { compareAtPrice: variant.compareAtPrice } : {}),
       kind: product.kind,
       requiresShipping: product.kind === 'physical',
     },

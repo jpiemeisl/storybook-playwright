@@ -42,6 +42,8 @@ export interface RecurringCharge {
   startsAt?: string;
   /** e.g. "$9.00 / month from Apr 4, 2026". */
   label: string;
+  /** Free-trial days before this charge starts (trial lines only). */
+  trialDays?: number;
 }
 
 export interface CartFlags {
@@ -137,10 +139,10 @@ function recurringFor(cart: Cart, lines: CartTotals['lines'], now: string): Recu
     const option = line.purchaseOption;
     if (option.type !== 'subscription') return;
     const startsAt = option.trialDays ? addDays(now, option.trialDays) : addInterval(now, option.interval);
-    const key = `${option.interval.count}-${option.interval.unit}-${startsAt}`;
+    const key = `${option.interval.count}-${option.interval.unit}-${startsAt}-${option.trialDays ?? 0}`;
     const existing = groups.get(key);
     const amount = existing ? add(existing.amount, lines[i]!.total) : lines[i]!.total;
-    groups.set(key, { interval: option.interval, amount, startsAt, label: '' });
+    groups.set(key, { interval: option.interval, amount, startsAt, label: '', ...(option.trialDays ? { trialDays: option.trialDays } : {}) });
   });
   return [...groups.values()].map((charge) => ({
     ...charge,

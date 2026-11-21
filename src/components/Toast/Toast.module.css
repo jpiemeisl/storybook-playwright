@@ -1,7 +1,11 @@
 @layer components {
+  /* No gap here: the live containers stay rendered (in the accessibility tree) even when empty. */
   .region {
     display: grid;
-    gap: var(--gap-sm);
+  }
+
+  .region > * + *:not(:empty) {
+    margin-block-start: var(--gap-sm);
   }
 
   /*
@@ -28,10 +32,6 @@
   .stack {
     display: grid;
     gap: var(--gap-sm);
-  }
-
-  .stack:empty {
-    display: none;
   }
 
   /* Focused and scrolled-to content stops above the stack (the size is measured in an effect). */

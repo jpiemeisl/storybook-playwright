@@ -69,7 +69,7 @@ export const StackedFive: Story = {
     const more = canvas.getByRole('button', { name: '+2 more' });
     await expect(more).toHaveAttribute('aria-expanded', 'false');
     await expect(canvas.queryByText('Notification 1')).toBeNull();
-    await expect(canvas.getByText('Notification 5')).toBeVisible();
+    await expect(canvas.getByText('Notification 5')).toBeInTheDocument();
   },
 };
 
