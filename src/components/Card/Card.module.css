@@ -1,0 +1,121 @@
+@layer components {
+  .root {
+    container-type: inline-size;
+    block-size: 100%;
+  }
+
+  .card {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    block-size: 100%;
+    overflow: hidden;
+    border: var(--border-1) solid transparent;
+    border-radius: var(--radius-surface);
+    color: var(--color-text);
+  }
+
+  .elevated {
+    background-color: var(--color-surface);
+    box-shadow: var(--elevation-mid);
+  }
+
+  .outlined {
+    background-color: var(--color-surface);
+    border-color: var(--color-border);
+  }
+
+  .flat {
+    background-color: var(--color-bg-subtle);
+  }
+
+  .media {
+    flex-shrink: 0;
+  }
+
+  .body {
+    display: flex;
+    flex: 1;
+    flex-direction: column;
+    gap: var(--gap-sm);
+    min-inline-size: 0;
+    padding: var(--gap-md);
+  }
+
+  .eyebrow {
+    color: var(--color-text-muted);
+    font-size: var(--text-size-sm);
+  }
+
+  .title {
+    overflow-wrap: anywhere;
+  }
+
+  .description {
+    overflow-wrap: anywhere;
+  }
+
+  /* Footer sits at the bottom of equal-height cards and above the stretched link. */
+  .footer {
+    position: relative;
+    z-index: 1;
+    margin-block-start: auto;
+    padding-block-start: var(--gap-sm);
+  }
+
+  /* Stretched link: the title link's hit area covers the whole card. */
+  .card .titleLink {
+    color: inherit;
+    text-decoration-line: none;
+    outline: none;
+  }
+
+  .card .titleLink::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+  }
+
+  .linked:hover {
+    border-color: var(--color-action);
+  }
+
+  .linked:hover .titleLink {
+    color: var(--color-action);
+    text-decoration-line: underline;
+    text-underline-offset: 0.2em;
+  }
+
+  /* Focus ring around the whole card while its title link has keyboard focus. */
+  .card:has(.titleLink:focus-visible) {
+    outline: var(--focus-ring-width) solid var(--color-focus-ring);
+    outline-offset: var(--focus-ring-offset);
+  }
+
+  /* Horizontal: image beside the body once the card is wide enough. */
+  @container (min-width: 32rem) {
+    .horizontal {
+      flex-direction: row;
+    }
+
+    .horizontal .media {
+      flex: 0 0 40%;
+    }
+  }
+
+  @media (prefers-reduced-motion: no-preference) {
+    .card {
+      transition: border-color var(--transition-fast) var(--transition-easing);
+    }
+  }
+
+  /* CardGrid */
+  .grid > .gridItem {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .gridItem > * {
+    flex: 1;
+  }
+}
