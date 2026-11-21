@@ -135,7 +135,7 @@ describe('sortProducts', () => {
     expect(ids(sortProducts(products, 'featured'))).toEqual(ids(products));
     expect(sortProducts(products, 'title')[0]!.title).toBe('Basil seed packet');
     expect(sortProducts(products, 'rating')[0]!.id).toBe('prod-tote'); // 4.8 with 4,000 reviews
-    const dated = [{ ...mug, id: 'old', createdAt: '2025-01-01' }, { ...mug, id: 'new', createdAt: '2026-03-01' }, { ...mug, id: 'none' }];
+    const dated = [{ ...mug, id: 'old', createdAt: '2025-01-01' }, { ...mug, id: 'new', createdAt: '2026-03-01' }, { ...mug, id: 'none', createdAt: undefined }];
     expect(ids(sortProducts(dated, 'newest'))).toEqual(['new', 'old', 'none']);
   });
 
