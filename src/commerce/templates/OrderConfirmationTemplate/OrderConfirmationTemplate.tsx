@@ -55,14 +55,14 @@ export function nextSteps(order: Order): StepItem[] {
   return steps;
 }
 
-function Row({ term, amount, deduct, strong }: { term: string; amount: Money; deduct?: boolean; strong?: boolean }) {
+function Row({ term, amount, deduct, strong, freeText }: { term: string; amount: Money; deduct?: boolean; strong?: boolean; freeText?: string }) {
   return (
     <div className={[styles.row, strong && styles.strong].filter(Boolean).join(' ')}>
       <dt>{term}</dt>
       <dd>
         {deduct && <span aria-hidden="true">−</span>}
         {deduct && <span className={styles.visuallyHidden}>minus </span>}
-        {formatMoney(amount)}
+        {freeText && amount.amount === 0 ? freeText : formatMoney(amount)}
       </dd>
     </div>
   );
@@ -131,7 +131,7 @@ export function OrderConfirmationTemplate({ page, chrome, ctx }: TemplateProps<O
               <dl className={styles.totals}>
                 <Row term="Subtotal" amount={totals.subtotal} />
                 {totals.discount.amount > 0 && <Row term="Discount" amount={totals.discount} deduct />}
-                {ships && <Row term="Shipping" amount={totals.shipping} />}
+                {ships && <Row term="Shipping" amount={totals.shipping} freeText="Free" />}
                 <Row term="Tax" amount={totals.tax} />
                 {totals.dueToday && <Row term="Order total" amount={totals.total} />}
                 <Row term="Billed today" amount={billedToday} strong />

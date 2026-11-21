@@ -33,18 +33,25 @@ export const ErrorState: Story = { tags: ['vrt-mobile'], parameters: mobile, arg
 export const TwentyLines: Story = { tags: ['vrt-mobile'], parameters: mobile, args: { cart: 'twentyLines' } };
 export const PromoApplied: Story = { tags: ['vrt-mobile'], parameters: mobile, args: { cart: 'withPromo' } };
 
-/** Blocking issues: the alert links to each line (moving focus there) and Check out is disabled with a reason. */
+/** Blocking issues: an alert lists them and Check out is disabled with a visible reason. */
 export const WithIssues: Story = {
   tags: ['vrt-mobile'],
   parameters: mobile,
   args: { cart: 'withOutOfStockLine' },
   play: async ({ canvasElement }) => {
-    const canvas = within(canvasElement);
-    const checkout = canvas.getByRole('button', { name: 'Check out' });
+    const checkout = within(canvasElement).getByRole('button', { name: 'Check out' });
     await expect(checkout).toHaveAttribute('aria-disabled', 'true');
     await expect(checkout).toHaveAccessibleDescription('Fix the items marked in your cart to check out.');
-    await userEvent.click(canvas.getByRole('link', { name: /^Brass desk lamp: Out of stock/ }));
-    await expect(canvasElement.ownerDocument.getElementById('line-l2')).toHaveFocus();
     await expectHeadingOutline(canvasElement);
+  },
+};
+
+/** Each issue link moves focus to its line (no screenshot: it scrolls the page). */
+export const IssueLinksFocusLines: Story = {
+  parameters: { layout: 'fullscreen', vrt: { screenshot: false } },
+  args: { cart: 'withOutOfStockLine' },
+  play: async ({ canvasElement }) => {
+    await userEvent.click(within(canvasElement).getByRole('link', { name: /^Brass desk lamp: Out of stock/ }));
+    await expect(canvasElement.ownerDocument.getElementById('line-l2')).toHaveFocus();
   },
 };

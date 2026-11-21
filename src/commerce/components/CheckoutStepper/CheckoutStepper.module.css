@@ -121,8 +121,11 @@
       forced-color-adjust: none;
     }
 
-    .step:not(:last-child)::after {
+    /* Backgrounds are replaced in forced colours: keep the connectors visible. */
+    .step:not(:last-child)::after,
+    .step[data-state='complete']:not(:last-child)::after {
       background-color: CanvasText;
+      forced-color-adjust: none;
     }
   }
 }

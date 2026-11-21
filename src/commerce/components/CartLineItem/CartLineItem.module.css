@@ -26,8 +26,8 @@
     display: grid;
     grid-template-areas:
       'media details details'
-      'media quantity total'
-      'media remove remove';
+      'media quantity quantity'
+      'media remove total';
     grid-template-columns: 4.5rem minmax(0, 1fr) auto;
     align-items: start;
     gap: var(--gap-xs) var(--gap-md);
@@ -112,7 +112,7 @@
   .total {
     grid-area: total;
     justify-self: end;
-    align-self: end;
+    align-self: center;
     text-align: end;
     font-weight: var(--text-weight-strong);
   }
@@ -127,6 +127,7 @@
 
   .remove {
     grid-area: remove;
+    align-self: center;
     justify-self: start;
     margin-inline-start: calc(var(--space-3) * -1);
   }

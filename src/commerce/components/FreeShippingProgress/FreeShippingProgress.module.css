@@ -55,9 +55,26 @@
     background-color: var(--color-success);
   }
 
+  /* Forced colours replace the fill colour, so draw the bar with system colours instead. */
   @media (forced-colors: active) {
     .progress {
       border: 1px solid CanvasText;
+      background-color: Canvas;
+      forced-color-adjust: none;
+    }
+
+    .progress::-webkit-progress-bar {
+      background-color: Canvas;
+    }
+
+    .progress::-webkit-progress-value,
+    [data-reached] .progress::-webkit-progress-value {
+      background-color: Highlight;
+    }
+
+    .progress::-moz-progress-bar,
+    [data-reached] .progress::-moz-progress-bar {
+      background-color: Highlight;
     }
   }
 }
