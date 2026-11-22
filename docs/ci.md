@@ -19,6 +19,7 @@ flowchart LR
   checks -- storybook-static --> v4["visual (4/4)"]
   checks -- storybook-static --> a11y["a11y<br/>accessibility suite"]
   v1 & v2 & v3 & v4 -- blob reports --> report["visual-report<br/>merged HTML report,<br/>job summary"]
+  setup & checks & v1 & v2 & v3 & v4 & report & a11y -.-> status["ci-status<br/>the one required check"]
 ```
 
 | Job | Runs in | What it does |
@@ -26,8 +27,9 @@ flowchart LR
 | `setup` | the runner (no container) | Fails if `docker/image.json` and `@playwright/test` disagree (`check-playwright-image`), then outputs the image reference (`tag@digest`). The image is defined only in `docker/image.json`. |
 | `checks` | pinned image | `npm ci` (npm cache keyed on `package-lock.json`), `npm run check:all`. On pull requests, lists the baseline files the pull request changes in the job summary. Uploads `storybook-static` (kept 1 day) so Storybook is built once per run. |
 | `visual (N/4)` | pinned image | Downloads `storybook-static` and runs one quarter of the visual suite (`--shard=N/4`). Always uploads its blob report; on failure also uploads `test-results-shard-N` (actual, expected and diff images, traces). Kept 14 days. |
-| `visual-report` | pinned image | Runs even when shards fail. Merges the blob reports into one HTML report, uploads it as `playwright-report` (14 days), and writes the job summary: counts, failed and flaky stories, the 10 slowest stories, how to open the report. It fails when any shard failed, so it can be the one required visual check. |
+| `visual-report` | pinned image | Runs even when shards fail. Merges the blob reports into one HTML report, uploads it as `playwright-report` (14 days), and writes the job summary: counts, failed and flaky stories, the 10 slowest stories, how to open the report. Then it fails if any shard didn't succeed, so its own status is honest. |
 | `a11y` | pinned image | The accessibility suite (`playwright.a11y.config.ts`) against the same `storybook-static`. On failure uploads `a11y-test-results`. |
+| `ci-status` | the runner (no container) | Always runs, after every other job. Fails if any of them failed, was cancelled or was skipped. **The only required status check.** |
 
 Security: the token is read-only (`contents: read`) in every job; artifacts, caches and summaries need
 no more. The workflow uses no secrets and never `pull_request_target`, so code from a pull request never
@@ -92,17 +94,23 @@ The workflow can't enforce these; set them in **Settings** → **Branches** → 
 **Add classic branch protection rule**) for `main`:
 
 1. **Require a pull request before merging.** Optionally require one approval.
-2. **Require status checks to pass**, and add these checks (they appear in the list after the first run):
-   - `setup`
-   - `checks`
-   - `visual-report` (fails when any visual shard fails, so the shards need not be listed one by one)
-   - `a11y`
+2. **Require status checks to pass**, and add **only `ci-status`** (it appears in the list after the first
+   run). Why only that one:
+   - `visual` is a matrix, so it reports one check per shard (`visual (1/4)` … `visual (4/4)`). Listing
+     them ties branch protection to the shard count, and changing the count would leave pull requests
+     waiting for checks that no longer exist.
+   - A **skipped** job counts as passing for branch protection. When `setup` or `checks` fails, the jobs
+     after it are skipped, so a rule that requires only those later jobs (or `visual-report`) could let a
+     broken pull request through.
+   - `ci-status` runs with `if: always()`, needs every job, and fails if any of them failed, was cancelled
+     or was skipped, so one check covers the whole workflow whatever its shape.
 3. **Require branches to be up to date before merging** (in classic rules: tick it under the status
    checks setting; in rulesets: "Require branches to be up to date before merging").
 4. Optionally **Block force pushes** and **Restrict deletions** for `main`.
 
-If you rename a job in `ci.yml`, update the required checks too, or pull requests will wait forever for a
-check that no longer exists.
+When you add, remove or rename a job in `ci.yml`, update the `needs` list of `ci-status` (every other job
+must be in it). Don't rename `ci-status` itself without updating the required check, or pull requests will
+wait forever for a check that no longer exists.
 
 ## Timings
 
