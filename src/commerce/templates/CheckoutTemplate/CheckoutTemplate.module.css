@@ -123,4 +123,8 @@
     display: grid;
     gap: var(--gap-lg);
   }
+
+  .barButton {
+    inline-size: 100%;
+  }
 }

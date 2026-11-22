@@ -156,6 +156,9 @@
   --header-height: var(--space-16);
   --color-overlay: var(--black-alpha-50);
   --z-header: 100;
+  /* Sticky purchase bars sit above page content and below the cookie banner, toasts and dialogs. */
+  --z-sticky-bar: 150;
+  --z-cookie-banner: 160;
   --z-overlay: 200;
   --z-drawer: 300;
   /* Height reserved for StickyActionBar (landing pages, below 48rem); also its scroll-padding-bottom. */

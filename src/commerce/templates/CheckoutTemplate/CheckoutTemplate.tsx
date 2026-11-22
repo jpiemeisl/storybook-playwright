@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState, type FormEvent, type MouseEvent, type ReactNode } from 'react';
+import { useEffect, useId, useRef, useState, type FormEvent, type MouseEvent, type ReactNode } from 'react';
 import { Alert } from '../../../components/Alert';
 import { Button, ButtonLink } from '../../../components/Button';
 import { Container } from '../../../components/Container';
@@ -13,6 +13,8 @@ import { SiteLayout } from '../../../templates/SiteLayout';
 import { layoutProps } from '../../../templates/TemplateBlocks';
 import type { TemplateProps } from '../../../templates/types';
 import { CheckoutStepper, type CheckoutStepperStep } from '../../components/CheckoutStepper';
+import { StickyBuyBar, useOutOfView } from '../../components/StickyBuyBar';
+import { formatMoney } from '../../../utils/formatMoney';
 import { OrderSummary } from '../../components/OrderSummary';
 import { TrustBadges } from '../../components/TrustBadges';
 import { hasBlockingIssues } from '../../logic/cartLines';
@@ -91,6 +93,8 @@ export function CheckoutTemplate({ page, chrome, ctx }: TemplateProps<CheckoutPa
   const headingRef = useRef<HTMLHeadingElement>(null);
   const summaryRef = useRef<HTMLDivElement>(null);
   const shownStep = useRef(step);
+  const formId = useId();
+  const actionsRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     if (shownStep.current === step) return;
@@ -132,6 +136,17 @@ export function CheckoutTemplate({ page, chrome, ctx }: TemplateProps<CheckoutPa
   }));
   const next = steps[index + 1];
   const Body = bodies[step];
+  const blocked = cart.lines.length === 0 || hasBlockingIssues(issues);
+  const actionsOutOfView = useOutOfView(actionsRef, !blocked);
+  const submitLabel =
+    step === 'review' ? (
+      <>
+        <Icon name="lock" size="sm" />
+        Place order
+      </>
+    ) : (
+      `Continue to ${checkoutStepLabels[next!].toLowerCase()}`
+    );
 
   let content: ReactNode;
   if (cart.lines.length === 0) content = <Guard title="Your cart is empty" message="Add something to your cart before checking out." cartHref={cartHref} />;
@@ -149,7 +164,7 @@ export function CheckoutTemplate({ page, chrome, ctx }: TemplateProps<CheckoutPa
               <OrderSummary cart={cart} totals={totals} lineHref={ctx?.lineHref ?? defaultLineHref} shippingKnown={!flags.needsShippingStep || index > 1} notes={page.notes} />
             </div>
           )}
-          <form className={styles.form} noValidate onSubmit={submit}>
+          <form id={formId} className={styles.form} noValidate onSubmit={submit}>
             {attempts > 0 && Object.keys(errors).length > 0 && <ErrorSummary errors={errors} summaryRef={summaryRef} />}
             <Body page={{ ...page, step }} ctx={ctx} errors={errors} set={set} stepLink={stepLink} />
             {step === 'review' && status === 'error' && (
@@ -157,21 +172,28 @@ export function CheckoutTemplate({ page, chrome, ctx }: TemplateProps<CheckoutPa
                 {errorMessage ?? 'Something went wrong. You have not been charged. Please try again.'}
               </Alert>
             )}
-            <div className={styles.actions}>
+            <div ref={actionsRef} className={styles.actions}>
               <Button type="submit" size="lg" loading={status === 'submitting'}>
-                {step === 'review' ? (
-                  <>
-                    <Icon name="lock" size="sm" />
-                    Place order
-                  </>
-                ) : (
-                  `Continue to ${checkoutStepLabels[next!].toLowerCase()}`
-                )}
+                {submitLabel}
               </Button>
               <TrustBadges flags={flags} />
             </div>
           </form>
         </div>
+        {/* Narrow screens, while the real button is scrolled away: the total and the same submit, for the same form. */}
+        <StickyBuyBar
+          shown={actionsOutOfView}
+          summary={
+            <>
+              <span>Due today</span>
+              <strong>{formatMoney(totals.dueToday)}</strong>
+            </>
+          }
+        >
+          <Button type="submit" form={formId} size="lg" loading={status === 'submitting'} className={styles.barButton}>
+            {submitLabel}
+          </Button>
+        </StickyBuyBar>
       </>
     );
 

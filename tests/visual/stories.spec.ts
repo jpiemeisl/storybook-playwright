@@ -44,6 +44,8 @@ type ViewportParam = number | { width: number; height?: number; fullPage?: boole
 
 
 const PORT = 6007;
+/** Full-page captures hide fixed purchase bars (see the file). */
+const FULL_PAGE_CSS = resolve(process.cwd(), 'tests', 'visual', 'fullpage.css');
 
 const indexPath = resolve(process.cwd(), 'storybook-static', 'index.json');
 
@@ -131,8 +133,15 @@ for (const story of stories) {
     await page.setViewportSize({ width: loaded.width, height: loaded.height });
     const probe = await openStory(page, story.id);
     if (probe.vrt?.screenshot === false) {
-      // Interaction-only story (e.g. activating an embed): check it, never capture it.
-      expectClean(probe, story.id, loaded.width);
+      // Interaction-only story (e.g. activating an embed): check it, never capture it. Its first
+      // vrt.viewports entry, if any, is the viewport it runs at (e.g. a phone-only sticky bar).
+      const want = probe.vrt.viewports?.length ? capturesFromParam(probe.vrt.viewports)[0]! : loaded;
+      if (want.width !== loaded.width || want.height !== loaded.height) {
+        await page.setViewportSize({ width: want.width, height: want.height });
+        expectClean(await openStory(page, story.id), story.id, want.width);
+      } else {
+        expectClean(probe, story.id, loaded.width);
+      }
       expect(external, 'external network requests').toEqual([]);
       return;
     }
@@ -153,7 +162,7 @@ for (const story of stories) {
           expectClean(result, story.id, capture.width);
           loaded = capture;
         }
-        await expect(page).toHaveScreenshot(`${story.id}-${capture.width}.png`, { fullPage: capture.fullPage });
+        await expect(page).toHaveScreenshot(`${story.id}-${capture.width}.png`, { fullPage: capture.fullPage, ...(capture.fullPage ? { stylePath: FULL_PAGE_CSS } : {}) });
       });
     }
 
@@ -165,7 +174,7 @@ for (const story of stories) {
           const result = await openStory(page, story.id, theme);
           expectClean(result, story.id, capture.width);
           await expect(page.locator('html')).toHaveAttribute('data-theme', theme);
-          await expect(page).toHaveScreenshot(`${story.id}-${capture.width}-${theme}.png`, { fullPage: capture.fullPage });
+          await expect(page).toHaveScreenshot(`${story.id}-${capture.width}-${theme}.png`, { fullPage: capture.fullPage, ...(capture.fullPage ? { stylePath: FULL_PAGE_CSS } : {}) });
         });
       }
     }
