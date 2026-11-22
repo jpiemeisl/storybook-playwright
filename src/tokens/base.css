@@ -36,6 +36,12 @@ h6 {
   letter-spacing: var(--letter-spacing-heading);
 }
 
+/* Any themed element (the page or a nested <Theme>) paints its own surface and text colour. */
+[data-theme] {
+  background-color: var(--color-bg);
+  color: var(--color-text);
+}
+
 :focus-visible {
   outline: var(--focus-ring-width) solid var(--color-focus-ring);
   outline-offset: var(--focus-ring-offset);

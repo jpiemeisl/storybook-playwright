@@ -1,0 +1,138 @@
+/*
+ * Theme: orchard (light, editorial). Overrides the semantic tier only. Every semantic colour token is
+ * defined explicitly (npm run check:themes). Paper white with a faint sage tint, deep green-black text,
+ * a plum action, generous radii, soft shadows and serif headings from the system (no web fonts).
+ *
+ * Scoped with @scope ... to ([data-theme]) (see harbor.css); inverse regions are dark green-black.
+ * `@media not print`: printed pages always use the default theme.
+ */
+@media not print {
+  @scope ([data-theme='orchard']) to ([data-theme]) {
+    :scope,
+    [data-surface='default'] {
+      color-scheme: light;
+
+      --color-bg: #fbfdfb;
+      --color-bg-subtle: #eef4ef;
+      --color-bg-muted: #e2ebe3;
+      --color-surface: #ffffff;
+      --color-bg-accent-subtle: #f3eaf4;
+      --color-bg-inverse: #13241a;
+      --color-border: #d2dcd4;
+      --color-border-strong: #748779;
+
+      --color-text: #142218;
+      --color-text-muted: #45564a;
+      --color-text-subtle: #536358;
+      --color-text-inverse: #f3f7f3;
+
+      --color-action: #6b2d5c;
+      --color-action-hover: #57234a;
+      --color-action-active: #451b3b;
+      --color-action-text: #ffffff;
+      --color-action-subtle: #f3eaf4;
+      --color-action-subtle-hover: #e8d8ec;
+
+      /* Links: plum, distinct from the body text, and underlined (never colour alone). */
+      --color-link: #6b2d5c;
+      --color-link-hover: #451b3b;
+
+      --color-disabled-bg: #eef4ef;
+      --color-disabled-text: #77857a;
+      --color-disabled-border: #d2dcd4;
+
+      --color-focus-ring: #a3317f;
+
+      --color-danger: #a8231f;
+      --color-danger-subtle: #fbe9e7;
+      --color-success: #21633a;
+      --color-success-subtle: #e4f2e7;
+      --color-warning: #7f4c00;
+      --color-warning-subtle: #fdf2da;
+      --color-info: #1d5b87;
+      --color-info-subtle: #e2edf6;
+      --color-sale: #a8231f;
+      --color-rating: #9a6200;
+
+      --color-field-bg: #ffffff;
+      --color-field-border: #66786b;
+      --color-field-border-hover: #3e4e43;
+      --color-field-border-focus: #6b2d5c;
+      --color-field-disabled-bg: #eef4ef;
+
+      --color-code-bg: #eef4ef;
+      --color-code-text: #142218;
+      --color-quote-border: #6b2d5c;
+      --color-table-header-bg: #eef4ef;
+      --color-table-stripe: #f5f9f5;
+      --color-scroll-shadow: rgb(20 34 24 / 0.18);
+      --color-overlay: rgb(20 34 24 / 0.5);
+      --color-overlay-media: rgb(10 20 14 / 0.72);
+
+      /* Shape and depth: generous radii, soft low shadows. */
+      --radius-control: 0.75rem;
+      --radius-surface: 1.25rem;
+      --radius-pill: 9999px;
+      --elevation-low: 0 1px 2px rgb(20 34 24 / 0.06);
+      --elevation-mid: 0 4px 12px rgb(20 34 24 / 0.08);
+      --elevation-high: 0 12px 32px rgb(20 34 24 / 0.12);
+
+      /* Type: a system serif for headings, medium weight. */
+      --text-font-heading: Georgia, 'Iowan Old Style', 'Palatino Linotype', serif;
+      --text-weight-heading: 500;
+    }
+
+    [data-surface='inverse'] {
+      color-scheme: dark;
+
+      --color-bg: #13241a;
+      --color-bg-subtle: #1b3124;
+      --color-bg-muted: #24402f;
+      --color-surface: #1b3124;
+      --color-border: #34513f;
+      --color-border-strong: #7a9483;
+
+      --color-text: #f3f7f3;
+      --color-text-muted: #bccbbf;
+      --color-text-subtle: #adbdb1;
+
+      --color-action: #e9bcdc;
+      --color-action-hover: #f1d0e7;
+      --color-action-active: #f7e1f0;
+      --color-action-text: #13241a;
+      --color-action-subtle: #3b1f35;
+      --color-action-subtle-hover: #4b2843;
+      --color-focus-ring: #f2a9db;
+      --color-link: #e9bcdc;
+      --color-link-hover: #f7e1f0;
+
+      --color-danger: #ffb4ae;
+      --color-danger-subtle: #4a1814;
+      --color-success: #a0e1b2;
+      --color-success-subtle: #163a22;
+      --color-warning: #f6d083;
+      --color-warning-subtle: #3f2e08;
+      --color-info: #a3d1f3;
+      --color-info-subtle: #14334a;
+      --color-sale: #ffb4ae;
+      --color-rating: #f6d083;
+
+      --color-field-bg: #1b3124;
+      --color-field-border: #8ba493;
+      --color-field-border-hover: #bccbbf;
+      --color-field-border-focus: #e9bcdc;
+      --color-field-disabled-bg: #24402f;
+
+      --color-code-bg: #1b3124;
+      --color-code-text: #f3f7f3;
+      --color-quote-border: #e9bcdc;
+      --color-table-header-bg: #1b3124;
+      --color-table-stripe: rgb(255 255 255 / 0.04);
+      --color-scroll-shadow: rgb(0 0 0 / 0.5);
+
+      --logo-filter-muted: grayscale(1) brightness(0) invert(1) opacity(0.8);
+
+      color: var(--color-text);
+    }
+  }
+}

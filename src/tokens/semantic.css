@@ -1,6 +1,7 @@
 /*
- * Tier 2: semantic aliases. Meaning-based tokens that components consume.
- * Themes override this tier only, by redefining these under [data-theme='<name>'].
+ * Tier 2: semantic aliases. Meaning-based tokens that components consume. This file is the default
+ * theme (on :root and [data-theme='default']). Other themes (themes/*.css) override this tier only,
+ * scoped to [data-theme='<name>'], and must define every --color-* token (npm run check:themes).
  */
 :root,
 [data-theme='default'],
