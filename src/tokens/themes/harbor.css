@@ -94,6 +94,7 @@
       --color-bg-subtle: #dbe3ee;
       --color-bg-muted: #ccd6e4;
       --color-surface: #f4f7fb;
+      --color-bg-accent-subtle: #f6e4bf;
       --color-border: #b3c0d2;
       --color-border-strong: #66758c;
 
@@ -134,6 +135,8 @@
       --color-table-header-bg: #dbe3ee;
       --color-table-stripe: rgb(15 26 43 / 0.04);
       --color-scroll-shadow: rgb(15 26 43 / 0.2);
+      /* Inverse is light here, so text over images (Hero) sits on a light wash, not a dark scrim. */
+      --color-overlay-media: rgb(232 237 245 / 0.88);
 
       --logo-filter-muted: grayscale(1) opacity(0.75);
 

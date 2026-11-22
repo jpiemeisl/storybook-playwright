@@ -17,7 +17,7 @@
   --color-bg-accent-subtle: var(--teal-50);
   --color-bg-inverse: var(--neutral-900);
   --color-border: var(--neutral-200);
-  --color-border-strong: var(--neutral-400);
+  --color-border-strong: var(--neutral-450); /* >= 3:1 on --color-bg: control edges, empty rating stars */
 
   /* Text */
   --color-text: var(--neutral-900);
@@ -180,6 +180,7 @@
   --color-bg-subtle: var(--neutral-800);
   --color-bg-muted: var(--neutral-700);
   --color-surface: var(--neutral-800);
+  --color-bg-accent-subtle: var(--teal-900);
   --color-border: var(--neutral-700);
   --color-border-strong: var(--neutral-500);
 
