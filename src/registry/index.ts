@@ -13,4 +13,6 @@ export {
   type RegisteredBlock,
   type RendererContext,
 } from './types';
+/** Validation helpers for custom blocks and templates (canRender guards). */
+export { Checker, isNonEmptyString, isObj, type Obj } from './checker';
 export { errorsOnly, FATAL_CODES, isFatal, validateBlock, validatePage, type IssueCode, type ValidateOptions, type ValidationIssue } from './validate';
