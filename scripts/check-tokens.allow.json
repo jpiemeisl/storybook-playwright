@@ -1,0 +1,4 @@
+{
+  "$comment": "Each exception needs a reason. An entry silences violations in `file` on lines containing `match`.",
+  "entries": []
+}
