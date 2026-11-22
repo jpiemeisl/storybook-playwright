@@ -482,8 +482,8 @@ Every story runs axe with the standard rule set. One story disables a rule:
 ### Subsets, shards and speed
 
 The full suite captures every story (about 1,640 screenshots) and takes about 8.5 minutes on the
-maintainer's 16-thread machine with 8 workers; the smoke subset about 2.7 minutes, and `test:a11y` about
-8.5 minutes (`workers: '50%'` in `playwright.config.ts`).
+maintainer's 16-thread machine with 8 workers (`workers: '50%'` in `playwright.config.ts`). The smoke subset
+takes about 2.7 minutes and `test:a11y` about 8.5 minutes.
 
 - **Smoke:** `npm run test:vrt:smoke` runs only stories tagged `theme-smoke` or `vrt-full` (Playwright
   tag `@smoke`), default theme, desktop width, against the same baselines. Use it while iterating.

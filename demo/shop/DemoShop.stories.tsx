@@ -41,9 +41,11 @@ export const Confirmation: Story = {
     const canvas = within(canvasElement);
     await userEvent.click(canvas.getByRole('button', { name: 'Place order' }));
     await expect(await canvas.findByRole('heading', { level: 1, name: 'Thank you for your order' })).toBeVisible();
-    // Focus moves to <main> on navigation; blur it so the screenshot has no focus ring.
+    // The account toast is fixed to the viewport: dismiss it so the full-page shot shows the page itself.
+    await userEvent.click(await canvas.findByRole('button', { name: /^Dismiss: Order FH-2101 added/ }));
+    await waitFor(() => expect(canvas.getByRole('region', { name: 'Notifications' })).not.toHaveTextContent(/added to your account/));
+    // Focus moves after the dismiss; blur it so the screenshot has no focus ring.
     (canvasElement.ownerDocument.activeElement as HTMLElement | null)?.blur();
-    await waitFor(() => expect(canvas.getByRole('region', { name: 'Notifications' })).toBeInTheDocument());
   },
 };
 
