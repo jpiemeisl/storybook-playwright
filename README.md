@@ -26,6 +26,9 @@ npx playwright install chromium
 | `npm run docs:content-model` | Regenerates `docs/content-model.md` from the content-type JSDoc           |
 | `npm run check:story-tags` | After a Storybook build: fails when a main template story lacks its expected `vrt-full` tag (tags spread from shared objects are silently dropped) |
 | `npm run check:boundaries` | Fails if core code imports `src/commerce` or anything under `src/` imports `demo/` |
+| `npm run check:tokens` | Fails if CSS outside `src/tokens` uses primitive colour, radius, shadow or font tokens, or raw colours (allowlist: `scripts/check-tokens.allow.json`) |
+| `npm run check:themes` | Fails if a theme in `src/tokens/themes` misses a colour token, adds unknown tokens or references a missing primitive |
+| `npm run test:a11y` | Builds Storybook, then runs axe on every `theme-smoke` story in every theme at 1280 px |
 
 ## Project layout
 
@@ -326,6 +329,14 @@ A story **fails** (before any screenshot comparison) if:
   the story's viewports.
 
 So interaction tests and accessibility checks run as part of `npm run test:vrt`.
+
+### Themes
+
+Stories tagged `theme-smoke` are also captured in every non-default theme (harbor, orchard) at 1280 and
+375 px, plus 768 px when the story is also `vrt-full`. Their files are named `<id>-<width>-<theme>.png`;
+default-theme names don't change. A story with explicit `vrt.viewports` is captured in themes only at
+those widths. Set `parameters.vrt.themes` to change the theme list for one story (`[]` turns it off).
+`check:story-tags` checks that the smoke set is tagged. See [docs/theming.md](docs/theming.md).
 
 ### Choosing viewports
 

@@ -7,4 +7,7 @@
 @import url('./reset.css') layer(reset);
 @import url('./primitives.css') layer(tokens);
 @import url('./semantic.css') layer(tokens);
+/* Themes: overrides to the semantic tier only, applied with data-theme on any element (see docs/theming.md). */
+@import url('./themes/harbor.css') layer(tokens);
+@import url('./themes/orchard.css') layer(tokens);
 @import url('./base.css') layer(base);

@@ -52,7 +52,7 @@ const meta = {
 export default meta;
 type Story = StoryObj<typeof meta>;
 
-export const Default: Story = {};
+export const Default: Story = { tags: ['theme-smoke'] };
 
 export const WithoutCta: Story = {
   args: { cta: undefined },
@@ -94,7 +94,7 @@ export const Sticky: Story = {
  * Keyboard: Enter opens the dropdown, ArrowDown moves into it, Escape closes it and returns focus,
  * Space opens it again (final state is captured).
  */
-export const DropdownOpen: Story = {
+export const DropdownOpen: Story = { tags: ['theme-smoke'],
   parameters: { vrt: { viewports: [{ width: 1280, fullPage: true }] } },
   play: async ({ canvasElement }) => {
     const canvas = within(canvasElement);

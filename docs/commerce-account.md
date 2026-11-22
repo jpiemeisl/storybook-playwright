@@ -60,7 +60,7 @@ Supply page data from your APIs, `now` from your server clock, and these callbac
 | Callback | Used by |
 | --- | --- |
 | `onSignOut()` | AccountNav (all account pages) |
-| `onSubscriptionAction(subscriptionId, request)` | Subscription detail and cards. `request` is `{ type: 'pause', months, resumesOn }`, `{ type: 'change-plan', planId }`, `{ type: 'cancel', reason?, comment? }`, `resume`, `undo-cancel`, `reactivate` or `update-payment`. |
+| `onSubscriptionAction(subscriptionId, request)` | Subscription detail and cards. `request` is `{ type: 'pause', months, resumesOn }`, `{ type: 'change-plan', planId, effective }`, `{ type: 'cancel', reason?, comment? }`, `resume`, `undo-cancel`, `reactivate` or `update-payment`. |
 | `onRetryInvoice(invoice)` | Invoice list (failed invoices) |
 | `onReorder(order)` | Order detail ("Buy again") |
 | `onSaveAddress`, `onDeleteAddress`, `onSetDefaultAddress` | Address book |
@@ -71,6 +71,17 @@ Supply page data from your APIs, `now` from your server clock, and these callbac
 **Subscription actions and `status`:**
 - A synchronous host just re-renders with new data.
 - An async host sets `page.status = 'submitting'` before `onSubscriptionAction` returns, then `idle` (the dialog closes and the outcome is announced) or `error` with `errorMessage` (the dialog stays open).
+
+## Dialog contract
+
+`ManageSubscription`, `AddressBook` and the other components with dialogs share one rule: **a dialog closes based on `status`**, not on the click.
+
+1. **On confirm,** the component calls your callback with the request.
+2. **A synchronous host** updates its data and leaves `status` as `idle`; the dialog closes straight away and the outcome is announced.
+3. **An asynchronous host** (a server round trip) must set `status: 'submitting'` *inside the callback, before it returns*. The confirm button then shows its loading state and the dialog stays open.
+4. **When the save finishes,** set `status: 'idle'` (the dialog closes and the outcome is announced) or `status: 'error'` with `errorMessage` (the dialog stays open and shows the error; the customer can retry or close it).
+
+If `submitting` is set later, for example after an `await`, the component sees `idle` first and closes the dialog before the save has finished. The address book announces changes as soon as its callbacks return and shows `errorMessage` in the open dialog; drive it the same way.
 
 ## Security notes
 
@@ -106,7 +117,12 @@ The rules behind the actions:
 - **update-payment:** any status except cancelled.
 - **reactivate:** cancelled.
 
-**Plan changes take effect at the next billing date.** There's no proration in this demo, and `getPlanChangeSummary` says "Nothing is charged today". Direction compares yearly cost exactly: upgrade, downgrade or switch.
+**Plan change timing is the host's decision.** Set `subscription.planChangeEffective` to `'immediately'` or `'next-billing-date'` (the default). Three things follow from that one field:
+- **The dialog copy:** `getPlanChangeSummary(current, next, { effective, nextBillingAt })` says either "…today. Your next charge, on Apr 15, 2026, uses the new price." or "…on Apr 15, 2026. You keep Monthly until then."
+- **The request:** `{ type: 'change-plan', planId, effective }` carries the same value.
+- **The data:** a next-billing-date change is shown through `subscription.scheduledPlanChange` (`{ planId, effectiveAt }`), which the card renders as "Switches to Annual on Apr 15, 2026".
+
+Neither timing prorates, so the copy always says "Nothing is charged today". Direction compares yearly cost exactly: upgrade, downgrade or switch. The demo follows the request: immediate changes switch the plan, and next-billing-date changes set `scheduledPlanChange`.
 
 **Pause dates** clamp month ends: Jan 31 + 1 month is Feb 28, or Feb 29 in leap years.
 

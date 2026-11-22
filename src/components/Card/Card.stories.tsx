@@ -80,7 +80,7 @@ export const FocusState: Story = {
   },
 };
 
-export const Grid: Story = {
+export const Grid: Story = { tags: ['theme-smoke'],
   render: () => (
     <CardGrid>
       {cards.map((card) => (

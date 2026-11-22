@@ -22,7 +22,7 @@ export default meta;
 type Story = StoryObj<typeof meta>;
 
 /** 1 column on narrow slots, 2 on medium, 4 on wide. */
-export const FourColumns: Story = {};
+export const FourColumns: Story = { tags: ['theme-smoke'] };
 
 export const ThreeColumns: Story = {
   args: { columns: footerColumnsThree },

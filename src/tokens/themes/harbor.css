@@ -1,0 +1,146 @@
+/*
+ * Theme: harbor (dark). Overrides the semantic tier only. Every semantic colour token is defined
+ * explicitly (npm run check:themes), so nothing inherits light values by accident.
+ *
+ * Scoped with @scope ... to ([data-theme]): the theme applies to the element with
+ * data-theme="harbor" and its descendants, stopping at any nested theme. Inside the scope,
+ * [data-surface='default'] returns to this palette and [data-surface='inverse'] uses this theme's
+ * inverse palette (a LIGHT surface, so inverse regions still contrast with the dark page).
+ * `@media not print`: printed pages always use the default theme.
+ */
+@media not print {
+  @scope ([data-theme='harbor']) to ([data-theme]) {
+    :scope,
+    [data-surface='default'] {
+      color-scheme: dark;
+
+      /* Surfaces: each step lighter reads as raised, without relying on shadow. */
+      --color-bg: #0f1a2b;
+      --color-bg-subtle: #16243a;
+      --color-bg-muted: #1d2e48;
+      --color-surface: #1b2b45;
+      --color-bg-accent-subtle: #2e2510;
+      --color-bg-inverse: #e8edf5;
+      --color-border: #34486a;
+      --color-border-strong: #7487a6;
+
+      /* Text */
+      --color-text: #e8edf5;
+      --color-text-muted: #a3b1c6;
+      --color-text-subtle: #97a6bc;
+      --color-text-inverse: #0f1a2b;
+
+      /* Action: amber with dark text */
+      --color-action: #f2b134;
+      --color-action-hover: #f6c35f;
+      --color-action-active: #f9d488;
+      --color-action-text: #1a1305;
+      --color-action-subtle: #2e2510;
+      --color-action-subtle-hover: #3d3115;
+
+      --color-link: #f5c15a;
+      --color-link-hover: #f9d78f;
+
+      --color-disabled-bg: #1d2e48;
+      --color-disabled-text: #7384a0;
+      --color-disabled-border: #34486a;
+
+      /* A bright cyan ring, distinct from the amber action. */
+      --color-focus-ring: #5ce1e6;
+
+      --color-danger: #ff9a9a;
+      --color-danger-subtle: #3b1d26;
+      --color-success: #79dc96;
+      --color-success-subtle: #12301f;
+      --color-warning: #f5c56a;
+      --color-warning-subtle: #33270d;
+      --color-info: #8ccbff;
+      --color-info-subtle: #132a43;
+      --color-sale: #ffa3a3;
+      --color-rating: #f2b134;
+
+      --color-field-bg: #13213a;
+      --color-field-border: #8193b0;
+      --color-field-border-hover: #aebbd0;
+      --color-field-border-focus: #5ce1e6;
+      --color-field-disabled-bg: #1d2e48;
+
+      --color-code-bg: #1d2e48;
+      --color-code-text: #e8edf5;
+      --color-quote-border: #f2b134;
+      --color-table-header-bg: #1d2e48;
+      --color-table-stripe: #16243a;
+      --color-scroll-shadow: rgb(0 0 0 / 0.5);
+      --color-overlay: rgb(3 7 14 / 0.75);
+      --color-overlay-media: rgb(3 7 14 / 0.75);
+
+      /* Shape and depth: small radii, 2px control borders, borders instead of soft shadows. */
+      --radius-control: 0.25rem;
+      --radius-surface: 0.375rem;
+      --border-width-control: 2px;
+      --elevation-low: 0 0 0 1px #34486a;
+      --elevation-mid: 0 0 0 1px #3f557a;
+      --elevation-high: 0 0 0 1px #4a6188, 0 16px 40px rgb(0 0 0 / 0.55);
+
+      /* Type: heavier headings, slightly tighter. */
+      --text-weight-heading: 800;
+      --letter-spacing-heading: -0.01em;
+    }
+
+    [data-surface='inverse'] {
+      color-scheme: light;
+
+      --color-bg: #e8edf5;
+      --color-bg-subtle: #dbe3ee;
+      --color-bg-muted: #ccd6e4;
+      --color-surface: #f4f7fb;
+      --color-bg-accent-subtle: #f6e4bf;
+      --color-border: #b3c0d2;
+      --color-border-strong: #66758c;
+
+      --color-text: #0f1a2b;
+      --color-text-muted: #3a485d;
+      --color-text-subtle: #46556b;
+
+      --color-action: #7a4f00;
+      --color-action-hover: #613f00;
+      --color-action-active: #4a3000;
+      --color-action-text: #ffffff;
+      --color-action-subtle: #f6e4bf;
+      --color-action-subtle-hover: #efd6a3;
+      --color-focus-ring: #006a74;
+      --color-link: #7a4f00;
+      --color-link-hover: #573800;
+
+      --color-danger: #a3141e;
+      --color-danger-subtle: #fbe3e4;
+      --color-success: #17602d;
+      --color-success-subtle: #def2e4;
+      --color-warning: #6f4400;
+      --color-warning-subtle: #faeed4;
+      --color-info: #0a5585;
+      --color-info-subtle: #dbeaf5;
+      --color-sale: #a3141e;
+      --color-rating: #8a5a00;
+
+      --color-field-bg: #ffffff;
+      --color-field-border: #5d6d85;
+      --color-field-border-hover: #3a485d;
+      --color-field-border-focus: #006a74;
+      --color-field-disabled-bg: #dbe3ee;
+
+      --color-code-bg: #dbe3ee;
+      --color-code-text: #0f1a2b;
+      --color-quote-border: #7a4f00;
+      --color-table-header-bg: #dbe3ee;
+      --color-table-stripe: rgb(15 26 43 / 0.04);
+      --color-scroll-shadow: rgb(15 26 43 / 0.2);
+      /* Inverse is light here, so text over images (Hero) sits on a light wash, not a dark scrim. */
+      --color-overlay-media: rgb(232 237 245 / 0.88);
+
+      --logo-filter-muted: grayscale(1) opacity(0.75);
+
+      color: var(--color-text);
+    }
+  }
+}

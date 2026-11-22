@@ -15,7 +15,7 @@ type Story = StoryObj<typeof meta>;
 
 /** About 1,200 words, 13 headings: sticky TOC from 64rem, collapsible above the body below. */
 export const BlogPost: Story = {
-  tags: ['!vrt-mobile', 'vrt-full'],
+  tags: ['!vrt-mobile', 'vrt-full', 'theme-smoke'],
   play: async ({ canvasElement, args }) => {
     await expectPageInvariants(canvasElement, args);
     const toc = within(canvasElement).getByRole('navigation', { name: 'On this page' });

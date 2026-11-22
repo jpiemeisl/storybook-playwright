@@ -1,6 +1,6 @@
 /* Base element styles. Imported into the `base` layer by index.css. Semantic tokens only. */
 html {
-  color-scheme: light;
+  /* color-scheme is set by the theme palette (semantic.css, themes/*.css). */
   /* Keep in-page anchor targets (and their focus rings) clear of a sticky header and its border. */
   scroll-padding-block-start: calc(var(--header-height) + var(--gap-sm));
 }
@@ -23,7 +23,23 @@ samp {
 }
 
 a {
-  color: var(--color-action);
+  color: var(--color-link);
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-family: var(--text-font-heading);
+  letter-spacing: var(--letter-spacing-heading);
+}
+
+/* Any themed element (the page or a nested <Theme>) paints its own surface and text colour. */
+[data-theme] {
+  background-color: var(--color-bg);
+  color: var(--color-text);
 }
 
 :focus-visible {

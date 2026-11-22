@@ -24,7 +24,7 @@ export const Digital: Story = { tags: ['vrt-mobile'], parameters: mobile, args: 
 export const SubscriptionTrial: Story = { tags: ['vrt-mobile'], parameters: mobile, args: { order: 'subscriptionTrial' } };
 /** Mixed: shipping, downloads and renewal copy together; a status alert; one h1. */
 export const Mixed: Story = {
-  tags: ['vrt-full'],
+  tags: ['vrt-full', 'theme-smoke'],
   parameters: { layout: 'fullscreen' },
   args: { order: 'mixed' },
   play: async ({ canvasElement }) => {

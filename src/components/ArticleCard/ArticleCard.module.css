@@ -12,7 +12,7 @@
     flex-shrink: 0;
     inline-size: var(--space-8);
     block-size: var(--space-8);
-    border-radius: var(--radius-full);
+    border-radius: var(--radius-round);
     object-fit: cover;
   }
 

@@ -46,11 +46,11 @@ export const ChangePlanDialog: Story = {
     const dialog = within(within(context.canvasElement.ownerDocument.body).getByRole('dialog'));
     await expect(dialog.getByRole('radio', { name: /Monthly: \$20\.00 \/ month \(Current plan\)/ })).toBeDisabled();
     await userEvent.click(dialog.getByRole('radio', { name: /^Annual/ }));
-    await expect(dialog.getByRole('status')).toHaveTextContent('Downgrade. Your plan changes to Annual ($192.00 / year) on Apr 15, 2026. Nothing is charged today.');
+    await expect(dialog.getByRole('status')).toHaveTextContent('Downgrade. Your plan changes to Annual ($192.00 / year) on Apr 15, 2026. You keep Monthly until then. Nothing is charged today.');
   },
 };
 /** The cancel dialog focuses "Keep subscription" first; Escape closes it and focus returns to the button. */
-export const CancelDialog: Story = {
+export const CancelDialog: Story = { tags: ['theme-smoke'],
   args: { sub: 'withPlans' },
   play: async (context) => {
     const opener = within(context.canvasElement).getByRole('button', { name: 'Cancel subscription' });

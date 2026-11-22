@@ -28,7 +28,7 @@ const samples: ToastData[] = [
 ];
 
 /** Every tone, with link and button actions and a long message. Toasts on their own (no region). */
-export const Matrix: Story = {
+export const Matrix: Story = { tags: ['theme-smoke'],
   render: () => (
     <div style={{ display: 'grid', gap: '0.75rem', maxInlineSize: '24rem' }}>
       {samples.map((t) => (

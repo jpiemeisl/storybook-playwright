@@ -7,8 +7,8 @@
  * the wrong widths and nothing fails. This check reads storybook-static/index.json and fails when a
  * story listed below lacks its expected tag, or when a listed story no longer exists.
  *
- * The list is deliberately short: the main screenshots of each template family (the `vrt-full`
- * stories). Add a line when a new template family gets main stories.
+ * The list is deliberately short: the main screenshots of each template family (`vrt-full`) and the
+ * theme smoke set (`theme-smoke`). Add a line when a new template family gets main stories.
  *
  * Usage: node scripts/check-story-tags.mjs   (exit code 1 on problems)
  */
@@ -26,6 +26,34 @@ export const EXPECTED_TAGS = [
   { title: 'Commerce/Templates/Order confirmation', tag: 'vrt-full', stories: ['Mixed'] },
   { title: 'Commerce/Templates/Auth', tag: 'vrt-full', stories: ['Login'] },
   { title: 'Commerce/Templates/Account', tag: 'vrt-full', stories: ['Dashboard Rich', 'Orders', 'Order Detail Mixed', 'Downloads', 'Subscriptions', 'Subscription Active', 'Addresses'] },
+  // Theme smoke set: also captured in every non-default theme (docs/theming.md lists them).
+  { title: 'Foundations/Tokens', tag: 'theme-smoke', stories: ['Colors'] },
+  { title: 'Components/Button', tag: 'theme-smoke', stories: ['Sizes'] },
+  { title: 'Compositions/FormsKitchenSink', tag: 'theme-smoke', stories: ['Default'] },
+  { title: 'Forms/Alert', tag: 'theme-smoke', stories: ['Tones'] },
+  { title: 'Feedback/Toast', tag: 'theme-smoke', stories: ['Matrix'] },
+  { title: 'Primitives/Badge', tag: 'theme-smoke', stories: ['Tones'] },
+  { title: 'Commerce/Account/StatusBadges', tag: 'theme-smoke', stories: ['Matrix'] },
+  { title: 'Navigation/Header', tag: 'theme-smoke', stories: ['Default', 'Dropdown Open'] },
+  { title: 'Navigation/MobileMenu', tag: 'theme-smoke', stories: ['Open'] },
+  { title: 'Navigation/Footer', tag: 'theme-smoke', stories: ['Four Columns'] },
+  { title: 'Sections/Card', tag: 'theme-smoke', stories: ['Grid'] },
+  { title: 'Sections/PricingTable', tag: 'theme-smoke', stories: ['Monthly'] },
+  { title: 'Sections/Accordion', tag: 'theme-smoke', stories: ['Several Expanded'] },
+  { title: 'Media/Tabs', tag: 'theme-smoke', stories: ['Default'] },
+  { title: 'Media/Modal', tag: 'theme-smoke', stories: ['Open'] },
+  { title: 'Data/Table', tag: 'theme-smoke', stories: ['Striped'] },
+  { title: 'Templates/Composed pages', tag: 'theme-smoke', stories: ['Home'] },
+  { title: 'Templates/Blog post', tag: 'theme-smoke', stories: ['Blog Post'] },
+  { title: 'Templates/Error page', tag: 'theme-smoke', stories: ['Not Found'] },
+  { title: 'Commerce/ProductCard', tag: 'theme-smoke', stories: ['Matrix'] },
+  { title: 'Commerce/Templates/Product detail', tag: 'theme-smoke', stories: ['Physical With Variants'] },
+  { title: 'Commerce/Templates/Cart', tag: 'theme-smoke', stories: ['Mixed'] },
+  { title: 'Commerce/Templates/Checkout', tag: 'theme-smoke', stories: ['Mixed Payment'] },
+  { title: 'Commerce/Templates/Order confirmation', tag: 'theme-smoke', stories: ['Mixed'] },
+  { title: 'Commerce/Templates/Account', tag: 'theme-smoke', stories: ['Dashboard Rich'] },
+  { title: 'Commerce/Account/ManageSubscription', tag: 'theme-smoke', stories: ['Cancel Dialog'] },
+  { title: 'Commerce/Templates/Auth', tag: 'theme-smoke', stories: ['Login'] },
 ];
 
 /**

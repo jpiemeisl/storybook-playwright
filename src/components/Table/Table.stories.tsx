@@ -26,7 +26,7 @@ export const Small: Story = {
   },
 };
 
-export const Striped: Story = {
+export const Striped: Story = { tags: ['theme-smoke'],
   args: { striped: true },
 };
 

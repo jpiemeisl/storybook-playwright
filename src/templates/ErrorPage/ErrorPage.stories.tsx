@@ -16,7 +16,7 @@ type Story = StoryObj<typeof meta>;
 /** Full chrome, actions, search (GET) and suggested pages. */
 export const NotFound: Story = {
   args: { name: 'error-404' },
-  tags: ['!vrt-mobile', 'vrt-full'],
+  tags: ['!vrt-mobile', 'vrt-full', 'theme-smoke'],
   play: async ({ canvasElement, args }) => {
     await expectPageInvariants(canvasElement, args);
     await expect(within(canvasElement).getByRole('search')).toHaveAttribute('method', 'get');

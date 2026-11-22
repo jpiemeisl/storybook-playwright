@@ -24,7 +24,7 @@ const mobile = { layout: 'fullscreen', vrt: { viewports: [{ width: 375, fullPage
 const outline: Story['play'] = async ({ canvasElement }) => expectHeadingOutline(canvasElement);
 
 export const Physical: Story = { tags: ['vrt-full'], parameters: { layout: 'fullscreen' }, play: outline };
-export const Mixed: Story = { tags: ['vrt-full'], parameters: { layout: 'fullscreen' }, args: { cart: 'mixed' }, play: outline };
+export const Mixed: Story = { tags: ['vrt-full', 'theme-smoke'], parameters: { layout: 'fullscreen' }, args: { cart: 'mixed' }, play: outline };
 export const Empty: Story = { tags: ['vrt-full'], parameters: { layout: 'fullscreen' }, args: { cart: 'empty' }, play: outline };
 export const Digital: Story = { tags: ['vrt-mobile'], parameters: mobile, args: { cart: 'digitalOnly' } };
 export const Subscription: Story = { tags: ['vrt-mobile'], parameters: mobile, args: { cart: 'subscriptionWithTrial' } };

@@ -51,7 +51,7 @@
     margin: 0;
     margin-block-start: calc((1lh - var(--icon-size-md)) / 2);
     border: var(--border-2) solid var(--color-field-border);
-    border-radius: var(--radius-full);
+    border-radius: var(--radius-round);
     background-color: var(--color-field-bg);
     cursor: pointer;
   }

@@ -1,0 +1,114 @@
+@layer components {
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(20rem, 100%), 1fr));
+    gap: var(--gap-lg);
+  }
+
+  .panel {
+    display: grid;
+    align-content: start;
+    gap: var(--gap-md);
+    padding: var(--gap-lg);
+    border: var(--border-width-card) solid var(--color-border);
+    border-radius: var(--radius-surface);
+  }
+
+  .title {
+    margin: 0;
+    font-size: var(--text-size-xl);
+    font-weight: var(--text-weight-heading);
+  }
+
+  .swatches {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: var(--gap-xs) var(--gap-sm);
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    font-size: var(--text-size-xs);
+  }
+
+  .swatches li {
+    display: flex;
+    align-items: center;
+    gap: var(--gap-xs);
+    min-inline-size: 0;
+    overflow-wrap: anywhere;
+  }
+
+  /* The outline uses a semantic border token, so light chips show on light panels and dark on dark. */
+  .chip {
+    flex-shrink: 0;
+    inline-size: var(--space-6);
+    block-size: var(--space-6);
+    border: var(--border-1) solid var(--color-border-strong);
+    border-radius: var(--radius-control);
+  }
+
+  .type p {
+    margin: 0 0 var(--gap-xs);
+  }
+
+  .h1 {
+    font-family: var(--text-font-heading);
+    font-size: var(--text-size-2xl);
+    font-weight: var(--text-weight-heading);
+    letter-spacing: var(--letter-spacing-heading);
+    line-height: var(--text-leading-heading);
+  }
+
+  .h2 {
+    font-family: var(--text-font-heading);
+    font-size: var(--text-size-lg);
+    font-weight: var(--text-weight-heading);
+    letter-spacing: var(--letter-spacing-heading);
+  }
+
+  .muted {
+    color: var(--color-text-muted);
+  }
+
+  .shapes,
+  .shadows,
+  .focus {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: var(--gap-sm);
+  }
+
+  .shapes span,
+  .shadows span {
+    padding: var(--gap-xs) var(--gap-sm);
+    border: var(--border-width-control) solid var(--color-border-strong);
+    background-color: var(--color-surface);
+    font-size: var(--text-size-sm);
+  }
+
+  .control {
+    border-radius: var(--radius-control);
+  }
+
+  .surface {
+    border-radius: var(--radius-surface);
+  }
+
+  .pill {
+    border-radius: var(--radius-pill);
+  }
+
+  .shadows span {
+    border-color: transparent;
+    border-radius: var(--radius-surface);
+  }
+
+  .ring {
+    padding: var(--gap-xs) var(--gap-sm);
+    border-radius: var(--radius-control);
+    outline: var(--focus-ring-width) solid var(--color-focus-ring);
+    outline-offset: var(--focus-ring-offset);
+    font-size: var(--text-size-sm);
+  }
+}

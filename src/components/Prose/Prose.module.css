@@ -65,7 +65,7 @@
   }
 
   .prose :where(a:focus-visible) {
-    border-radius: var(--radius-1);
+    border-radius: var(--radius-inline);
     outline: var(--focus-ring-width) solid var(--color-focus-ring);
     outline-offset: var(--focus-ring-offset);
   }
@@ -107,7 +107,7 @@
 
   .prose :where(:not(pre) > code) {
     padding: 0.1em 0.35em;
-    border-radius: var(--radius-1);
+    border-radius: var(--radius-inline);
     background-color: var(--color-code-bg);
     color: var(--color-code-text);
   }
@@ -116,7 +116,7 @@
     padding: 0.1em 0.4em;
     border: var(--border-1) solid var(--color-border-strong);
     border-block-end-width: 2px;
-    border-radius: var(--radius-2);
+    border-radius: var(--radius-control);
     background-color: var(--color-bg-subtle);
   }
 

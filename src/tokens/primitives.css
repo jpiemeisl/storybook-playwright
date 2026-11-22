@@ -10,6 +10,7 @@
   --neutral-200: #dde1e3;
   --neutral-300: #c3c9cc;
   --neutral-400: #9aa3a8;
+  --neutral-450: #848d93; /* 3.3:1 on white: the lightest grey that still passes 3:1 for control edges */
   --neutral-500: #677177; /* darkened from #6f7a80 to meet 4.5:1 on --color-bg and --color-bg-subtle */
   --neutral-600: #535d63;
   --neutral-700: #3d454a;

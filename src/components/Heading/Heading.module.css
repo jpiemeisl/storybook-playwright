@@ -2,6 +2,7 @@
   .heading {
     font-family: var(--text-font-heading);
     font-weight: var(--text-weight-heading);
+    letter-spacing: var(--letter-spacing-heading);
     line-height: var(--text-leading-heading);
     color: var(--color-text);
     text-wrap: balance;

@@ -377,6 +377,14 @@ export function validateCustomerSubscription(subscription: unknown): ValidationI
       p.strings('features', true);
     });
     uniqueIds(c, 'availablePlans');
+    if (c.value.planChangeEffective !== undefined) c.oneOf('planChangeEffective', ['immediately', 'next-billing-date']);
+    c.child('scheduledPlanChange', false, (s) => {
+      s.date('effectiveAt');
+      const plans = Array.isArray(c.value.availablePlans) ? c.value.availablePlans : [];
+      const plan = plans.find((p) => isObj(p) && p.id === s.value.planId);
+      if (!plan) s.report('invalid-field', 'planId', '"planId" must be one of "availablePlans".');
+      else if (isObj(plan) && plan.current) s.report('invalid-field', 'planId', 'A scheduled change cannot be to the current plan.');
+    });
     if (Array.isArray(c.value.availablePlans) && c.value.availablePlans.length > 0) {
       const current = c.value.availablePlans.filter((p) => isObj(p) && p.current === true).length;
       if (current !== 1) c.report('invalid-field', 'availablePlans', `"availablePlans" must have exactly one current plan (found ${current}).`);

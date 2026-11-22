@@ -39,7 +39,7 @@ export const Ghost: Story = {
   args: { variant: 'ghost' },
 };
 
-export const Sizes: Story = {
+export const Sizes: Story = { tags: ['theme-smoke'],
   render: (args) => (
     <div style={row}>
       <Button {...args} size="sm">

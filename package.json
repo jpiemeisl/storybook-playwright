@@ -13,7 +13,10 @@
     "test:unit": "vitest run",
     "docs:content-model": "node scripts/content-model-docs.mjs",
     "check:boundaries": "node scripts/check-boundaries.mjs",
-    "check:story-tags": "node scripts/check-story-tags.mjs"
+    "check:story-tags": "node scripts/check-story-tags.mjs",
+    "check:tokens": "node scripts/check-tokens.mjs",
+    "check:themes": "node scripts/check-theme-contract.mjs",
+    "test:a11y": "storybook build && playwright test --config playwright.a11y.config.ts"
   },
   "dependencies": {
     "react": "^19.3.1",

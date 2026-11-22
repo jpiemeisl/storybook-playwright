@@ -58,6 +58,11 @@ export function SubscriptionCard({ subscription: sub, now, href, variant = 'full
             <Price price={sub.price} interval={sub.interval} size="sm" />
           </div>
           {date && <p className={styles.meta}>{date}</p>}
+          {sub.scheduledPlanChange && (
+            <p className={styles.meta}>
+              <Icon name="calendar" size="sm" /> Switches to {sub.availablePlans?.find((p) => p.id === sub.scheduledPlanChange!.planId)?.name ?? 'a new plan'} on {formatCommerceDate(sub.scheduledPlanChange.effectiveAt)}
+            </p>
+          )}
           {sub.paymentMethodSummary && sub.status !== 'cancelled' && (
             <p className={styles.meta}>
               <Icon name="credit-card" size="sm" /> Paid with {sub.paymentMethodSummary}

@@ -30,7 +30,7 @@ export default meta;
 type Story = StoryObj<typeof meta>;
 
 /** Wiring: tab aria-controls → panel id; panel aria-labelledby → tab id; only the selected tab is tabbable. */
-export const Default: Story = {
+export const Default: Story = { tags: ['theme-smoke'],
   play: async ({ canvasElement }) => {
     const canvas = within(canvasElement);
     const tab = canvas.getByRole('tab', { name: 'Overview' });

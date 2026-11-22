@@ -48,7 +48,7 @@ const meta = {
 export default meta;
 type Story = StoryObj<typeof meta>;
 
-export const Colors: Story = {
+export const Colors: Story = { tags: ['theme-smoke'],
   render: () => (
     <section className={styles.section}>
       <Heading size="2xl">Semantic colours</Heading>

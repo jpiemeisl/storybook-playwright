@@ -27,8 +27,15 @@ describe('demo account reducer: subscriptions', () => {
     ({ state } = run({ type: 'subscription', id: 'sub-a5', request: { type: 'resume' } }, state));
     expect(sub(state, 'sub-a5')).toMatchObject({ status: 'active', nextBillingAt: '2026-06-21' });
     expect(sub(state, 'sub-a5').pausedUntil).toBeUndefined();
-    ({ state } = run({ type: 'subscription', id: 'sub-a2', request: { type: 'change-plan', planId: 'club-annual' } }, state));
+    // Next billing date: scheduled, the current plan stays until then.
+    let scheduled;
+    ({ state, result: scheduled } = run({ type: 'subscription', id: 'sub-a2', request: { type: 'change-plan', planId: 'club-annual', effective: 'next-billing-date' } }, state));
+    expect(scheduled).toEqual({ ok: true, message: 'Grower club membership switches to Annual on Apr 15, 2026.' });
+    expect(sub(state, 'sub-a2')).toMatchObject({ plan: 'Monthly', scheduledPlanChange: { planId: 'club-annual', effectiveAt: '2026-04-15' } });
+    // Immediately: switched now, any scheduled change dropped.
+    ({ state } = run({ type: 'subscription', id: 'sub-a2', request: { type: 'change-plan', planId: 'club-annual', effective: 'immediately' } }, state));
     expect(sub(state, 'sub-a2')).toMatchObject({ plan: 'Annual', price: { amount: 19200 } });
+    expect(sub(state, 'sub-a2').scheduledPlanChange).toBeUndefined();
     expect(sub(state, 'sub-a2').availablePlans!.filter((p) => p.current).map((p) => p.id)).toEqual(['club-annual']);
     for (const s of state.subscriptions) expect(validateCustomerSubscription(s), s.id).toEqual([]);
   });
@@ -39,7 +46,7 @@ describe('demo account reducer: subscriptions', () => {
     expect(paused.result).toMatchObject({ ok: false, reason: 'not-allowed' });
     expect(paused.state.subscriptions).toEqual(before.subscriptions);
     expect(run({ type: 'subscription', id: 'nope', request: { type: 'resume' } }).result).toMatchObject({ ok: false, reason: 'not-found' });
-    expect(run({ type: 'subscription', id: 'sub-a2', request: { type: 'change-plan', planId: 'club-monthly' } }).result).toMatchObject({ ok: false, reason: 'not-allowed' });
+    expect(run({ type: 'subscription', id: 'sub-a2', request: { type: 'change-plan', planId: 'club-monthly', effective: 'immediately' } }).result).toMatchObject({ ok: false, reason: 'not-allowed' });
     expect(run({ type: 'subscription', id: 'sub-a8', request: { type: 'cancel' } }).result).toMatchObject({ ok: false, reason: 'not-allowed' });
   });
 

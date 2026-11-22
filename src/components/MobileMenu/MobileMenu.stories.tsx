@@ -39,7 +39,7 @@ async function openMenu(canvasElement: HTMLElement) {
 
 export const Closed: Story = {};
 
-export const Open: Story = {
+export const Open: Story = { tags: ['theme-smoke'],
   play: async ({ canvasElement }) => {
     const menu = await openMenu(canvasElement);
     await expect(menu.getByRole('button', { name: 'Close menu' })).toHaveFocus();

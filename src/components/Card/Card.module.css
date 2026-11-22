@@ -10,7 +10,7 @@
     flex-direction: column;
     block-size: 100%;
     overflow: hidden;
-    border: var(--border-1) solid transparent;
+    border: var(--border-width-card) solid transparent;
     border-radius: var(--radius-surface);
     color: var(--color-text);
   }

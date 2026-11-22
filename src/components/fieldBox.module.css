@@ -9,7 +9,7 @@
     min-inline-size: 0;
     min-block-size: var(--field-height-md);
     padding-inline: var(--field-padding-inline);
-    border: var(--border-1) solid var(--color-field-border);
+    border: var(--border-width-control) solid var(--color-field-border);
     border-radius: var(--radius-control);
     background-color: var(--color-field-bg);
     color: var(--color-text);

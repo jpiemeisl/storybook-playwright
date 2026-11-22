@@ -1,0 +1,50 @@
+@layer components {
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(22rem, 100%), 1fr));
+  }
+
+  .panel {
+    display: grid;
+    align-content: start;
+    gap: var(--gap-md);
+    min-inline-size: 0;
+    padding: var(--gap-lg);
+  }
+
+  .title {
+    margin: 0;
+    font-size: var(--text-size-xl);
+    font-weight: var(--text-weight-heading);
+  }
+
+  .stack {
+    display: grid;
+    gap: var(--gap-md);
+  }
+
+  .row {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: var(--gap-sm);
+  }
+
+  .dialog {
+    display: grid;
+    gap: var(--gap-xs);
+    padding: var(--gap-md);
+    border: var(--border-width-card) solid var(--color-border);
+    border-radius: var(--radius-surface);
+    background-color: var(--color-surface);
+    box-shadow: var(--elevation-high);
+  }
+
+  .dialog p {
+    margin: 0;
+  }
+
+  .dialogTitle {
+    font-weight: var(--text-weight-strong);
+  }
+}
