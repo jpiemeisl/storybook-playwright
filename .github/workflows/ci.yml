@@ -131,10 +131,6 @@ jobs:
         with:
           name: storybook-static
           path: storybook-static
-      - name: THROWAWAY container options check
-        run: |
-          echo "PID 1: $(cat /proc/1/comm)"
-          df -h /dev/shm
       - name: Visual tests (shard ${{ matrix.shard }}/4)
         run: npx playwright test --shard=${{ matrix.shard }}/4 --reporter=blob,dot
       - uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
