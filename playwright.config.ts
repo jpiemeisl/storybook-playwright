@@ -1,8 +1,8 @@
 import { defineConfig, devices } from '@playwright/test';
-import { assertCanUpdate } from './scripts/vrt-guard.mjs';
+import { assertCanUpdate, isUpdateArgs } from './scripts/vrt-guard.mjs';
 
-// Baselines are written only inside the Playwright container (scripts/vrt-guard.mjs explains the override).
-if (process.argv.some((arg) => arg === '-u' || arg.startsWith('--update-snapshots'))) assertCanUpdate();
+// Baselines are written only inside the Playwright container, and never in CI (scripts/vrt-guard.mjs).
+if (isUpdateArgs(process.argv)) assertCanUpdate();
 
 const PORT = 6007;
 
