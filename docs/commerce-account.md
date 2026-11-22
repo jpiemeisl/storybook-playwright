@@ -72,6 +72,17 @@ Supply page data from your APIs, `now` from your server clock, and these callbac
 - A synchronous host just re-renders with new data.
 - An async host sets `page.status = 'submitting'` before `onSubscriptionAction` returns, then `idle` (the dialog closes and the outcome is announced) or `error` with `errorMessage` (the dialog stays open).
 
+## Dialog contract
+
+`ManageSubscription`, `AddressBook` and the other components with dialogs share one rule: **a dialog closes based on `status`**, not on the click.
+
+1. **On confirm,** the component calls your callback with the request.
+2. **A synchronous host** updates its data and leaves `status` as `idle`; the dialog closes straight away and the outcome is announced.
+3. **An asynchronous host** (a server round trip) must set `status: 'submitting'` *inside the callback, before it returns*. The confirm button then shows its loading state and the dialog stays open.
+4. **When the save finishes,** set `status: 'idle'` (the dialog closes and the outcome is announced) or `status: 'error'` with `errorMessage` (the dialog stays open and shows the error; the customer can retry or close it).
+
+If `submitting` is set later, for example after an `await`, the component sees `idle` first and closes the dialog before the save has finished. The address book announces changes as soon as its callbacks return and shows `errorMessage` in the open dialog; drive it the same way.
+
 ## Security notes
 
 - **No payment fields.** "Update payment method" is a callback, and the past-due notice has a slot for your provider's hosted fields. This library renders no card inputs, the same rule as checkout. `paymentMethodSummary` is generic text, never a brand logo or a full number; the validator rejects long digit runs.
