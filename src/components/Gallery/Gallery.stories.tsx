@@ -32,6 +32,8 @@ export const OneImage: Story = {
 
 /** lightbox={false}: plain images, no buttons. */
 export const WithoutLightbox: Story = {
+  // Behaviour test: its screenshots were identical to ThreeImages's at every width, so it isn't captured.
+  parameters: { vrt: { screenshot: false } },
   args: { images: galleryThree, columns: 3, lightbox: false },
   play: async ({ canvasElement }) => {
     await expect(within(canvasElement).queryAllByRole('button')).toHaveLength(0);

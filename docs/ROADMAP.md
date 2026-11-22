@@ -46,8 +46,6 @@ of each gap are in [GAPS.md](GAPS.md).
   should live in separate packages that depend on the core types.
 - **Backend integration guide.** Document how a host wires the commerce templates to a real cart,
   checkout, payment provider (hosted fields only) and account API, replacing the demo providers.
-- **Visual suite size.** Duplicate screenshots found by hashing baselines are listed in the Phase 14
-  report; removing the redundant ones is pending a decision.
 - **Forced colours by hand.** Chromium emulation doesn't repaint author colours; check the main flows in
   a real Windows contrast theme.
 - **`@scope` support.** Themes need CSS `@scope`; browsers without it show the default theme.

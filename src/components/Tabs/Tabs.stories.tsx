@@ -53,6 +53,8 @@ export const SecondSelected: Story = {
 
 /** Automatic activation: arrows, Home and End move focus and select; focus ring visible. */
 export const KeyboardAutomatic: Story = {
+  // Behaviour test: its screenshots were identical to SecondSelected's at every width, so it isn't captured.
+  parameters: { vrt: { screenshot: false } },
   play: async ({ canvasElement }) => {
     const canvas = within(canvasElement);
     await userEvent.tab();
@@ -71,6 +73,8 @@ export const KeyboardAutomatic: Story = {
 
 /** Manual activation: arrows move focus only; Enter selects. */
 export const KeyboardManual: Story = {
+  // Behaviour test: its screenshots were identical to SecondSelected's at every width, so it isn't captured.
+  parameters: { vrt: { screenshot: false } },
   args: { activation: 'manual' },
   play: async ({ canvasElement }) => {
     const canvas = within(canvasElement);

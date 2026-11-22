@@ -65,6 +65,8 @@ export const SingleOpen: Story = {
 
 /** Keyboard: arrows/Home/End move between headers; Enter and Space toggle. */
 export const Keyboard: Story = {
+  // Behaviour test: its screenshots were identical to SingleOpen's at every width, so it isn't captured.
+  parameters: { vrt: { screenshot: false } },
   play: async ({ canvasElement }) => {
     const canvas = within(canvasElement);
     trigger(canvas, 0).focus();
