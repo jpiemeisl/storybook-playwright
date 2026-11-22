@@ -100,16 +100,17 @@ export const PauseSubscription: Story = {
   },
 };
 
-/** Change plan: the summary appears before confirming, then the plan changes. */
+/** Change plan: the summary (next billing date, the host's rule here) appears before confirming; the change is then scheduled. */
 export const ChangePlan: Story = {
   render: () => <SubscriptionDemo id="sub-a2" />,
   play: async ({ canvasElement }) => {
     await userEvent.click(within(canvasElement).getByRole('button', { name: 'Change plan' }));
     const d = await dialog(canvasElement);
     await userEvent.click(d.getByRole('radio', { name: /^Monthly Plus/ }));
-    await expect(d.getByRole('status')).toHaveTextContent('Upgrade. Your plan changes to Monthly Plus ($28.00 / month) on Apr 15, 2026.');
+    await expect(d.getByRole('status')).toHaveTextContent('Upgrade. Your plan changes to Monthly Plus ($28.00 / month) on Apr 15, 2026. You keep Monthly until then.');
     await userEvent.click(d.getByRole('button', { name: 'Change plan' }));
-    await waitFor(() => expect(within(canvasElement).getByText('Monthly Plus plan')).toBeVisible());
+    await waitFor(() => expect(within(canvasElement).getByText(/Switches to Monthly Plus on Apr 15, 2026/)).toBeVisible());
+    await expect(within(canvasElement).getByText('Monthly plan')).toBeVisible(); // current plan kept until then
   },
 };
 

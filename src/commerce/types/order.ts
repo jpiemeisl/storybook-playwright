@@ -1,7 +1,7 @@
 import type { Money } from '../../content-types/money';
 import type { BillingInterval } from './product';
 import type { CartLine, ShippingMethod } from './cart';
-import type { SubscriptionPlanOption } from './account';
+import type { PlanChangeEffective, SubscriptionPlanOption } from './account';
 
 /** A postal address. */
 export interface Address {
@@ -131,4 +131,8 @@ export interface CustomerSubscription {
   paymentMethodSummary?: string;
   /** Plans the customer can switch to; exactly one is `current`. */
   availablePlans?: SubscriptionPlanOption[];
+  /** When plan changes take effect (the host's billing rule). Default `next-billing-date`. */
+  planChangeEffective?: PlanChangeEffective;
+  /** A plan change waiting for the next billing date. */
+  scheduledPlanChange?: { planId: string; effectiveAt: string };
 }

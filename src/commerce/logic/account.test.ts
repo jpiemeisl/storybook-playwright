@@ -104,16 +104,25 @@ describe('getPlanChangeSummary', () => {
   const [monthly, plus, quarterly, annual] = clubPlans as [SubscriptionPlanOption, SubscriptionPlanOption, SubscriptionPlanOption, SubscriptionPlanOption];
 
   it('compares yearly cost: upgrade, downgrade or switch', () => {
-    expect(getPlanChangeSummary(monthly, plus, '2026-04-15')).toEqual({
+    expect(getPlanChangeSummary(monthly, plus, { nextBillingAt: '2026-04-15' })).toEqual({
       direction: 'upgrade',
       priceDifference: { amount: 800, currency: 'USD' },
-      effectiveText: 'Your plan changes to Monthly Plus ($28.00 / month) on Apr 15, 2026. Nothing is charged today.',
+      effective: 'next-billing-date',
+      effectiveText: 'Your plan changes to Monthly Plus ($28.00 / month) on Apr 15, 2026. You keep Monthly until then. Nothing is charged today.',
     });
     expect(getPlanChangeSummary(monthly, quarterly).direction).toBe('downgrade'); // $216 a year vs $240
     expect(getPlanChangeSummary(monthly, annual).direction).toBe('downgrade');
     expect(getPlanChangeSummary(annual, plus).direction).toBe('upgrade');
     expect(getPlanChangeSummary(monthly, { ...monthly, id: 'x', name: 'Monthly (new)' }).direction).toBe('switch');
     expect(getPlanChangeSummary(monthly, quarterly).effectiveText).toMatch(/at your next billing date/);
+  });
+
+  it('the text follows the host’s timing', () => {
+    expect(getPlanChangeSummary(monthly, annual, { effective: 'immediately', nextBillingAt: '2026-04-15' })).toMatchObject({
+      effective: 'immediately',
+      effectiveText: 'Your plan changes to Annual ($192.00 / year) today. Your next charge, on Apr 15, 2026, uses the new price. Nothing is charged today.',
+    });
+    expect(getPlanChangeSummary(monthly, annual, { effective: 'immediately' }).effectiveText).toMatch(/today\. Your next charge uses the new price/);
   });
 
   it('throws on a currency mismatch', () => {

@@ -52,10 +52,16 @@ function subscriptionChange(sub: CustomerSubscription, request: SubscriptionActi
       return { sub: { ...rest, status: 'active', nextBillingAt: next, currentPeriodEnd: next }, message: `${sub.productTitle} is active again. Next charge ${formatCommerceDate(next)}.` };
     }
     case 'change-plan': {
+      // The request carries the host's timing, so what happens matches the text the customer read.
       const plan = sub.availablePlans!.find((p) => p.id === request.planId)!;
+      if (request.effective === 'next-billing-date') {
+        const effectiveAt = sub.nextBillingAt ?? today;
+        return { sub: { ...sub, scheduledPlanChange: { planId: plan.id, effectiveAt } }, message: `${sub.productTitle} switches to ${plan.name} on ${formatCommerceDate(effectiveAt)}.` };
+      }
+      const { scheduledPlanChange: _s, ...rest } = sub;
       return {
-        sub: { ...sub, plan: plan.name, price: plan.price, interval: plan.interval, availablePlans: sub.availablePlans!.map(({ current: _c, ...p }) => (p.id === plan.id ? { ...p, current: true } : p)) },
-        message: `${sub.productTitle} is now on the ${plan.name} plan from ${formatCommerceDate(sub.nextBillingAt ?? today)}.`,
+        sub: { ...rest, plan: plan.name, price: plan.price, interval: plan.interval, availablePlans: sub.availablePlans!.map(({ current: _c, ...p }) => (p.id === plan.id ? { ...p, current: true } : p)) },
+        message: `${sub.productTitle} is now on the ${plan.name} plan. Your next charge${sub.nextBillingAt ? `, on ${formatCommerceDate(sub.nextBillingAt)},` : ''} uses the new price.`,
       };
     }
     case 'cancel': {

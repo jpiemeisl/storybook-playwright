@@ -5,7 +5,7 @@
 import type { Money } from '../../content-types/money';
 import { formatMoney } from '../../utils/formatMoney';
 import type { CustomerSubscription, Order, OrderStatus } from '../types/order';
-import type { Invoice, LibraryItem, SavedAddress, SubscriptionPlanOption, WishlistItem } from '../types/account';
+import type { Invoice, LibraryItem, PlanChangeEffective, SavedAddress, SubscriptionPlanOption, WishlistItem } from '../types/account';
 import type { BillingInterval } from '../types/product';
 import type { SummaryRow } from './cartSummary';
 import { subtract } from './money';
@@ -183,24 +183,44 @@ export interface PlanChangeSummary {
   direction: 'upgrade' | 'downgrade' | 'switch';
   /** Next plan's price per cycle minus the current one's (may be negative). */
   priceDifference: Money;
-  /** e.g. "Your plan changes to Annual ($192.00 / year) on Apr 1, 2026. Nothing is charged today." */
+  /** When it takes effect (from the host's rule). */
+  effective: PlanChangeEffective;
+  /**
+   * Matches `effective`, e.g. "Your plan changes to Annual ($192.00 / year) on Apr 1, 2026. You keep
+   * Monthly until then. Nothing is charged today." or "Your plan changes to Annual ($192.00 / year)
+   * today. Your next charge, on Apr 1, 2026, uses the new price. Nothing is charged today."
+   */
   effectiveText: string;
+}
+
+export interface PlanChangeOptions {
+  /** Default `next-billing-date`. */
+  effective?: PlanChangeEffective;
+  /** ISO date of the next charge. */
+  nextBillingAt?: string;
 }
 
 /**
  * Compares two plans by their yearly cost (exact integer cross-multiplication): more is an upgrade,
- * less a downgrade, equal a switch. The change takes effect at the next billing date: no proration.
- * Throws CurrencyMismatchError when the plans use different currencies.
+ * less a downgrade, equal a switch. The text follows `effective` (the host's rule); neither timing
+ * prorates, so nothing is charged today. Throws CurrencyMismatchError when the plans use different
+ * currencies.
  */
-export function getPlanChangeSummary(current: SubscriptionPlanOption, next: SubscriptionPlanOption, effectiveAt?: string): PlanChangeSummary {
+export function getPlanChangeSummary(current: SubscriptionPlanOption, next: SubscriptionPlanOption, options: PlanChangeOptions = {}): PlanChangeSummary {
+  const effective = options.effective ?? 'next-billing-date';
   const priceDifference = subtract(next.price, current.price);
   const [cn, cd] = cyclesPerYear(current.interval);
   const [nn, nd] = cyclesPerYear(next.interval);
   const a = BigInt(next.price.amount) * BigInt(nn) * BigInt(cd);
   const b = BigInt(current.price.amount) * BigInt(cn) * BigInt(nd);
   const direction = a > b ? 'upgrade' : a < b ? 'downgrade' : 'switch';
-  const when = effectiveAt ? `on ${formatCommerceDate(effectiveAt)}` : 'at your next billing date';
-  return { direction, priceDifference, effectiveText: `Your plan changes to ${next.name} (${formatRecurring(next.price, next.interval)}) ${when}. Nothing is charged today.` };
+  const plan = `${next.name} (${formatRecurring(next.price, next.interval)})`;
+  const date = options.nextBillingAt ? formatCommerceDate(options.nextBillingAt) : undefined;
+  const effectiveText =
+    effective === 'immediately'
+      ? `Your plan changes to ${plan} today. Your next charge${date ? `, on ${date},` : ''} uses the new price. Nothing is charged today.`
+      : `Your plan changes to ${plan} ${date ? `on ${date}` : 'at your next billing date'}. You keep ${current.name} until then. Nothing is charged today.`;
+  return { direction, priceDifference, effective, effectiveText };
 }
 
 // -------------------------------------------------------------------------------- invoices, addresses

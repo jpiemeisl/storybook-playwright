@@ -15,6 +15,13 @@ export interface Customer {
   createdAt: string;
 }
 
+/**
+ * When a plan change takes effect. The host decides (it knows its billing provider) and the copy
+ * follows: `immediately` switches now and the next charge uses the new price; `next-billing-date`
+ * keeps the current plan until the next charge. Neither prorates.
+ */
+export type PlanChangeEffective = 'immediately' | 'next-billing-date';
+
 /** A plan a subscription can switch to. Exactly one in a list is `current`. */
 export interface SubscriptionPlanOption {
   id: string;

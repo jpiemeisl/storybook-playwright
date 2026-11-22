@@ -8,6 +8,7 @@ import { Radio, RadioGroup } from '../../../components/Radio';
 import { Textarea } from '../../../components/Textarea';
 import { computePauseResumeDate, getPlanChangeSummary, getSubscriptionActions, type PauseMonths, type SubscriptionAction } from '../../logic/account';
 import { formatCommerceDate, formatRecurring } from '../../logic/pricing';
+import type { PlanChangeEffective } from '../../types/account';
 import type { CustomerSubscription } from '../../types/order';
 import styles from './ManageSubscription.module.css';
 
@@ -15,7 +16,7 @@ import styles from './ManageSubscription.module.css';
 export type SubscriptionActionRequest =
   | { type: 'pause'; months: PauseMonths; resumesOn: string }
   | { type: 'resume' }
-  | { type: 'change-plan'; planId: string }
+  | { type: 'change-plan'; planId: string; effective: PlanChangeEffective }
   | { type: 'cancel'; reason?: string; comment?: string }
   | { type: 'undo-cancel' }
   | { type: 'reactivate' }
@@ -100,7 +101,7 @@ export function ManageSubscription({ subscription: sub, now, onAction, status = 
   };
 
   const nextPlan = sub.availablePlans?.find((p) => p.id === planId);
-  const summary = current && nextPlan && !nextPlan.current ? getPlanChangeSummary(current, nextPlan, sub.nextBillingAt) : null;
+  const summary = current && nextPlan && !nextPlan.current ? getPlanChangeSummary(current, nextPlan, { effective: sub.planChangeEffective, nextBillingAt: sub.nextBillingAt }) : null;
 
   const dialogs: Record<Exclude<Dialog, null>, { title: string; body: ReactNode; footer: ReactNode }> = {
     pause: {
@@ -128,7 +129,7 @@ export function ManageSubscription({ subscription: sub, now, onAction, status = 
           </p>
         </>
       ),
-      footer: confirm('Change plan', () => ({ type: 'change-plan', planId }), !summary),
+      footer: confirm('Change plan', () => ({ type: 'change-plan', planId, effective: sub.planChangeEffective ?? 'next-billing-date' }), !summary),
     },
     cancel: {
       title: `Cancel ${sub.productTitle}?`,
@@ -207,7 +208,7 @@ function outcome(r: SubscriptionActionRequest, sub: CustomerSubscription): strin
     case 'resume':
       return `${sub.productTitle} is active again.`;
     case 'change-plan':
-      return `Plan change saved for ${sub.productTitle}.`;
+      return r.effective === 'immediately' ? `${sub.productTitle} plan changed.` : `Plan change scheduled for ${sub.productTitle}${sub.nextBillingAt ? ` on ${formatCommerceDate(sub.nextBillingAt)}` : ''}.`;
     case 'cancel':
       return `${sub.productTitle} will be cancelled at the end of this period.`;
     case 'undo-cancel':
