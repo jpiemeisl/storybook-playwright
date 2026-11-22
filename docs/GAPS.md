@@ -57,7 +57,8 @@ One list of everything earlier phases deferred or left open, gathered from the g
 - **Resolved (Phase 14):** heavy multi-capture stories timed out under load; per-test timeouts now scale with the number of captures. Three consecutive full runs had zero diffs.
 - **Resolved (Phase 14):** an internal `<Link target="_blank">` now gets `rel="noopener"` like external links.
 - **Resolved (Phase 14):** four stories whose screenshots were byte-identical to a sibling at every width (Gallery Without Lightbox, Tabs Keyboard Automatic and Keyboard Manual, Accordion Keyboard) now use `vrt.screenshot: false`: 11 fewer captures, play tests kept.
-- **Open:** CI with a fixed Playwright Docker image and Linux baselines (baselines are Windows-only, platform-less names).
+- **Resolved (Phase 15):** a fixed Playwright Docker image (pinned by digest) and Linux baselines, with pinned fonts. **Open:** running it in CI.
+- **Open (found in Phase 15):** horizontal overflow at 375 px in Blog Post Layout, Blog index, All Blocks and Contact.
 - **Open:** publishing and versioning the package.
 - **Open:** real CMS adapters and a backend integration guide.
 - **Open:** multi-currency and i18n.

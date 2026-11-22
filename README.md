@@ -11,13 +11,15 @@ every gap in [docs/GAPS.md](docs/GAPS.md).
 
 ## Quickstart
 
-Requires Node 20.19+ (developed on Node 24).
+Requires Node 26 (`.nvmrc`; the same major as the Playwright image) and Docker for the visual suites.
 
 ```sh
 npm install
 npx playwright install chromium
 npm run storybook          # http://localhost:6006; start at "Demo shop / Checkpoints / Home"
 npm run check:all          # types, rules, library build, unit tests, Storybook build
+npm run docker:pull        # once: the pinned Playwright image for visual tests
+npm run test:vrt:docker    # the visual suite, in the container
 ```
 
 The **demo shop** (`Demo shop/Checkpoints/Home`) is a complete, clickable shop assembled only from
@@ -51,14 +53,20 @@ How the pieces fit: [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md). How to add to 
 | `npm run check:boundaries` | Fails if core imports `src/commerce`, or anything under `src/` imports `demo/` |
 | `npm run check:tokens` | Fails if CSS outside `src/tokens` uses primitive colour, radius, shadow or font tokens, or raw colours (allowlist: `scripts/check-tokens.allow.json`, empty) |
 | `npm run check:themes` | Fails if a theme misses a colour token, adds unknown tokens or references a missing primitive |
+| `npm run check:playwright-image` | Fails when `docker/image.json` pins a different Playwright version than the installed `@playwright/test` |
+| `npm run check:snapshots` | After a Storybook build: fails when a baseline file belongs to no test (renamed or deleted story); `--delete` removes them |
 | `npm run check:story-tags` | After a Storybook build: fails when a main story lacks its expected screenshot tags |
 | `npm run build:lib` | Library build into `dist/`: core and commerce ES modules, CSS, token and theme CSS, type declarations |
 | `npm run check:lib` | After `build:lib`: no commerce, demo or fixture code in core; commerce imports core as an external; no storage, cookie or fetch use; every export declared; bundle sizes |
 | `npm run docs:components` | Regenerates [docs/COMPONENTS.md](docs/COMPONENTS.md) from the Storybook index (`-- --check` fails when stale) |
 | `npm run docs:content-model` | Regenerates [docs/content-model.md](docs/content-model.md) from the content-type JSDoc |
 | `npm run test:unit` | Vitest unit tests for pure logic (validators, registry, adapters, commerce logic, demo reducers, router) |
-| `npm run test:vrt` | Builds Storybook, then compares every story with the committed baselines (play functions and axe run too) |
-| `npm run test:vrt:update` | Builds Storybook, then rewrites failing or missing baselines |
+| `npm run docker:pull` / `docker:shell` | Pull the pinned image / open a shell in the container |
+| `npm run test:vrt:docker` | **The visual suite**: in the container, builds Storybook, then compares every story with the committed baselines (play functions and axe run too) |
+| `npm run test:vrt:docker:update` | In the container: rewrites failing or missing baselines (the only way to write baselines) |
+| `npm run test:vrt:docker:smoke` / `test:a11y:docker` | The smoke subset / the accessibility suite, in the container |
+| `npm run test:vrt` | The same suite on the host (warns on Windows and macOS: host fonts differ from the baselines) |
+| `npm run test:vrt:update` | Refuses to run outside the container (use `test:vrt:docker:update`) |
 | `npm run test:vrt:smoke` | Builds Storybook, then only `theme-smoke` and `vrt-full` stories, default theme, 1280 px |
 | `npm run test:vrt:changed -- "<pattern>"` | Builds Storybook, then only tests whose title matches (e.g. a story title prefix) |
 | `npm run test:vrt:flaky -- "<pattern>"` | No build: runs matching tests five times each with no retries, to expose flaky stories |
@@ -68,8 +76,8 @@ How the pieces fit: [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md). How to add to 
 ## Release checklist
 
 1. `npm run check:all`
-2. `npm run test:vrt`: must pass with zero diffs. Inspect any baseline you changed on purpose.
-3. `npm run test:a11y`
+2. `npm run test:vrt:docker`: must pass with zero diffs. Inspect any baseline you changed on purpose.
+3. `npm run test:a11y:docker`
 4. Update the docs the change touches (component JSDoc, `docs/*.md`, [docs/GAPS.md](docs/GAPS.md)).
 5. Commit baselines together with the change that caused them; never merge a PR with unexplained
    baseline changes.
@@ -366,6 +374,55 @@ backend: the types are the contract for future adapters.
 
   See [`docs/commerce-account.md`](docs/commerce-account.md).
 
+## Visual testing with Docker
+
+Every baseline is rendered in one pinned Linux container, so screenshots match on every machine and anyone
+can update them. Details, the font pinning and how to bump Playwright: [docs/testing.md](docs/testing.md).
+
+**Prerequisites:** Docker Desktop with the WSL 2 backend on Windows (Linux containers mode), Docker Desktop
+on macOS, or Docker Engine on Linux. Rancher Desktop or Podman (with the `docker` CLI shim) work too.
+
+**First run:**
+
+```sh
+npm run docker:pull          # the image pinned in docker/image.json (about 1 GB, once)
+npm run test:vrt:docker      # the first run also installs node_modules into a Docker volume
+```
+
+**Daily commands** (extra arguments pass through to Playwright):
+
+| Command | What it does |
+| --- | --- |
+| `npm run test:vrt:docker` | Build Storybook and run the visual suite in the container |
+| `npm run test:vrt:docker -- --shard=1/3` | One shard (or `-- -g "<story title prefix>"` for a subset) |
+| `npm run test:vrt:docker:smoke` | The smoke subset in the container |
+| `npm run test:vrt:docker:update` | Rewrite failing or missing baselines (add `-- --update-snapshots=all` after a token change) |
+| `npm run test:a11y:docker` | The accessibility suite in the container |
+| `npm run docker:shell` | An interactive shell in the container (repo at `/work`) |
+
+**The rule:** baselines are only ever written inside the container. `test:vrt:update` and any
+`--update-snapshots` run refuse to write on the host (emergency override: `PW_ALLOW_HOST_UPDATE=1`, see
+[docs/testing.md](docs/testing.md)). `npm run test:vrt` on Windows or macOS still runs, with a warning: host
+fonts differ, so failures there are expected.
+
+**Performance:** the repo is bind-mounted into the container. On Windows, a clone inside the WSL file
+system (for example `\\wsl$\Ubuntu\home\<you>\storybook-playwright`, used from a WSL shell) makes the bind
+mount much faster than a clone on a Windows drive.
+
+**Troubleshooting:**
+
+- **Dependencies look wrong or stale:** remove the node_modules volume and the next run reinstalls it.
+  `docker volume ls` lists it as `storybook-playwright-node-modules-<hash>`; remove it with
+  `docker volume rm <name>`.
+- **The image pull fails:** check proxies, disk space and that the tag and digest in `docker/image.json`
+  exist (`docker buildx imagetools inspect mcr.microsoft.com/playwright:<tag>`). No login is needed for
+  `mcr.microsoft.com`.
+- **"Cannot connect to the Docker daemon" or "pipe not found":** start Docker Desktop and switch to Linux
+  containers (`docker context use desktop-linux`).
+- **Files owned by root on Linux:** the runner passes your uid:gid. Fix files from older runs with
+  `sudo chown -R $(id -u):$(id -g) tests/visual/__screenshots__ test-results storybook-static`.
+- **Timeouts:** a slow bind mount (see Performance) or a busy machine; try `-- --workers=4`.
+
 ## Visual regression testing
 
 `tests/visual/stories.spec.ts` reads `storybook-static/index.json` and generates one test per story.
@@ -442,13 +499,13 @@ Play functions in `vrt-full` stories run at 375, 768 and 1280. Write them so the
 (query elements that are visible at all sizes, or use `{ hidden: true }` when only asserting attributes),
 or pin the story's viewports with the `vrt` parameter.
 
-Baselines live in `tests/visual/__screenshots__/` and are named `<story-id>-<width>.png`. They have no
-platform suffix because they are generated on a single Windows machine; screenshots from another OS
-will differ in font rendering, so regenerate them on the machine that runs the tests.
+Baselines live in `tests/visual/__screenshots__/` and are named `<story-id>-<width>.png` (plus
+`-<theme>` for theme captures). They have no platform suffix: they are all rendered in the pinned Linux
+container (see "Visual testing with Docker").
 
 ### Reviewing a failure
 
-1. `npm run test:vrt`
+1. `npm run test:vrt:docker`
 2. `npm run test:vrt:report` and open the failing test. The report shows expected, actual and a diff
    (use the slider or "Diff" view).
 3. If the change is a bug, fix it and re-run. If it is intended, update the baselines.
@@ -456,7 +513,7 @@ will differ in font rendering, so regenerate them on the machine that runs the t
 ### Updating baselines
 
 ```sh
-npm run test:vrt:update
+npm run test:vrt:docker:update
 git diff --stat tests/visual/__screenshots__
 ```
 
@@ -467,8 +524,7 @@ change that caused them, so each baseline update is reviewable alongside its cau
 (e.g. a slightly darker grey) are left stale. After a token change, rewrite everything:
 
 ```sh
-npm run build-storybook
-npx playwright test --update-snapshots=all
+npm run test:vrt:docker:update -- --update-snapshots=all
 ```
 
 ### Accessibility exceptions
@@ -481,9 +537,12 @@ Every story runs axe with the standard rule set. One story disables a rule:
 
 ### Subsets, shards and speed
 
-The full suite captures every story (about 1,640 screenshots) and takes about 8.5 minutes on the
-maintainer's 16-thread machine with 8 workers (`workers: '50%'` in `playwright.config.ts`). The smoke subset
-takes about 2.7 minutes and `test:a11y` about 8.5 minutes.
+The full suite captures every story (about 1,630 screenshots). On the maintainer's 16-thread Windows
+machine with 8 workers (`workers: '50%'` in `playwright.config.ts`), `test:vrt:docker` takes about 17
+minutes end to end: about 7 minutes to build Storybook through the bind mount, then about 9.5 minutes of
+tests (the host run took about 8.5 minutes of tests). In the container the smoke subset takes about 6
+minutes (3.4 of them tests) and `test:a11y:docker` about 13 minutes (8.7 of them tests). A clone inside the
+WSL file system makes the build step much faster (see "Visual testing with Docker").
 
 - **Smoke:** `npm run test:vrt:smoke` runs only stories tagged `theme-smoke` or `vrt-full` (Playwright
   tag `@smoke`), default theme, desktop width, against the same baselines. Use it while iterating.
@@ -506,10 +565,7 @@ A story is flaky when its screenshot or play function differs between runs of th
    waits for `document.fonts.ready` and every image), focus rings left from a play function (blur or
    assert focus deliberately), scroll position left over, and animations (disabled for screenshots).
 
-### Windows notes
+### Line endings
 
-Baselines are generated on a single Windows machine and their names have no platform suffix
-(`snapshotPathTemplate` in `playwright.config.ts`). Font rendering differs on other systems, so run the
-visual suite on Windows, or regenerate every baseline in one environment (a pinned Playwright Docker
-image is the plan for CI; see the roadmap). Files are committed with CRLF line endings by Git; scripts
-split lines on `\r?\n`.
+`.gitattributes` stores and checks out text files with LF on every OS (`* text=auto eol=lf`) and marks
+images and archives as binary, so the container and every host see identical files.
