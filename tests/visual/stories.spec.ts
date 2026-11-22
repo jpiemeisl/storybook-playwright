@@ -1,6 +1,7 @@
 import { existsSync, readFileSync } from 'node:fs';
 import { resolve } from 'node:path';
 import { expect, test, type Page } from '@playwright/test';
+import { themes } from '../../src/components/Theme/themes';
 
 /*
  * One visual regression test per Storybook story, generated from storybook-static/index.json.
@@ -12,6 +13,11 @@ import { expect, test, type Page } from '@playwright/test';
  *        vrt-mobile - 1280 plus 375
  *        vrt-full   - 375, 768 and 1280 as full-page screenshots
  *   3. default: 1280×800 viewport screenshot
+ *
+ * Themes: stories tagged `theme-smoke` are also captured in every non-default theme (from the exported
+ * `themes` list), at 1280 and 375 (and 768 when also tagged vrt-full), loaded with
+ * `&globals=theme:<name>`. Their snapshots are named `<id>-<width>-<theme>.png`; default-theme names
+ * stay `<id>-<width>.png`. `parameters.vrt.themes` overrides the list (e.g. [] to opt out).
  *
  * Screenshots are taken only after Storybook's `storyFinished` event, which fires once the story has
  * rendered, its play function has completed and the a11y addon has run axe. A failed play function
@@ -37,7 +43,7 @@ type ViewportParam = number | { width: number; height?: number; fullPage?: boole
 interface StoryResult {
   status: 'success' | 'error' | 'missing';
   /** viewports: override the tag viewports. screenshot: false runs play + a11y checks only. */
-  vrt: { viewports?: ViewportParam[]; screenshot?: boolean } | null;
+  vrt: { viewports?: ViewportParam[]; screenshot?: boolean; themes?: string[] } | null;
   problems: string[];
 }
 
@@ -147,9 +153,18 @@ async function settlePage(page: Page) {
   });
 }
 
-/** First load of the story iframe. */
-async function openStory(page: Page, id: string): Promise<StoryResult> {
-  await page.goto(`/iframe.html?id=${id}&viewMode=story`);
+const EXTRA_THEMES = themes.map((t) => t.name).filter((name) => name !== 'default');
+
+/** Theme captures: desktop and mobile (tablet only for vrt-full), full-page when the story's captures are. */
+function themeCaptures(captures: Capture[], tags: string[] = []): Capture[] {
+  const fullPage = captures.some((c) => c.fullPage);
+  const widths = [1280, 375, ...(tags.includes('vrt-full') ? [768] : [])];
+  return widths.map((width) => captures.find((c) => c.width === width) ?? { width, height: 800, fullPage });
+}
+
+/** First load of the story iframe (optionally in a theme, via the `theme` global). */
+async function openStory(page: Page, id: string, theme?: string): Promise<StoryResult> {
+  await page.goto(`/iframe.html?id=${id}&viewMode=story${theme ? `&globals=theme:${theme}` : ''}`);
   const result = await page.evaluate(() => window.__vrtStoryResult!);
   await settlePage(page);
   return result;
@@ -221,6 +236,19 @@ for (const story of stories) {
         }
         await expect(page).toHaveScreenshot(`${story.id}-${capture.width}.png`, { fullPage: capture.fullPage });
       });
+    }
+
+    const extraThemes = probe.vrt?.themes ?? (story.tags?.includes('theme-smoke') ? EXTRA_THEMES : []);
+    for (const theme of extraThemes.filter((t) => t !== 'default')) {
+      for (const capture of themeCaptures(captures, story.tags)) {
+        await test.step(`${theme} ${capture.width}px`, async () => {
+          await page.setViewportSize({ width: capture.width, height: capture.height });
+          const result = await openStory(page, story.id, theme);
+          expectClean(result, story.id, capture.width);
+          await expect(page.locator('html')).toHaveAttribute('data-theme', theme);
+          await expect(page).toHaveScreenshot(`${story.id}-${capture.width}-${theme}.png`, { fullPage: capture.fullPage });
+        });
+      }
     }
     expect(external, 'external network requests').toEqual([]);
   });

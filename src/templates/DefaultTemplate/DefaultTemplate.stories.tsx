@@ -19,7 +19,7 @@ type Story = StoryObj<typeof meta>;
 
 // Tags are written literally on each story (Storybook reads them statically; see check:story-tags).
 
-export const Home: Story = { args: { name: 'home' }, tags: ['!vrt-mobile', 'vrt-full'] };
+export const Home: Story = { args: { name: 'home' }, tags: ['!vrt-mobile', 'vrt-full', 'theme-smoke'] };
 export const About: Story = {
   args: { name: 'about' },
   tags: ['!vrt-mobile', 'vrt-full'],

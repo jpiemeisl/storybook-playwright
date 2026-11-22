@@ -19,7 +19,7 @@ export default meta;
 type Story = StoryObj<{ onQuickAdd: () => void }>;
 
 /** Every kind and state: sale, sold out, low stock, no image, long title, price extremes, with and without ratings, both quick actions. */
-export const Matrix: Story = {
+export const Matrix: Story = { tags: ['theme-smoke'],
   render: (args) => (
     <Grid as="ul" columns={{ base: 2, md: 3, lg: 5 }} gap="md" style={{ listStyle: 'none', padding: 0, margin: 0 }}>
       {cards.map((product, i) => (

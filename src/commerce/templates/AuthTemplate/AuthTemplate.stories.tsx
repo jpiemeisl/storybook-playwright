@@ -25,7 +25,7 @@ const submitEmpty = (label: string): Story['play'] => async ({ canvasElement }) 
 
 /** Sign in on the minimal layout; the CSRF token from ctx is in the form. */
 export const Login: Story = {
-  tags: ['vrt-full'],
+  tags: ['vrt-full', 'theme-smoke'],
   parameters: { layout: 'fullscreen' },
   play: async ({ canvasElement }) => {
     await expectHeadingOutline(canvasElement);

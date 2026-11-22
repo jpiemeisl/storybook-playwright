@@ -8,7 +8,7 @@ export default meta;
 type Story = StoryObj<Record<string, never>>;
 
 /** Order statuses (including a digital-only order) and subscription statuses: text and icon, never colour alone. */
-export const Matrix: Story = {
+export const Matrix: Story = { tags: ['theme-smoke'],
   render: () => (
     <div style={{ display: 'grid', gap: '1rem' }}>
       <div>

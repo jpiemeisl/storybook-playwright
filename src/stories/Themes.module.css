@@ -1,0 +1,48 @@
+@layer components {
+  .page {
+    padding-block: var(--gap-xl);
+  }
+
+  .nested {
+    display: grid;
+    gap: var(--gap-md);
+    margin-block-start: var(--gap-lg);
+    padding: var(--gap-lg);
+    border: var(--border-width-card) solid var(--color-border);
+    border-radius: var(--radius-surface);
+  }
+
+  .sample {
+    display: grid;
+    gap: var(--gap-sm);
+  }
+
+  .heading {
+    margin: 0;
+    font-size: var(--text-size-lg);
+    font-weight: var(--text-weight-heading);
+  }
+
+  .sample p {
+    margin: 0;
+  }
+
+  .muted {
+    color: var(--color-text-muted);
+  }
+
+  .row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--gap-sm);
+  }
+
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(18rem, 100%), 1fr));
+  }
+
+  .column {
+    min-inline-size: 0;
+  }
+}

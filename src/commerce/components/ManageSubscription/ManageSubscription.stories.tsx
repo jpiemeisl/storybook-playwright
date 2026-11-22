@@ -50,7 +50,7 @@ export const ChangePlanDialog: Story = {
   },
 };
 /** The cancel dialog focuses "Keep subscription" first; Escape closes it and focus returns to the button. */
-export const CancelDialog: Story = {
+export const CancelDialog: Story = { tags: ['theme-smoke'],
   args: { sub: 'withPlans' },
   play: async (context) => {
     const opener = within(context.canvasElement).getByRole('button', { name: 'Cancel subscription' });

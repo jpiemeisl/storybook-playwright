@@ -40,7 +40,7 @@ export const FirstExpanded: Story = {
 };
 
 /** allowMultiple: opening a second panel keeps the first open. */
-export const SeveralExpanded: Story = {
+export const SeveralExpanded: Story = { tags: ['theme-smoke'],
   args: { allowMultiple: true },
   play: async ({ canvasElement }) => {
     const canvas = within(canvasElement);

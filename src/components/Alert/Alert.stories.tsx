@@ -18,7 +18,7 @@ const meta = {
 export default meta;
 type Story = StoryObj<typeof meta>;
 
-export const Tones: Story = {
+export const Tones: Story = { tags: ['theme-smoke'],
   render: () => (
     <div style={{ display: 'grid', gap: 'var(--gap-md)', maxInlineSize: '40rem' }}>
       <Alert tone="info" title="Office closed on Monday">We’re closed for the public holiday. Replies resume on Tuesday.</Alert>

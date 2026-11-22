@@ -60,7 +60,7 @@ async function openModal(canvasElement: HTMLElement) {
 export const Closed: Story = {};
 
 /** Focus moves into the dialog on open; the dialog is named and described. */
-export const Open: Story = {
+export const Open: Story = { tags: ['theme-smoke'],
   play: async ({ canvasElement }) => {
     const dialog = await openModal(canvasElement);
     await expect(dialog).toHaveAccessibleName('Pause your plan?');

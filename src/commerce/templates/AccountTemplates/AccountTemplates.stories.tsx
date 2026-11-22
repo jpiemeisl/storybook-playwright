@@ -20,7 +20,7 @@ const outline: Story['play'] = async ({ canvasElement }) => expectHeadingOutline
 const r = (el: ReactElement) => () => el;
 
 // Main screenshots (vrt-full).
-export const DashboardRich: Story = { tags: ['vrt-full'], parameters: { layout: 'fullscreen' }, render: r(<AccountDashboardTemplate page={dashboardPage('calm')} chrome={chrome} ctx={ctx('/account')} />), play: outline };
+export const DashboardRich: Story = { tags: ['vrt-full', 'theme-smoke'], parameters: { layout: 'fullscreen' }, render: r(<AccountDashboardTemplate page={dashboardPage('calm')} chrome={chrome} ctx={ctx('/account')} />), play: outline };
 export const Orders: Story = {
   tags: ['vrt-full'],
   parameters: { layout: 'fullscreen' },

@@ -39,7 +39,7 @@ export const Playground: Story = {
   tags: ['skip-vrt'],
 };
 
-export const Tones: Story = {
+export const Tones: Story = { tags: ['theme-smoke'],
   render: (args) => <AllTones {...args} />,
 };
 

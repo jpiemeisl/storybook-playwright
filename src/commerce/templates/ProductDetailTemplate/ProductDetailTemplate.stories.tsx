@@ -68,7 +68,7 @@ type Story = StoryObj<typeof meta>;
 // viewports apply (`undefined` would not: Storybook keeps the meta value when merging).
 const full = { layout: 'fullscreen', vrt: { viewports: [] } };
 
-export const PhysicalWithVariants: Story = { tags: ['!vrt-mobile', 'vrt-full'], parameters: full, args: { name: 'variants' } };
+export const PhysicalWithVariants: Story = { tags: ['!vrt-mobile', 'vrt-full', 'theme-smoke'], parameters: full, args: { name: 'variants' } };
 export const DigitalSingleFile: Story = { tags: ['!vrt-mobile', 'vrt-full'], parameters: full, args: { name: 'digital' } };
 export const MonthlySubscription: Story = { tags: ['!vrt-mobile', 'vrt-full'], parameters: full, args: { name: 'monthly' } };
 export const SimplePhysical: Story = { args: { name: 'simple' } };

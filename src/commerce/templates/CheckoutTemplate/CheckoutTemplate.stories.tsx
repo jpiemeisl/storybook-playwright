@@ -29,7 +29,7 @@ const outline: Story['play'] = async ({ canvasElement }) => expectHeadingOutline
 // Mixed cart: every step (information, payment and review are the main screenshots).
 export const MixedInformation: Story = { tags: ['vrt-full'], parameters: { layout: 'fullscreen' }, play: outline };
 export const MixedShipping: Story = { tags: ['vrt-mobile'], parameters: mobile, args: { step: 'shipping' } };
-export const MixedPayment: Story = { tags: ['vrt-full'], parameters: { layout: 'fullscreen' }, args: { step: 'payment' }, play: outline };
+export const MixedPayment: Story = { tags: ['vrt-full', 'theme-smoke'], parameters: { layout: 'fullscreen' }, args: { step: 'payment' }, play: outline };
 export const MixedReview: Story = { tags: ['vrt-full'], parameters: { layout: 'fullscreen' }, args: { step: 'review' }, play: outline };
 
 // Physical only.

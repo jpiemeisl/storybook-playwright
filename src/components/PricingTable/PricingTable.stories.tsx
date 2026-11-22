@@ -17,7 +17,7 @@ const meta = {
 export default meta;
 type Story = StoryObj<typeof meta>;
 
-export const Monthly: Story = {
+export const Monthly: Story = { tags: ['theme-smoke'],
   play: async ({ canvasElement }) => {
     const canvas = within(canvasElement);
     await expect(canvas.getByRole('radio', { name: 'Monthly' })).toBeChecked();
