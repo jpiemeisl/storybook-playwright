@@ -95,3 +95,4 @@ export * from './utils';
 // Shared types
 export type { Gap } from './components/gap';
 export type { PolymorphicProps } from './components/polymorphic';
+export { blockTypes as THROWAWAY_EXPORT } from './content-types';
