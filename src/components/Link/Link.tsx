@@ -40,7 +40,7 @@ export function Link({
 
   if (!isExternal) {
     return (
-      <LinkComponent href={href} className={classes} rel={rel} target={target} {...rest}>
+      <LinkComponent href={href} className={classes} rel={target === '_blank' ? [...new Set(['noopener', ...(rel?.split(/\s+/).filter(Boolean) ?? [])])].join(' ') : rel} target={target} {...rest}>
         {children}
       </LinkComponent>
     );

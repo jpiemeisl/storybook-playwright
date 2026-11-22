@@ -246,7 +246,3 @@ export const articleToc: TocItem[] = articleBlocks
   .map((block) => ({ id: block.id, label: block.text, level: block.type === 'h2' ? 2 : 3 }));
 
 /** Approximate word count of the long article (for the fixture brief: about 1,200 words). */
-export const articleWordCount = articleBlocks
-  .map((block) => ('text' in block ? block.text : 'code' in block ? block.code : ''))
-  .join(' ')
-  .split(/\s+/).length;

@@ -15,9 +15,15 @@ import { installStoryListener, openStory } from '../support/storybook';
 const indexPath = resolve(process.cwd(), 'storybook-static', 'index.json');
 if (!existsSync(indexPath)) throw new Error('Run `npm run build-storybook` first (npm run test:a11y builds for you).');
 const index = JSON.parse(readFileSync(indexPath, 'utf8')) as { entries: Record<string, { id: string; title: string; name: string; type: string; tags?: string[] }> };
-const smoke = Object.values(index.entries).filter((e) => e.type === 'story' && e.tags?.includes('theme-smoke'));
+const stories = Object.values(index.entries).filter((e) => e.type === 'story');
+const smoke = stories.filter((e) => e.tags?.includes('theme-smoke'));
+/** The demo shop's checkpoint stories (journeys and keyboard stories are behaviour tests run by test:vrt). */
+const shop = stories.filter((e) => e.title === 'Demo shop/Checkpoints');
 
-test('the smoke set is not empty', () => expect(smoke.length).toBeGreaterThan(20));
+test('the smoke and shop sets are not empty', () => {
+  expect(smoke.length).toBeGreaterThan(20);
+  expect(shop.length).toBeGreaterThan(8);
+});
 
 for (const { name: theme } of themes) {
   for (const story of smoke) {
@@ -29,5 +35,23 @@ for (const { name: theme } of themes) {
       expect(result.status).toBe('success');
       await expect(page.locator('html')).toHaveAttribute('data-theme', theme);
     });
+  }
+}
+
+/** The demo shop checkpoints in every theme, at desktop and phone width. */
+for (const { name: theme } of themes) {
+  for (const story of shop) {
+    for (const width of [1280, 375]) {
+      test(`shop ${theme} ${width} › ${story.name}`, async ({ page }) => {
+        await page.addInitScript(installStoryListener);
+        await page.setViewportSize({ width, height: 800 });
+        const result = await openStory(page, story.id, theme);
+        // A story that declares its viewports (e.g. phone-only) is checked only at those widths.
+        const declared = result.vrt?.viewports?.map((v) => (typeof v === 'number' ? v : v.width));
+        test.skip(!!declared && !declared.includes(width), `${story.id} declares viewports ${declared}`);
+        expect(result.problems, `axe and play results for ${story.id} in ${theme} at ${width}px`).toEqual([]);
+        expect(result.status).toBe('success');
+      });
+    }
   }
 }

@@ -3,7 +3,6 @@
  * ever loaded. External URLs below are link targets or embed URLs that are only used after a user
  * explicitly activates an embed, which the stories never do for real.
  */
-import { createElement as h } from 'react';
 import type {
   AuthorContent,
   CategoryItem,
@@ -275,4 +274,3 @@ export const extraArticle: ArticleCardContent = {
 
 /* ---------- Small rich-text snippets ---------- */
 
-export const shortBio = h('p', null, 'Ana writes about month-end close, cash flow and the habits that keep books clean.');

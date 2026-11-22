@@ -18,10 +18,6 @@ export function cartView(key: CartFixtureKey) {
 }
 
 /** The `amounts` for one line of a cart. */
-export function amountsFor(cart: Cart, lineId: string): CartTotals['lines'][number] {
-  return totalsFor(cart).lines.find((l) => l.lineId === lineId)!;
-}
-
 const handles = new Map(products.map((p) => [p.id, p.handle]));
 export const lineHref = (line: CartLine) => `/products/${handles.get(line.productId) ?? line.productId}`;
 
