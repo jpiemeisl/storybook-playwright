@@ -1,66 +1,119 @@
 # storybook-playwright
 
-A React component pattern library: Vite + React + TypeScript (strict), documented in Storybook and
-protected by Playwright visual regression tests that run against every story.
+A React pattern library for content sites and small shops: presentational components, page templates, a
+CMS-agnostic content model, an optional commerce layer and themes, documented in Storybook and protected
+by Playwright visual regression and accessibility tests that run against every story. Built with Vite,
+React and strict TypeScript. The package is private and unpublished; `npm run build:lib` verifies that
+it builds as a library.
 
-## Setup
+**Status:** phases 1 to 14 are done. Open items are in [docs/ROADMAP.md](docs/ROADMAP.md), and the history of
+every gap in [docs/GAPS.md](docs/GAPS.md).
+
+## Quickstart
 
 Requires Node 20.19+ (developed on Node 24).
 
 ```sh
 npm install
 npx playwright install chromium
+npm run storybook          # http://localhost:6006; start at "Demo shop / Checkpoints / Home"
+npm run check:all          # types, rules, library build, unit tests, Storybook build
 ```
+
+The **demo shop** (`Demo shop/Checkpoints/Home`) is a complete, clickable shop assembled only from
+library pieces: browse, filter, add to cart, check out, sign in (demo customer `robin@example.com`, any
+password) and manage subscriptions. Switch the theme in the toolbar to restyle all of it.
+
+## Principles
+
+- **Presentational components.** Props in, callbacks out. No fetching, storage, cookies, timers (except
+  the opt-in Toast auto-dismiss) or clock reads in `src/`; dates come in as `now`.
+- **Token tiers.** Primitives → semantic tokens → themes. Components read semantic tokens only
+  (`check:tokens`); a theme overrides semantic tokens and nothing else ([docs/theming.md](docs/theming.md)).
+- **CMS-agnostic content model.** Pages are JSON blocks validated and rendered by the registry; adapters
+  map a CMS into that shape ([docs/content-model.md](docs/content-model.md)).
+- **Commerce separation.** `src/commerce` builds on core and is its own entry point; core never imports
+  it (`check:boundaries`, `check:lib`).
+- **Demo-only providers.** In-memory cart, checkout and account providers and the demo shop live in
+  `demo/`. They never ship and nothing in `src/` imports them.
+
+How the pieces fit: [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md). How to add to them:
+[docs/CONTRIBUTING.md](docs/CONTRIBUTING.md). Every component: [docs/COMPONENTS.md](docs/COMPONENTS.md).
 
 ## Scripts
 
-| Script                    | What it does                                                                 |
-| ------------------------- | ---------------------------------------------------------------------------- |
-| `npm run typecheck`       | `tsc --noEmit` over src, .storybook, tests and config files                  |
-| `npm run storybook`       | Storybook dev server on http://localhost:6006                                |
-| `npm run build-storybook` | Static Storybook build into `storybook-static/`                              |
-| `npm run test:vrt`        | Builds Storybook, then compares every story against the committed baselines  |
-| `npm run test:vrt:update` | Builds Storybook, then rewrites the baselines                                |
-| `npm run test:vrt:report` | Opens the HTML report from the last run (diffs for any failures)             |
-| `npm run test:unit`       | Vitest unit tests for pure logic (validators, registry, adapter, fixtures)   |
-| `npm run docs:content-model` | Regenerates `docs/content-model.md` from the content-type JSDoc           |
-| `npm run check:story-tags` | After a Storybook build: fails when a main template story lacks its expected `vrt-full` tag (tags spread from shared objects are silently dropped) |
-| `npm run check:boundaries` | Fails if core code imports `src/commerce` or anything under `src/` imports `demo/` |
-| `npm run check:tokens` | Fails if CSS outside `src/tokens` uses primitive colour, radius, shadow or font tokens, or raw colours (allowlist: `scripts/check-tokens.allow.json`) |
-| `npm run check:themes` | Fails if a theme in `src/tokens/themes` misses a colour token, adds unknown tokens or references a missing primitive |
-| `npm run test:a11y` | Builds Storybook, then runs axe on every `theme-smoke` story in every theme at 1280 px |
+| Script | What it does |
+| --- | --- |
+| `npm run storybook` | Storybook dev server on http://localhost:6006 |
+| `npm run build-storybook` | Static Storybook build into `storybook-static/` |
+| `npm run check:all` | Everything except the browser suites: typecheck, boundaries, tokens, themes, Storybook build, story tags, components doc, library build and check, unit tests |
+| `npm run typecheck` | `tsc --noEmit` over src, demo, .storybook, tests, scripts and config files |
+| `npm run check:boundaries` | Fails if core imports `src/commerce`, or anything under `src/` imports `demo/` |
+| `npm run check:tokens` | Fails if CSS outside `src/tokens` uses primitive colour, radius, shadow or font tokens, or raw colours (allowlist: `scripts/check-tokens.allow.json`, empty) |
+| `npm run check:themes` | Fails if a theme misses a colour token, adds unknown tokens or references a missing primitive |
+| `npm run check:story-tags` | After a Storybook build: fails when a main story lacks its expected screenshot tags |
+| `npm run build:lib` | Library build into `dist/`: core and commerce ES modules, CSS, token and theme CSS, type declarations |
+| `npm run check:lib` | After `build:lib`: no commerce, demo or fixture code in core; commerce imports core as an external; no storage, cookie or fetch use; every export declared; bundle sizes |
+| `npm run docs:components` | Regenerates [docs/COMPONENTS.md](docs/COMPONENTS.md) from the Storybook index (`-- --check` fails when stale) |
+| `npm run docs:content-model` | Regenerates [docs/content-model.md](docs/content-model.md) from the content-type JSDoc |
+| `npm run test:unit` | Vitest unit tests for pure logic (validators, registry, adapters, commerce logic, demo reducers, router) |
+| `npm run test:vrt` | Builds Storybook, then compares every story with the committed baselines (play functions and axe run too) |
+| `npm run test:vrt:update` | Builds Storybook, then rewrites failing or missing baselines |
+| `npm run test:vrt:smoke` | Builds Storybook, then only `theme-smoke` and `vrt-full` stories, default theme, 1280 px |
+| `npm run test:vrt:changed -- "<pattern>"` | Builds Storybook, then only tests whose title matches (e.g. a story title prefix) |
+| `npm run test:vrt:flaky -- "<pattern>"` | No build: runs matching tests five times each with no retries, to expose flaky stories |
+| `npm run test:vrt:report` | Opens the HTML report from the last run |
+| `npm run test:a11y` | Builds Storybook, then axe on every story (default theme), the theme smoke set in every theme, and the demo shop checkpoints in every theme at 1280 and 375 px |
+
+## Release checklist
+
+1. `npm run check:all`
+2. `npm run test:vrt`: must pass with zero diffs. Inspect any baseline you changed on purpose.
+3. `npm run test:a11y`
+4. Update the docs the change touches (component JSDoc, `docs/*.md`, [docs/GAPS.md](docs/GAPS.md)).
+5. Commit baselines together with the change that caused them; never merge a PR with unexplained
+   baseline changes.
 
 ## Project layout
 
 ```
-.storybook/           Storybook config; preview wraps stories in <div data-theme="default">
-src/tokens/           Design tokens and global CSS
-  index.css           Declares layer order: reset, tokens, base, components, overrides
-  primitives.css      Tier 1: raw scales (colour, spacing, type, radii, shadows)
-  semantic.css        Tier 2: meaning-based aliases. Themes override this tier only
-  Foundations.stories.tsx
-src/components/       One folder per component: .tsx, .module.css, .stories.tsx, index.ts
-src/index.ts          Public entry point; re-exports components, content types and the registry
+.storybook/           Storybook config: theme toolbar and decorator, a11y addon set to fail on violations
+src/tokens/           Design tokens and global CSS: primitives, semantic tokens (the default theme), themes/
+src/components/       Core components: one folder each (.tsx, .module.css, .stories.tsx, index.ts)
+src/templates/        SiteLayout, PageRenderer, the template registry and page templates
 src/content-types/    JSON-only content model (blocks, pages, site chrome) a CMS adapter produces
 src/component-types/  Component prop shapes that may contain ReactNode
 src/registry/         Block registry, BlockRenderer, validators and link safety
-src/templates/        SiteLayout, PageRenderer, templates registry and page templates (docs/templates.md)
 src/adapters/         Example CMS adapter (reference only; not exported)
-src/commerce/         Commerce foundations (own barrel, not exported from src/index.ts): types, pure
-                      money/cart/variant logic, validators, display components, fixtures
-demo/                 Storybook-only demo cart provider ("Demo only"); never imported by src/
-src/fixtures/pages/   Page fixtures as JSON (plus edge cases); fixtures/blocks/ has one per block
-src/fixtures/chrome/  Site chrome fixtures (default and minimal) as JSON
-scripts/              Docs generator for docs/content-model.md
-src/fixtures/images/  Local deterministic placeholder images for stories (no remote URLs)
-src/stories/          Story-only helpers (Placeholder, Ruler); not exported
-tests/visual/         Playwright VRT specs (stories, Legal print) and committed baselines (__screenshots__/)
+src/commerce/         Commerce entry: types, pure logic, components, templates, fixtures
+src/fixtures/         Page, block and chrome fixtures (JSON) and local placeholder images
+src/stories/          Story-only helpers; not exported
+src/index.ts          Core entry point (src/commerce/index.ts is the commerce entry)
+demo/commerce/        Demo-only providers: in-memory cart, checkout and account
+demo/shop/            Demo shop: in-memory router, link and form interception, routes, journeys
+scripts/              Checks (boundaries, tokens, themes, story tags, library) and doc generators
+tests/visual/         Visual spec, committed baselines (__screenshots__/), full-page capture CSS
+tests/a11y/           Accessibility specs (all stories, themes, demo shop)
+tests/support/        Shared Storybook helpers for the specs
+docs/                 Architecture, contributing, components, theming, commerce, templates, roadmap, gaps
 ```
 
-Rules: components use **semantic tokens only**, never primitives, and logical properties
-(`margin-inline`, `padding-block`, ...). Component CSS lives in `@layer components { ... }` inside a
-CSS Module. No runtime CSS-in-JS, no localStorage, no browser globals at render time, no data
-fetching in components.
+## Out of scope
+
+Real authentication, payments, tax, address lookup, data fetching, analytics and consent storage are
+the host application's job. The library gives them UI, types and callbacks. The CookieBanner is UI
+only and not legal advice: the host stores the visitor's choice, applies it and owns compliance. No
+CSS-in-JS, web fonts, animation libraries or runtime dependencies beyond React.
+
+## Components and blocks
+
+Phase 14 additions:
+
+- **CookieBanner** (core): a non-modal, labelled region with "Accept all" and "Reject all" given equal weight and "Choose settings" (a Modal with the host's `ConsentCategory[]`; required categories always on). It never takes focus on appear, traps focus only inside the settings dialog, and stacks above the sticky purchase bars. Output is `ConsentChoices` (`Record<string, boolean>`); `defaultConsentChoices(categories)` gives the starting state. **UI only, not legal advice:** it reads and writes no cookies or storage and loads no scripts. The host owns consent storage, what each category means and legal compliance. It appears only in its own stories and one demo shop story, never in other screenshots.
+- **StickyBuyBar** (commerce): the sticky mobile add-to-cart and checkout bars ([docs/commerce-browsing.md](docs/commerce-browsing.md), [docs/commerce-checkout.md](docs/commerce-checkout.md)).
+- **Scroll hints** on AccountNav and CategoryFilter rows: CSS edge fades shown with scroll-state queries.
+- **Header `actions`** and `ctx.headerActions`: host controls (search, account, cart) in the site header at every width.
+- **Demo shop** in `demo/shop/` ([demo/shop/README.md](demo/shop/README.md)).
 
 ### Components
 
@@ -417,3 +470,46 @@ change that caused them, so each baseline update is reviewable alongside its cau
 npm run build-storybook
 npx playwright test --update-snapshots=all
 ```
+
+### Accessibility exceptions
+
+Every story runs axe with the standard rule set. One story disables a rule:
+
+| Story | Rule | Why |
+| --- | --- | --- |
+| Commerce/Account/OrderHistory · Matrix | `landmark-unique` | Seven order histories on one page repeat the filter and pagination navigation; the account template stories check the rule on a real page. |
+
+### Subsets, shards and speed
+
+The full suite captures every story (about 1,640 screenshots) and takes about 8.5 minutes on the
+maintainer's 16-thread machine with 8 workers; the smoke subset about 2.7 minutes, and `test:a11y` about
+8.5 minutes (`workers: '50%'` in `playwright.config.ts`).
+
+- **Smoke:** `npm run test:vrt:smoke` runs only stories tagged `theme-smoke` or `vrt-full` (Playwright
+  tag `@smoke`), default theme, desktop width, against the same baselines. Use it while iterating.
+- **Changed area:** `npm run test:vrt:changed -- "Commerce/Templates/Cart"` runs tests whose title
+  matches the pattern (a regular expression; test titles are `<Storybook title> / <story name>`).
+- **Shards:** split the run across machines or terminals, each with its own built Storybook:
+  `npm run test:vrt -- --shard=1/3`, `--shard=2/3`, `--shard=3/3`. Merge HTML reports with
+  `npx playwright merge-reports` if you need one report.
+- **Workers:** override with `--workers=N`.
+
+### Debugging flakes
+
+A story is flaky when its screenshot or play function differs between runs of the same code.
+
+1. `npm run build-storybook`, then `npm run test:vrt:flaky -- "<story title>"` runs it five times with
+   no retries.
+2. Open the failing run's diff in `npm run test:vrt:report`.
+3. Fix the cause in the story or component rather than raising tolerances. Usual causes: something
+   reads the clock or `Math.random` (pass `now` and ids in), images or fonts finishing late (the harness
+   waits for `document.fonts.ready` and every image), focus rings left from a play function (blur or
+   assert focus deliberately), scroll position left over, and animations (disabled for screenshots).
+
+### Windows notes
+
+Baselines are generated on a single Windows machine and their names have no platform suffix
+(`snapshotPathTemplate` in `playwright.config.ts`). Font rendering differs on other systems, so run the
+visual suite on Windows, or regenerate every baseline in one environment (a pinned Playwright Docker
+image is the plan for CI; see the roadmap). Files are committed with CRLF line endings by Git; scripts
+split lines on `\r?\n`.

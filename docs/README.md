@@ -3,7 +3,7 @@
 The full plan for this pattern library (phases, scope and decisions) lives in the project's planning
 doc, not in this repository. This folder is for repo-local notes that support it.
 
-Status: phases 1 to 13 are done.
+Status: phases 1 to 14 are done. Start with [ARCHITECTURE.md](ARCHITECTURE.md); open work is in [ROADMAP.md](ROADMAP.md) and every gap report is consolidated in [GAPS.md](GAPS.md).
 
 Phase 1: tooling scaffold, three-tier design tokens, Button / Text / Heading,
 Foundations stories, and the Playwright visual regression harness with committed baselines.
@@ -106,3 +106,12 @@ Phase 13 (branch `phase-13-themes`): themes as semantic-tier overrides. It adds:
 - two Phase 12 follow-ups: plan-change timing (`effective`) and the documented dialog contract
 
 See [`theming.md`](theming.md).
+
+Phase 14 (branch `phase-14-demo-polish`): demo shop, polish, hardening and the finishing docs. It adds:
+
+- the clickable demo shop in `demo/shop/` (in-memory router, link and form interception, every route), with journey and keyboard-only play tests
+- scroll hints on AccountNav and CategoryFilter, sticky mobile add-to-cart and checkout bars (`StickyBuyBar`), and `CookieBanner`
+- the header `actions` slot (`ctx.headerActions`)
+- stability and speed work: per-test timeouts, `test:vrt:smoke`, `test:vrt:changed`, `test:vrt:flaky`, shard docs
+- the library build (`build:lib`, `check:lib`), `check:all`, and a wider `test:a11y`
+- [ARCHITECTURE.md](ARCHITECTURE.md), [CONTRIBUTING.md](CONTRIBUTING.md), [COMPONENTS.md](COMPONENTS.md) (generated), [ROADMAP.md](ROADMAP.md) and [GAPS.md](GAPS.md)

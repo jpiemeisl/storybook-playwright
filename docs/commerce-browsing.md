@@ -109,7 +109,7 @@ What the library lacked and how it was filled:
 
 ### Deferred
 
-- **Sticky mobile add-to-cart bar:** not shipped. Doing it properly needs the bar to appear only once the real button scrolls out of view (an IntersectionObserver), plus scroll padding. That's more than "simple"; the Landing template's StickyActionBar is the pattern to reuse later.
+- **Sticky mobile add-to-cart bar:** shipped in Phase 14 (`StickyBuyBar`, see below).
 - **Price range slider:** two number inputs instead, as the brief asked.
 - **URL syncing** inside the templates: by design, the host does it.
 - **Review submission:** `ReviewSummary` takes an `action` slot for a "Write a review" link; there is no form.
@@ -117,5 +117,9 @@ What the library lacked and how it was filled:
 ## Known limitations and open items
 
 - **URL price filters use whole currency units and assume two decimals.** `price_min=20` means 2000 minor units. That is right for the single-currency USD demo; revisit it before supporting currencies with zero or three decimals (JPY, KWD).
-- **Deferred:** the sticky mobile add-to-cart bar and the review submission form.
+- **Deferred:** the review submission form.
+
+## Sticky add-to-cart bar (Phase 14)
+
+Below 48rem, while the product page's real AddToCart is scrolled out of view, `StickyBuyBar` pins the title, price and the **same** AddToCart (with `secondary`: same label, status and disabled behaviour, no second live region) to the bottom of the viewport. Out of view is tracked with an IntersectionObserver in an effect; where it isn't supported the bar never appears. When the product can't be added (sold out, or no complete selection), the bar shows the status text instead of a button. While the bar shows, `html` gets `scroll-padding-bottom` and matching end padding, so focused controls and the last links on the page stay clear of it (a play test tabs through the page to check). It respects the bottom safe-area inset, stacks below toasts and the cookie banner (`--z-sticky-bar`), and never prints.
 - **"Choose options" on ProductCard is a visual cue inside the single title link,** not a second link. Cards keep exactly one link plus at most one separate button.
