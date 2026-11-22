@@ -1,4 +1,8 @@
 import { defineConfig, devices } from '@playwright/test';
+import { assertCanUpdate } from './scripts/vrt-guard.mjs';
+
+// Baselines are written only inside the Playwright container (scripts/vrt-guard.mjs explains the override).
+if (process.argv.some((arg) => arg === '-u' || arg.startsWith('--update-snapshots'))) assertCanUpdate();
 
 const PORT = 6007;
 

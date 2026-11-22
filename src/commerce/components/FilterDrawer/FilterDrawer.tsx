@@ -60,7 +60,7 @@ export function FilterDrawer({ open, onOpenChange, activeCount, resultCount, onC
             close();
           }
         }}
-        onClose={close}
+        onClose={(event) => !event.currentTarget.open && close()}
         onClick={(event) => {
           if (event.target === event.currentTarget) close();
         }}

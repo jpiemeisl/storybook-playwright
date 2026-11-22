@@ -37,9 +37,14 @@ of each gap are in [GAPS.md](GAPS.md).
 
 ## Platform and process
 
-- **CI.** Run `npm run check:all`, `test:vrt` and `test:a11y` in CI on a pinned Playwright Docker image.
-  Baselines are currently Windows-only with platform-less names; CI needs Linux baselines generated in
-  the same image (and either Linux-only baselines or per-platform names).
+- **Docker image and Linux baselines: done (Phase 15).** Every baseline is rendered in the Playwright
+  image pinned by digest in `docker/image.json`, with pinned fonts (`docker/fonts.conf`).
+- **CI (next).** Run `npm run check:all`, then the visual and accessibility suites in the same pinned
+  image (the image from `docker/image.json` as the job container, `npm ci`, `npm run test:vrt` and
+  `npm run test:a11y` with `PW_DOCKER=1`), on pull requests and main.
+- **Horizontal overflow at 375 px (found in Phase 15).** These stories render wider than the viewport, on
+  every platform: Compositions/ContentPages Blog Post Layout, Templates/Blog index, Content model
+  All Blocks and Templates/Composed pages Contact. Fix the components, then regenerate those baselines.
 - **Publishing and versioning.** `npm run build:lib` and `check:lib` verify the package shape, but it is
   `private` and unpublished. Next: a real package name, semver with a changelog, and a release workflow.
 - **Real CMS adapters.** `src/adapters/example-cms` shows the mapping. Real adapters (headless CMSs)

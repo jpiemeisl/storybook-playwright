@@ -71,7 +71,7 @@ export function Modal({
           onClose();
         }
       }}
-      onClose={onClose}
+      onClose={(event) => !event.currentTarget.open && onClose()}
       onClick={(event) => {
         if (event.target === event.currentTarget) onClose();
       }}

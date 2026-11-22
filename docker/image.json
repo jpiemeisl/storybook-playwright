@@ -1,0 +1,9 @@
+{
+  "comment": "The one place the visual-test image is pinned. Bump all three fields together with @playwright/test (see docs/testing.md).",
+  "image": "mcr.microsoft.com/playwright",
+  "tag": "v1.65.1-noble",
+  "digest": "sha256:1507cbfc550a63a6b7396791ca4f00df17beb56342d2447b3f106c306f525579",
+  "platform": "linux/amd64",
+  "playwright": "1.65.1",
+  "node": "26"
+}
