@@ -22,7 +22,10 @@ function rowValue(row: SummaryRow): ReactNode {
 }
 
 export interface SummaryRowsProps {
-  totals: CartTotals;
+  /** Totals to derive the rows from (summaryRows). Required unless `rows` is given. */
+  totals?: CartTotals;
+  /** Precomputed rows (e.g. orderSummaryRows for a placed order); when given, `totals` is not used for rows. */
+  rows?: SummaryRow[];
   /** False before an address is known: shipping reads "Calculated at checkout". */
   shippingKnown?: boolean;
   /** Shows a remove button on each discount row. */
@@ -34,10 +37,10 @@ export interface SummaryRowsProps {
  * carts only), trial deduction, estimated tax and a visually distinct "Due today". Shared by CartSummary
  * and OrderSummary.
  */
-export function SummaryRows({ totals, shippingKnown, onRemovePromo }: SummaryRowsProps) {
+export function SummaryRows({ totals, rows, shippingKnown, onRemovePromo }: SummaryRowsProps) {
   return (
     <dl className={styles.rows}>
-      {summaryRows(totals, { shippingKnown }).map((row) => (
+      {(rows ?? (totals ? summaryRows(totals, { shippingKnown }) : [])).map((row) => (
         <div key={row.key === 'discount' ? `discount-${row.code}` : row.key} className={[styles.row, row.key === 'dueToday' && styles.due].filter(Boolean).join(' ')} data-row={row.key}>
           <dt>
             {row.label}
@@ -78,7 +81,8 @@ export function ThenBilled({ totals, headingLevel = 3 }: { totals: Pick<CartTota
   );
 }
 
-export interface CartSummaryProps extends SummaryRowsProps {
+export interface CartSummaryProps extends Omit<SummaryRowsProps, 'totals' | 'rows'> {
+  totals: CartTotals;
   /** Messages above the rows, e.g. FreeShippingProgress or a promo banner. */
   messages?: ReactNode;
   /** The PromoCodeInput. */

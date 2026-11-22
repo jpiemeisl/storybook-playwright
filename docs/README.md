@@ -80,3 +80,16 @@ Phase 11 (branch `phase-11-cart-checkout`): cart and checkout in `src/commerce`,
 - `useDemoCheckout` and `useDemoToasts` in the demo provider
 
 See [`commerce-checkout.md`](commerce-checkout.md).
+
+Phase 12 (branch `phase-12-account`): the account area in `src/commerce`. It adds:
+
+- auth forms and templates (sign in, register, forgot and reset password)
+- account navigation and layout
+- order history and detail
+- the downloads library with masked licence keys
+- subscription management with dialogs, and invoices
+- the address book and the wishlist
+- `DemoAccountProvider` in `demo/`
+- two Phase 10 fixes: story tags guarded by `check:story-tags`, and the LoadMore forced-colours fill
+
+See [`commerce-account.md`](commerce-account.md).

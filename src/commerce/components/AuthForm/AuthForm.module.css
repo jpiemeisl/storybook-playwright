@@ -1,0 +1,114 @@
+@layer components {
+  .form {
+    display: grid;
+    gap: var(--gap-md);
+  }
+
+  .summaryList {
+    display: grid;
+    gap: var(--gap-xs);
+    margin: 0;
+    padding-inline-start: var(--space-5);
+  }
+
+  .row {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--gap-sm) var(--gap-md);
+  }
+
+  .intro {
+    margin: 0;
+  }
+
+  .secondary {
+    margin: 0;
+    text-align: center;
+  }
+
+  .submit {
+    inline-size: 100%;
+  }
+
+  .passwordRow {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
+    gap: var(--gap-xs);
+  }
+
+  .toggle {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--gap-xs);
+    padding-inline: var(--space-3);
+    border: var(--border-1) solid var(--color-field-border);
+    border-radius: var(--radius-control);
+    background-color: var(--color-surface);
+    color: var(--color-text);
+    font-size: var(--text-size-sm);
+    white-space: nowrap;
+  }
+
+  /* Pressed: thicker border and the eye-off icon, not colour alone. */
+  .toggle[aria-pressed='true'] {
+    border-width: var(--border-2);
+    border-color: var(--color-text);
+    font-weight: var(--text-weight-strong);
+  }
+
+  .toggle:focus-visible {
+    outline: var(--focus-ring-width) solid var(--color-focus-ring);
+    outline-offset: var(--focus-ring-offset);
+  }
+
+  .checklist {
+    display: grid;
+    gap: var(--gap-xs);
+    font-size: var(--text-size-sm);
+  }
+
+  .checklistTitle {
+    margin: 0;
+    color: var(--color-text-muted);
+  }
+
+  .checklist ul {
+    display: grid;
+    gap: var(--space-1);
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .checklist li {
+    display: flex;
+    align-items: center;
+    gap: var(--gap-xs);
+    color: var(--color-text-muted);
+  }
+
+  .checklist li[data-passed] {
+    color: var(--color-text);
+  }
+
+  .checklist li[data-passed] svg {
+    color: var(--color-success);
+  }
+
+  .visuallyHidden {
+    position: absolute;
+    inline-size: 1px;
+    block-size: 1px;
+    overflow: hidden;
+    clip-path: inset(50%);
+    white-space: nowrap;
+  }
+
+  @media (forced-colors: active) {
+    .checklist li[data-passed] svg {
+      color: CanvasText;
+    }
+  }
+}

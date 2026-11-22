@@ -94,12 +94,12 @@ export const DefaultExpanded: Story = {
 };
 
 export const FaqSectionDefault: Story = {
-  tags: ['vrt-full'],
+  tags: ['!vrt-mobile', 'vrt-full'],
   render: () => <FaqSection items={faqs} intro="Still stuck? Email hello@brightside.example and we’ll reply within a working day." />,
 };
 
 export const FaqSectionOnSubtle: Story = {
-  tags: ['vrt-full'],
+  tags: ['!vrt-mobile', 'vrt-full'],
   parameters: { surface: 'subtle' },
   render: () => <FaqSection items={faqs} allowMultiple />,
   play: async ({ canvasElement }) => {

@@ -1,0 +1,11 @@
+@layer components {
+  .badge {
+    align-self: center;
+  }
+
+  /* No warning tone in Badge: a warning border keeps it distinct (with its icon and text). */
+  .warning {
+    border-color: var(--color-warning);
+    background-color: var(--color-warning-subtle);
+  }
+}

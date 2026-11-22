@@ -1,0 +1,129 @@
+@layer components {
+  .root {
+    display: grid;
+    gap: var(--gap-md);
+    container-type: inline-size;
+  }
+
+  .filters {
+    display: grid;
+    gap: var(--gap-sm);
+  }
+
+  .yearForm {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: end;
+    gap: var(--gap-sm);
+  }
+
+  /* Narrow: cards. */
+  .cards {
+    display: grid;
+    gap: var(--gap-sm);
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .card {
+    display: grid;
+    gap: var(--gap-xs);
+    padding: var(--gap-md);
+    border: var(--border-1) solid var(--color-border);
+    border-radius: var(--radius-surface);
+  }
+
+  .cardHead {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--gap-xs) var(--gap-sm);
+  }
+
+  .number {
+    margin: 0;
+    font-size: var(--text-size-md);
+  }
+
+  .meta,
+  .items {
+    margin: 0;
+    font-size: var(--text-size-sm);
+    overflow-wrap: anywhere;
+  }
+
+  .meta {
+    color: var(--color-text-muted);
+  }
+
+  .table {
+    display: none;
+  }
+
+  /* Wide: a table. */
+  @container (min-width: 44rem) {
+    .cards {
+      display: none;
+    }
+
+    .table {
+      display: block;
+    }
+  }
+
+  .table table {
+    inline-size: 100%;
+    border-collapse: collapse;
+  }
+
+  .table th,
+  .table td {
+    padding: var(--gap-sm);
+    border-block-end: var(--border-1) solid var(--color-border);
+    text-align: start;
+    vertical-align: middle;
+  }
+
+  .table thead th {
+    color: var(--color-text-muted);
+    font-size: var(--text-size-sm);
+  }
+
+  .itemsCell {
+    max-inline-size: 22rem;
+    font-size: var(--text-size-sm);
+    overflow-wrap: anywhere;
+  }
+
+  .table .numeric {
+    text-align: end;
+    font-variant-numeric: tabular-nums;
+  }
+
+  .skeleton {
+    display: grid;
+    gap: var(--gap-sm);
+  }
+
+  .skeleton p {
+    margin: 0;
+    color: var(--color-text-muted);
+  }
+
+  .skeleton span {
+    block-size: 4.5rem;
+    border-radius: var(--radius-surface);
+    background-color: var(--color-bg-muted);
+  }
+
+  .visuallyHidden {
+    position: absolute;
+    inline-size: 1px;
+    block-size: 1px;
+    overflow: hidden;
+    clip-path: inset(50%);
+    white-space: nowrap;
+  }
+}

@@ -1,4 +1,4 @@
-import type { MouseEvent } from 'react';
+import { useId, type MouseEvent } from 'react';
 import { Button, ButtonLink } from '../../../components/Button';
 import { Icon } from '../../../components/Icon';
 import { formatCommerceDate } from '../../logic/pricing';
@@ -15,7 +15,7 @@ export interface DownloadListProps {
    * Hosts pass signed URLs from their order API.
    */
   hrefFor?: (download: DownloadItem) => string;
-  /** Shown for files that are not available yet. Default "Available once your payment is confirmed." */
+  /** Shown for unavailable files without their own `reason`. Default "Available once your payment is confirmed." */
   unavailableReason?: string;
 }
 
@@ -29,10 +29,11 @@ const stayPut = (event: MouseEvent<HTMLAnchorElement>) => {
  * button with the reason as text. Expiry comes from the data ("Link expires Mar 21, 2027"), never the clock.
  */
 export function DownloadList({ downloads, hrefFor = () => '#', unavailableReason = 'Available once your payment is confirmed.' }: DownloadListProps) {
+  const listId = useId();
   return (
     <ul className={styles.root}>
       {downloads.map((file) => {
-        const reasonId = `download-${file.fileId}-reason`;
+        const reasonId = `${listId}-${file.fileId}-reason`;
         const meta = [file.format, file.sizeBytes !== undefined ? formatBytes(file.sizeBytes) : undefined].filter(Boolean).join(' · ');
         return (
           <li key={file.fileId} className={styles.item}>
@@ -43,7 +44,7 @@ export function DownloadList({ downloads, hrefFor = () => '#', unavailableReason
               {file.expiresAt && <p className={styles.meta}>Link expires {formatCommerceDate(file.expiresAt)}</p>}
               {!file.available && (
                 <p id={reasonId} className={styles.reason}>
-                  {unavailableReason}
+                  {file.reason ?? unavailableReason}
                 </p>
               )}
             </div>

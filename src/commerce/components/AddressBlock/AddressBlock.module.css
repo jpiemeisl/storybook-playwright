@@ -1,0 +1,7 @@
+@layer components {
+  .address {
+    display: grid;
+    font-style: normal;
+    overflow-wrap: anywhere;
+  }
+}

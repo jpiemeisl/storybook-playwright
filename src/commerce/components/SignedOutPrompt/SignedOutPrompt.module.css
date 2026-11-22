@@ -1,0 +1,7 @@
+@layer components {
+  .actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--gap-sm);
+  }
+}

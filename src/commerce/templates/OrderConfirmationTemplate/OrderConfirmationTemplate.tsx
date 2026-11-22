@@ -21,7 +21,7 @@ import { formatCommerceDate } from '../../logic/pricing';
 import { defaultLineHref, type CommerceContext } from '../../types/context';
 import type { Order } from '../../types/order';
 import type { OrderConfirmationPage } from '../../types/pages';
-import { AddressBlock } from '../CheckoutTemplate/AddressBlock';
+import { AddressBlock } from '../../components/AddressBlock';
 import styles from './OrderConfirmationTemplate.module.css';
 
 export const canRenderConfirmation = (page: PageContent) => isObj((page as Partial<OrderConfirmationPage>).order);

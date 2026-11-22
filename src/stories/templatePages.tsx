@@ -25,11 +25,12 @@ export interface TemplateStoryArgs {
 }
 
 /** Shared meta pieces for template stories. */
-export const templateMeta = {
-  parameters: { layout: 'fullscreen' },
-  args: { chrome: 'default' as const, onError: fn(), onSearch: fn() },
+/** Shared meta pieces (runtime fields only: never put `tags` here, they are read statically). Frozen. */
+export const templateMeta = Object.freeze({
+  parameters: Object.freeze({ layout: 'fullscreen' }),
+  args: Object.freeze({ chrome: 'default' as const, onError: fn(), onSearch: fn() }),
   render: (args: TemplateStoryArgs) => <TemplateFixture {...args} />,
-};
+});
 
 export function TemplateFixture({ name, chrome, onError, onSearch }: TemplateStoryArgs) {
   const page = fixturePage(name);

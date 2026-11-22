@@ -9,7 +9,7 @@ import type { Cart } from '../types/cart';
 import type { CheckoutStepId } from '../types/checkout';
 import { computeCartTotals, type CartContext, type CartTotals } from './cart';
 import { getCheckoutSteps } from './checkout';
-import { validateCart, validateOrder, validateProduct, validateReviewsData } from './validate';
+import { validateAddressBook, validateCart, validateCustomer, validateCustomerSubscription, validateInvoice, validateLibraryItem, validateOrder, validateProduct, validateReviewsData, validateWishlistItem } from './validate';
 import { purchaseOptionKey } from './options';
 import { resolveVariant } from './variants';
 
@@ -176,5 +176,84 @@ export function validateConfirmationPage(page: unknown): ValidationIssue[] {
     if (!isObj(c.value.order)) c.report('missing-field', 'order', '"order" is required.');
     else c.issues.push(...prefix(validateOrder(c.value.order), 'order'));
     linkChecks(c);
+  });
+}
+
+const AUTH = ['login', 'register', 'forgot-password', 'reset-password'];
+const accountLinks = (c: Checker) =>
+  c.child('links', false, (l) => {
+    for (const key of ['login', 'register', 'forgotPassword', 'shop', 'terms', 'privacy', 'support']) l.href(key, false);
+  });
+
+/** Auth pages: a known template, a safe action and safe links. */
+export function validateAuthPage(page: unknown): ValidationIssue[] {
+  return base(page, (c) => {
+    if (!AUTH.includes(c.value.template as string)) c.report('invalid-field', 'template', `template must be one of ${AUTH.join(', ')}.`);
+    if (c.value.action !== undefined && c.value.action !== '') c.href('action', false);
+    if (c.value.status !== undefined) c.oneOf('status', ['idle', 'submitting', 'error', 'success']);
+    if (c.value.layout !== undefined) c.oneOf('layout', ['minimal', 'default']);
+    accountLinks(c);
+  });
+}
+
+const list = (c: Checker, key: string, validate: (value: unknown) => ValidationIssue[]) => {
+  const value = c.value[key];
+  if (!Array.isArray(value)) return c.report('missing-field', key, `"${key}" is required (it may be empty).`);
+  value.forEach((item, i) => c.issues.push(...prefix(validate(item), `${key}[${i}]`)));
+};
+
+/**
+ * Account pages: the customer (or null), `now`, safe links, and the data each template needs, each
+ * item checked with its own validator.
+ */
+export function validateAccountPage(page: unknown): ValidationIssue[] {
+  return base(page, (c) => {
+    const customer = c.value.customer;
+    if (customer !== null) {
+      if (!isObj(customer)) c.report('missing-field', 'customer', '"customer" is required (null when signed out).');
+      else c.issues.push(...prefix(validateCustomer(customer), 'customer'));
+    }
+    c.date('now');
+    accountLinks(c);
+    switch (c.value.template) {
+      case 'account':
+        list(c, 'orders', validateOrder);
+        list(c, 'subscriptions', validateCustomerSubscription);
+        list(c, 'invoices', validateInvoice);
+        list(c, 'downloads', validateLibraryItem);
+        c.issues.push(...prefix(validateAddressBook(c.value.addresses), 'addresses'));
+        list(c, 'wishlist', validateWishlistItem);
+        break;
+      case 'account-orders':
+        list(c, 'orders', validateOrder);
+        if (typeof c.value.totalCount !== 'number') c.report('missing-field', 'totalCount', '"totalCount" is required.');
+        c.strings('years', true);
+        break;
+      case 'account-order':
+        if (!isObj(c.value.order)) c.report('missing-field', 'order', '"order" is required.');
+        else c.issues.push(...prefix(validateOrder(c.value.order), 'order'));
+        c.href('invoiceHref', false);
+        break;
+      case 'account-downloads':
+        list(c, 'items', validateLibraryItem);
+        break;
+      case 'account-subscriptions':
+        list(c, 'subscriptions', validateCustomerSubscription);
+        break;
+      case 'account-subscription':
+        if (!isObj(c.value.subscription)) c.report('missing-field', 'subscription', '"subscription" is required.');
+        else c.issues.push(...prefix(validateCustomerSubscription(c.value.subscription), 'subscription'));
+        list(c, 'invoices', validateInvoice);
+        break;
+      case 'account-addresses':
+        c.issues.push(...prefix(validateAddressBook(c.value.addresses), 'addresses'));
+        break;
+      case 'account-wishlist':
+        list(c, 'items', validateWishlistItem);
+        list(c, 'products', validateProduct);
+        break;
+      default:
+        c.report('invalid-field', 'template', 'Not an account template.');
+    }
   });
 }

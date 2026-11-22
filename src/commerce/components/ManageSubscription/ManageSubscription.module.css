@@ -1,0 +1,60 @@
+@layer components {
+  .root {
+    display: grid;
+    gap: var(--gap-sm);
+  }
+
+  .actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--gap-sm);
+  }
+
+  .announcement {
+    margin: 0;
+    font-weight: var(--text-weight-strong);
+  }
+
+  .announcement:empty {
+    display: none;
+  }
+
+  .body {
+    display: grid;
+    gap: var(--gap-md);
+  }
+
+  .summary {
+    margin: 0;
+    padding: var(--gap-sm) var(--gap-md);
+    border-radius: var(--radius-control);
+    background-color: var(--color-bg-muted);
+  }
+
+  .facts {
+    display: grid;
+    gap: var(--gap-xs);
+    margin: 0;
+    padding-inline-start: var(--space-5);
+  }
+
+  .footer {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: flex-end;
+    gap: var(--gap-sm);
+  }
+
+  /* Destructive: danger border and text plus a close icon, so it is not colour alone. */
+  .destructive {
+    border: var(--border-2) solid var(--color-danger);
+    color: var(--color-danger);
+  }
+
+  @media (forced-colors: active) {
+    .destructive {
+      border-style: double;
+      border-width: 3px;
+    }
+  }
+}

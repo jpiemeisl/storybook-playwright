@@ -17,14 +17,14 @@ const meta = {
 export default meta;
 type Story = StoryObj<typeof meta>;
 
-const full = ['!vrt-mobile', 'vrt-full'];
+// Tags are written literally on each story (Storybook reads them statically; see check:story-tags).
 
 /** Base catalogue with category tiles; filters are a GET form and links (no JavaScript needed). */
-export const Default: Story = { tags: full, render: () => render(collectionPage('base', '', { subCollections: subCollectionTiles })) };
+export const Default: Story = { tags: ['!vrt-mobile', 'vrt-full'], render: () => render(collectionPage('base', '', { subCollections: subCollectionTiles })) };
 
 /** Size M and colour Moss: chips, counts and two matches. */
 export const Filtered: Story = {
-  tags: full,
+  tags: ['!vrt-mobile', 'vrt-full'],
   render: () => render(collectionPage('base', filterQueries.sizeAndColour)),
   play: async ({ canvasElement }) => {
     await expectHeadingOutline(canvasElement);
@@ -34,7 +34,7 @@ export const Filtered: Story = {
   },
 };
 
-export const EmptyCollection: Story = { tags: full, render: () => render(collectionPage('empty')) };
+export const EmptyCollection: Story = { tags: ['!vrt-mobile', 'vrt-full'], render: () => render(collectionPage('empty')) };
 export const NoMatches: Story = { render: () => render(collectionPage('base', filterQueries.noMatches)) };
 export const Loading: Story = { render: () => render(collectionPage('all'), true) };
 export const OneProduct: Story = { render: () => render(collectionPage('oneProduct')) };

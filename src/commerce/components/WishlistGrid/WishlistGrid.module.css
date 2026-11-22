@@ -1,0 +1,12 @@
+@layer components {
+  .item {
+    display: grid;
+    gap: var(--gap-xs);
+    block-size: 100%;
+    grid-template-rows: 1fr auto;
+  }
+
+  .remove {
+    justify-self: start;
+  }
+}

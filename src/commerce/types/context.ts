@@ -5,6 +5,11 @@ import type { ReactNode } from 'react';
 import type { PromoApplyResult } from '../components/PromoCodeInput';
 import type { CartLine } from './cart';
 import type { CheckoutStepId, CheckoutValues } from './checkout';
+import type { AddressKind } from '../logic/account';
+import type { ForgotPasswordValues, LoginValues, RegisterValues, ResetPasswordValues } from '../logic/authForms';
+import type { SubscriptionActionRequest } from '../components/ManageSubscription';
+import type { Invoice, SavedAddress } from './account';
+import type { Order } from './order';
 import type { Product, PurchaseOption, Variant } from './product';
 
 /** What the host passes to the commerce templates, on top of the core RenderContext. All optional. */
@@ -45,6 +50,26 @@ export interface CommerceContext extends RenderContext {
    * build card inputs yourself; this library renders none. Use DemoPaymentFields only in demos.
    */
   paymentFields?: ReactNode;
+
+  // Auth and account (Phase 12). Without the auth callbacks, the forms POST to page.action natively.
+  /** Hidden inputs for every auth form, e.g. a CSRF token. */
+  formHiddenFields?: ReactNode;
+  onLogin?: (values: LoginValues) => void;
+  onRegister?: (values: RegisterValues) => void;
+  onForgotPassword?: (values: ForgotPasswordValues) => void;
+  onResetPassword?: (values: ResetPasswordValues) => void;
+  onSignOut?: () => void;
+  /** Every subscription action (pause, resume, change plan, cancel, undo, reactivate, update payment). */
+  onSubscriptionAction?: (subscriptionId: string, request: SubscriptionActionRequest) => void;
+  onRetryInvoice?: (invoice: Invoice) => void;
+  /** "Buy again" on an order. A callback only. */
+  onReorder?: (order: Order) => void;
+  onSaveAddress?: (address: Omit<SavedAddress, 'id'> & { id?: string }) => void;
+  onDeleteAddress?: (id: string) => void;
+  onSetDefaultAddress?: (id: string, kind: AddressKind) => void;
+  onRemoveWishlistItem?: (productId: string) => void;
+  /** Download URL per library file. Default "#" placeholders. */
+  downloadHref?: (productId: string, fileId: string) => string;
 }
 
 export const defaultProductHref = (product: Product) => `/products/${product.handle}`;

@@ -1,0 +1,123 @@
+@layer components {
+  /* minmax(0, 1fr): without it the nav's scrollable row would widen the page on narrow screens. */
+  .root {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    gap: var(--gap-lg);
+  }
+
+  /* Narrow: navigation above the content. Wide: a sidebar. */
+  .layout {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    gap: var(--gap-lg);
+  }
+
+  .nav,
+  .content {
+    min-inline-size: 0;
+  }
+
+  .content {
+    display: grid;
+    align-content: start;
+    gap: var(--gap-xl);
+  }
+
+  @media (min-width: 64rem) {
+    .layout {
+      grid-template-columns: 16rem minmax(0, 1fr);
+      gap: var(--gap-xl);
+    }
+
+    .nav {
+      position: sticky;
+      inset-block-start: calc(var(--header-height) + var(--gap-md));
+      align-self: start;
+    }
+  }
+
+  .section {
+    display: grid;
+    gap: var(--gap-md);
+  }
+
+  .sectionHead {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: var(--gap-xs) var(--gap-md);
+  }
+
+  .sectionTitle {
+    margin: 0;
+    font-size: var(--text-size-xl);
+  }
+
+  .list,
+  .quick {
+    display: grid;
+    gap: var(--gap-xs);
+    margin: 0;
+    padding-inline-start: var(--space-5);
+  }
+
+  .recent {
+    display: grid;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .recent li {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: var(--gap-xs) var(--gap-md);
+    padding-block: var(--gap-sm);
+    border-block-end: var(--border-1) solid var(--color-border);
+  }
+
+  .recentNumber {
+    font-weight: var(--text-weight-strong);
+  }
+
+  .recentTotal {
+    margin-inline-start: auto;
+    font-variant-numeric: tabular-nums;
+  }
+
+  .cards {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(min(18rem, 100%), 1fr));
+    gap: var(--gap-md);
+  }
+
+  .statusRow {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: var(--gap-sm);
+  }
+
+  .statusRow p {
+    margin: 0;
+  }
+
+  .addresses {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(16rem, 100%), 1fr));
+    gap: var(--gap-lg);
+  }
+
+  .addresses h3 {
+    margin: 0 0 var(--gap-xs);
+  }
+
+  .muted {
+    margin: var(--gap-xs) 0 0;
+    color: var(--color-text-muted);
+    font-size: var(--text-size-sm);
+  }
+}

@@ -1,0 +1,54 @@
+@layer components {
+  .root {
+    display: grid;
+    gap: var(--gap-lg);
+  }
+
+  .search {
+    display: grid;
+    gap: var(--gap-xs);
+    max-inline-size: 28rem;
+  }
+
+  .count {
+    margin: 0;
+    color: var(--color-text-muted);
+    font-size: var(--text-size-sm);
+  }
+
+  .group {
+    display: grid;
+    gap: var(--gap-md);
+  }
+
+  .groupTitle,
+  .title {
+    margin: 0;
+    overflow-wrap: anywhere;
+  }
+
+  .groupTitle {
+    font-size: var(--text-size-lg);
+  }
+
+  .title {
+    font-size: var(--text-size-md);
+  }
+
+  .item {
+    display: grid;
+    gap: var(--gap-sm);
+    padding-block-end: var(--gap-lg);
+    border-block-end: var(--border-1) solid var(--color-border);
+  }
+
+  .meta,
+  .licence {
+    margin: 0;
+    font-size: var(--text-size-sm);
+  }
+
+  .meta {
+    color: var(--color-text-muted);
+  }
+}
