@@ -10,7 +10,7 @@
  *
  * The repository is bind-mounted at /work. node_modules is a named Docker volume (one per checkout), so
  * Windows- or macOS-built node_modules never enter the container; scripts/docker-entry.mjs runs `npm ci`
- * in it only when package-lock.json changed. Inside, PW_DOCKER=1 is set; PLAYWRIGHT_* variables pass through.
+ * in it only when package-lock.json changed. storybook-static/ is a second volume (see below). Inside, PW_DOCKER=1 is set; PLAYWRIGHT_* variables pass through.
  */
 import { spawnSync } from 'node:child_process';
 import { createHash } from 'node:crypto';
@@ -21,7 +21,12 @@ const root = resolve(import.meta.dirname, '..');
 const pin = JSON.parse(readFileSync(resolve(root, 'docker', 'image.json'), 'utf8'));
 const image = `${pin.image}:${pin.tag}@${pin.digest}`;
 const platform = pin.platform ?? 'linux/amd64';
-const volume = `storybook-playwright-node-modules-${createHash('sha256').update(root.toLowerCase()).digest('hex').slice(0, 8)}`;
+const checkout = createHash('sha256').update(root.toLowerCase()).digest('hex').slice(0, 8);
+const volume = `storybook-playwright-node-modules-${checkout}`;
+// The Storybook build lives in a volume too: Chromium fetches thousands of files from it, which is far
+// faster from the Docker VM's own file system than through a Windows or macOS bind mount. It also keeps
+// the Linux build apart from any host build in storybook-static/.
+const staticVolume = `storybook-playwright-static-${checkout}`;
 
 const docker = (args, options = {}) => {
   const result = spawnSync('docker', args, { stdio: 'inherit', ...options });
@@ -44,7 +49,7 @@ const user = posix ? [`${process.getuid()}:${process.getgid()}`] : [];
 
 // On Linux and macOS the container runs as the host user, so files it writes (baselines, reports) are
 // not root-owned. A fresh named volume is root-owned: hand it to that user first.
-if (posix) docker(['run', '--rm', '--platform', platform, '-v', `${volume}:/work/node_modules`, image, 'chown', user[0], '/work/node_modules'], { stdio: 'ignore' });
+if (posix) docker(['run', '--rm', '--platform', platform, '-v', `${volume}:/work/node_modules`, '-v', `${staticVolume}:/work/storybook-static`, image, 'chown', user[0], '/work/node_modules', '/work/storybook-static'], { stdio: 'ignore' });
 
 const interactive = first === '--shell';
 const command = interactive ? ['bash'] : [first, ...rest];
@@ -61,6 +66,8 @@ const args = [
   `${root}:/work`,
   '-v',
   `${volume}:/work/node_modules`,
+  '-v',
+  `${staticVolume}:/work/storybook-static`,
   '-w',
   '/work',
   '-e',
