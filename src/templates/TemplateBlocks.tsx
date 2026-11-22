@@ -36,4 +36,5 @@ export const layoutProps = (ctx: RenderContext | undefined) => ({
   announcementDismissed: ctx?.announcementDismissed,
   onAnnouncementDismiss: ctx?.onAnnouncementDismiss,
   newsletter: ctx?.forms?.newsletter,
+  headerActions: ctx?.headerActions,
 });

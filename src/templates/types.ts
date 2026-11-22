@@ -1,3 +1,4 @@
+import type { ReactNode } from 'react';
 import type { ComponentType } from 'react';
 import type { PageContent } from '../content-types/blocks';
 import type { SiteChrome } from '../content-types/chrome';
@@ -20,6 +21,8 @@ export interface RenderContext extends RendererContext {
   /** Controlled announcement dismissal (persist it yourself; the library never stores it). */
   announcementDismissed?: boolean;
   onAnnouncementDismiss?: () => void;
+  /** Header controls from the host (search, account, cart), passed to SiteLayout. */
+  headerActions?: ReactNode;
 }
 
 /** Props every template receives. */

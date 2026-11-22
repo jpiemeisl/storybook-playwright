@@ -166,7 +166,7 @@ What the library lacked and how it was filled:
 2. **Wishlist remove button.** It's named "Remove <title> from wishlist" without `aria-pressed`: a pressed toggle called "Remove" would contradict itself. It keeps the saved (filled heart) style.
 3. **Status-driven dialog closing.** Dialogs close when `status` is `idle` after a request. Async hosts must set `submitting` synchronously inside the callback.
 4. **"Keep subscription" takes focus first** through the native `autofocus` attribute, set from a ref callback, which `showModal()` honours.
-5. **AccountNav layout follows its own container width.** It's a vertical list in the 16rem sidebar (wide pages) and a horizontally scrollable row with scroll-snap from 20rem (full width on narrow pages). There's no fade hint for the scroll yet.
+5. **AccountNav layout follows its own container width.** It's a vertical list in the 16rem sidebar (wide pages) and a horizontally scrollable row with scroll-snap from 20rem (full width on narrow pages). Since Phase 14 the row has edge fades where more items are hidden (`scrollHint.module.css`: sticky pseudo-elements shown per edge with CSS scroll-state queries, no JavaScript). Browsers without scroll-state queries show no cue; in forced colours the fades are removed and the scrollbar remains.
 6. **Year groups in invoices and order groups in downloads are not landmarks.** Headings carry the structure, so a page with many years isn't full of regions. The downloads search box is not a `search` landmark either, since it only filters the list.
 7. **The OrderHistory matrix story disables `landmark-unique`.** Seven histories on one page repeat the filter and pagination navs; the template stories check the rule on a real page.
 8. **Digital-only orders read "Complete"** rather than Processing, Shipped or Delivered.
@@ -174,7 +174,7 @@ What the library lacked and how it was filled:
 
 ### Deferred
 
-- A fade or arrow hint on the scrollable account nav.
+- ~~A fade or arrow hint on the scrollable account nav~~: shipped in Phase 14.
 - Proration and immediate plan changes. The demo applies plan changes at once; production should schedule them.
 - Address autocomplete and non-US addresses.
 - Real sign-in providers: `socialSlot` renders nothing by default.

@@ -89,12 +89,6 @@
     font-size: var(--text-size-sm);
   }
 
-  .address {
-    display: grid;
-    font-style: normal;
-    overflow-wrap: anywhere;
-  }
-
   .terms {
     display: grid;
     gap: var(--gap-md);
@@ -122,5 +116,9 @@
   .guard {
     display: grid;
     gap: var(--gap-lg);
+  }
+
+  .barButton {
+    inline-size: 100%;
   }
 }

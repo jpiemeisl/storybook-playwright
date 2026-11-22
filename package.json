@@ -3,6 +3,28 @@
   "private": true,
   "version": "0.1.0",
   "type": "module",
+  "sideEffects": [
+    "*.css"
+  ],
+  "exports": {
+    ".": {
+      "types": "./dist/types/index.d.ts",
+      "import": "./dist/core.js"
+    },
+    "./commerce": {
+      "types": "./dist/types/commerce/index.d.ts",
+      "import": "./dist/commerce.js"
+    },
+    "./core.css": "./dist/core.css",
+    "./commerce.css": "./dist/commerce.css",
+    "./tokens.css": "./dist/tokens/index.css",
+    "./tokens/*": "./dist/tokens/*",
+    "./themes/harbor.css": "./dist/tokens/themes/harbor.css",
+    "./themes/orchard.css": "./dist/tokens/themes/orchard.css"
+  },
+  "files": [
+    "dist"
+  ],
   "scripts": {
     "typecheck": "tsc --noEmit",
     "storybook": "storybook dev -p 6006",
@@ -10,17 +32,20 @@
     "test:vrt": "storybook build && playwright test",
     "test:vrt:update": "storybook build && playwright test --update-snapshots",
     "test:vrt:report": "playwright show-report",
+    "test:vrt:smoke": "storybook build && playwright test --config playwright.smoke.config.ts",
+    "test:vrt:changed": "storybook build && playwright test --grep",
+    "test:vrt:flaky": "playwright test --repeat-each=5 --retries=0 --grep",
     "test:unit": "vitest run",
     "docs:content-model": "node scripts/content-model-docs.mjs",
     "check:boundaries": "node scripts/check-boundaries.mjs",
     "check:story-tags": "node scripts/check-story-tags.mjs",
     "check:tokens": "node scripts/check-tokens.mjs",
     "check:themes": "node scripts/check-theme-contract.mjs",
-    "test:a11y": "storybook build && playwright test --config playwright.a11y.config.ts"
-  },
-  "dependencies": {
-    "react": "^19.3.1",
-    "react-dom": "^19.3.1"
+    "test:a11y": "storybook build && playwright test --config playwright.a11y.config.ts",
+    "build:lib": "vite build -c vite.lib.config.ts && vite build -c vite.lib.config.ts --mode commerce && node scripts/copy-lib-css.mjs && tsc -p tsconfig.lib.json",
+    "check:lib": "node scripts/check-lib.mjs",
+    "docs:components": "node scripts/components-docs.mjs",
+    "check:all": "npm run typecheck && npm run check:boundaries && npm run check:tokens && npm run check:themes && npm run build-storybook && npm run check:story-tags && npm run docs:components -- --check && npm run build:lib && npm run check:lib && npm run test:unit"
   },
   "devDependencies": {
     "@playwright/test": "^1.65.1",
@@ -32,9 +57,15 @@
     "@types/react-dom": "^19.3.0",
     "@vitejs/plugin-react": "^6.3.0",
     "http-server": "^14.1.1",
+    "react": "^19.3.1",
+    "react-dom": "^19.3.1",
     "storybook": "^10.6.8",
     "typescript": "^7.0.2",
     "vite": "^8.3.8",
     "vitest": "^5.1.1"
+  },
+  "peerDependencies": {
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0"
   }
 }

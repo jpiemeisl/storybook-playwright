@@ -1,5 +1,7 @@
 export { SiteLayout, type SiteLayoutProps, type SiteLayoutVariant } from './SiteLayout';
 export { PageRenderer, type PageRendererProps } from './PageRenderer';
+/** SiteLayout props from a render context, for custom templates. */
+export { layoutProps } from './TemplateBlocks';
 export { createTemplates, defaultTemplates, getTemplate, resolveTemplate } from './registry';
 export { defineTemplate, type RenderContext, type TemplateDefinition, type TemplateProps, type Templates } from './types';
 export { DefaultTemplate } from './DefaultTemplate';

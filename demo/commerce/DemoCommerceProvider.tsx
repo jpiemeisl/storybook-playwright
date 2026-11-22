@@ -66,12 +66,14 @@ export interface DemoCommerceProviderProps {
   now?: string;
   /** Starting checkout values (e.g. a fixture). Default empty. */
   initialCheckout?: CheckoutValues;
+  /** Starting checkout step (demo shop checkpoints). Default "information". */
+  initialStep?: CheckoutStepId;
   /** Make placeOrder fail (the story parameter demo.failPlaceOrder). */
   failPlaceOrder?: boolean;
   children: ReactNode;
 }
 
-export function DemoCommerceProvider({ initialCart = 'empty', now = DEMO_NOW, initialCheckout, failPlaceOrder = false, children }: DemoCommerceProviderProps) {
+export function DemoCommerceProvider({ initialCart = 'empty', now = DEMO_NOW, initialCheckout, initialStep, failPlaceOrder = false, children }: DemoCommerceProviderProps) {
   const [state, dispatch] = useReducer(reducer, carts[initialCart], initialDemoState);
   const totals = useMemo(() => computeCartTotals(state.cart, { promoDefinitions, shippingMethods, now }), [state.cart, now]);
 
@@ -104,7 +106,7 @@ export function DemoCommerceProvider({ initialCart = 'empty', now = DEMO_NOW, in
   );
 
   // Checkout: values, step, errors and the placed order, in memory.
-  const [checkout, checkoutDispatch] = useReducer(checkoutReducer, initialCheckout, initialCheckoutState);
+  const [checkout, checkoutDispatch] = useReducer(checkoutReducer, initialCheckout, (values) => ({ ...initialCheckoutState(values), ...(initialStep ? { step: initialStep } : {}) }));
   const checkoutValue = useMemo<DemoCheckout>(
     () => ({
       values: checkout.values,

@@ -53,10 +53,12 @@
   }
 
   .scroller {
+    --scroll-hint-inset: calc(var(--focus-ring-width) + var(--focus-ring-offset) + 1px);
+    --scroll-hint-gap: var(--gap-sm);
     display: flex;
     gap: var(--gap-sm);
     margin: 0;
-    padding: calc(var(--focus-ring-width) + var(--focus-ring-offset) + 1px);
+    padding: var(--scroll-hint-inset);
     overflow-x: auto;
     list-style: none;
     scrollbar-width: thin;

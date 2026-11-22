@@ -7,6 +7,9 @@ export default defineConfig({
   // Baselines are committed. No platform suffix: this project is maintained on a single Windows machine.
   snapshotPathTemplate: '{testDir}/__screenshots__/{arg}{ext}',
   fullyParallel: true,
+  // Half the logical cores: 8 on the 16-thread maintainer machine. Measured in Phase 14: the smoke suite
+  // took 2.7 minutes with 8 workers and with 12, so more workers only add load. Override with --workers.
+  workers: '50%',
   forbidOnly: !!process.env.CI,
   retries: process.env.CI ? 1 : 0,
   reporter: [['list'], ['html', { open: 'never' }]],

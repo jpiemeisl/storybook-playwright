@@ -189,7 +189,7 @@ What the library lacked and how it was filled:
 - Save for later: a callback slot only, as asked.
 - Address autocomplete or verification, and non-US addresses.
 - Real tax: the flat 8% demo estimate is labelled "Estimated tax".
-- A sticky mobile checkout bar.
+- ~~A sticky mobile checkout bar~~: shipped in Phase 14 (below).
 
 ## Known limitations
 
@@ -197,4 +197,8 @@ What the library lacked and how it was filled:
 - **Free shipping applies to every method** once the $75 threshold (or a free-shipping code) is met, because `computeCartTotals` zeroes shipping for whichever method is chosen. The shipping selector marks every method as free to match.
 - **US addresses only.** Fifty states plus DC, ZIP or ZIP+4.
 - **Tax is a labelled 8% demo estimate** ("Estimated tax"). Real tax needs the address and a tax service.
-- **Deferred:** a sticky mobile checkout bar, and save-for-later (a callback slot only).
+- **Deferred:** save-for-later (a callback slot only).
+
+## Sticky checkout bar (Phase 14)
+
+Below 48rem, while the step's real submit button is out of view, `StickyBuyBar` shows "Due today" and the step's primary button. That button is `type="submit"` with the `form` attribute pointing at the step form, so submitting runs the same validation and handler: there is no second code path, and the real button stays the form's default (Enter in a field) because it comes first in the document. Same rules as the product bar: hidden where IntersectionObserver is unsupported, scroll padding while shown, safe-area inset, below toasts and the cookie banner, not printed, and absent while the cart is empty or blocked.

@@ -1,0 +1,12 @@
+/*
+ * Applied to full-page screenshots only (Playwright `stylePath`). A position: fixed bar has no meaningful
+ * place in a stitched full-page image: it would be drawn wherever the first viewport ended. The sticky
+ * purchase bars are captured at phone size by their own stories (Commerce/StickyBuyBar).
+ */
+[data-sticky-buy-bar] {
+  display: none !important;
+}
+
+html:has([data-sticky-buy-bar]) {
+  padding-block-end: 0 !important;
+}

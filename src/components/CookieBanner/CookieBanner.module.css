@@ -1,0 +1,107 @@
+@layer components {
+  .banner {
+    position: fixed;
+    inset-inline: 0;
+    inset-block-end: 0;
+    z-index: var(--z-cookie-banner);
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: var(--gap-sm) var(--gap-md);
+    padding: var(--space-4) var(--gutter) calc(var(--space-4) + env(safe-area-inset-bottom, 0px));
+    border-block-start: var(--border-1) solid var(--color-border);
+    background-color: var(--color-surface);
+    color: var(--color-text);
+    box-shadow: var(--elevation-high);
+  }
+
+  .banner[data-position='bottom-start'] {
+    inset-inline: var(--gap-sm) auto;
+    inset-block-end: calc(var(--gap-sm) + env(safe-area-inset-bottom, 0px));
+    max-inline-size: min(28rem, calc(100% - 2 * var(--gap-sm)));
+    padding: var(--space-4);
+    border: var(--border-width-card) solid var(--color-border);
+    border-radius: var(--radius-surface);
+  }
+
+  /* Sticky purchase bars (narrow screens): stack the banner on top of the bar rather than over it. */
+  @media (max-width: 47.99rem) {
+    :global(html):has([data-sticky-action-bar]) .banner {
+      inset-block-end: calc(var(--sticky-action-bar-height) + env(safe-area-inset-bottom, 0px));
+      padding-block-end: var(--space-4);
+    }
+  }
+
+  .body {
+    flex: 1 1 20rem;
+    min-inline-size: 0;
+  }
+
+  .title {
+    margin: 0 0 var(--space-1);
+    font-family: var(--text-font-heading);
+    font-size: var(--text-size-md);
+    font-weight: var(--text-weight-heading);
+  }
+
+  .message {
+    font-size: var(--text-size-sm);
+  }
+
+  .message > :first-child {
+    margin-block-start: 0;
+  }
+
+  .message > :last-child {
+    margin-block-end: 0;
+  }
+
+  .actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--gap-sm);
+  }
+
+  .close {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    align-self: flex-start;
+    min-block-size: var(--control-height-sm);
+    min-inline-size: var(--control-height-sm);
+    border: 0;
+    border-radius: var(--radius-control);
+    background: none;
+    color: var(--color-text);
+    cursor: pointer;
+  }
+
+  .close:hover {
+    background-color: var(--color-bg-muted);
+  }
+
+  .close:focus-visible {
+    outline: var(--focus-ring-width) solid var(--color-focus-ring);
+    outline-offset: var(--focus-ring-offset);
+  }
+
+  .categories {
+    display: grid;
+    gap: var(--gap-md);
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  @media print {
+    .banner {
+      display: none;
+    }
+  }
+
+  @media (forced-colors: active) {
+    .banner {
+      border: 1px solid CanvasText;
+    }
+  }
+}

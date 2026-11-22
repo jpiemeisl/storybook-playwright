@@ -74,4 +74,14 @@
       grid-template-columns: 18rem minmax(0, 1fr);
     }
   }
+
+  .barTitle {
+    font-weight: var(--text-weight-strong);
+  }
+
+  .barStatus {
+    display: block;
+    font-weight: var(--text-weight-strong);
+    text-align: center;
+  }
 }

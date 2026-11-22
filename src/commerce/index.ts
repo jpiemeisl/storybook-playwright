@@ -10,6 +10,7 @@ export * from './logic/variants';
 export { useVariantSelection } from './hooks/useVariantSelection';
 export * from './logic/validate';
 export * from './components/Price';
+export * from './components/StickyBuyBar';
 export * from './components/SaleBadge';
 export * from './components/StockBadge';
 export * from './components/ProductTypeBadge';

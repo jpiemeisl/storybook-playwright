@@ -1,0 +1,62 @@
+@layer components {
+  .bar {
+    position: fixed;
+    inset-inline: 0;
+    inset-block-end: 0;
+    z-index: var(--z-sticky-bar);
+    display: flex;
+    align-items: center;
+    gap: var(--gap-sm);
+    box-sizing: border-box;
+    block-size: calc(var(--sticky-action-bar-height) + env(safe-area-inset-bottom, 0px));
+    padding: var(--space-2) var(--gutter) calc(var(--space-2) + env(safe-area-inset-bottom, 0px));
+    border-block-start: var(--border-1) solid var(--color-border);
+    background-color: var(--color-surface);
+    color: var(--color-text);
+    box-shadow: var(--elevation-high);
+  }
+
+  .summary {
+    flex: 0 1 auto;
+    max-inline-size: 45%;
+    min-inline-size: 0;
+    overflow: hidden;
+    font-size: var(--text-size-sm);
+    line-height: var(--text-leading-heading);
+  }
+
+  /* One line each: title, then price. */
+  .summary > * {
+    display: block;
+    overflow: hidden;
+    margin: 0;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  .action {
+    flex: 1 1 0;
+    min-inline-size: 0;
+  }
+
+  /* While the bar shows: focused and scrolled-to content stops above it, and the page end can scroll clear. */
+  @media (max-width: 47.99rem) {
+    /* On html, not body: host and Storybook resets commonly zero the body's padding. */
+    :global(html):has(.bar) {
+      padding-block-end: calc(var(--sticky-action-bar-height) + env(safe-area-inset-bottom, 0px));
+      scroll-padding-block-end: calc(var(--sticky-action-bar-height) + env(safe-area-inset-bottom, 0px) + var(--gap-sm));
+    }
+  }
+
+  @media (min-width: 48rem) {
+    .bar {
+      display: none;
+    }
+  }
+
+  @media print {
+    .bar {
+      display: none;
+    }
+  }
+}

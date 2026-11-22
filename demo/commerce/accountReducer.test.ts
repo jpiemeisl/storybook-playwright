@@ -86,3 +86,24 @@ describe('demo account reducer: addresses and wishlist', () => {
     expect(run({ type: 'removeWishlistItem', productId: 'nope' }).result.ok).toBe(false);
   });
 });
+
+describe('demo account reducer: demo shop actions', () => {
+  it('recordOrder adds the order, its downloads and its subscriptions (trial kept)', async () => {
+    const { confirmationOrders } = await import('../../src/commerce/fixtures');
+    const order = confirmationOrders.mixed;
+    const { state, result } = run({ type: 'recordOrder', order });
+    expect(result.ok).toBe(true);
+    expect(state.orders[0]).toBe(order);
+    expect(state.downloads[0]!.files.map((f) => f.fileId)).toEqual(order.downloads!.map((d) => d.fileId));
+    const added = state.subscriptions.filter((s) => s.id.startsWith(`sub-${order.number}`));
+    expect(added).toHaveLength(order.recurring!.length);
+    added.forEach((s) => expect(validateCustomerSubscription(s)).toEqual([]));
+  });
+
+  it('signs in as the demo customer and out again', () => {
+    let { state } = run({ type: 'signOut' });
+    expect(state.customer).toBeNull();
+    ({ state } = run({ type: 'signIn' }, state));
+    expect(state.customer).toEqual(customers.robin);
+  });
+});

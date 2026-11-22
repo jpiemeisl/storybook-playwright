@@ -157,7 +157,7 @@ Printed pages always use the default theme. Theme rules sit inside `@media not p
 
 - **Toolbar:** the **Theme** toolbar (the `theme` global) wraps every story in `<Theme>` and sets `data-theme` on `<html>`. In URLs it's `&globals=theme:harbor`. The backgrounds tool is disabled.
 - **Visual tests:** stories tagged `theme-smoke` are captured in every non-default theme at 1280 and 375 px (and 768 px when also `vrt-full`), named `<id>-<width>-<theme>.png`. Default-theme names are unchanged. `parameters.vrt.themes` overrides the list for one story.
-- **`npm run test:a11y`:** runs every smoke story in every theme at 1280 px and fails on any axe violation reported by Storybook's a11y addon, including colour contrast. That reuses the axe the addon already ships, so it needs no new dependency.
+- **`npm run test:a11y`:** runs every smoke story in every theme at 1280 px, the demo shop checkpoints in every theme at 1280 and 375 px (Phase 14), and every story once in the default theme, and fails on any axe violation reported by Storybook's a11y addon, including colour contrast. That reuses the axe the addon already ships, so it needs no new dependency.
 - **New stories:**
   - **Foundations/Theme comparison:** swatches, type, radii, shadows, borders and the focus ring, per theme.
   - **Themes/Component gallery:** the cheap regression guard, showing the same components in each theme.

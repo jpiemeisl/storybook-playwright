@@ -1,6 +1,7 @@
 import type { FocusEvent } from 'react';
 import type { CategoryItem, TagItem } from '../../component-types/content';
 import { Link } from '../Link';
+import hint from '../scrollHint.module.css';
 import styles from './TagList.module.css';
 
 export interface TagListProps {
@@ -84,7 +85,7 @@ export function CategoryFilter(props: CategoryFilterProps) {
     };
     return (
       <div role="group" aria-label={label} className={styles.filter}>
-        <ul className={styles.scroller} onFocus={onFocus}>
+        <ul className={`${styles.scroller} ${hint.hint}`} onFocus={onFocus}>
           {items.map((item) => (
             <li key={item.id}>
               <button
@@ -105,7 +106,7 @@ export function CategoryFilter(props: CategoryFilterProps) {
 
   return (
     <nav aria-label={label} className={styles.filter}>
-      <ul className={styles.scroller} onFocus={onFocus}>
+      <ul className={`${styles.scroller} ${hint.hint}`} onFocus={onFocus}>
         {items.map((item) => (
           <li key={item.id}>
             <Link

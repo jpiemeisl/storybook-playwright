@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useRef, useState } from 'react';
 import { Heading } from '../../../components/Heading';
 import { Text } from '../../../components/Text';
 import { AddToCart, type AddToCartStatus } from '../../components/AddToCart';
@@ -13,6 +13,7 @@ import { Rating } from '../../components/Rating';
 import { SaleBadge } from '../../components/SaleBadge';
 import { SizeGuide } from '../../components/SizeGuide';
 import { StockBadge } from '../../components/StockBadge';
+import { StickyBuyBar, useOutOfView } from '../../components/StickyBuyBar';
 import { VariantSelector } from '../../components/VariantSelector';
 import { WishlistButton } from '../../components/WishlistButton';
 import { defaultPurchaseOption, purchaseSelectorKind } from '../../logic/options';
@@ -58,6 +59,19 @@ export function ProductInfo({ product, variant, selection, onSelect, initialPurc
   const showQuantity = product.kind === 'physical' && !subscription;
   const stockLimit = variant?.stock.status === 'low-stock' ? variant.stock.quantity : undefined;
   const ratingCount = product.rating?.count ?? 0;
+  const buyRef = useRef<HTMLDivElement>(null);
+  const buyOutOfView = useOutOfView(buyRef);
+  const addProps = {
+    kind: product.kind,
+    status: disabled ? ('disabled' as const) : status,
+    onAdd: () => add(),
+    disabledLabel: disabled?.label,
+    disabledReason: disabled?.reason,
+    subscription: !!subscription,
+    trial: !!subscription?.trialDays,
+    preorder: variant?.stock.status === 'preorder',
+    productTitle: product.title,
+  };
 
   const add = () => {
     if (!variant || !ctx?.onAddToCart) return;
@@ -102,23 +116,25 @@ export function ProductInfo({ product, variant, selection, onSelect, initialPurc
       <SizeGuide table={product.sizeGuide} productTitle={product.title} />
       {showQuantity && !disabled && <QuantityStepper value={quantity} onChange={setQuantity} maxFromStock={stockLimit} productTitle={product.title} />}
       <TrialBanner trialDays={subscription?.trialDays} />
-      <div className={styles.buy}>
-        <AddToCart
-          kind={product.kind}
-          status={disabled ? 'disabled' : status}
-          onAdd={add}
-          disabledLabel={disabled?.label}
-          disabledReason={disabled?.reason}
-          subscription={!!subscription}
-          trial={!!subscription?.trialDays}
-          preorder={variant?.stock.status === 'preorder'}
-          productTitle={product.title}
-        />
+      <div ref={buyRef} className={styles.buy}>
+        <AddToCart {...addProps} />
         <WishlistButton pressed={saved} onPressedChange={setSaved} productTitle={product.title} />
       </div>
       <DeliveryInfo product={product} purchaseOption={option} />
       {product.kind === 'digital' && <DigitalDetails digital={product.digital} />}
       <ProductInfoAccordion product={product} headingLevel={2} />
+      {/* Narrow screens: the same AddToCart in a bar while the real one is scrolled away. Disabled: the status text instead. */}
+      <StickyBuyBar
+        shown={buyOutOfView}
+        summary={
+          <>
+            <span className={styles.barTitle}>{product.title}</span>
+            <Price price={price} compareAt={compareAt} interval={subscription?.interval} trialDays={subscription?.trialDays} size="sm" />
+          </>
+        }
+      >
+        {disabled ? <span className={styles.barStatus}>{disabled.label}</span> : <AddToCart {...addProps} secondary />}
+      </StickyBuyBar>
     </div>
   );
 }

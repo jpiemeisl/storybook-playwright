@@ -45,3 +45,30 @@ export const Matrix: Story = {
     await expect(new Set(names).size).toBe(names.length);
   },
 };
+
+/** Scrolls the row to a position (0 = start, 1 = end) and checks which edge fades show. */
+const scrollRow = (fraction: number) => async ({ canvasElement }: { canvasElement: HTMLElement }) => {
+  const list = within(canvasElement).getByRole('navigation').querySelector('ul')!;
+  await expect(list.scrollWidth).toBeGreaterThan(list.clientWidth);
+  list.scrollLeft = Math.round((list.scrollWidth - list.clientWidth) * fraction);
+  await new Promise((done) => requestAnimationFrame(() => done(null)));
+};
+
+const row = () => <AccountNav currentPath="/account" has={all} counts={{ orders: 60, downloads: 6, subscriptions: 3, wishlist: 14 }} onSignOut={() => undefined} />;
+
+/** Phone row at the start: a fade at the end edge only says more items follow. */
+export const RowScrolledStart: Story = { parameters: { vrt: { viewports: [375] } }, render: row, play: scrollRow(0) };
+/** In the middle: fades at both edges. */
+export const RowScrolledMiddle: Story = { parameters: { vrt: { viewports: [375] } }, render: row, play: scrollRow(0.5) };
+/** At the end: the start fade only; the last item ("Sign out") is fully visible. */
+export const RowScrolledEnd: Story = {
+
+  parameters: { vrt: { viewports: [375] } },
+  render: row,
+  play: async (ctx) => {
+    await scrollRow(1)(ctx);
+    const signOut = within(ctx.canvasElement).getByRole('button', { name: 'Sign out' }).getBoundingClientRect();
+    const list = ctx.canvasElement.querySelector('ul')!.getBoundingClientRect();
+    await expect(signOut.right).toBeLessThanOrEqual(list.right);
+  },
+};

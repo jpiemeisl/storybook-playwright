@@ -34,6 +34,8 @@ export interface SiteLayoutProps {
   onAnnouncementDismiss?: () => void;
   /** Makes chrome.footer.newsletter a working form. Without it the footer newsletter is not shown. */
   newsletter?: FormHandlers['newsletter'];
+  /** Controls shown in the header at every width (e.g. search, account and cart), from the host. Not in `minimal`. */
+  headerActions?: ReactNode;
 }
 
 /**
@@ -49,6 +51,7 @@ export function SiteLayout({
   announcementDismissed,
   onAnnouncementDismiss,
   newsletter,
+  headerActions,
 }: SiteLayoutProps) {
   const { props, issues } = useMemo(() => {
     const found: ValidationIssue[] = [];
@@ -73,7 +76,7 @@ export function SiteLayout({
       {variant !== 'bare' && (
         <div className={styles.chrome}>
           {full && announcement && <AnnouncementBar {...announcement} dismissed={announcementDismissed} onDismiss={dismiss} />}
-          <Header logo={<SiteLogo {...header.logo} />} items={full ? header.items : []} cta={full ? header.cta : undefined} sticky={header.sticky} />
+          <Header logo={<SiteLogo {...header.logo} />} items={full ? header.items : []} cta={full ? header.cta : undefined} actions={full ? headerActions : undefined} sticky={header.sticky} />
         </div>
       )}
       <main id="main" tabIndex={-1} className={styles.main}>

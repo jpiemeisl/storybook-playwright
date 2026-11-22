@@ -22,6 +22,11 @@ export interface AddToCartProps {
   preorder?: boolean;
   /** For announcements: "Added Stoneware mug to your cart". */
   productTitle: string;
+  /**
+   * A second copy of the same button (e.g. in StickyBuyBar): same label, status and disabled behaviour,
+   * but no live region and no reason or error text, which the primary copy already shows and announces.
+   */
+  secondary?: boolean;
 }
 
 /** The label for a kind and state. */
@@ -41,7 +46,7 @@ export function addToCartLabel({ kind, status, disabledLabel = 'Sold out', subsc
  * The main buy button: full width so its size never changes between states. Disabled states stay
  * focusable (aria-disabled) and point at a visible reason; outcomes are announced in a polite live region.
  */
-export function AddToCart({ kind, status, onAdd, disabledReason, disabledLabel, subscription, trial, preorder, productTitle }: AddToCartProps) {
+export function AddToCart({ kind, status, onAdd, disabledReason, disabledLabel, subscription, trial, preorder, productTitle, secondary = false }: AddToCartProps) {
   const reasonId = useId();
   const disabled = status === 'disabled';
   const label = addToCartLabel({ kind, status, disabledLabel, subscription, trial, preorder });
@@ -53,7 +58,7 @@ export function AddToCart({ kind, status, onAdd, disabledReason, disabledLabel, 
         className={styles.button}
         loading={status === 'loading'}
         aria-disabled={disabled || undefined}
-        aria-describedby={disabled && disabledReason ? reasonId : undefined}
+        aria-describedby={disabled && disabledReason && !secondary ? reasonId : undefined}
         onClick={() => {
           if (!disabled && status !== 'loading') onAdd();
         }}
@@ -62,15 +67,17 @@ export function AddToCart({ kind, status, onAdd, disabledReason, disabledLabel, 
         {status === 'success' && <Icon name="check" size="sm" />}
         {label}
       </Button>
-      {disabled && disabledReason && (
+      {disabled && disabledReason && !secondary && (
         <p id={reasonId} className={styles.reason}>
           {disabledReason}
         </p>
       )}
-      {status === 'error' && <p className={styles.error}>Something went wrong. Please try again.</p>}
-      <span className={styles.visuallyHidden} role="status">
-        {message}
-      </span>
+      {status === 'error' && !secondary && <p className={styles.error}>Something went wrong. Please try again.</p>}
+      {!secondary && (
+        <span className={styles.visuallyHidden} role="status">
+          {message}
+        </span>
+      )}
     </div>
   );
 }
