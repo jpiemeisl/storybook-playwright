@@ -1,15 +1,17 @@
+import { readFileSync } from 'node:fs';
 import { resolve } from 'node:path';
 import { defineConfig, normalizePath, type Plugin } from 'vite';
 import react from '@vitejs/plugin-react';
 
 /*
- * Library build (npm run build:lib), verification only: the package stays private and unpublished.
+ * Library build (npm run build:lib): the dist/ output published as @jpiemeisl/pattern-library (docs/publishing.md).
  * Two passes into dist/: `vite build -c vite.lib.config.ts` (core) and `--mode commerce`. Each is an ES
  * module with its CSS beside it. react, react-dom and react/jsx-runtime are peer externals. In the
  * commerce pass every import of core code becomes an import of the package's core entry, so commerce
  * never carries a second copy of core. CSS modules are always bundled where they are used.
  */
-const PACKAGE = 'storybook-playwright';
+/** The package name: the commerce bundle imports core from it. */
+const PACKAGE: string = JSON.parse(readFileSync(resolve(import.meta.dirname, 'package.json'), 'utf8')).name;
 const root = normalizePath(import.meta.dirname) + '/';
 const src = root + 'src/';
 const commerceDir = root + 'src/commerce/';

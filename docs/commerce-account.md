@@ -32,8 +32,8 @@ The subscription validator has status-specific rules:
 ## Wiring the templates to a host app
 
 ```tsx
-import { createTemplates, PageRenderer } from 'storybook-playwright';
-import { commerceTemplates } from 'storybook-playwright/commerce';
+import { createTemplates, PageRenderer } from '@jpiemeisl/pattern-library';
+import { commerceTemplates } from '@jpiemeisl/pattern-library/commerce';
 
 const templates = createTemplates(Object.values(commerceTemplates));
 // keys: login, register, forgot-password, reset-password, account, account-orders, account-order,

@@ -1,10 +1,22 @@
 {
-  "name": "storybook-playwright",
-  "private": true,
+  "name": "@jpiemeisl/pattern-library",
   "version": "0.1.0",
+  "description": "React pattern library for content and commerce sites: components, page templates, design tokens and themes.",
+  "license": "UNLICENSED",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jpiemeisl/storybook-playwright.git"
+  },
+  "homepage": "https://github.com/jpiemeisl/storybook-playwright#readme",
+  "bugs": {
+    "url": "https://github.com/jpiemeisl/storybook-playwright/issues"
+  },
   "type": "module",
   "engines": {
     "node": ">=26 <27"
+  },
+  "publishConfig": {
+    "registry": "https://npm.pkg.github.com"
   },
   "sideEffects": [
     "*.css"
@@ -23,10 +35,18 @@
     "./tokens.css": "./dist/tokens/index.css",
     "./tokens/*": "./dist/tokens/*",
     "./themes/harbor.css": "./dist/tokens/themes/harbor.css",
-    "./themes/orchard.css": "./dist/tokens/themes/orchard.css"
+    "./themes/orchard.css": "./dist/tokens/themes/orchard.css",
+    "./package.json": "./package.json"
   },
   "files": [
-    "dist"
+    "dist/core.js",
+    "dist/core.css",
+    "dist/commerce.js",
+    "dist/commerce.css",
+    "dist/tokens/",
+    "dist/types/",
+    "CHANGELOG.md",
+    "docs/consuming.md"
   ],
   "scripts": {
     "typecheck": "tsc --noEmit",
@@ -54,9 +74,19 @@
     "build:lib": "vite build -c vite.lib.config.ts && vite build -c vite.lib.config.ts --mode commerce && node scripts/copy-lib-css.mjs && tsc -p tsconfig.lib.json",
     "check:lib": "node scripts/check-lib.mjs",
     "docs:components": "node scripts/components-docs.mjs",
-    "check:all": "npm run typecheck && npm run check:playwright-image && npm run check:boundaries && npm run check:tokens && npm run check:themes && npm run build-storybook && npm run check:story-tags && npm run check:snapshots && npm run docs:components -- --check && npm run build:lib && npm run check:lib && npm run test:unit",
+    "check:all": "npm run typecheck && npm run check:playwright-image && npm run check:boundaries && npm run check:tokens && npm run check:themes && npm run build-storybook && npm run check:story-tags && npm run check:snapshots && npm run docs:components -- --check && npm run build:lib && npm run check:lib && npm run check:package && npm run check:api && npm run test:unit",
     "check:playwright-image": "node scripts/check-playwright-image.mjs",
-    "check:snapshots": "node scripts/check-orphan-snapshots.mjs"
+    "check:snapshots": "node scripts/check-orphan-snapshots.mjs",
+    "prepublishOnly": "node scripts/release-guard.mjs",
+    "check:package": "node scripts/check-package.mjs",
+    "api:report": "node scripts/api-report.mjs",
+    "check:api": "node scripts/api-report.mjs --check",
+    "release:prepare": "node scripts/release-prepare.mjs",
+    "release:tag": "node scripts/release-tag.mjs"
+  },
+  "peerDependencies": {
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0"
   },
   "devDependencies": {
     "@playwright/test": "^1.65.1",
@@ -74,9 +104,5 @@
     "typescript": "^7.0.2",
     "vite": "^8.3.8",
     "vitest": "^5.1.1"
-  },
-  "peerDependencies": {
-    "react": "^19.0.0",
-    "react-dom": "^19.0.0"
   }
 }

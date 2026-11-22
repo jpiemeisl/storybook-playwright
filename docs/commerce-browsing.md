@@ -38,8 +38,8 @@ Phase 10 (hand-written). Everything lives in [`src/commerce`](../src/commerce), 
 The templates are registry entries. The core registry doesn't know about them; merge them in:
 
 ```tsx
-import { createTemplates, PageRenderer } from 'storybook-playwright';
-import { buildCollectionListing, commerceTemplates, parseFilters, parsePage, parseSort } from 'storybook-playwright/commerce'; // src/commerce
+import { createTemplates, PageRenderer } from '@jpiemeisl/pattern-library';
+import { buildCollectionListing, commerceTemplates, parseFilters, parsePage, parseSort } from '@jpiemeisl/pattern-library/commerce'; // src/commerce
 
 const templates = createTemplates(Object.values(commerceTemplates));
 
