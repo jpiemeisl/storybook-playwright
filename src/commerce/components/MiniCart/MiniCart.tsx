@@ -73,7 +73,7 @@ export function MiniCart({ open, onClose, cart, totals, issues = [], lineHref, o
           onClose();
         }
       }}
-      onClose={() => open && onClose()}
+      onClose={(event) => open && !event.currentTarget.open && onClose()}
       onClick={(event) => {
         if (event.target === event.currentTarget) onClose();
       }}

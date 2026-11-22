@@ -71,7 +71,7 @@ export function MobileMenu({
           onClose();
         }
       }}
-      onClose={onClose}
+      onClose={(event) => !event.currentTarget.open && onClose()}
       // A click on the dialog element itself (not its content) is a click on the scrim.
       onClick={(event) => {
         if (event.target === event.currentTarget) onClose();
