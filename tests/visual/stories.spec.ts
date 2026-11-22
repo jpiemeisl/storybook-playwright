@@ -2,6 +2,7 @@ import { existsSync, readFileSync } from 'node:fs';
 import { resolve } from 'node:path';
 import { expect, test, type Page } from '@playwright/test';
 import { themes } from '../../src/components/Theme/themes';
+import { installStoryListener, openStory, settlePage, type StoryResult } from '../support/storybook';
 
 /*
  * One visual regression test per Storybook story, generated from storybook-static/index.json.
@@ -40,12 +41,7 @@ interface Capture {
 
 type ViewportParam = number | { width: number; height?: number; fullPage?: boolean };
 
-interface StoryResult {
-  status: 'success' | 'error' | 'missing';
-  /** viewports: override the tag viewports. screenshot: false runs play + a11y checks only. */
-  vrt: { viewports?: ViewportParam[]; screenshot?: boolean; themes?: string[] } | null;
-  problems: string[];
-}
+
 
 const PORT = 6007;
 
@@ -80,94 +76,17 @@ function capturesFromParam(viewports: ViewportParam[]): Capture[] {
   );
 }
 
-declare global {
-  interface Window {
-    __vrtStoryResult?: Promise<StoryResult>;
-    /** Starts waiting for the next storyFinished (used before a remount). */
-    __vrtArm?: () => Promise<StoryResult>;
-    __STORYBOOK_PREVIEW__?: { currentRender?: { story?: { parameters?: Record<string, unknown> } } };
-  }
-}
-
-/** Runs before any page script: hooks Storybook's preview channel as soon as it is created. */
-function installStoryListener() {
-  type Report = { type: string; status: string; result?: { violations?: { id: string; help: string; nodes: { target: string[] }[] }[] } };
-  type Channel = { on: (event: string, fn: (payload: never) => void) => void };
-
-  let settle: (result: StoryResult) => void = () => {};
-  window.__vrtArm = () => (window.__vrtStoryResult = new Promise((done) => (settle = done)));
-  window.__vrtArm();
-
-  const vrtParam = () =>
-    (window.__STORYBOOK_PREVIEW__?.currentRender?.story?.parameters?.vrt as StoryResult['vrt']) ?? null;
-
-  const listen = (channel: Channel) => {
-    channel.on('storyFinished', ({ status, reporters }: { status: 'success' | 'error'; reporters: Report[] }) => {
-      const problems = reporters
-        .filter((r) => r.status === 'failed')
-        .flatMap((r) =>
-          r.result?.violations?.length
-            ? r.result.violations.map((v) => `${r.type}: ${v.id} - ${v.help} (${v.nodes.map((n) => n.target.join(' ')).join(', ')})`)
-            : [`${r.type} report failed`],
-        );
-      settle({ status, vrt: vrtParam(), problems });
-    });
-    channel.on('playFunctionThrewException', (error: { message?: string }) =>
-      settle({ status: 'error', vrt: vrtParam(), problems: [`play function threw: ${error.message ?? 'unknown error'}`] }),
-    );
-    channel.on('storyThrewException', (error: { message?: string }) =>
-      settle({ status: 'error', vrt: vrtParam(), problems: [`story threw: ${error.message ?? 'unknown error'}`] }),
-    );
-    channel.on('storyMissing', () => settle({ status: 'missing', vrt: null, problems: ['story not found'] }));
-  };
-
-  let current: Channel | undefined;
-  Object.defineProperty(globalThis, '__STORYBOOK_ADDONS_CHANNEL__', {
-    configurable: true,
-    get: () => current,
-    set(channel: Channel) {
-      current = channel;
-      listen(channel);
-    },
-  });
-}
-
-/** Waits for fonts and images, then lets components react to load/error events before capturing. */
-async function settlePage(page: Page) {
-  await page.evaluate(async () => {
-    // Lazy images outside the viewport never start loading (and full-page shots would miss them).
-    for (const img of document.querySelectorAll<HTMLImageElement>('img[loading="lazy"]')) img.loading = 'eager';
-    await document.fonts.ready;
-    await Promise.all(
-      Array.from(document.images)
-        .filter((img) => !img.complete)
-        .map(
-          (img) =>
-            new Promise((done) => {
-              img.addEventListener('load', done, { once: true });
-              img.addEventListener('error', done, { once: true });
-            }),
-        ),
-    );
-    await new Promise((done) => requestAnimationFrame(() => requestAnimationFrame(done)));
-  });
-}
-
 const EXTRA_THEMES = themes.map((t) => t.name).filter((name) => name !== 'default');
 
-/** Theme captures: desktop and mobile (tablet only for vrt-full), full-page when the story's captures are. */
-function themeCaptures(captures: Capture[], tags: string[] = []): Capture[] {
+/**
+ * Theme captures: desktop and mobile (tablet only for vrt-full), full-page when the story's captures
+ * are. A story with explicit vrt.viewports (e.g. a desktop-only dropdown) keeps only those widths.
+ */
+function themeCaptures(captures: Capture[], tags: string[] = [], explicit = false): Capture[] {
   const fullPage = captures.some((c) => c.fullPage);
   const widths = [1280, 375, ...(tags.includes('vrt-full') ? [768] : [])];
+  if (explicit) return captures.filter((c) => widths.includes(c.width));
   return widths.map((width) => captures.find((c) => c.width === width) ?? { width, height: 800, fullPage });
-}
-
-/** First load of the story iframe (optionally in a theme, via the `theme` global). */
-async function openStory(page: Page, id: string, theme?: string): Promise<StoryResult> {
-  await page.goto(`/iframe.html?id=${id}&viewMode=story${theme ? `&globals=theme:${theme}` : ''}`);
-  const result = await page.evaluate(() => window.__vrtStoryResult!);
-  await settlePage(page);
-  return result;
 }
 
 /**
@@ -240,7 +159,7 @@ for (const story of stories) {
 
     const extraThemes = probe.vrt?.themes ?? (story.tags?.includes('theme-smoke') ? EXTRA_THEMES : []);
     for (const theme of extraThemes.filter((t) => t !== 'default')) {
-      for (const capture of themeCaptures(captures, story.tags)) {
+      for (const capture of themeCaptures(captures, story.tags, !!probe.vrt?.viewports?.length)) {
         await test.step(`${theme} ${capture.width}px`, async () => {
           await page.setViewportSize({ width: capture.width, height: capture.height });
           const result = await openStory(page, story.id, theme);
