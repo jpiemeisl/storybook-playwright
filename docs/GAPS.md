@@ -56,7 +56,7 @@ One list of everything earlier phases deferred or left open, gathered from the g
 - **Resolved (Phase 14):** one command for every non-browser check (`check:all`), and a components inventory that fails when stale.
 - **Resolved (Phase 14):** heavy multi-capture stories timed out under load; per-test timeouts now scale with the number of captures. Three consecutive full runs had zero diffs.
 - **Resolved (Phase 14):** an internal `<Link target="_blank">` now gets `rel="noopener"` like external links.
-- **Open (pending decision):** stories whose screenshots are byte-identical at every captured width (listed in the Phase 14 report). Converting them to `vrt.screenshot: false` would save captures without losing their play tests.
+- **Resolved (Phase 14):** four stories whose screenshots were byte-identical to a sibling at every width (Gallery Without Lightbox, Tabs Keyboard Automatic and Keyboard Manual, Accordion Keyboard) now use `vrt.screenshot: false`: 11 fewer captures, play tests kept.
 - **Open:** CI with a fixed Playwright Docker image and Linux baselines (baselines are Windows-only, platform-less names).
 - **Open:** publishing and versioning the package.
 - **Open:** real CMS adapters and a backend integration guide.
