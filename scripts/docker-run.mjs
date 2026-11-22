@@ -10,7 +10,7 @@
  *
  * The repository is bind-mounted at /work. node_modules is a named Docker volume (one per checkout), so
  * Windows- or macOS-built node_modules never enter the container; scripts/docker-entry.mjs runs `npm ci`
- * in it only when package-lock.json changed. Inside, PW_DOCKER=1 is set.
+ * in it only when package-lock.json changed. Inside, PW_DOCKER=1 is set; PLAYWRIGHT_* variables pass through.
  */
 import { spawnSync } from 'node:child_process';
 import { createHash } from 'node:crypto';
@@ -65,8 +65,13 @@ const args = [
   '/work',
   '-e',
   'PW_DOCKER=1',
+  // Pinned font resolution (see the file): system-ui would otherwise be a CJK font with no bold.
+  '-e',
+  'FONTCONFIG_FILE=/work/docker/fonts.conf',
   '-e',
   'npm_config_update_notifier=false',
+  // Playwright settings from the host (e.g. PLAYWRIGHT_JSON_OUTPUT_NAME).
+  ...Object.keys(process.env).filter((name) => name.startsWith('PLAYWRIGHT_')).flatMap((name) => ['-e', `${name}=${process.env[name]}`]),
   image,
   'node',
   'scripts/docker-entry.mjs',
