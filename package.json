@@ -46,8 +46,7 @@
     "dist/tokens/",
     "dist/types/",
     "CHANGELOG.md",
-    "docs/consuming.md",
-    "src/fixtures/article.ts"
+    "docs/consuming.md"
   ],
   "scripts": {
     "typecheck": "tsc --noEmit",
