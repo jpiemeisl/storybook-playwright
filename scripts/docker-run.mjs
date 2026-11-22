@@ -16,6 +16,7 @@ import { spawnSync } from 'node:child_process';
 import { createHash } from 'node:crypto';
 import { readFileSync } from 'node:fs';
 import { resolve } from 'node:path';
+import { inCi, isUpdateArgs, updateRefusal } from './vrt-guard.mjs';
 
 const root = resolve(import.meta.dirname, '..');
 const pin = JSON.parse(readFileSync(resolve(root, 'docker', 'image.json'), 'utf8'));
@@ -43,6 +44,12 @@ if (!first) {
   process.exit(1);
 }
 if (first === '--pull') process.exit(docker(['pull', '--platform', platform, image]));
+// Never write baselines in CI: refuse before starting the container (the guard inside refuses too,
+// because CI is passed through below).
+if (inCi() && (rest.concat(first).some((arg) => /^test:vrt(:docker)?:update$/.test(arg)) || isUpdateArgs(rest))) {
+  console.error(updateRefusal());
+  process.exit(1);
+}
 
 const posix = process.platform !== 'win32';
 const user = posix ? [`${process.getuid()}:${process.getgid()}`] : [];
@@ -77,6 +84,8 @@ const args = [
   'FONTCONFIG_FILE=/work/docker/fonts.conf',
   '-e',
   'npm_config_update_notifier=false',
+  // CI, so the guard inside the container refuses baseline updates in CI too.
+  ...(process.env.CI ? ['-e', `CI=${process.env.CI}`] : []),
   // Playwright settings from the host (e.g. PLAYWRIGHT_JSON_OUTPUT_NAME).
   ...Object.keys(process.env).filter((name) => name.startsWith('PLAYWRIGHT_')).flatMap((name) => ['-e', `${name}=${process.env[name]}`]),
   image,

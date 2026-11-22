@@ -1,0 +1,241 @@
+# Checks, visual regression and accessibility on every pull request and every push to main, in the
+# Playwright image pinned in docker/image.json (the same image as npm run test:vrt:docker locally).
+# CI only compares against committed baselines; it never writes them. See docs/ci.md.
+name: CI
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+
+# One run per ref. A new push to a pull request cancels its older run; runs on main always finish.
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: ${{ github.event_name == 'pull_request' }}
+
+# Read-only token everywhere. No job needs more: artifacts, caches and job summaries don't use the token's
+# permissions.
+permissions:
+  contents: read
+
+env:
+  npm_config_update_notifier: 'false'
+  npm_config_fund: 'false'
+  npm_config_audit: 'false'
+
+jobs:
+  setup:
+    name: setup
+    runs-on: ubuntu-24.04
+    timeout-minutes: 5
+    outputs:
+      image: ${{ steps.image.outputs.image }}
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      # The image is defined only in docker/image.json; every other job runs in the reference output here.
+      - name: Check the pin matches @playwright/test
+        run: node scripts/check-playwright-image.mjs
+      - name: Read the pinned image
+        id: image
+        run: node -e "const p = require('./docker/image.json'); console.log('image=' + p.image + ':' + p.tag + '@' + p.digest)" >> "$GITHUB_OUTPUT"
+
+  checks:
+    name: checks
+    needs: setup
+    runs-on: ubuntu-24.04
+    timeout-minutes: 25
+    container:
+      image: ${{ needs.setup.outputs.image }}
+      options: --ipc=host --init
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+          # Full history so pull requests can diff their baselines against the merge base.
+          fetch-depth: 0
+      - name: Trust the workspace (container runs as root)
+        run: git config --global --add safe.directory "$GITHUB_WORKSPACE"
+      - name: List changed baselines
+        if: github.event_name == 'pull_request'
+        env:
+          BASE_REF: ${{ github.base_ref }}
+        run: |
+          base=$(git merge-base "origin/$BASE_REF" HEAD)
+          git diff --name-status "$base" HEAD -- tests/visual/__screenshots__ > baselines.txt
+          count=$(wc -l < baselines.txt | tr -d ' ')
+          {
+            if [ "$count" -eq 0 ]; then
+              echo "## Baselines: none changed"
+              echo
+              echo "This pull request does not change any file under \`tests/visual/__screenshots__/\`."
+            else
+              echo "## Baselines: $count changed"
+              echo
+              echo "This pull request changes $count baseline file(s) under \`tests/visual/__screenshots__/\` (A added, M modified, D deleted). Review them in the Files tab: GitHub shows image diffs."
+              echo
+              echo '```'
+              head -n 200 baselines.txt
+              if [ "$count" -gt 200 ]; then echo "... and $((count - 200)) more"; fi
+              echo '```'
+            fi
+          } >> "$GITHUB_STEP_SUMMARY"
+          echo "$count baseline file(s) changed against $BASE_REF"
+      - name: npm cache directory
+        id: npm-cache
+        run: echo "dir=$(npm config get cache)" >> "$GITHUB_OUTPUT"
+      - uses: actions/cache@55cc8345863c7cc4c66a329aec7e433d2d1c52a9 # v6.1.0
+        with:
+          path: ${{ steps.npm-cache.outputs.dir }}
+          key: npm-${{ runner.os }}-${{ hashFiles('package-lock.json') }}
+          restore-keys: npm-${{ runner.os }}-
+      - run: npm ci
+      - run: npm run check:all
+      # check:all builds Storybook; the visual and a11y jobs reuse this build.
+      - uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
+        with:
+          name: storybook-static
+          path: storybook-static
+          retention-days: 1
+          if-no-files-found: error
+
+  visual:
+    name: visual (${{ matrix.shard }}/4)
+    needs: [setup, checks]
+    runs-on: ubuntu-24.04
+    timeout-minutes: 30
+    container:
+      image: ${{ needs.setup.outputs.image }}
+      options: --ipc=host --init
+    strategy:
+      fail-fast: false
+      matrix:
+        shard: [1, 2, 3, 4]
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - name: Pin font resolution (docker/fonts.conf)
+        run: echo "FONTCONFIG_FILE=$GITHUB_WORKSPACE/docker/fonts.conf" >> "$GITHUB_ENV"
+      - name: npm cache directory
+        id: npm-cache
+        run: echo "dir=$(npm config get cache)" >> "$GITHUB_OUTPUT"
+      - uses: actions/cache@55cc8345863c7cc4c66a329aec7e433d2d1c52a9 # v6.1.0
+        with:
+          path: ${{ steps.npm-cache.outputs.dir }}
+          key: npm-${{ runner.os }}-${{ hashFiles('package-lock.json') }}
+          restore-keys: npm-${{ runner.os }}-
+      - run: npm ci
+      - uses: actions/download-artifact@9000827ccba6bdab643e8b6fd33ac0654aef8333 # v8.0.2
+        with:
+          name: storybook-static
+          path: storybook-static
+      - name: Visual tests (shard ${{ matrix.shard }}/4)
+        run: npx playwright test --shard=${{ matrix.shard }}/4 --reporter=blob,dot
+      - uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
+        if: ${{ !cancelled() }}
+        with:
+          name: blob-report-${{ matrix.shard }}
+          path: blob-report
+          retention-days: 14
+      # Actual, expected and diff images plus traces of the failing tests.
+      - uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
+        if: failure()
+        with:
+          name: test-results-shard-${{ matrix.shard }}
+          path: test-results
+          retention-days: 14
+
+  visual-report:
+    name: visual-report
+    needs: [setup, visual]
+    if: ${{ always() && needs.setup.result == 'success' }}
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    container:
+      image: ${{ needs.setup.outputs.image }}
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - name: npm cache directory
+        id: npm-cache
+        run: echo "dir=$(npm config get cache)" >> "$GITHUB_OUTPUT"
+      - uses: actions/cache@55cc8345863c7cc4c66a329aec7e433d2d1c52a9 # v6.1.0
+        with:
+          path: ${{ steps.npm-cache.outputs.dir }}
+          key: npm-${{ runner.os }}-${{ hashFiles('package-lock.json') }}
+          restore-keys: npm-${{ runner.os }}-
+      - run: npm ci
+      - uses: actions/download-artifact@9000827ccba6bdab643e8b6fd33ac0654aef8333 # v8.0.2
+        with:
+          pattern: blob-report-*
+          path: all-blob-reports
+          merge-multiple: true
+      - name: Merge the shard reports
+        id: merge
+        env:
+          PLAYWRIGHT_JSON_OUTPUT_NAME: report.json
+          PLAYWRIGHT_HTML_OPEN: never
+        run: |
+          if [ -d all-blob-reports ] && [ -n "$(ls -A all-blob-reports)" ]; then
+            npx playwright merge-reports --reporter=html,json all-blob-reports
+          else
+            echo "No blob reports were uploaded."
+          fi
+      - uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
+        with:
+          name: playwright-report
+          path: playwright-report
+          retention-days: 14
+          if-no-files-found: ignore
+      - name: Job summary
+        env:
+          RUN_URL: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
+        run: node scripts/ci-summary.mjs report.json "$RUN_URL"
+      # The report job itself fails when any shard failed or was cancelled, so it can be a required check.
+      - name: Fail when the visual suite failed
+        if: needs.visual.result != 'success'
+        env:
+          RESULT: ${{ needs.visual.result }}
+        run: |
+          echo "The visual jobs finished with: $RESULT"
+          exit 1
+
+  a11y:
+    name: a11y
+    needs: [setup, checks]
+    runs-on: ubuntu-24.04
+    timeout-minutes: 30
+    container:
+      image: ${{ needs.setup.outputs.image }}
+      options: --ipc=host --init
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - name: Pin font resolution (docker/fonts.conf)
+        run: echo "FONTCONFIG_FILE=$GITHUB_WORKSPACE/docker/fonts.conf" >> "$GITHUB_ENV"
+      - name: npm cache directory
+        id: npm-cache
+        run: echo "dir=$(npm config get cache)" >> "$GITHUB_OUTPUT"
+      - uses: actions/cache@55cc8345863c7cc4c66a329aec7e433d2d1c52a9 # v6.1.0
+        with:
+          path: ${{ steps.npm-cache.outputs.dir }}
+          key: npm-${{ runner.os }}-${{ hashFiles('package-lock.json') }}
+          restore-keys: npm-${{ runner.os }}-
+      - run: npm ci
+      - uses: actions/download-artifact@9000827ccba6bdab643e8b6fd33ac0654aef8333 # v8.0.2
+        with:
+          name: storybook-static
+          path: storybook-static
+      # The same suite as npm run test:a11y, against the Storybook build from the checks job.
+      - name: Accessibility tests
+        run: npx playwright test --config playwright.a11y.config.ts --reporter=dot
+      - uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
+        if: failure()
+        with:
+          name: a11y-test-results
+          path: test-results
+          retention-days: 14

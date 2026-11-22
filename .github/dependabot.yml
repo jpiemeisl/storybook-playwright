@@ -1,0 +1,33 @@
+# Weekly dependency updates. See docs/ci.md ("Dependabot").
+version: 2
+updates:
+  # Workflow actions stay pinned to full commit SHAs; Dependabot bumps the SHA and the version comment.
+  - package-ecosystem: github-actions
+    directory: /
+    schedule:
+      interval: weekly
+    commit-message:
+      prefix: ci
+
+  - package-ecosystem: npm
+    directory: /
+    schedule:
+      interval: weekly
+    open-pull-requests-limit: 10
+    commit-message:
+      prefix: deps
+    groups:
+      minor-and-patch:
+        update-types: [minor, patch]
+    ignore:
+      # Bumping Playwright needs the pinned image (docker/image.json) and every baseline regenerated in the
+      # same pull request; docs/testing.md has the manual procedure. The image itself lives in a JSON file
+      # Dependabot doesn't read, so it is never bumped automatically either.
+      - dependency-name: '@playwright/test'
+      - dependency-name: playwright
+      - dependency-name: playwright-core
+      # Storybook majors are migrations, done by hand.
+      - dependency-name: storybook
+        update-types: [version-update:semver-major]
+      - dependency-name: '@storybook/*'
+        update-types: [version-update:semver-major]
