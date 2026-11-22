@@ -1,7 +1,7 @@
 @layer components {
   .link {
-    color: var(--color-action);
-    border-radius: var(--radius-1);
+    color: var(--color-link);
+    border-radius: var(--radius-inline);
     text-underline-offset: 0.2em;
     text-decoration-thickness: 1px;
   }
@@ -13,7 +13,7 @@
   }
 
   .link:hover {
-    color: var(--color-action-hover);
+    color: var(--color-link-hover);
     text-decoration-thickness: 2px;
   }
 

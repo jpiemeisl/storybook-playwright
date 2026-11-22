@@ -6,6 +6,8 @@
 [data-theme='default'],
 /* A light panel inside an inverse area (e.g. the accent CtaBanner) resets to the default surface. */
 [data-surface='default'] {
+  color-scheme: light;
+
   /* Surfaces */
   --color-bg: var(--neutral-0);
   --color-bg-subtle: var(--neutral-50);
@@ -29,6 +31,10 @@
   --color-action-text: var(--neutral-0);
   --color-action-subtle: var(--teal-50);
   --color-action-subtle-hover: var(--teal-100);
+
+  /* Links (body text links; underlined, so never colour alone) */
+  --color-link: var(--teal-600);
+  --color-link-hover: var(--teal-700);
 
   /* Disabled */
   --color-disabled-bg: var(--neutral-100);
@@ -91,6 +97,7 @@
   --text-weight-heading: var(--font-weight-bold);
   --text-leading-body: var(--line-height-normal);
   --text-leading-heading: var(--line-height-tight);
+  --letter-spacing-heading: normal;
 
   /* Layout */
   --gap-xs: var(--space-1);
@@ -127,6 +134,13 @@
   --radius-control: var(--radius-2);
   --radius-surface: var(--radius-3);
   --radius-pill: var(--radius-full);
+  /* Circles (avatars, dots, radios, round icon buttons): always round, whatever the theme. */
+  --radius-round: var(--radius-full);
+  /* Small inline elements: inline code, kbd, link focus outlines. */
+  --radius-inline: var(--radius-1);
+  /* Border widths for form controls and buttons, and for cards and panels. */
+  --border-width-control: var(--border-1);
+  --border-width-card: var(--border-1);
   --elevation-low: var(--shadow-1);
   --elevation-mid: var(--shadow-2);
   --elevation-high: var(--shadow-3);
@@ -179,6 +193,8 @@
   --color-action-subtle: var(--teal-900);
   --color-action-subtle-hover: var(--teal-800);
   --color-focus-ring: var(--teal-200);
+  --color-link: var(--teal-200);
+  --color-link-hover: var(--teal-100);
 
   --color-danger: var(--red-100);
   --color-danger-subtle: var(--red-700);

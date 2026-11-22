@@ -21,7 +21,7 @@
     block-size: var(--icon-size-md);
     margin: 0;
     border: var(--border-2) solid var(--color-field-border);
-    border-radius: var(--radius-2);
+    border-radius: var(--radius-control);
     background-color: var(--color-field-bg);
     cursor: pointer;
   }
