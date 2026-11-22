@@ -1,0 +1,14 @@
+export type Bump = 'patch' | 'minor' | 'major';
+export const BUMPS: Bump[];
+export function bumpVersion(version: string, kind: string): string;
+export function tagFor(version: string): string;
+export function parseRepo(repository: string | { url?: string } | undefined): { owner: string; repo: string; url: string };
+export type ChangelogSection = { name: string; date: string | null; body: string };
+export function parseChangelog(text: string): { preamble: string; sections: ChangelogSection[]; links: string[] };
+export function changelogSection(text: string, version: string): string | null;
+export function hasNotes(body: string | null | undefined): boolean;
+export function releaseChangelog(text: string, version: string, date: string, repoUrl: string): string;
+export function renderChangelog(log: { preamble: string; sections: ChangelogSection[]; links: string[] }): string;
+export function today(now?: Date): string;
+type CheckRun = { id?: number; name: string; status: string; conclusion: string | null; started_at?: string | null; html_url?: string };
+export function ciStatusVerdict(response: { check_runs?: CheckRun[] } | null | undefined, sha?: string): { ok: boolean; message: string };

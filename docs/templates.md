@@ -8,7 +8,7 @@ Phase 8 turns the block model into complete pages. Hand-written (not generated).
 ## How it fits together
 
 ```tsx
-import { PageRenderer, getDocumentMeta, validatePage } from 'storybook-playwright';
+import { PageRenderer, getDocumentMeta, validatePage } from '@jpiemeisl/pattern-library';
 
 export function Page({ page, chrome, path }: { page: TemplatePage; chrome: SiteChrome; path: string }) {
   // <head> is the host's job: getDocumentMeta(page) returns title, description, canonical, robots, openGraph.
@@ -50,7 +50,7 @@ export function Page({ page, chrome, path }: { page: TemplatePage; chrome: SiteC
 ### Adding or replacing a template
 
 ```tsx
-import { PageRenderer, createTemplates, defineTemplate, SiteLayout, BlockRenderer } from 'storybook-playwright';
+import { PageRenderer, createTemplates, defineTemplate, SiteLayout, BlockRenderer } from '@jpiemeisl/pattern-library';
 
 interface PressReleasePage extends PageContent { template: 'press'; release: { title: string; date: string } }
 

@@ -69,8 +69,8 @@ interface CheckoutValues {
 ## Wiring it to a host app
 
 ```tsx
-import { createTemplates, PageRenderer } from 'storybook-playwright';
-import { commerceTemplates, computeCartTotals, getCartIssues, getCartNotes, createOrderFromCart, firstInvalidStep } from 'storybook-playwright/commerce';
+import { createTemplates, PageRenderer } from '@jpiemeisl/pattern-library';
+import { commerceTemplates, computeCartTotals, getCartIssues, getCartNotes, createOrderFromCart, firstInvalidStep } from '@jpiemeisl/pattern-library/commerce';
 
 const templates = createTemplates(Object.values(commerceTemplates));
 ```

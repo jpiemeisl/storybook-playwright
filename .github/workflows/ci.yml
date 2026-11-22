@@ -240,13 +240,58 @@ jobs:
           path: test-results
           retention-days: 14
 
+  # The npm package as consumers get it: build, contents and API checks, then the packed tarball installed
+  # into a fresh Vite + React app outside the repository (scripts/smoke-app.mjs), typechecked and built.
+  # Proves every release candidate before any tag exists. Nothing is published here.
+  package:
+    name: package
+    needs: setup
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    container:
+      image: ${{ needs.setup.outputs.image }}
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - name: npm cache directory
+        id: npm-cache
+        run: echo "dir=$(npm config get cache)" >> "$GITHUB_OUTPUT"
+      - uses: actions/cache@55cc8345863c7cc4c66a329aec7e433d2d1c52a9 # v6.1.0
+        with:
+          path: ${{ steps.npm-cache.outputs.dir }}
+          key: npm-${{ runner.os }}-${{ hashFiles('package-lock.json') }}
+          restore-keys: npm-${{ runner.os }}-
+      - run: npm ci
+      - run: npm run build:lib
+      - run: npm run check:lib
+      # Writes the packed file list to the job summary.
+      - run: npm run check:package
+      - run: npm run check:api
+      - name: Pack the tarball
+        id: pack
+        run: |
+          mkdir -p "$RUNNER_TEMP/pack"
+          npm pack --ignore-scripts --pack-destination "$RUNNER_TEMP/pack"
+          echo "tarball=$(ls "$RUNNER_TEMP"/pack/*.tgz)" >> "$GITHUB_OUTPUT"
+      - name: Install the tarball into a fresh app and build it
+        env:
+          TARBALL: ${{ steps.pack.outputs.tarball }}
+        run: node scripts/smoke-app.mjs "$TARBALL" "$RUNNER_TEMP/smoke-app"
+      - uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
+        with:
+          name: package-tarball
+          path: ${{ steps.pack.outputs.tarball }}
+          retention-days: 7
+          if-no-files-found: error
+
   # The one required status check. A matrix job reports one check per shard, and a skipped job counts as
   # passing in branch protection, so requiring individual jobs can let a broken run through. This job
   # needs every other job and fails unless all of them succeeded. Keep `needs` in step with the jobs above.
   ci-status:
     name: ci-status
     if: always()
-    needs: [setup, checks, visual, visual-report, a11y]
+    needs: [setup, checks, visual, visual-report, a11y, package]
     runs-on: ubuntu-24.04
     timeout-minutes: 5
     steps:
@@ -258,4 +303,4 @@ jobs:
           echo "Job results: $RESULTS"
           exit 1
       - name: All jobs succeeded
-        run: echo "setup, checks, visual, visual-report and a11y all succeeded."
+        run: echo "setup, checks, visual, visual-report, a11y and package all succeeded."

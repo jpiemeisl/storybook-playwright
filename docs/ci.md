@@ -19,7 +19,8 @@ flowchart LR
   checks -- storybook-static --> v4["visual (4/4)"]
   checks -- storybook-static --> a11y["a11y<br/>accessibility suite"]
   v1 & v2 & v3 & v4 -- blob reports --> report["visual-report<br/>merged HTML report,<br/>job summary"]
-  setup & checks & v1 & v2 & v3 & v4 & report & a11y -.-> status["ci-status<br/>the one required check"]
+  setup --> package["package<br/>build:lib, check:lib, check:package,<br/>check:api, tarball smoke app"]
+  setup & checks & v1 & v2 & v3 & v4 & report & a11y & package -.-> status["ci-status<br/>the one required check"]
 ```
 
 | Job | Runs in | What it does |
@@ -29,6 +30,7 @@ flowchart LR
 | `visual (N/4)` | pinned image | Downloads `storybook-static` and runs one quarter of the visual suite (`--shard=N/4`). Always uploads its blob report; on failure also uploads `test-results-shard-N` (actual, expected and diff images, traces). Kept 14 days. |
 | `visual-report` | pinned image | Runs even when shards fail. Merges the blob reports into one HTML report, uploads it as `playwright-report` (14 days), and writes the job summary: counts, failed and flaky stories, the 10 slowest stories, how to open the report. Then it fails if any shard didn't succeed, so its own status is honest. |
 | `a11y` | pinned image | The accessibility suite (`playwright.a11y.config.ts`) against the same `storybook-static`. On failure uploads `a11y-test-results`. |
+| `package` | pinned image | In parallel with `checks`: `build:lib`, `check:lib`, `check:package` (the packed file list goes to the job summary) and `check:api`. Then it packs the tarball and installs it into a fresh Vite + React app outside the repository (`scripts/smoke-app.mjs`), which imports core, commerce and the CSS entry points, typechecks and builds. Uploads `package-tarball` (7 days). Nothing is published; releases are [publishing.md](publishing.md). |
 | `ci-status` | the runner (no container) | Always runs, after every other job. Fails if any of them failed, was cancelled or was skipped. **The only required status check.** |
 
 Security: the token is read-only (`contents: read`) in every job; artifacts, caches and summaries need

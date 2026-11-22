@@ -6,14 +6,15 @@
  *     imports a name the core entry doesn't export
  *   - either bundle contains localStorage, sessionStorage, document.cookie or fetch(
  *   - a runtime export has no type declaration
+ *   - a package.json exports target is missing from the build, or a JavaScript entry has no types
  * Reports bundle sizes (raw and gzip) per entry.
  */
-import { existsSync, readFileSync } from 'node:fs';
+import { existsSync, readdirSync, readFileSync } from 'node:fs';
 import { gzipSync } from 'node:zlib';
 import { dirname, resolve } from 'node:path';
 
 const dist = resolve(process.cwd(), 'dist');
-const PACKAGE = 'storybook-playwright';
+const PACKAGE = JSON.parse(readFileSync(resolve(process.cwd(), 'package.json'), 'utf8')).name;
 const problems = [];
 const fail = (message) => problems.push(message);
 
@@ -76,7 +77,25 @@ for (const [entry, names, file] of [['core', coreExports, 'types/index.d.ts'], [
   for (const name of names) if (!types.has(name)) fail(`${entry} exports "${name}" without a declaration in dist/${file}`);
 }
 
-// 5. Sizes.
+// 5. The package.json exports map: every target exists in the build, every JavaScript entry declares types,
+//    and wildcard targets match at least one file.
+const pkg = JSON.parse(readFileSync(resolve(process.cwd(), 'package.json'), 'utf8'));
+for (const [subpath, target] of Object.entries(pkg.exports ?? {})) {
+  const conditions = typeof target === 'string' ? { default: target } : target;
+  for (const [condition, file] of Object.entries(conditions)) {
+    const path = resolve(process.cwd(), file);
+    if (file.includes('*')) {
+      const dir = dirname(path);
+      const suffix = file.split('*')[1];
+      if (!existsSync(dir) || !readdirSync(dir, { recursive: true }).some((f) => String(f).endsWith(suffix))) fail(`exports['${subpath}'].${condition} (${file}) matches no file`);
+    } else if (!existsSync(path)) fail(`exports['${subpath}'].${condition} points to ${file}, which the build did not produce`);
+  }
+  const js = Object.entries(conditions).filter(([c, f]) => c !== 'types' && f.endsWith('.js'));
+  if (js.length && !conditions.types) fail(`exports['${subpath}'] has a JavaScript entry without a 'types' condition`);
+  if (conditions.types && Object.keys(conditions)[0] !== 'types') fail(`exports['${subpath}']: 'types' must be the first condition`);
+}
+
+// 6. Sizes.
 const kb = (n) => `${(n / 1024).toFixed(1)} kB`;
 const rows = ['core.js', 'core.css', 'commerce.js', 'commerce.css'].filter((f) => existsSync(resolve(dist, f))).map((file) => {
   const buffer = readFileSync(resolve(dist, file));
@@ -89,4 +108,4 @@ if (problems.length) {
   console.error(`\ncheck:lib found ${problems.length} problem(s):\n${problems.map((p) => `  - ${p}`).join('\n')}`);
   process.exit(1);
 }
-console.log('\nLibrary OK: no commerce, demo or fixture code in core; commerce imports core as an external; no storage, cookie or fetch use; every export declared.');
+console.log('\nLibrary OK: no commerce, demo or fixture code in core; commerce imports core as an external; no storage, cookie or fetch use; every export declared; every exports-map target built and typed.');

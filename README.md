@@ -5,10 +5,11 @@
 A React pattern library for content sites and small shops: presentational components, page templates, a
 CMS-agnostic content model, an optional commerce layer and themes, documented in Storybook and protected
 by Playwright visual regression and accessibility tests that run against every story. Built with Vite,
-React and strict TypeScript. The package is private and unpublished; `npm run build:lib` verifies that
-it builds as a library.
+React and strict TypeScript. It is published privately to GitHub Packages as
+`@jpiemeisl/pattern-library`; see [Installing the package](#installing-the-package).
 
-**Status:** phases 1 to 14 are done. Open items are in [docs/ROADMAP.md](docs/ROADMAP.md), and the history of
+**Status:** phases 1 to 16 are done; Phase 17 (publishing to GitHub Packages) is set up and its first
+release, 0.1.0, is next. Open items are in [docs/ROADMAP.md](docs/ROADMAP.md), and the history of
 every gap in [docs/GAPS.md](docs/GAPS.md).
 
 ## Quickstart
@@ -27,6 +28,24 @@ npm run test:vrt:docker    # the visual suite, in the container
 The **demo shop** (`Demo shop/Checkpoints/Home`) is a complete, clickable shop assembled only from
 library pieces: browse, filter, add to cart, check out, sign in (demo customer `robin@example.com`, any
 password) and manage subscriptions. Switch the theme in the toolbar to restyle all of it.
+
+## Installing the package
+
+Consuming projects install `@jpiemeisl/pattern-library` from GitHub Packages (private). This needs a
+classic token with `read:packages` locally, or `GITHUB_TOKEN` plus package access in CI. Then commit a
+scoped `.npmrc` and import the entry points and CSS:
+
+```ts
+import '@jpiemeisl/pattern-library/tokens.css';
+import '@jpiemeisl/pattern-library/core.css';
+import { Button, LinkProvider, PageRenderer } from '@jpiemeisl/pattern-library';
+import { commerceTemplates } from '@jpiemeisl/pattern-library/commerce';
+```
+
+Tokens, `.npmrc`, router wiring (Next.js, React Router), themes, templates, commerce, the security rules
+and Dependabot: [docs/consuming.md](docs/consuming.md) (also shipped inside the package). Every exported
+name: [docs/api-surface.md](docs/api-surface.md). What a version number promises:
+[docs/versioning.md](docs/versioning.md). Changes per version: [CHANGELOG.md](CHANGELOG.md).
 
 ## Principles
 
@@ -50,7 +69,7 @@ How the pieces fit: [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md). How to add to 
 | --- | --- |
 | `npm run storybook` | Storybook dev server on http://localhost:6006 |
 | `npm run build-storybook` | Static Storybook build into `storybook-static/` |
-| `npm run check:all` | Everything except the browser suites: typecheck, boundaries, tokens, themes, Storybook build, story tags, components doc, library build and check, unit tests |
+| `npm run check:all` | Everything except the browser suites: typecheck, boundaries, tokens, themes, Storybook build, story tags, components doc, library build and check, package contents, API report, unit tests |
 | `npm run typecheck` | `tsc --noEmit` over src, demo, .storybook, tests, scripts and config files |
 | `npm run check:boundaries` | Fails if core imports `src/commerce`, or anything under `src/` imports `demo/` |
 | `npm run check:tokens` | Fails if CSS outside `src/tokens` uses primitive colour, radius, shadow or font tokens, or raw colours (allowlist: `scripts/check-tokens.allow.json`, empty) |
@@ -60,6 +79,10 @@ How the pieces fit: [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md). How to add to 
 | `npm run check:story-tags` | After a Storybook build: fails when a main story lacks its expected screenshot tags |
 | `npm run build:lib` | Library build into `dist/`: core and commerce ES modules, CSS, token and theme CSS, type declarations |
 | `npm run check:lib` | After `build:lib`: no commerce, demo or fixture code in core; commerce imports core as an external; no storage, cookie or fetch use; every export declared; bundle sizes |
+| `npm run check:package` | After `build:lib`: `npm pack --dry-run` must contain only the build output, README, CHANGELOG and `docs/consuming.md` (allowlist in `scripts/check-package.mjs`), and every `exports` target; prints size and file count |
+| `npm run api:report` / `check:api` | After `build:lib`: regenerate [docs/api-surface.md](docs/api-surface.md) (every export with its kind, themes, layers, semantic tokens) / fail when it's out of date |
+| `npm run release:prepare -- <patch|minor|major>` | On a release branch: bump the version, date the CHANGELOG, regenerate the API report ([docs/publishing.md](docs/publishing.md)) |
+| `npm run release:tag` | On `main` after the release pull request merged and CI passed: tag `v<version>` and push the tag, which starts the release workflow |
 | `npm run docs:components` | Regenerates [docs/COMPONENTS.md](docs/COMPONENTS.md) from the Storybook index (`-- --check` fails when stale) |
 | `npm run docs:content-model` | Regenerates [docs/content-model.md](docs/content-model.md) from the content-type JSDoc |
 | `npm run test:unit` | Vitest unit tests for pure logic (validators, registry, adapters, commerce logic, demo reducers, router) |
@@ -245,7 +268,7 @@ The library ships a CMS-agnostic content model and a renderer; it contains no CM
    right `Container`.
 
 ```tsx
-import { BlockRenderer, validatePage, errorsOnly } from 'storybook-playwright';
+import { BlockRenderer, validatePage, errorsOnly } from '@jpiemeisl/pattern-library';
 
 export function Page({ page }: { page: PageContent }) {
   return (
@@ -278,7 +301,7 @@ Behaviour worth knowing:
 type and maps it to any component's props:
 
 ```tsx
-import { BlockRenderer, createRegistry, defineBlock, validatePage, type BlockLike } from 'storybook-playwright';
+import { BlockRenderer, createRegistry, defineBlock, validatePage, type BlockLike } from '@jpiemeisl/pattern-library';
 
 interface QuoteOfTheDayBlock extends BlockLike {
   type: 'quoteOfTheDay';
@@ -383,6 +406,15 @@ request and every push to `main`, in the same pinned Playwright image as `npm ru
 writes baselines: update them locally in Docker and commit them with the code. On a visual failure, download
 the `playwright-report` artifact from the run and open it with `npx playwright show-report <folder>`. Jobs,
 failure reading, re-runs, Dependabot and the branch protection settings: [docs/ci.md](docs/ci.md).
+
+## Releases
+
+Versions are published only by the release workflow, from a `v<version>` tag on a commit on `main` that
+passed `ci-status`; `npm publish` anywhere else refuses. The flow is `release:prepare` on a branch, a
+pull request, merge, then `release:tag` on `main`. Each release gets a GitHub Release with the CHANGELOG
+notes and a zipped Storybook of that version. Pull requests run a `package` job that installs the packed
+tarball into a fresh app. Maintainer guide (dry runs, failed releases, deprecation, tag ruleset):
+[docs/publishing.md](docs/publishing.md).
 
 ## Visual testing with Docker
 
