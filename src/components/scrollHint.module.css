@@ -1,0 +1,68 @@
+/*
+ * Scroll hint for a horizontally scrolling flex row (AccountNav, CategoryFilter): an edge fade on each side
+ * that has more items to scroll to. Pure CSS: no layout-reading JavaScript and no animation.
+ *
+ * ::before and ::after are sticky, zero-net-width flex items pinned to the row's two edges. A scroll-state
+ * container query on the row shows each fade only while that edge can still scroll, so at the start there
+ * is no start fade, at the end no end fade, and a row that fits shows none (and takes no extra space).
+ * Nothing is hidden for good: content can always be scrolled clear of a fade, and scroll-padding keeps a
+ * focused item clear of them.
+ *
+ * Set on the row:
+ *   --scroll-hint-inset  the row's inline padding (sticky items stop at the padding edge; the fades
+ *                        extend over it so no sliver of content shows at the very edge)
+ *   --scroll-hint-gap    the row's flex gap (cancelled, so the fades add no space)
+ *   --scroll-hint-cover  the background under the row (default --color-bg)
+ *
+ * Fallbacks: browsers without scroll-state queries show no cue (the scrollbar remains). Forced colours:
+ * the fades are removed; the content and the scrollbar stay.
+ */
+@layer components {
+  .hint {
+    container-type: scroll-state;
+    scroll-padding-inline: var(--scroll-hint-size);
+  }
+
+  .hint::before,
+  .hint::after {
+    content: '';
+    position: sticky;
+    z-index: 1;
+    flex: none;
+    align-self: stretch;
+    inline-size: calc(var(--scroll-hint-size) + var(--scroll-hint-inset, 0px));
+    pointer-events: none;
+    opacity: 0;
+  }
+
+  .hint::before {
+    inset-inline-start: calc(var(--scroll-hint-inset, 0px) * -1);
+    margin-inline: calc(var(--scroll-hint-inset, 0px) * -1) calc((var(--scroll-hint-size) + var(--scroll-hint-gap, 0px)) * -1);
+    background-image: linear-gradient(to right, var(--scroll-hint-cover, var(--color-bg)) 35%, transparent);
+  }
+
+  .hint::after {
+    inset-inline-end: calc(var(--scroll-hint-inset, 0px) * -1);
+    margin-inline: calc((var(--scroll-hint-size) + var(--scroll-hint-gap, 0px)) * -1) calc(var(--scroll-hint-inset, 0px) * -1);
+    background-image: linear-gradient(to left, var(--scroll-hint-cover, var(--color-bg)) 35%, transparent);
+  }
+
+  @container scroll-state(scrollable: inline-start) {
+    .hint::before {
+      opacity: 1;
+    }
+  }
+
+  @container scroll-state(scrollable: inline-end) {
+    .hint::after {
+      opacity: 1;
+    }
+  }
+
+  @media (forced-colors: active) {
+    .hint::before,
+    .hint::after {
+      display: none;
+    }
+  }
+}

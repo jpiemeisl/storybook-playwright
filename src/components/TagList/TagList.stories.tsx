@@ -77,3 +77,18 @@ export const CategoryButtonsMultiple: Story = {
     canvas.getByRole('button', { name: /^Company news/ }).focus();
   },
 };
+
+const scrollRow = (fraction: number) => async ({ canvasElement }: { canvasElement: HTMLElement }) => {
+  const list = canvasElement.querySelector('ul')!;
+  await expect(list.scrollWidth).toBeGreaterThan(list.clientWidth);
+  list.scrollLeft = Math.round((list.scrollWidth - list.clientWidth) * fraction);
+  await new Promise((done) => requestAnimationFrame(() => done(null)));
+};
+const narrowRow = () => <CategoryFilter items={categories} selectedIds={['tax']} label="Blog categories" />;
+
+/** Phone width, scrolled to the start: only the end edge fades. */
+export const CategoryRowStart: Story = { parameters: { vrt: { viewports: [375] } }, render: narrowRow, play: scrollRow(0) };
+/** Scrolled to the middle: both edges fade. */
+export const CategoryRowMiddle: Story = { parameters: { vrt: { viewports: [375] } }, render: narrowRow, play: scrollRow(0.5) };
+/** Scrolled to the end: only the start edge fades; the last chip is fully visible. */
+export const CategoryRowEnd: Story = { parameters: { vrt: { viewports: [375] } }, render: narrowRow, play: scrollRow(1) };

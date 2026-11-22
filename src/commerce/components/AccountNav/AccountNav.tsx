@@ -1,6 +1,7 @@
 import { Badge } from '../../../components/Badge';
 import { Icon, type IconName } from '../../../components/Icon';
 import { Link } from '../../../components/Link';
+import hint from '../../../components/scrollHint.module.css';
 import styles from './AccountNav.module.css';
 
 export type AccountSection = 'overview' | 'orders' | 'downloads' | 'subscriptions' | 'addresses' | 'wishlist';
@@ -49,7 +50,7 @@ export function AccountNav({ currentPath, basePath = '/account', counts = {}, ha
   const shown = sections.filter((s) => (s.id !== 'downloads' && s.id !== 'subscriptions') || has[s.id] || alwaysShow.includes(s.id));
   return (
     <nav className={styles.root} aria-label={label}>
-      <ul className={styles.list}>
+      <ul className={`${styles.list} ${hint.hint}`}>
         {shown.map((s) => {
           const count = counts[s.id];
           return (
