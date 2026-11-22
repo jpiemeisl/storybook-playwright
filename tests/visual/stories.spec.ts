@@ -1,6 +1,6 @@
 import { existsSync, readFileSync } from 'node:fs';
 import { resolve } from 'node:path';
-import { expect, test, type Page } from '@playwright/test';
+import { expect, test as base, type Page } from '@playwright/test';
 import { themes } from '../../src/components/Theme/themes';
 import { installStoryListener, openStory, settlePage, type StoryResult } from '../support/storybook';
 
@@ -44,6 +44,13 @@ type ViewportParam = number | { width: number; height?: number; fullPage?: boole
 
 
 const PORT = 6007;
+
+/**
+ * `vrtMode` is set per config: "full" (playwright.config.ts) captures everything; "smoke"
+ * (playwright.smoke.config.ts, npm run test:vrt:smoke) runs only stories tagged theme-smoke or vrt-full,
+ * in the default theme at desktop width, against the same baselines.
+ */
+const test = base.extend<object, { vrtMode: 'full' | 'smoke' }>({ vrtMode: ['full', { option: true, scope: 'worker' }] });
 /** Full-page captures hide fixed purchase bars (see the file). */
 const FULL_PAGE_CSS = resolve(process.cwd(), 'tests', 'visual', 'fullpage.css');
 
@@ -115,7 +122,8 @@ function expectClean(result: StoryResult, id: string, width: number) {
 }
 
 for (const story of stories) {
-  test(`${story.title} / ${story.name}`, async ({ page }) => {
+  const smokeTagged = !!story.tags?.some((t) => t === 'theme-smoke' || t === 'vrt-full');
+  test(`${story.title} / ${story.name}`, { tag: smokeTagged ? ['@smoke'] : [] }, async ({ page, vrtMode }) => {
     await page.addInitScript(installStoryListener);
 
     // Stories must never reach the network beyond the local Storybook server.
@@ -145,7 +153,9 @@ for (const story of stories) {
       expect(external, 'external network requests').toEqual([]);
       return;
     }
-    const captures = probe.vrt?.viewports?.length ? capturesFromParam(probe.vrt.viewports) : tagCaptures;
+    const allCaptures = probe.vrt?.viewports?.length ? capturesFromParam(probe.vrt.viewports) : tagCaptures;
+    const desktop = allCaptures.filter((c) => c.width === 1280);
+    const captures = vrtMode === 'smoke' ? (desktop.length ? desktop : allCaptures.slice(0, 1)) : allCaptures;
     if (captures[0]!.width === loaded.width && captures[0]!.height === loaded.height) {
       expectClean(probe, story.id, loaded.width);
     } else {
@@ -166,7 +176,9 @@ for (const story of stories) {
       });
     }
 
-    const extraThemes = probe.vrt?.themes ?? (story.tags?.includes('theme-smoke') ? EXTRA_THEMES : []);
+    const extraThemes = vrtMode === 'smoke' ? [] : (probe.vrt?.themes ?? (story.tags?.includes('theme-smoke') ? EXTRA_THEMES : []));
+    // Each capture can take a few seconds under load (full-page shots at three widths in three themes).
+    test.setTimeout(30_000 + 8_000 * (captures.length + extraThemes.length * themeCaptures(captures, story.tags, !!probe.vrt?.viewports?.length).length));
     for (const theme of extraThemes.filter((t) => t !== 'default')) {
       for (const capture of themeCaptures(captures, story.tags, !!probe.vrt?.viewports?.length)) {
         await test.step(`${theme} ${capture.width}px`, async () => {
