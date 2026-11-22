@@ -1,0 +1,56 @@
+/* DEMO ONLY: the demo banner and the header controls. Semantic tokens only (check:tokens). */
+@layer components {
+  .banner {
+    padding: var(--space-2) var(--gutter);
+    background-color: var(--color-bg-accent-subtle);
+    color: var(--color-text);
+    font-size: var(--text-size-sm);
+    text-align: center;
+  }
+
+  .banner p {
+    margin: 0;
+  }
+
+  .headerLink {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    gap: var(--gap-xs);
+    min-block-size: var(--control-height-md);
+    min-inline-size: var(--control-height-md);
+    justify-content: center;
+    padding-inline: var(--space-2);
+    border-radius: var(--radius-control);
+    color: var(--color-text);
+    font-weight: var(--text-weight-strong);
+    text-decoration-line: none;
+    white-space: nowrap;
+  }
+
+  .headerLink:hover {
+    background-color: var(--color-bg-subtle);
+  }
+
+  /*
+   * Phones: the header keeps only the cart and the menu button (logo, three controls and the menu don't
+   * fit in 375px). Search and the account link are also in the footer's Help column.
+   */
+  @media (max-width: 29.99rem) {
+    .wideOnly {
+      display: none;
+    }
+  }
+
+  /* Text labels collapse to icons on narrow screens; they stay in the accessible name. */
+  @media (max-width: 47.99rem) {
+    .narrowHidden {
+      position: absolute;
+      inline-size: 1px;
+      block-size: 1px;
+      overflow: hidden;
+      clip-path: inset(50%);
+      white-space: nowrap;
+    }
+  }
+}

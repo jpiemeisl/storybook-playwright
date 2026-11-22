@@ -13,6 +13,8 @@ export interface HeaderProps {
   /** Main navigation. Empty: a logo-only header (no nav landmark, no menu button), e.g. for landing pages. */
   items: NavItem[];
   cta?: MenuCta;
+  /** Always-visible controls before the CTA and menu button, e.g. a search link, account link and cart button. */
+  actions?: ReactNode;
   /** Stick to the top of the viewport while scrolling. */
   sticky?: boolean;
   /** Accessible name of the nav landmark. */
@@ -29,6 +31,7 @@ export function Header({
   logo,
   items,
   cta,
+  actions,
   sticky = false,
   'aria-label': navLabel = 'Main',
   menuLabel = 'Menu',
@@ -86,6 +89,8 @@ export function Header({
             </nav>
           </div>
         )}
+
+        {actions && <div className={styles.actions}>{actions}</div>}
 
         {cta && (
           <Link href={cta.href} variant="standalone" className={styles.cta}>

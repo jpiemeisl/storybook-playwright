@@ -149,6 +149,20 @@
     color: var(--color-action-text);
   }
 
+  /* Host controls (search, account, cart): visible at every width, pushed to the end on narrow headers. */
+  .actions {
+    display: flex;
+    flex-shrink: 0;
+    align-items: center;
+    gap: var(--gap-xs);
+    margin-inline-start: auto;
+  }
+
+  .actions ~ .menuButton,
+  .header[data-no-nav] .actions ~ .cta {
+    margin-inline-start: 0;
+  }
+
   .menuButton {
     display: inline-flex;
     flex-shrink: 0;

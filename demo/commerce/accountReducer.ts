@@ -6,6 +6,7 @@ import { addInterval, formatCommerceDate } from '../../src/commerce/logic/pricin
 import { getSubscriptionActions, removeAddress, setDefaultAddress, type AddressKind } from '../../src/commerce/logic/account';
 import type { SubscriptionActionRequest } from '../../src/commerce/components/ManageSubscription';
 import type { Customer, CustomerSubscription, Invoice, LibraryItem, Order, SavedAddress, WishlistItem } from '../../src/commerce';
+import { customers, productById } from '../../src/commerce/fixtures';
 
 export interface DemoAccountState {
   customer: Customer | null;
@@ -26,7 +27,12 @@ export type DemoAccountAction =
   | { type: 'saveAddress'; address: Omit<SavedAddress, 'id'> & { id?: string } }
   | { type: 'deleteAddress'; id: string }
   | { type: 'setDefaultAddress'; id: string; kind: AddressKind }
-  | { type: 'removeWishlistItem'; productId: string };
+  | { type: 'removeWishlistItem'; productId: string }
+  /** Demo shop: a placed order joins the history, with its downloads and subscriptions. */
+  | { type: 'recordOrder'; order: Order }
+  /** Demo shop: sign in as the fixed demo customer, or sign out. No real authentication. */
+  | { type: 'signIn' }
+  | { type: 'signOut' };
 
 export type DemoAccountResult = { ok: true; message: string } | { ok: false; reason: 'not-allowed' | 'not-found' | 'server'; message: string };
 
@@ -82,6 +88,33 @@ function subscriptionChange(sub: CustomerSubscription, request: SubscriptionActi
   }
 }
 
+/** The library items and subscriptions a newly placed order adds to the account. */
+export function orderAdditions(order: Order): { downloads: LibraryItem[]; subscriptions: CustomerSubscription[] } {
+  const downloads = order.lines
+    .filter((line) => line.snapshot.kind === 'digital')
+    .map((line) => {
+      const ids = new Set(productById(line.productId)?.digital?.files.map((f) => f.id) ?? [line.productId]);
+      return { productId: line.productId, productTitle: line.snapshot.title, orderId: order.id, orderNumber: order.number, purchasedAt: order.placedAt, files: (order.downloads ?? []).filter((d) => ids.has(d.fileId)) };
+    });
+  const subscriptions = (order.recurring ?? []).map((r, i): CustomerSubscription => {
+    const line = order.lines.find((l) => l.id === r.lineId)!;
+    return {
+      id: `sub-${order.number}-${i + 1}`,
+      productId: line.productId,
+      productTitle: line.snapshot.title,
+      plan: line.snapshot.variantTitle ?? 'Standard',
+      price: r.amount,
+      interval: r.interval,
+      status: r.trialEndsAt ? 'trialing' : 'active',
+      startedAt: order.placedAt.slice(0, 10),
+      nextBillingAt: r.firstBillingAt,
+      currentPeriodEnd: r.firstBillingAt,
+      ...(r.trialEndsAt ? { trialEndsAt: r.trialEndsAt } : {}),
+    };
+  });
+  return { downloads, subscriptions };
+}
+
 /** Applies an action and says what happened. Invalid or failed actions leave the state unchanged. */
 export function applyAccountAction(state: DemoAccountState, action: DemoAccountAction, ctx: DemoAccountContext): { state: DemoAccountState; result: DemoAccountResult } {
   const fail = (scope: string, reason: Extract<DemoAccountResult, { ok: false }>['reason'], message: string) => ({ state: { ...state, lastError: { scope, message } }, result: { ok: false as const, reason, message } });
@@ -121,6 +154,14 @@ export function applyAccountAction(state: DemoAccountState, action: DemoAccountA
       if (ctx.fail) return fail('addresses', 'server', 'Demo: the default couldn’t be changed. Try again.');
       return done({ addresses: setDefaultAddress(state.addresses, action.id, action.kind) }, `${address.label || address.name} is now your default ${action.kind} address.`);
     }
+    case 'recordOrder': {
+      const { downloads, subscriptions } = orderAdditions(action.order);
+      return done({ orders: [action.order, ...state.orders], downloads: [...downloads, ...state.downloads], subscriptions: [...subscriptions, ...state.subscriptions] }, `Order ${action.order.number} added to your account.`);
+    }
+    case 'signIn':
+      return done({ customer: customers.robin }, `Signed in as ${customers.robin.name}.`);
+    case 'signOut':
+      return done({ customer: null }, 'Signed out.');
     case 'removeWishlistItem': {
       if (!state.wishlist.some((w) => w.productId === action.productId)) return fail('wishlist', 'not-found', 'That item is no longer in your wishlist.');
       if (ctx.fail) return fail('wishlist', 'server', 'Demo: the item couldn’t be removed. Try again.');
