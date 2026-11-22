@@ -49,3 +49,16 @@ export const Confirmation: Story = {
 
 /** Signed in: the account overview. */
 export const Dashboard: Story = { tags: ['vrt-full'], args: { initialPath: '/account', signedIn: true } };
+
+/** Phone checkout with the cookie banner: it stacks on top of the sticky checkout bar, never over it. */
+export const WithCookieBanner: Story = {
+  parameters: { layout: 'fullscreen', vrt: { viewports: [{ width: 375, height: 760 }] } },
+  args: { initialPath: '/checkout', initialCart: 'mixed', initialCheckout: checkoutValues.mixed, initialStep: 'information', cookieBanner: true },
+  play: async ({ canvasElement }) => {
+    const doc = canvasElement.ownerDocument;
+    await waitFor(() => expect(doc.querySelector('[data-sticky-buy-bar]')).not.toBeNull());
+    const bar = doc.querySelector('[data-sticky-buy-bar]')!.getBoundingClientRect();
+    const banner = within(canvasElement).getByRole('region', { name: 'Cookies on this site' }).getBoundingClientRect();
+    await expect(banner.bottom).toBeLessThanOrEqual(bar.top + 1);
+  },
+};

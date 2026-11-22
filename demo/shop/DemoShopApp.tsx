@@ -4,7 +4,8 @@
  * demo providers. The theme comes from the Storybook toolbar decorator, which wraps every story in
  * <Theme>, so switching theme restyles the whole shop.
  */
-import { useMemo } from 'react';
+import { useMemo, useState } from 'react';
+import { CookieBanner, type ConsentCategory } from '../../src/components/CookieBanner';
 import { ToastRegion } from '../../src/components/Toast';
 import { PageRenderer } from '../../src/templates';
 import type { CheckoutStepId, CheckoutValues } from '../../src/commerce';
@@ -99,6 +100,18 @@ function DemoBanner() {
   );
 }
 
+const consentCategories: ConsentCategory[] = [
+  { id: 'necessary', label: 'Strictly necessary', description: 'Your cart and sign-in.', required: true },
+  { id: 'analytics', label: 'Analytics', description: 'Count visits (the demo counts nothing).' },
+];
+
+/** The library's CookieBanner with an in-memory choice: the demo stores nothing. */
+function DemoCookieBanner() {
+  const [open, setOpen] = useState(true);
+  const close = () => setOpen(false);
+  return <CookieBanner open={open} message={<p>Demo: the shop sets no cookies; this shows the banner UI only.</p>} categories={consentCategories} onAcceptAll={close} onRejectAll={close} onSave={close} />;
+}
+
 export interface DemoShopAppProps {
   /** Starting route, e.g. "/collections/garden?o.Size=M". Default "/". */
   initialPath?: string;
@@ -111,9 +124,11 @@ export interface DemoShopAppProps {
   signedIn?: boolean;
   /** Called after each in-memory navigation (for tests and the Storybook actions panel). */
   onNavigate?: (location: Location) => void;
+  /** Show the cookie banner (kept out of every other story). */
+  cookieBanner?: boolean;
 }
 
-export function DemoShopApp({ initialPath = '/', initialCart = 'empty', initialCheckout, initialStep, signedIn = false, onNavigate }: DemoShopAppProps) {
+export function DemoShopApp({ initialPath = '/', initialCart = 'empty', initialCheckout, initialStep, signedIn = false, onNavigate, cookieBanner = false }: DemoShopAppProps) {
   return (
     <ShopRouter initial={initialPath} onNavigate={onNavigate}>
       <DemoCommerceProvider initialCart={initialCart} initialCheckout={initialCheckout} initialStep={initialStep}>
@@ -122,6 +137,7 @@ export function DemoShopApp({ initialPath = '/', initialCart = 'empty', initialC
             <DemoBanner />
             <Routes />
             <ShopToasts />
+            {cookieBanner && <DemoCookieBanner />}
           </ShopLinkProvider>
         </DemoAccountProvider>
       </DemoCommerceProvider>
