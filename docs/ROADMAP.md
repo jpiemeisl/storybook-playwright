@@ -39,14 +39,15 @@ of each gap are in [GAPS.md](GAPS.md).
 
 - **Docker image and Linux baselines: done (Phase 15).** Every baseline is rendered in the Playwright
   image pinned by digest in `docker/image.json`, with pinned fonts (`docker/fonts.conf`).
-- **CI (next).** Run `npm run check:all`, then the visual and accessibility suites in the same pinned
-  image (the image from `docker/image.json` as the job container, `npm ci`, `npm run test:vrt` and
-  `npm run test:a11y` with `PW_DOCKER=1`), on pull requests and main.
+- **CI: done (Phase 16).** GitHub Actions runs `check:all`, the sharded visual suite and the accessibility
+  suite in the pinned image on every pull request and push to main; see [ci.md](ci.md). Dependabot keeps
+  actions and npm packages current (Playwright excluded).
 - **Horizontal overflow at 375 px (found in Phase 15).** These stories render wider than the viewport, on
   every platform: Compositions/ContentPages Blog Post Layout, Templates/Blog index, Content model
   All Blocks and Templates/Composed pages Contact. Fix the components, then regenerate those baselines.
-- **Publishing and versioning.** `npm run build:lib` and `check:lib` verify the package shape, but it is
-  `private` and unpublished. Next: a real package name, semver with a changelog, and a release workflow.
+- **Publishing to GitHub Packages (next).** `npm run build:lib` and `check:lib` verify the package shape,
+  but it is `private` and unpublished. Next: a scoped package name, semver with a changelog, and a release
+  workflow that publishes to GitHub Packages from CI.
 - **Real CMS adapters.** `src/adapters/example-cms` shows the mapping. Real adapters (headless CMSs)
   should live in separate packages that depend on the core types.
 - **Backend integration guide.** Document how a host wires the commerce templates to a real cart,

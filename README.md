@@ -1,5 +1,7 @@
 # storybook-playwright
 
+[![CI](https://github.com/jpiemeisl/storybook-playwright/actions/workflows/ci.yml/badge.svg?branch=main)](https://github.com/jpiemeisl/storybook-playwright/actions/workflows/ci.yml)
+
 A React pattern library for content sites and small shops: presentational components, page templates, a
 CMS-agnostic content model, an optional commerce layer and themes, documented in Storybook and protected
 by Playwright visual regression and accessibility tests that run against every story. Built with Vite,
@@ -373,6 +375,14 @@ backend: the types are the contract for future adapters.
   - no payment fields: "Update payment method" is a callback with a slot for the provider's fields
 
   See [`docs/commerce-account.md`](docs/commerce-account.md).
+
+## CI
+
+GitHub Actions runs `check:all`, the visual suite (in four shards) and the accessibility suite on every pull
+request and every push to `main`, in the same pinned Playwright image as `npm run test:vrt:docker`. CI never
+writes baselines: update them locally in Docker and commit them with the code. On a visual failure, download
+the `playwright-report` artifact from the run and open it with `npx playwright show-report <folder>`. Jobs,
+failure reading, re-runs, Dependabot and the branch protection settings: [docs/ci.md](docs/ci.md).
 
 ## Visual testing with Docker
 
