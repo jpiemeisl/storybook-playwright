@@ -3,6 +3,8 @@
 The full plan for this pattern library (phases, scope and decisions) lives in the project's planning
 doc, not in this repository. This folder is for repo-local notes that support it.
 
+Status: phases 1 to 13 are done.
+
 Phase 1: tooling scaffold, three-tier design tokens, Button / Text / Heading,
 Foundations stories, and the Playwright visual regression harness with committed baselines.
 
@@ -93,3 +95,14 @@ Phase 12 (branch `phase-12-account`): the account area in `src/commerce`. It add
 - two Phase 10 fixes: story tags guarded by `check:story-tags`, and the LoadMore forced-colours fill
 
 See [`commerce-account.md`](commerce-account.md).
+
+Phase 13 (branch `phase-13-themes`): themes as semantic-tier overrides. It adds:
+
+- `check:tokens`, which keeps components on semantic tokens, and the tokens that audit needed
+- two themes, harbor (dark) and orchard (light editorial), in `src/tokens/themes`, guarded by `check:themes`
+- the `Theme` component and `themes` list in core
+- WCAG contrast unit tests per theme and surface
+- the Storybook theme toolbar, `theme-smoke` captures in every theme, and `test:a11y`
+- two Phase 12 follow-ups: plan-change timing (`effective`) and the documented dialog contract
+
+See [`theming.md`](theming.md).
