@@ -74,7 +74,7 @@
     "build:lib": "vite build -c vite.lib.config.ts && vite build -c vite.lib.config.ts --mode commerce && node scripts/copy-lib-css.mjs && tsc -p tsconfig.lib.json",
     "check:lib": "node scripts/check-lib.mjs",
     "docs:components": "node scripts/components-docs.mjs",
-    "check:all": "npm run typecheck && npm run check:playwright-image && npm run check:boundaries && npm run check:tokens && npm run check:themes && npm run build-storybook && npm run check:story-tags && npm run check:snapshots && npm run docs:components -- --check && npm run build:lib && npm run check:lib && npm run check:package && npm run check:api && npm run test:unit",
+    "check:all": "npm run typecheck && npm run check:playwright-image && npm run check:boundaries && npm run check:tokens && npm run check:themes && npm run build-storybook && npm run check:story-tags && npm run check:snapshots && npm run docs:components -- --check && npm run check:docs && npm run build:lib && npm run check:lib && npm run check:package && npm run check:api && npm run check:jsdoc && npm run test:unit",
     "check:playwright-image": "node scripts/check-playwright-image.mjs",
     "check:snapshots": "node scripts/check-orphan-snapshots.mjs",
     "prepublishOnly": "node scripts/release-guard.mjs",
@@ -82,7 +82,10 @@
     "api:report": "node scripts/api-report.mjs",
     "check:api": "node scripts/api-report.mjs --check",
     "release:prepare": "node scripts/release-prepare.mjs",
-    "release:tag": "node scripts/release-tag.mjs"
+    "release:tag": "node scripts/release-tag.mjs",
+    "check:docs": "node scripts/check-docs.mjs",
+    "check:docs:external": "node scripts/check-docs.mjs --external",
+    "check:jsdoc": "node scripts/check-jsdoc.mjs"
   },
   "peerDependencies": {
     "react": "^19.0.0",

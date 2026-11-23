@@ -58,7 +58,9 @@ describe('api-report', () => {
 
   it('follows export chains, including local re-exports and type-only re-exports', () => {
     const exports = moduleExports('types/index.d.ts', readFile);
-    expect(Object.fromEntries(exports)).toEqual({
+    expect(exports.get('HomeTemplate')).toMatchObject({ origin: 'types/templates/Home.d.ts', name: 'HomeTemplate' });
+    expect(exports.get('createTemplates')).toMatchObject({ origin: 'types/templates/index.d.ts', name: 'createTemplates' });
+    expect(Object.fromEntries([...exports].map(([n, { kind, typeOnly }]) => [n, { kind, typeOnly }]))).toEqual({
       Button: { kind: 'component', typeOnly: false },
       ButtonProps: { kind: 'type', typeOnly: true },
       ButtonLink: { kind: 'component', typeOnly: false },

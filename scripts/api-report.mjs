@@ -98,27 +98,27 @@ export function moduleExports(path, readFile, cache = new Map()) {
   const resolveLocal = (name, typeOnly) => {
     const local = locals.get(name);
     if (!local) throw new Error(`${path}: exports '${name}', which it neither declares nor imports`);
-    if (local.kind) return { kind: local.kind, typeOnly };
+    if (local.kind) return { kind: local.kind, typeOnly, origin: path, name };
     const info = moduleExports(target(local.from), readFile, cache).get(local.imported);
     if (!info) throw new Error(`${path}: '${local.imported}' is not exported by '${local.from}'`);
-    return { kind: info.kind, typeOnly: typeOnly || local.typeOnly || info.typeOnly };
+    return { ...info, typeOnly: typeOnly || local.typeOnly || info.typeOnly };
   };
 
   for (const s of statements(text)) {
     let m;
-    if ((m = s.match(/^export\s+declare\s+function\s+([\w$]+)/))) add(m[1], { kind: classifyFunction(m[1], s), typeOnly: false });
-    else if ((m = s.match(/^export\s+declare\s+(?:const|let)\s+([\w$]+)/))) add(m[1], { kind: classifyConst(m[1], s), typeOnly: false });
-    else if ((m = s.match(/^export\s+declare\s+(?:abstract\s+)?class\s+([\w$]+)/))) add(m[1], { kind: 'class', typeOnly: false });
-    else if ((m = s.match(/^export\s+(?:declare\s+)?(?:type|interface|enum)\s+([\w$]+)/))) add(m[1], { kind: 'type', typeOnly: true });
-    else if ((m = s.match(/^export\s+(type\s+)?\*\s+as\s+([\w$]+)\s+from/))) add(m[2], { kind: 'namespace', typeOnly: !!m[1] });
+    if ((m = s.match(/^export\s+declare\s+function\s+([\w$]+)/))) add(m[1], { kind: classifyFunction(m[1], s), typeOnly: false, origin: path, name: m[1] });
+    else if ((m = s.match(/^export\s+declare\s+(?:const|let)\s+([\w$]+)/))) add(m[1], { kind: classifyConst(m[1], s), typeOnly: false, origin: path, name: m[1] });
+    else if ((m = s.match(/^export\s+declare\s+(?:abstract\s+)?class\s+([\w$]+)/))) add(m[1], { kind: 'class', typeOnly: false, origin: path, name: m[1] });
+    else if ((m = s.match(/^export\s+(?:declare\s+)?(?:type|interface|enum)\s+([\w$]+)/))) add(m[1], { kind: 'type', typeOnly: true, origin: path, name: m[1] });
+    else if ((m = s.match(/^export\s+(type\s+)?\*\s+as\s+([\w$]+)\s+from/))) add(m[2], { kind: 'namespace', typeOnly: !!m[1], origin: path, name: m[2] });
     else if ((m = s.match(/^export\s+(type\s+)?\*\s+from\s+['"]([^'"]+)['"]/))) {
-      for (const [name, info] of moduleExports(target(m[2]), readFile, cache)) add(name, { kind: info.kind, typeOnly: !!m[1] || info.typeOnly });
+      for (const [name, info] of moduleExports(target(m[2]), readFile, cache)) add(name, { ...info, typeOnly: !!m[1] || info.typeOnly });
     } else if ((m = s.match(/^export\s+(type\s+)?\{([^}]*)\}\s+from\s+['"]([^'"]+)['"]/))) {
       const from = moduleExports(target(m[3]), readFile, cache);
       for (const spec of parseSpecifiers(m[2])) {
         const info = from.get(spec.imported);
         if (!info) throw new Error(`${path}: '${spec.imported}' is not exported by '${m[3]}'`);
-        add(spec.local, { kind: info.kind, typeOnly: !!m[1] || spec.typeOnly || info.typeOnly });
+        add(spec.local, { ...info, typeOnly: !!m[1] || spec.typeOnly || info.typeOnly });
       }
     } else if ((m = s.match(/^export\s+(type\s+)?\{([^}]*)\}/))) {
       for (const spec of parseSpecifiers(m[2])) add(spec.local, resolveLocal(spec.imported, !!m[1] || spec.typeOnly));
