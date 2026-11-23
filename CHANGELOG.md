@@ -46,6 +46,9 @@ Deprecated, Removed, Fixed and Security. `npm run release:prepare` moves them un
 - `validatePage` checks a page with no `template` as the `default` template, so it also warns when no
   `hero` or `pageHeader` block provides the h1.
 - The `default` theme description says "grays".
+- `CookieBanner`: the settings dialog's "Reject all" now calls `onRejectAll`, like the banner's, instead
+  of `onSave` with every optional category off. Host apps that handled that case in `onSave` should
+  handle it in `onRejectAll` (`allConsentChoices(categories, false)` builds the same value).
 
 ### Fixed
 

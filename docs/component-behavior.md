@@ -111,7 +111,9 @@ native constraint attributes (`required`, `type`, `minLength`, `pattern`, ...) w
 **CookieBanner** is a non-modal, labeled region with "Accept all" and "Reject all" given equal weight,
 and "Choose settings" (a Modal listing the host's `ConsentCategory[]`; required categories are always
 on). It never takes focus when it appears, traps focus only inside the settings dialog, and stacks above
-the sticky purchase bars. Its output is `ConsentChoices` (`Record<string, boolean>`);
-`defaultConsentChoices(categories)` gives the starting state. It's UI only and not legal advice: it reads
+the sticky purchase bars. Both "Reject all" buttons, in the banner and in the settings dialog, call
+`onRejectAll`; "Accept all" calls `onAcceptAll`; "Save choices" calls `onSave` with the ticked
+`ConsentChoices` (`Record<string, boolean>`). `defaultConsentChoices(categories)` gives the starting state,
+and `allConsentChoices(categories, on)` builds the all-on or all-off value. It's UI only and not legal advice: it reads
 and writes no cookies or storage and loads no scripts. The host app owns consent storage, what each
 category means and legal compliance.
