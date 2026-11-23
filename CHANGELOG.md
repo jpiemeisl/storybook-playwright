@@ -11,6 +11,25 @@ Deprecated, Removed, Fixed and Security. `npm run release:prepare` moves them un
 
 ## [Unreleased]
 
+## [0.1.1] - 2026-11-22
+
+Documentation and type documentation only: no change to components, styles, tokens or behavior.
+
+### Fixed
+
+- `docs/consuming.md`: importing the token files one by one instead of `tokens.css` needs each file
+  imported into its cascade layer (`@import url(...) layer(tokens)`); the individual files carry no
+  `@layer` of their own. The guide now shows the correct imports, lists the `tokens/*` export, and every
+  TypeScript example in it typechecks against the package.
+- README and CHANGELOG corrections (the mini cart is a component, not a template).
+
+### Changed
+
+- Every public export has a JSDoc summary, and non-obvious props have descriptions, so editors and
+  Storybook's autodocs explain them (the shipped `.d.ts` files carry the comments).
+- README rewritten as a short overview; the full documentation, grouped by audience, is in the
+  [docs index](https://github.com/jpiemeisl/storybook-playwright/blob/main/docs/README.md).
+
 ## [0.1.0] - 2026-11-22
 
 The first published version.
@@ -36,5 +55,6 @@ The first published version.
 - CSS entry points: `tokens.css`, `core.css`, `commerce.css` and one file per theme.
 - TypeScript declarations for every entry point.
 
-[Unreleased]: https://github.com/jpiemeisl/storybook-playwright/compare/v0.1.0...HEAD
+[Unreleased]: https://github.com/jpiemeisl/storybook-playwright/compare/v0.1.1...HEAD
+[0.1.1]: https://github.com/jpiemeisl/storybook-playwright/compare/v0.1.0...v0.1.1
 [0.1.0]: https://github.com/jpiemeisl/storybook-playwright/releases/tag/v0.1.0
