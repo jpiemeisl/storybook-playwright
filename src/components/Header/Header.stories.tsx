@@ -173,7 +173,9 @@ export const ItemsArriveLater: Story = {
     await expect(canvas.queryByRole('navigation')).toBeNull();
     await expect(header).not.toHaveAttribute('data-overflowing');
     await userEvent.click(canvas.getByRole('button', { name: 'Load navigation' }));
-    await waitFor(() => expect(header).toHaveAttribute('data-overflowing'));
-    await expect(canvas.getByRole('button', { name: 'Menu' })).toBeVisible();
+    // Below 48rem the inline nav is hidden and the menu button always shows, so overflow is measured
+    // (and matters) only at desktop widths.
+    if (window.matchMedia('(min-width: 48rem)').matches) await waitFor(() => expect(header).toHaveAttribute('data-overflowing'));
+    await waitFor(() => expect(canvas.getByRole('button', { name: 'Menu' })).toBeVisible());
   },
 };
