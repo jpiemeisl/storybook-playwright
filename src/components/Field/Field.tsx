@@ -12,12 +12,17 @@ export interface FieldControlProps {
   'aria-required'?: boolean;
 }
 
+/** Props for Field. */
 export interface FieldProps {
+  /** Visible label, connected to the control with `for`/`id`. */
   label: ReactNode;
+  /** Help text under the control, referenced from its aria-describedby. */
   hint?: ReactNode;
   /** Error text. When present the control gets aria-invalid and the message is described by it. */
   error?: ReactNode;
+  /** Marks the control required (native `required` and aria-required) and shows a "*" on the label. */
   required?: boolean;
+  /** Shows "(optional)" on the label. Ignored when `required` is set. */
   optional?: boolean;
   /** Control id. Defaults to a generated one. */
   id?: string;

@@ -5,11 +5,15 @@ import { Image } from '../Image';
 import { Modal } from '../Modal';
 import styles from './Lightbox.module.css';
 
+/** Props for Lightbox. Controlled: the parent owns `index` (Gallery does this for you). */
 export interface LightboxProps {
+  /** All images that can be viewed, in order. Each image's caption is shown under it. */
   images: GalleryImage[];
   /** Index of the image shown; null closes the lightbox. */
   index: number | null;
+  /** Called with the new index from the previous/next buttons or arrow keys. */
   onIndexChange: (index: number) => void;
+  /** Called on Escape, backdrop click and the close button. Set `index` to null here. */
   onClose: () => void;
   /** Accessible name of the dialog. */
   label?: string;

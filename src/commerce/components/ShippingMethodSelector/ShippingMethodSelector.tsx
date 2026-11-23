@@ -4,6 +4,7 @@ import { formatMoney } from '../../../utils/formatMoney';
 import type { ShippingMethod } from '../../types/cart';
 import styles from './ShippingMethodSelector.module.css';
 
+/** Props for ShippingMethodSelector, the shipping method radio cards in checkout. */
 export interface ShippingMethodSelectorProps {
   methods: ShippingMethod[];
   /** Selected method id. */
@@ -11,6 +12,7 @@ export interface ShippingMethodSelectorProps {
   onChange: (methodId: string) => void;
   /** Methods free shipping applies to (a free-shipping code or the $75 threshold): shown as "Free" and marked. */
   freeMethodIds?: string[];
+  /** Validation message shown for the group, e.g. when no method is chosen. */
   error?: string;
   /** Field name. Default "shippingMethodId". */
   name?: string;

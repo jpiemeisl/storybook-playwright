@@ -10,6 +10,7 @@ import styles from './AddressForm.module.css';
 
 type AddressField = Exclude<keyof Address, 'country'>;
 
+/** Props for AddressForm, the controlled US address fieldset used in checkout and the address book. */
 export interface AddressFormProps {
   /** `shipping` or `billing`: sets the autocomplete section tokens and which error keys are read. */
   section: 'shipping' | 'billing';

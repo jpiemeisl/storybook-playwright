@@ -5,4 +5,5 @@ export const themes = [
   { name: 'orchard', label: 'Orchard', description: 'Light and editorial: sage-tinted paper, a plum action, generous radii and serif headings.' },
 ] as const;
 
+/** Name of a shipped theme (`default`, `harbor` or `orchard`), as set on `data-theme` by Theme. */
 export type ThemeName = (typeof themes)[number]['name'];

@@ -3,12 +3,14 @@
  * entropy claims or breached-password lists. The server must enforce its own rules.
  */
 
+/** One rule in the password checklist with its display label and whether the password passes it. */
 export interface PasswordCheck {
   id: 'length' | 'not-only-digits' | 'letter-and-number' | 'no-edge-spaces';
   label: string;
   passed: boolean;
 }
 
+/** Minimum password length in characters (Unicode code points) for the register and reset forms. */
 export const MIN_PASSWORD_LENGTH = 12;
 
 /** The checklist, in display order. An empty password passes nothing. */
@@ -22,6 +24,7 @@ export function getPasswordChecks(password: string): PasswordCheck[] {
   ];
 }
 
+/** True when the password passes every checklist rule. A client-side check only; the server enforces its own rules. */
 export const isPasswordAcceptable = (password: string) => getPasswordChecks(password).every((c) => c.passed);
 
 /** "3 of 4 password rules met", for a polite announcement. */

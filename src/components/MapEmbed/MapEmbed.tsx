@@ -7,6 +7,10 @@ import { Image } from '../Image';
 import { Link } from '../Link';
 import styles from './MapEmbed.module.css';
 
+/**
+ * Props for MapEmbed: the MapContent fields (embed `src`, iframe `title`, `address`, `directionsHref`)
+ * plus the placeholder and aspect ratio.
+ */
 export interface MapEmbedProps extends MapContent {
   /** Local static image shown before activation. Defaults to a CSS map pattern. */
   placeholder?: ImageContent;

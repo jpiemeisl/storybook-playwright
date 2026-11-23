@@ -8,6 +8,7 @@ import { Price } from '../Price';
 import { SubscriptionStatusBadge } from '../StatusBadge';
 import styles from './SubscriptionCard.module.css';
 
+/** Props for SubscriptionCard, the summary card for one subscription (status, plan, price and key date). */
 export interface SubscriptionCardProps {
   subscription: CustomerSubscription;
   /** ISO 8601 "now" for trial countdowns. */

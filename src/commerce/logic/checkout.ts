@@ -23,11 +23,13 @@ import { usStateName, US_ZIP } from './usStates';
 /** The cart facts checkout depends on (CartTotals.flags satisfies it). */
 export type CheckoutFlags = Pick<CartFlags, 'needsShippingStep' | 'hasSubscription' | 'hasDigital'>;
 
+/** Host-level checkout options passed to the step validators and order creation. */
 export interface CheckoutOptions {
   /** Collect a billing address for payment. Default true (see the billing address model above). */
   collectBillingAddress?: boolean;
 }
 
+/** Display label for each checkout step id, used by CheckoutStepper and step headings. */
 export const checkoutStepLabels: Record<CheckoutStepId, string> = {
   information: 'Information',
   shipping: 'Shipping',
@@ -43,6 +45,7 @@ export function getCheckoutSteps(flags: Pick<CartFlags, 'needsShippingStep'>): C
 /** Empty values: nothing ticked, billing same as shipping. */
 export const emptyCheckoutValues = (): CheckoutValues => ({ email: '', billingSameAsShipping: true, termsAccepted: false });
 
+/** Field labels for the US address form, also used in validation messages. */
 export const addressLabels = {
   name: 'Full name',
   company: 'Company',

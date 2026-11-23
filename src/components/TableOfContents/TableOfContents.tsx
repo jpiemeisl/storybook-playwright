@@ -3,12 +3,15 @@ import type { TocItem } from '../../component-types/content';
 import { Link } from '../Link';
 import styles from './TableOfContents.module.css';
 
+/** Props for TableOfContents. Renders nothing when `items` is empty. */
 export interface TableOfContentsProps {
+  /** Headings to list, in page order. Level-3 items nest under the preceding level-2 item. See buildTocFromHeadings. */
   items: TocItem[];
   /** Controlled active heading id. */
   activeId?: string;
   /** Track the heading in view with IntersectionObserver (ignored when `activeId` is set). */
   observe?: boolean;
+  /** Visible title and the nav's accessible name. Default "On this page". */
   title?: string;
 }
 

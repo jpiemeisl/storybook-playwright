@@ -5,6 +5,7 @@
  */
 import type { Money } from '../../content-types/money';
 
+/** Thrown when a binary money operation receives two values in different currencies; carries both currency codes. */
 export class CurrencyMismatchError extends Error {
   constructor(
     readonly expected: string,
@@ -15,6 +16,7 @@ export class CurrencyMismatchError extends Error {
   }
 }
 
+/** Thrown when an amount, quantity or percent is not a safe integer (or, for percent, not finite). */
 export class InvalidAmountError extends Error {
   constructor(value: number, what = 'amount') {
     super(`Invalid ${what}: ${value} (must be a safe integer).`);
@@ -30,18 +32,22 @@ const sameCurrency = (a: Money, b: Money) => {
   if (a.currency !== b.currency) throw new CurrencyMismatchError(a.currency, b.currency);
 };
 
+/** Creates a Money value from an integer amount in minor units (cents); throws InvalidAmountError for non-integers. */
 export const money = (amount: number, currency: string): Money => {
   checkInteger(amount);
   return { amount, currency };
 };
 
+/** Returns a zero Money value in the given currency. */
 export const zero = (currency: string): Money => ({ amount: 0, currency });
 
+/** Returns `a + b` in minor units; pure, and throws CurrencyMismatchError when currencies differ. */
 export function add(a: Money, b: Money): Money {
   sameCurrency(a, b);
   return money(a.amount + b.amount, a.currency);
 }
 
+/** Returns `a - b` in minor units (may be negative); pure, and throws CurrencyMismatchError when currencies differ. */
 export function subtract(a: Money, b: Money): Money {
   sameCurrency(a, b);
   return money(a.amount - b.amount, a.currency);
@@ -82,6 +88,9 @@ export function percentOf(value: Money, percent: number): Money {
   return money(Number(result), value.currency);
 }
 
+/** True when the amount is exactly zero minor units. */
 export const isZero = (value: Money) => value.amount === 0;
+/** Returns the smaller of two same-currency values (`a` on a tie); throws CurrencyMismatchError when currencies differ. */
 export const min = (a: Money, b: Money): Money => (sameCurrency(a, b), a.amount <= b.amount ? a : b);
+/** Returns the larger of two same-currency values (`a` on a tie); throws CurrencyMismatchError when currencies differ. */
 export const max = (a: Money, b: Money): Money => (sameCurrency(a, b), a.amount >= b.amount ? a : b);

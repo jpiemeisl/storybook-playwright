@@ -16,8 +16,10 @@ import { SummaryRows } from '../CartSummary';
 import { DownloadList } from '../DownloadList';
 import styles from './OrderDetail.module.css';
 
+/** Props for OrderItemsList, the line items of a placed order. */
 export interface OrderItemsListProps {
   order: Order;
+  /** Returns the product page URL for a line's title link. */
   lineHref: (line: CartLine) => string;
   /** Catalogue products, to attach each digital line's files to it. Without them, downloads are not shown per line. */
   products?: readonly Product[];
@@ -75,6 +77,7 @@ export function OrderTotalsSummary({ order, headingLevel = 3 }: { order: Order; 
   );
 }
 
+/** Props for OrderActions, the buy again, contact support and invoice actions on an order page. */
 export interface OrderActionsProps {
   order: Pick<Order, 'number'>;
   /** Shows "Buy again". A callback only: the host adds the lines to its cart. */

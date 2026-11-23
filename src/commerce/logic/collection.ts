@@ -6,6 +6,7 @@ import type { Product } from '../types/product';
 import type { CollectionListing } from '../types/pages';
 import { applyFilters, computeFacets, paginate, sortProducts, type FilterState, type SortKey } from './browse';
 
+/** Parameters for buildCollectionListing: filters, sort, page, page size, paging mode and the base path for page links. */
 export interface ListingRequest {
   filters: FilterState;
   sort?: SortKey;

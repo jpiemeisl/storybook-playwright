@@ -12,8 +12,10 @@ const tones: Record<StatusTone, { badge: BadgeTone; icon: IconName }> = {
   danger: { badge: 'danger', icon: 'alert-circle' },
 };
 
+/** Props for StatusBadge, a status label with a tone-specific icon. */
 export interface StatusBadgeProps {
   label: string;
+  /** Sets the badge color and default icon. */
   tone: StatusTone;
   /** Overrides the tone's icon. */
   icon?: IconName;

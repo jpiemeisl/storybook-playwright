@@ -5,6 +5,7 @@ import { formatMoney } from '../../../utils/formatMoney';
 import type { CartTotals } from '../../logic/cart';
 import styles from './FreeShippingProgress.module.css';
 
+/** Props for FreeShippingProgress; pass the matching fields of CartTotals. */
 export interface FreeShippingProgressProps {
   /** `totals.freeShippingProgress`. */
   progress: CartTotals['freeShippingProgress'];

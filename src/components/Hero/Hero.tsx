@@ -6,9 +6,12 @@ import { Image } from '../Image';
 import { Text } from '../Text';
 import styles from './Hero.module.css';
 
+/** Hero layout: `centered` text with media below, `split` text beside media, `background` text over a full-bleed image. */
 export type HeroVariant = 'centered' | 'split' | 'background';
 
+/** Props for Hero: the HeroContent fields plus layout options. */
 export interface HeroProps extends HeroContent {
+  /** Layout. `background` is full-bleed and brings its own Container. */
   variant?: HeroVariant;
   /** Split variant: which side the media sits on from 48rem. */
   mediaPosition?: 'start' | 'end';

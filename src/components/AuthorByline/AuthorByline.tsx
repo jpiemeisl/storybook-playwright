@@ -4,7 +4,9 @@ import { Image } from '../Image';
 import { Link } from '../Link';
 import styles from './AuthorByline.module.css';
 
+/** Props for AuthorByline. */
 export interface AuthorBylineProps {
+  /** The author. Without an avatar, their initials are shown instead; with `href`, the name is a link. */
   author: AuthorContent;
   /** ISO 8601 date, e.g. "2026-03-14". */
   date?: string;

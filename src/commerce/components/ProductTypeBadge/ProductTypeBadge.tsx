@@ -3,6 +3,7 @@ import { Icon, type IconName } from '../../../components/Icon';
 import type { ProductKind } from '../../types/product';
 import styles from './ProductTypeBadge.module.css';
 
+/** Props for ProductTypeBadge. */
 export interface ProductTypeBadgeProps {
   kind: ProductKind;
   /** Also label physical products ("Physical product"). Default false: physical renders nothing. */

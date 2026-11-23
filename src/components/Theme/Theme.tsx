@@ -1,6 +1,7 @@
 import type { ElementType, HTMLAttributes, ReactNode } from 'react';
 import type { ThemeName } from './themes';
 
+/** Props for Theme. Other HTML attributes go to the rendered element. */
 export interface ThemeProps extends HTMLAttributes<HTMLElement> {
   /** Theme to apply to this subtree. */
   name: ThemeName;

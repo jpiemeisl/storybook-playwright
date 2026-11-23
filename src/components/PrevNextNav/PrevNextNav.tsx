@@ -2,17 +2,22 @@ import { Icon } from '../Icon';
 import { Link } from '../Link';
 import styles from './PrevNextNav.module.css';
 
+/** One side of a PrevNextNav: the title and URL of the neighboring item. */
 export interface PrevNextLink {
   /** Title of the linked item, e.g. the previous case study. */
   title: string;
   href: string;
 }
 
+/** Props for PrevNextNav. Renders nothing when neither `previous` nor `next` is given. */
 export interface PrevNextNavProps {
+  /** The previous item in the series. Omit on the first item. */
   previous?: PrevNextLink;
+  /** The next item in the series. Omit on the last item. */
   next?: PrevNextLink;
   /** Small label above each title; part of the link's accessible name. Default "Previous" / "Next". */
   previousLabel?: string;
+  /** Small label above the next title. Default "Next". */
   nextLabel?: string;
   /** Accessible name of the nav landmark. */
   'aria-label'?: string;

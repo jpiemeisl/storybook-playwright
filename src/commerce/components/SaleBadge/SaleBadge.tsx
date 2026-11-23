@@ -1,5 +1,6 @@
 import styles from './SaleBadge.module.css';
 
+/** Props for SaleBadge; pass `percent` for "Save N%" or `label` for custom text (`label` wins when both are set). */
 export interface SaleBadgeProps {
   /** Whole percent off: "Save 20%". */
   percent?: number;

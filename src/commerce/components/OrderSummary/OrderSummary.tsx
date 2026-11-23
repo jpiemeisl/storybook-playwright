@@ -8,9 +8,12 @@ import { CartLineItem } from '../CartLineItem';
 import { SummaryRows, ThenBilled } from '../CartSummary';
 import styles from './OrderSummary.module.css';
 
+/** Props for OrderSummary, the read-only cart summary in the checkout sidebar. */
 export interface OrderSummaryProps {
   cart: Cart;
+  /** Totals from computeCartTotals for `cart`; the summary does no arithmetic. */
   totals: CartTotals;
+  /** Returns the product page URL for a cart line's title link. */
   lineHref: (line: CartLine) => string;
   /** False before an address is known: shipping reads "Calculated at checkout". */
   shippingKnown?: boolean;

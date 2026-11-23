@@ -4,12 +4,19 @@ import { Heading } from '../Heading';
 import { Text } from '../Text';
 import styles from './CtaBanner.module.css';
 
+/**
+ * Surface of a CtaBanner. `inverse` is a dark panel; `accent` always stays a light panel, even inside
+ * an inverse Section; `subtle` follows the surrounding surface.
+ */
 export type CtaBannerVariant = 'accent' | 'inverse' | 'subtle';
 
+/** Props for CtaBanner: the CtaContent fields plus presentation options. */
 export interface CtaBannerProps extends CtaContent {
+  /** Panel surface. Default "accent". */
   variant?: CtaBannerVariant;
   /** `split` puts the actions beside the text from 56rem. */
   layout?: 'centered' | 'split';
+  /** Heading level of the heading. Default 2. */
   headingLevel?: 2 | 3;
 }
 

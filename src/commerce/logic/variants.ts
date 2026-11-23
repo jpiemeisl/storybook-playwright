@@ -4,6 +4,7 @@
  */
 import type { Product, Variant } from '../types/product';
 
+/** Chosen option values keyed by option name (e.g. `{ Color: 'Blue', Size: 'M' }`); may be partial. */
 export type Selection = Record<string, string>;
 
 /** in-stock: leads to a purchasable variant (in stock, low stock, backorder or pre-order). out-of-stock: only sold-out variants. none: no variant has it. */

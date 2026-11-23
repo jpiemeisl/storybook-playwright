@@ -4,6 +4,7 @@ import { Select } from '../../../components/Select';
 import { sortKeys, sortLabels, type SortKey } from '../../logic/browse';
 import styles from './SortSelect.module.css';
 
+/** Props for SortSelect, the "Sort by" control for product listings. */
 export interface SortSelectProps {
   value: SortKey;
   /** Live mode. Without it the select is a plain field in a GET form (name "sort"). */

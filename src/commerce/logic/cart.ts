@@ -25,6 +25,7 @@ export const DEMO_TAX_RATE = 0.08;
 /** Merchandise subtotal at or above which shipping is free ($75.00). */
 export const FREE_SHIPPING_THRESHOLD: Money = { amount: 7500, currency: 'USD' };
 
+/** Inputs computeCartTotals needs besides the cart: promo definitions, shipping methods, tax rate and the current time. */
 export interface CartContext {
   promoDefinitions: readonly PromoCode[];
   shippingMethods: readonly ShippingMethod[];
@@ -34,6 +35,7 @@ export interface CartContext {
   now: string;
 }
 
+/** One future recurring charge: subscription lines sharing a billing interval and start date, summed per cycle. */
 export interface RecurringCharge {
   interval: BillingInterval;
   /** Per cycle, all lines with this interval and start date. */
@@ -46,6 +48,7 @@ export interface RecurringCharge {
   trialDays?: number;
 }
 
+/** What kinds of products a cart holds; drives which checkout steps and notes are shown. */
 export interface CartFlags {
   hasShippable: boolean;
   hasDigital: boolean;
@@ -57,6 +60,7 @@ export interface CartFlags {
   needsShippingStep: boolean;
 }
 
+/** Everything computeCartTotals derives from a cart: per-line amounts, subtotal, discount, shipping, tax, total, due-today, recurring charges, promo results, flags and free-shipping progress. All money in minor units. */
 export interface CartTotals {
   currency: string;
   itemCount: number;

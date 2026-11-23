@@ -3,6 +3,7 @@ import { Grid, type ResponsiveColumns } from '../../../components/Grid';
 import { ProductCardSkeleton } from '../ProductCard';
 import styles from './ProductGrid.module.css';
 
+/** Props for ProductGrid, the responsive list of product cards. */
 export interface ProductGridProps {
   /** ProductCards. Each is wrapped in a list item. */
   children?: ReactNode;

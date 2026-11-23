@@ -5,6 +5,7 @@ import { formatRecurring, subscriptionUnitPrice } from '../../logic/pricing';
 import type { Product, PurchaseOption, Variant } from '../../types/product';
 import styles from './PurchaseOptionSelector.module.css';
 
+/** Props for PurchaseOptionSelector, the one-time versus subscription choice on a product page. */
 export interface PurchaseOptionSelectorProps {
   product: Product;
   variant: Variant;
@@ -27,6 +28,7 @@ export function PurchaseOptionSelector({ product, variant, value, onChange }: Pu
   );
 }
 
+/** Props for BillingIntervalSelector, the segmented billing interval control for subscription products. */
 export interface BillingIntervalSelectorProps {
   product: Product;
   variant: Variant;

@@ -11,14 +11,17 @@ import { EmptyCart } from '../EmptyCart';
 import { FreeShippingProgress } from '../FreeShippingProgress';
 import styles from './MiniCart.module.css';
 
+/** Props for MiniCart, the cart drawer opened from the header. */
 export interface MiniCartProps {
   /** Controlled open state. */
   open: boolean;
   onClose: () => void;
   cart: Cart;
+  /** Totals from computeCartTotals for `cart`; the drawer does no arithmetic. */
   totals: CartTotals;
   /** From getCartIssues. Blocking issues disable Checkout with a visible reason. */
   issues?: CartIssue[];
+  /** Returns the product page URL for a cart line's title link. */
   lineHref: (line: CartLine) => string;
   /** Quantity stepper for physical lines. */
   onQuantityChange?: (lineId: string, quantity: number) => void;

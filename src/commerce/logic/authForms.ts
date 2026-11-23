@@ -10,13 +10,16 @@ import { getFieldError } from '../../utils/validation';
 import { isPasswordAcceptable } from './password';
 import { EMAIL } from './validate';
 
+/** Field errors from the auth form validators, keyed by field name; fields without errors are omitted. */
 export type AuthErrors = Partial<Record<string, string>>;
 
+/** Values submitted by the sign-in form. */
 export interface LoginValues {
   email: string;
   password: string;
   remember?: boolean;
 }
+/** Values submitted by the create-account form. */
 export interface RegisterValues {
   name: string;
   email: string;
@@ -25,9 +28,11 @@ export interface RegisterValues {
   marketingConsent?: boolean;
   termsAccepted: boolean;
 }
+/** Values submitted by the forgot-password form. */
 export interface ForgotPasswordValues {
   email: string;
 }
+/** Values submitted by the reset-password form. */
 export interface ResetPasswordValues {
   password: string;
   confirmPassword: string;
@@ -52,10 +57,12 @@ function newPassword(password: string, confirm: string, errors: AuthErrors) {
 
 const clean = (errors: AuthErrors): AuthErrors => Object.fromEntries(Object.entries(errors).filter(([, v]) => v));
 
+/** Validates the sign-in form: a well-formed email and a non-empty password. Returns field errors (empty when valid); pure, and never reveals whether an account exists. */
 export function validateLogin(values: LoginValues): AuthErrors {
   return clean({ email: email(values.email), password: values.password ? undefined : getFieldError({ valueMissing: true }, { label: 'Password' }, { valueMissing: 'Enter your password' }) });
 }
 
+/** Validates the create-account form: name, email, a password that meets every checklist rule, a matching confirmation and accepted terms. Returns field errors (empty when valid); pure. */
 export function validateRegister(values: RegisterValues): AuthErrors {
   const errors: AuthErrors = {};
   if (!values.name.trim()) errors.name = getFieldError({ valueMissing: true }, { label: 'Name' }, { valueMissing: 'Enter your name' });
@@ -65,8 +72,10 @@ export function validateRegister(values: RegisterValues): AuthErrors {
   return clean(errors);
 }
 
+/** Validates the forgot-password form (a well-formed email). Returns field errors (empty when valid); pure. */
 export const validateForgotPassword = (values: ForgotPasswordValues): AuthErrors => clean({ email: email(values.email) });
 
+/** Validates the reset-password form: a password that meets every checklist rule and a matching confirmation. Returns field errors (empty when valid); pure. */
 export function validateResetPassword(values: ResetPasswordValues): AuthErrors {
   const errors: AuthErrors = {};
   newPassword(values.password, values.confirmPassword, errors);

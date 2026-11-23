@@ -10,11 +10,16 @@ export interface SlidesPerView {
   lg?: number;
 }
 
+/** Props for Carousel. */
 export interface CarouselProps {
   /** Accessible name, e.g. "Customer stories". */
   label: string;
   /** One child per slide. Any content: cards, images, products. */
   children: ReactNode;
+  /**
+   * Slides visible at once. A number is the count for wide containers; narrower ones step down to 3, 2
+   * then 1. Pass an object for exact control. Default 1.
+   */
   slidesPerView?: number | SlidesPerView;
   /** Previous/next wrap around instead of stopping at the ends. */
   loop?: boolean;

@@ -6,6 +6,7 @@ import { formatCommerceDate } from '../../logic/pricing';
 import type { Order } from '../../types/order';
 import styles from './OrderTimeline.module.css';
 
+/** Props for OrderTimeline, the order milestone list with tracking events. */
 export interface OrderTimelineProps {
   order: Pick<Order, 'status' | 'lines' | 'placedAt' | 'tracking' | 'downloads'>;
   /** Heading level for "Tracking". Default 3. */

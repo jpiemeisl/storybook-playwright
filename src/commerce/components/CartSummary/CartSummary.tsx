@@ -21,6 +21,7 @@ function rowValue(row: SummaryRow): ReactNode {
   return row.amount ? formatMoney(row.amount) : null;
 }
 
+/** Props for SummaryRows; pass `totals` for a cart or precomputed `rows` for a placed order. */
 export interface SummaryRowsProps {
   /** Totals to derive the rows from (summaryRows). Required unless `rows` is given. */
   totals?: CartTotals;
@@ -81,6 +82,7 @@ export function ThenBilled({ totals, headingLevel = 3 }: { totals: Pick<CartTota
   );
 }
 
+/** Props for CartSummary, the order summary panel on the cart page. */
 export interface CartSummaryProps extends Omit<SummaryRowsProps, 'totals' | 'rows'> {
   totals: CartTotals;
   /** Messages above the rows, e.g. FreeShippingProgress or a promo banner. */

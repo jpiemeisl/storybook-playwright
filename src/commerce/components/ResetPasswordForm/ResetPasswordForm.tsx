@@ -8,6 +8,7 @@ import { AuthFormShell, PasswordChecklist, PasswordField, type AuthFormBaseProps
 import { usePasswordAnnouncement } from '../RegisterForm/RegisterForm';
 import styles from '../AuthForm/AuthForm.module.css';
 
+/** Props for ResetPasswordForm, the choose-a-new-password form reached from a reset link. */
 export interface ResetPasswordFormProps extends AuthFormBaseProps<ResetPasswordValues> {
   /** The reset link has expired: show how to request a new one instead of the form. */
   expired?: boolean;

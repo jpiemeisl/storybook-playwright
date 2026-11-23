@@ -9,6 +9,7 @@ import type { BlockContext, BlockLike, RendererContext } from './types';
 import { isFatal, validateBlock, type ValidationIssue } from './validate';
 import styles from './BlockRenderer.module.css';
 
+/** Props for BlockRenderer: the blocks to render, plus the registry, form handlers, error reporting and layout options. */
 export interface BlockRendererProps {
   /** Blocks in display order (usually PageContent.blocks). Custom block types are allowed. */
   blocks: readonly (Block | BlockLike)[];
@@ -168,6 +169,7 @@ export function renderBlocks(
   return { nodes, issues };
 }
 
+/** Props for PageSection: Section background and padding, an optional element id and landmark label, and the band content. */
 export interface PageSectionProps {
   background?: SectionBackground;
   padding?: SectionPadding;

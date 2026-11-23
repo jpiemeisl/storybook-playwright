@@ -2,6 +2,7 @@ import { useId, useState } from 'react';
 import { Icon } from '../../../components/Icon';
 import styles from './LicenseKey.module.css';
 
+/** Props for LicenseKey, the masked license key with show and copy buttons. */
 export interface LicenseKeyProps {
   /** The key. Shown only after the customer reveals it; never put in an attribute, URL or log. */
   value: string;

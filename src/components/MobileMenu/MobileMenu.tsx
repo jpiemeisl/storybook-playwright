@@ -4,18 +4,23 @@ import { Icon } from '../Icon';
 import { Link } from '../Link';
 import styles from './MobileMenu.module.css';
 
+/** A call-to-action link shown by Header and MobileMenu. */
 export interface MenuCta {
   label: string;
   href: string;
 }
 
+/** Props for MobileMenu. Controlled: the parent owns `open` and closes it from `onClose`. */
 export interface MobileMenuProps {
   /** id of the dialog, for the opening button's aria-controls. */
   id?: string;
+  /** Whether the drawer is shown as a modal dialog. */
   open: boolean;
   /** Called on Escape, scrim click, the close button and after following a link. */
   onClose: () => void;
+  /** Navigation items. Items with children become expandable sections; sections containing the current page start expanded. */
   items: NavItem[];
+  /** Call-to-action link pinned to the bottom of the drawer. */
   cta?: MenuCta;
   /** Accessible name of the nav landmark inside the menu. */
   'aria-label'?: string;

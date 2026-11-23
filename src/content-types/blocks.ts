@@ -94,7 +94,7 @@ export interface TestimonialContentRef {
 export interface LogoItemContent {
   /** Company name; used as the logo's alt text. */
   name: string;
-  /** Logo image (its alt is ignored in favour of `name`). */
+  /** Logo image (its alt is ignored in favor of `name`). */
   image: ImageRef;
   /** Optional link, e.g. to a case study. */
   href?: string;
@@ -128,7 +128,7 @@ export interface PricingTierContent {
   features: { label: string; included: boolean }[];
   /** Call to action. */
   cta: LinkRef;
-  /** Visually emphasised; gets a text badge too. */
+  /** Visually emphasized; gets a text badge too. */
   highlighted?: boolean;
   /** Badge text, e.g. "Most popular". */
   badge?: string;
@@ -316,7 +316,7 @@ export interface CtaBannerBlock extends BlockBase {
   primaryAction: ActionRef;
   /** Optional second action. */
   secondaryAction?: ActionRef;
-  /** Panel colour. Default "accent". */
+  /** Panel color. Default "accent". */
   variant?: 'accent' | 'inverse' | 'subtle';
   /** Default "centered". */
   layout?: 'centered' | 'split';

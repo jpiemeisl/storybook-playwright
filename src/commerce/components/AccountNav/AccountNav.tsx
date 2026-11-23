@@ -4,8 +4,10 @@ import { Link } from '../../../components/Link';
 import hint from '../../../components/scrollHint.module.css';
 import styles from './AccountNav.module.css';
 
+/** Sections of the account area, each a link in AccountNav; used for count badges and the current item. */
 export type AccountSection = 'overview' | 'orders' | 'downloads' | 'subscriptions' | 'addresses' | 'wishlist';
 
+/** Props for AccountNav, the account area navigation. */
 export interface AccountNavProps {
   /** Path of the page being viewed: the matching item gets aria-current="page". */
   currentPath?: string;

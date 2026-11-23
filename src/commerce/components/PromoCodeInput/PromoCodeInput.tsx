@@ -8,6 +8,7 @@ import styles from './PromoCodeInput.module.css';
 /** What onApply reports back. A promise shows the "applying" state until it settles. */
 export type PromoApplyResult = { ok: boolean; message: string };
 
+/** Props for PromoCodeInput, the promo code form with applied codes as chips. */
 export interface PromoCodeInputProps {
   /** Codes already applied, shown as chips. */
   applied: string[];

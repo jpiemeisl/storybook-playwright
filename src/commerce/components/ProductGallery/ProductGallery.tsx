@@ -5,6 +5,7 @@ import { Lightbox } from '../../../components/Lightbox';
 import type { ImageRef } from '../../../content-types/shared';
 import styles from './ProductGallery.module.css';
 
+/** Props for ProductGallery, the product page image gallery (controlled current image). */
 export interface ProductGalleryProps {
   images: ImageRef[];
   /** Controlled current image (follow the selected variant's imageIndex). */

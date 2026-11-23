@@ -4,6 +4,10 @@ import { Icon } from '../Icon';
 import { Image } from '../Image';
 import styles from './VideoEmbed.module.css';
 
+/**
+ * Props for VideoEmbed: the VideoContent fields (provider, `videoId` for YouTube/Vimeo or `src` for
+ * `generic`, title, poster) plus the aspect ratio.
+ */
 export interface VideoEmbedProps extends VideoContent {
   /** CSS aspect-ratio. Default "16 / 9". */
   aspectRatio?: string;
@@ -72,14 +76,21 @@ export function VideoEmbed({ provider, videoId, src, title, poster, aspectRatio 
   );
 }
 
+/** A text track (WebVTT file) for Video, rendered as a `<track>` element. */
 export interface VideoTrack {
+  /** URL of the WebVTT file. Must be unique among the tracks (used as the key). */
   src: string;
+  /** Language of the track, e.g. "en". */
   srcLang: string;
+  /** Name shown in the player's track menu, e.g. "English". */
   label: string;
+  /** Track kind. Default "captions". */
   kind?: 'captions' | 'subtitles' | 'descriptions';
+  /** Enable this track by default. */
   default?: boolean;
 }
 
+/** Props for Video. */
 export interface VideoProps {
   /** Self-hosted file URL. */
   src: string;
@@ -87,7 +98,9 @@ export interface VideoProps {
   title: string;
   /** Local poster image URL. */
   poster?: string;
+  /** Captions, subtitles or descriptions. */
   tracks?: VideoTrack[];
+  /** CSS aspect-ratio. Default "16 / 9". */
   aspectRatio?: string;
 }
 

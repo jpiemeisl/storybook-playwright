@@ -1,14 +1,21 @@
 import type { HTMLAttributes } from 'react';
 import styles from './Divider.module.css';
 
+/** Direction of the Divider line. */
 export type DividerOrientation = 'horizontal' | 'vertical';
 
+/** Props for Divider. Accepts HTML attributes except `children`. */
 export interface DividerProps extends Omit<HTMLAttributes<HTMLElement>, 'children'> {
+  /** Direction of the line. Use `vertical` inside a row layout. */
   orientation?: DividerOrientation;
   /** Short text shown in the middle of the line, e.g. "or". Also used as the accessible name. */
   label?: string;
 }
 
+/**
+ * A separator line between content. A plain horizontal divider renders an `<hr>`; vertical or labeled
+ * dividers render a `<div role="separator">` with `aria-orientation` and the label as its accessible name.
+ */
 export function Divider({ orientation = 'horizontal', label, className, ...rest }: DividerProps) {
   const classes = [styles.divider, styles[orientation], label && styles.labelled, className]
     .filter(Boolean)

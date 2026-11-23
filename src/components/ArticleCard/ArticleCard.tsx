@@ -5,10 +5,15 @@ import { Card, type CardOrientation, type CardSize, type CardVariant } from '../
 import { Image } from '../Image';
 import styles from './ArticleCard.module.css';
 
+/** Props for ArticleCard. Presentation props are passed through to Card. */
 export interface ArticleCardProps {
+  /** Article to show. Its category becomes a badge and its author, date and reading time the footer. */
   article: ArticleCardContent;
+  /** Card surface treatment. Default "outlined". */
   variant?: CardVariant;
+  /** Image above or beside the body. */
   orientation?: CardOrientation;
+  /** Heading level of the title. Default 3. */
   headingLevel?: 2 | 3 | 4;
   /** `lg` for a featured article (larger title, more padding). */
   size?: CardSize;

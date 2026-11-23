@@ -1,6 +1,7 @@
 import type { ReactNode } from 'react';
 import styles from './StickyBuyBar.module.css';
 
+/** Props for StickyBuyBar, the bottom purchase bar shown on narrow viewports while the real action is out of view. */
 export interface StickyBuyBarProps {
   /** Render the bar. Pass useOutOfView(ref) of the real action: the bar exists only while it is out of view. */
   shown: boolean;

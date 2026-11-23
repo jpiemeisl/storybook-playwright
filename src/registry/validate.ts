@@ -238,6 +238,7 @@ const rules: Record<Block['type'], (c: Checker) => void> = {
   },
 };
 
+/** Options for validateBlock and validatePage: the block types and template names to treat as known. */
 export interface ValidateOptions {
   /** Block types the registry can render. Default: the built-in types. */
   knownTypes?: readonly string[];
@@ -354,4 +355,5 @@ export function validatePage(page: unknown, options: ValidateOptions = {}): Vali
   return issues;
 }
 
+/** Returns only the issues with severity "error", dropping warnings. Pure; the input array is not changed. */
 export const errorsOnly = (issues: ValidationIssue[]) => issues.filter((issue) => issue.severity === 'error');

@@ -2,6 +2,7 @@ import { Icon, type IconName } from '../../../components/Icon';
 import type { CartFlags } from '../../logic/cart';
 import styles from './TrustBadges.module.css';
 
+/** Props for TrustBadges, the checkout reassurance list. */
 export interface TrustBadgesProps {
   /** `totals.flags`: decides which items apply. */
   flags: Pick<CartFlags, 'hasShippable' | 'hasDigital' | 'hasSubscription'>;

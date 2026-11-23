@@ -2,16 +2,22 @@ import { useEffect, useId, useRef, type ReactNode } from 'react';
 import { Icon } from '../Icon';
 import styles from './Modal.module.css';
 
+/** Maximum width of a Modal. `full` fills the viewport. */
 export type ModalSize = 'sm' | 'md' | 'lg' | 'full';
 
+/** Props for Modal. Controlled: the parent owns `open` and sets it to false from `onClose`. */
 export interface ModalProps {
+  /** Whether the dialog is shown. Content is only rendered while open. */
   open: boolean;
   /** Called on Escape, backdrop click and the close button. */
   onClose: () => void;
+  /** Dialog heading (an h2) and its accessible name. */
   title: ReactNode;
   /** Hide the title visually (it still names the dialog), e.g. for a lightbox. */
   hideTitle?: boolean;
+  /** Short text under the title, used as the dialog's accessible description. */
   description?: ReactNode;
+  /** Maximum width. Default "md". */
   size?: ModalSize;
   children?: ReactNode;
   /** Actions row at the bottom, e.g. Cancel / Confirm buttons. */

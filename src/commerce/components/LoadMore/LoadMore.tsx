@@ -2,6 +2,7 @@ import { useId, type MouseEvent } from 'react';
 import { ButtonLink } from '../../../components/Button';
 import styles from './LoadMore.module.css';
 
+/** Props for LoadMore, the "Showing X of Y" progress and load-more link under a product listing. */
 export interface LoadMoreProps {
   /** Items currently shown. */
   shown: number;

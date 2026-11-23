@@ -1,6 +1,7 @@
 import type { ReactNode } from 'react';
 import { EmptyState } from '../../../components/EmptyState';
 
+/** Props for EmptyCart, the empty state shown when the cart has no lines. */
 export interface EmptyCartProps {
   /** Where "Continue shopping" goes. Default "/shop". */
   shopHref?: string;

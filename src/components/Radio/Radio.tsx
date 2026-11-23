@@ -14,7 +14,9 @@ interface RadioGroupContextValue {
 
 const RadioGroupContext = createContext<RadioGroupContextValue | null>(null);
 
+/** Props for RadioGroup. Other native `<fieldset>` props go to the fieldset. Children are Radio elements. */
 export interface RadioGroupProps extends Omit<ComponentPropsWithRef<'fieldset'>, 'onChange' | 'defaultValue'> {
+  /** Visible group label, rendered as the fieldset's `<legend>`. */
   legend: ReactNode;
   /** Shared input name. Defaults to a generated one. */
   name?: string;
@@ -22,12 +24,17 @@ export interface RadioGroupProps extends Omit<ComponentPropsWithRef<'fieldset'>,
   value?: string;
   /** Uncontrolled initial value. */
   defaultValue?: string;
+  /** Called with the value of the option the user selects. */
   onChange?: (value: string) => void;
+  /** Stack the options (`vertical`, default) or lay them out in a row (`horizontal`). */
   orientation?: 'vertical' | 'horizontal';
   /** `card`: each option is a bordered, fully clickable card (plans, shipping methods). */
   variant?: 'default' | 'card';
+  /** Help text under the legend, linked to the group with aria-describedby. */
   hint?: ReactNode;
+  /** Error text under the options. Sets aria-invalid on the group and is linked with aria-describedby. */
   error?: ReactNode;
+  /** Sets `required` on every radio and aria-required on the group, and shows a "*" on the legend. */
   required?: boolean;
 }
 
@@ -83,9 +90,13 @@ export function RadioGroup({
   );
 }
 
+/** Props for Radio. `name` and the checked state come from the surrounding RadioGroup; other native `<input>` props go to the input. */
 export interface RadioProps extends Omit<ComponentPropsWithRef<'input'>, 'type' | 'name' | 'value' | 'children'> {
+  /** Value reported to RadioGroup's `onChange` and submitted with the form. */
   value: string;
+  /** Visible label and the radio's accessible name. */
   label: ReactNode;
+  /** Secondary text under the label, announced as the radio's description. */
   description?: ReactNode;
 }
 

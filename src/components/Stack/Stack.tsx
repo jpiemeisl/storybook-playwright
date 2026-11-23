@@ -3,20 +3,27 @@ import type { Gap } from '../gap';
 import type { PolymorphicProps } from '../polymorphic';
 import styles from './Stack.module.css';
 
+/** Main axis of a Stack: `row` lays children out horizontally, `column` vertically. */
 export type StackDirection = 'row' | 'column';
+/** Cross-axis alignment of Stack children (maps to `align-items`). */
 export type StackAlign = 'start' | 'center' | 'end' | 'stretch' | 'baseline';
+/** Main-axis distribution of Stack children (maps to `justify-content`; `between` is space-between). */
 export type StackJustify = 'start' | 'center' | 'end' | 'between';
 
 interface StackOwnProps {
+  /** Main axis. */
   direction?: StackDirection;
+  /** Space between children, from the spacing tokens. */
   gap?: Gap;
   /** Cross-axis alignment. */
   align?: StackAlign;
   /** Main-axis distribution. */
   justify?: StackJustify;
+  /** Let children wrap onto new lines. */
   wrap?: boolean;
 }
 
+/** Props for Stack. Polymorphic: `as` picks the element (default `div`). */
 export type StackProps<E extends ElementType = 'div'> = PolymorphicProps<E, StackOwnProps>;
 
 /** One-dimensional flex layout with token-based gaps. */

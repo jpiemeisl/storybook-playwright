@@ -14,6 +14,7 @@ import type { ValidationIssue } from '../registry/checker';
 import { isSafeHref, isSafeImageSrc } from '../registry/links';
 import { markCurrent, type PathMatch } from './currentPath';
 
+/** Header, Footer and AnnouncementBar props produced by chromeToProps, with unsafe links and images already removed. */
 export interface ChromeProps {
   header: { logo: SiteLogoProps; items: NavItem[]; cta?: MenuCta; sticky: boolean };
   footer: {
@@ -26,6 +27,7 @@ export interface ChromeProps {
   announcement?: Pick<AnnouncementBarProps, 'message' | 'link' | 'tone' | 'dismissible'>;
 }
 
+/** Options for chromeToProps: current-path marking and a callback for refused links and images. */
 export interface ChromeOptions {
   /** Marks the matching header item (prefix mode by default) and footer link (exact) with aria-current. */
   currentPath?: string;

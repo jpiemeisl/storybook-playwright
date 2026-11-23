@@ -29,6 +29,7 @@ import styles from './AccountTemplates.module.css';
 type Props<P extends PageContent> = TemplateProps<P> & { ctx?: CommerceContext };
 const noop = () => undefined;
 
+/** Order history page: the customer's orders with status and year filters and pagination, or an empty state with a shop link. */
 export function AccountOrdersTemplate({ page, chrome, ctx }: Props<AccountOrdersPage>) {
   return (
     <AccountLayout page={page} chrome={chrome} ctx={ctx} title="Your orders" description={page.totalCount ? `${page.totalCount} ${page.totalCount === 1 ? 'order' : 'orders'}` : undefined} signedOutTitle="Sign in to view your orders">
@@ -99,6 +100,7 @@ export function AccountOrderTemplate({ page, chrome, ctx }: Props<AccountOrderPa
   );
 }
 
+/** Downloads library page: every purchased digital file, searchable and grouped by product or order. File links come from `ctx.downloadHref`. */
 export function AccountDownloadsTemplate({ page, chrome, ctx }: Props<AccountDownloadsPage>) {
   const [query, setQuery] = useState('');
   const href = ctx?.downloadHref;
@@ -109,6 +111,7 @@ export function AccountDownloadsTemplate({ page, chrome, ctx }: Props<AccountDow
   );
 }
 
+/** Subscriptions list page: one SubscriptionCard per subscription linking to its detail page, or a link to browse subscriptions when there are none. */
 export function AccountSubscriptionsTemplate({ page, chrome, ctx }: Props<AccountSubscriptionsPage>) {
   return (
     <AccountLayout page={page} chrome={chrome} ctx={ctx} title="Your subscriptions" signedOutTitle="Sign in to manage your subscriptions">
@@ -154,6 +157,7 @@ export function AccountSubscriptionTemplate({ page, chrome, ctx }: Props<Account
   );
 }
 
+/** Address book page: saved addresses with add, edit, delete and set-default, wired to the `ctx` address callbacks. */
 export function AccountAddressesTemplate({ page, chrome, ctx }: Props<AccountAddressesPage>) {
   return (
     <AccountLayout page={page} chrome={chrome} ctx={ctx} title="Your addresses" signedOutTitle="Sign in to manage your addresses">
@@ -162,6 +166,7 @@ export function AccountAddressesTemplate({ page, chrome, ctx }: Props<AccountAdd
   );
 }
 
+/** Wishlist page: saved products in a grid with remove and quick add, wired to the `ctx` wishlist callbacks. */
 export function AccountWishlistTemplate({ page, chrome, ctx }: Props<AccountWishlistPage>) {
   return (
     <AccountLayout page={page} chrome={chrome} ctx={ctx} title="Your wishlist" signedOutTitle="Sign in to see your wishlist">

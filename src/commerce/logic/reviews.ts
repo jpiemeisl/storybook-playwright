@@ -1,5 +1,6 @@
 import type { ProductReviewsData, Review } from '../types/product';
 
+/** Review list sort orders used by sortReviews and the review list sort control (`highest`/`lowest` break ties by newest). */
 export type ReviewSort = 'newest' | 'highest' | 'lowest';
 
 /** Stable review sort; ties by id. */

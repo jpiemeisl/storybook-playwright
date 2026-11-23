@@ -2,6 +2,7 @@ import { useEffect, useId, useRef, useState, type ChangeEvent, type ComponentPro
 import field from '../fieldBox.module.css';
 import styles from './Textarea.module.css';
 
+/** Props for Textarea. Native `<textarea>` props go to the textarea; `className` goes on the wrapper and `rows` defaults to 4. */
 export interface TextareaProps extends ComponentPropsWithRef<'textarea'> {
   /** Grow with the content (CSS field-sizing). Browsers without it keep `rows` and a resize handle. */
   autoGrow?: boolean;

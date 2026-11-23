@@ -2,12 +2,14 @@ import { useEffect, useId, useState } from 'react';
 import { Icon } from '../../../components/Icon';
 import styles from './QuantityStepper.module.css';
 
+/** Props for QuantityStepper; works controlled (`value`) or uncontrolled (`defaultValue`). */
 export interface QuantityStepperProps {
   /** Controlled value. */
   value?: number;
   /** Uncontrolled initial value. Default 1. */
   defaultValue?: number;
   onChange?: (quantity: number) => void;
+  /** Lowest allowed quantity. Default 1. */
   min?: number;
   /** Hard upper limit. Default 99. */
   max?: number;

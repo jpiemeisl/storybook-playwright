@@ -5,6 +5,7 @@ import { Link } from '../../../components/Link';
 import type { ImageRef } from '../../../content-types/shared';
 import styles from './CollectionCard.module.css';
 
+/** Props for CollectionCard, a category tile linking to a collection page. */
 export interface CollectionCardProps {
   title: string;
   href: string;

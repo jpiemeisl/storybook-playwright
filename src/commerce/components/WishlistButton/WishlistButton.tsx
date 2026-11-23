@@ -1,6 +1,7 @@
 import { Icon } from '../../../components/Icon';
 import styles from './WishlistButton.module.css';
 
+/** Props for WishlistButton, the heart button that saves a product to the wishlist. */
 export interface WishlistButtonProps {
   pressed: boolean;
   onPressedChange: (pressed: boolean) => void;

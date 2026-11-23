@@ -8,6 +8,7 @@ import { getPasswordChecks, passwordSummary } from '../../logic/password';
 import { AuthFormShell, PasswordChecklist, PasswordField, type AuthFormBaseProps } from '../AuthForm';
 import styles from '../AuthForm/AuthForm.module.css';
 
+/** Props for RegisterForm, the create-account form. */
 export interface RegisterFormProps extends AuthFormBaseProps<RegisterValues> {
   /** Sign-in, terms and privacy links. */
   links?: { signIn?: string; terms?: string; privacy?: string };

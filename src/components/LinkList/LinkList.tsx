@@ -1,17 +1,21 @@
 import { Link } from '../Link';
 import styles from './LinkList.module.css';
 
+/** One link in a LinkList. */
 export interface LinkListItem {
+  /** Visible link text. */
   label: string;
   href: string;
   /** Accessible name when the label alone is not descriptive. */
   ariaLabel?: string;
 }
 
+/** Props for LinkList. Renders nothing when `items` is empty. */
 export interface LinkListProps {
   items: LinkListItem[];
   /** `row` wraps inline (legal links); `column` stacks (suggested pages). Default "column". */
   direction?: 'row' | 'column';
+  /** Text size. Default "md". */
   size?: 'sm' | 'md';
   /** Accessible name of the list. */
   label?: string;

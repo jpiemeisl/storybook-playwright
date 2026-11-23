@@ -2,18 +2,23 @@ import { useId, type ReactNode } from 'react';
 import type { TableColumn } from '../../component-types/content';
 import styles from './Table.module.css';
 
+/** Props for Table. Pass `columns` + `rows` for a generated table, or your own `children`. */
 export interface TableProps<Row extends Record<string, ReactNode>> {
   /** Required: names the table and its scroll region. */
   caption: ReactNode;
   /** Visually hide the caption (it still names the table). */
   hideCaption?: boolean;
+  /** Column definitions, in order. The first column's cells are row headers (`<th scope="row">`). */
   columns?: TableColumn<Row>[];
+  /** Data rows, keyed by column `key`. Missing values show a dash. */
   rows?: Row[];
   /** Alternative to columns/rows: your own <thead>/<tbody>. */
   children?: ReactNode;
   /** Header stays visible while the table scrolls vertically inside a capped-height region. */
   stickyHeader?: boolean;
+  /** Alternate row backgrounds. */
   striped?: boolean;
+  /** Reduce cell padding. */
   dense?: boolean;
 }
 

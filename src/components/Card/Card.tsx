@@ -7,18 +7,24 @@ import { Link } from '../Link';
 import { Text } from '../Text';
 import styles from './Card.module.css';
 
+/** Card surface treatment: `elevated` (shadow), `outlined` (border) or `flat` (neither). */
 export type CardVariant = 'elevated' | 'outlined' | 'flat';
+/** Card layout: image above the body (`vertical`) or beside it on wide cards (`horizontal`). */
 export type CardOrientation = 'vertical' | 'horizontal';
+/** Card scale: `lg` has a larger title and more padding, for a featured item. */
 export type CardSize = 'md' | 'lg';
 
+/** Props for Card: the CardContent fields plus presentation options. */
 export interface CardProps extends CardContent {
   /** CSS aspect-ratio for the image. Default "16 / 9". */
   imageAspectRatio?: string;
   /** Meta, actions or anything else at the bottom. Links here stay clickable above the card link. */
   footer?: ReactNode;
+  /** Surface treatment. Default "outlined". */
   variant?: CardVariant;
   /** `horizontal` puts the image beside the body when the card is at least 32rem wide. */
   orientation?: CardOrientation;
+  /** Heading level of the title. Default 3. */
   headingLevel?: 2 | 3 | 4;
   /** `lg`: larger title and more padding, for a featured item above a grid. Default "md". */
   size?: CardSize;
@@ -72,6 +78,7 @@ export function Card({
   );
 }
 
+/** Props for CardGrid. */
 export interface CardGridProps {
   /** Card elements. Each is wrapped in a list item. */
   children: ReactNode;

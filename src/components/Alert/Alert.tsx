@@ -2,10 +2,14 @@ import type { ComponentPropsWithRef, ReactNode } from 'react';
 import { Icon, type IconName } from '../Icon';
 import styles from './Alert.module.css';
 
+/** Kind of Alert. Sets the color, the icon and the visually hidden prefix ("Information", "Success", "Warning", "Error"). */
 export type AlertTone = 'info' | 'success' | 'warning' | 'danger';
 
+/** Props for Alert. Other native `<div>` props go to the root; children are the message body. */
 export interface AlertProps extends Omit<ComponentPropsWithRef<'div'>, 'title'> {
+  /** Kind of message. Default "info". */
   tone?: AlertTone;
+  /** Short bold heading line above the body. */
   title?: ReactNode;
   /** Shows a dismiss button that calls this. */
   onDismiss?: () => void;

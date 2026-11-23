@@ -4,10 +4,13 @@ import type { Product, Variant } from '../../types/product';
 import { ProductCard } from '../ProductCard';
 import styles from './RelatedProducts.module.css';
 
+/** Props for RelatedProducts, the "You might also like" carousel on a product page. */
 export interface RelatedProductsProps {
   products: Product[];
+  /** Returns the product page URL for each product. */
   hrefFor: (product: Product) => string;
   heading?: string;
+  /** Enables each card's quick "Add to cart" button and is called with the product and its single variant. */
   onQuickAdd?: (product: Product, variant: Variant) => void;
 }
 

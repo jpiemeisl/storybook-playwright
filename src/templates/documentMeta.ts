@@ -6,6 +6,7 @@
 import type { PageContent } from '../content-types/blocks';
 import { isSafeImageSrc } from '../registry/links';
 
+/** Raw document <head> values returned by getDocumentMeta, for the host app to render (title, description, canonical, robots, Open Graph). */
 export interface DocumentMeta {
   title: string;
   description?: string;

@@ -20,6 +20,7 @@ export interface AccountLinks {
   support?: string;
 }
 
+/** Template names for the auth pages; selects which form an AuthPage renders. */
 export type AuthTemplateName = 'login' | 'register' | 'forgot-password' | 'reset-password';
 
 /** Sign in, create account, forgot password and reset password. */
@@ -60,6 +61,7 @@ export interface AccountDashboardPage extends AccountPageBase {
   wishlist: WishlistItem[];
 }
 
+/** Page data for the order history page (template `account-orders`): one filtered, paginated page of orders. */
 export interface AccountOrdersPage extends AccountPageBase {
   template: 'account-orders';
   /** This page of orders (already filtered and paginated). */
@@ -71,6 +73,7 @@ export interface AccountOrdersPage extends AccountPageBase {
   pagination?: { currentPage: number; totalPages: number };
 }
 
+/** Page data for a single order's detail page (template `account-order`). */
 export interface AccountOrderPage extends AccountPageBase {
   template: 'account-order';
   order: Order;
@@ -81,17 +84,20 @@ export interface AccountOrderPage extends AccountPageBase {
   breadcrumbs?: BreadcrumbItem[];
 }
 
+/** Page data for the downloads library page (template `account-downloads`). */
 export interface AccountDownloadsPage extends AccountPageBase {
   template: 'account-downloads';
   items: LibraryItem[];
   groupBy?: 'product' | 'order';
 }
 
+/** Page data for the subscriptions list page (template `account-subscriptions`). */
 export interface AccountSubscriptionsPage extends AccountPageBase {
   template: 'account-subscriptions';
   subscriptions: CustomerSubscription[];
 }
 
+/** Page data for managing one subscription (template `account-subscription`), with its invoices and the last action's state. */
 export interface AccountSubscriptionPage extends AccountPageBase {
   template: 'account-subscription';
   subscription: CustomerSubscription;
@@ -104,12 +110,14 @@ export interface AccountSubscriptionPage extends AccountPageBase {
   accessNote?: string;
 }
 
+/** Page data for the address book page (template `account-addresses`). */
 export interface AccountAddressesPage extends AccountPageBase {
   template: 'account-addresses';
   addresses: SavedAddress[];
   errorMessage?: string;
 }
 
+/** Page data for the wishlist page (template `account-wishlist`). */
 export interface AccountWishlistPage extends AccountPageBase {
   template: 'account-wishlist';
   items: WishlistItem[];
@@ -117,4 +125,5 @@ export interface AccountWishlistPage extends AccountPageBase {
   products: Product[];
 }
 
+/** Any account page's data, discriminated by `template`; the shape a host passes to the account templates. */
 export type AccountPage = AccountDashboardPage | AccountOrdersPage | AccountOrderPage | AccountDownloadsPage | AccountSubscriptionsPage | AccountSubscriptionPage | AccountAddressesPage | AccountWishlistPage;

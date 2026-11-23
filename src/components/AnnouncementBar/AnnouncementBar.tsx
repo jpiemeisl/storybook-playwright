@@ -5,13 +5,16 @@ import { Icon } from '../Icon';
 import { Link } from '../Link';
 import styles from './AnnouncementBar.module.css';
 
+/** Background of an AnnouncementBar. `inverse` also switches its contents to inverse-surface colors. */
 export type AnnouncementTone = 'accent' | 'inverse' | 'subtle';
 
+/** Props for AnnouncementBar. Renders nothing once dismissed. */
 export interface AnnouncementBarProps {
   /** Plain text, ideally under 120 characters. */
   message: string;
   /** Optional link after the message. */
   link?: ActionLink;
+  /** Background. Default "accent". */
   tone?: AnnouncementTone;
   /** Show a dismiss button. Uncontrolled unless `dismissed` is passed. */
   dismissible?: boolean;

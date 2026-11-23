@@ -4,9 +4,13 @@ import { Icon } from '../Icon';
 import { Link } from '../Link';
 import styles from './Header.module.css';
 
+/** Props for NavDropdown. Controlled: the parent owns `open` (Header keeps at most one dropdown open). */
 export interface NavDropdownProps {
+  /** Top-level nav item. Its label is the button text; its own href is listed first as "<label> overview", followed by its children. */
   item: NavItem;
+  /** Whether the list of links is shown. */
   open: boolean;
+  /** Called with the requested open state on toggle, Escape, outside click, tabbing away or following a link. */
   onOpenChange: (open: boolean) => void;
 }
 

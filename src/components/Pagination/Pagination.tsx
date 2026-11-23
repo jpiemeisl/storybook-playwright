@@ -6,9 +6,11 @@ import styles from './Pagination.module.css';
 interface PaginationBaseProps {
   /** 1-based. */
   currentPage: number;
+  /** Total number of pages. With 1 or fewer, nothing is rendered. */
   totalPages: number;
   /** Pages shown either side of the current page before an ellipsis. Default 1. */
   siblingCount?: number;
+  /** Accessible name of the nav landmark. Default "Pagination". */
   'aria-label'?: string;
   className?: string;
 }
@@ -36,6 +38,13 @@ export function pageRange(current: number, total: number, siblings = 1): PageEnt
   return [1, 'gap-start', ...range(left, right), 'gap-end', total];
 }
 
+/**
+ * Page navigation for a paged list: previous/next plus numbered pages with ellipses, collapsing to
+ * "Page X of Y" with previous/next on narrow slots. Renders nothing when there is only one page.
+ *
+ * The current page gets aria-current="page"; previous/next at the ends stay focusable with
+ * aria-disabled instead of being removed.
+ */
 export function Pagination({
   currentPage,
   totalPages,

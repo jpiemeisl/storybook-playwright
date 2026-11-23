@@ -5,7 +5,9 @@ import { Heading } from '../Heading';
 import { Text } from '../Text';
 import styles from './EmptyState.module.css';
 
+/** Props for EmptyState. */
 export interface EmptyStateProps {
+  /** Heading, e.g. "No results". */
   title: string;
   /** Short explanation of why there is nothing here. */
   message?: ReactNode;
@@ -13,6 +15,7 @@ export interface EmptyStateProps {
   action?: ActionLink;
   /** Extra content under the message, e.g. a list of suggestions. */
   children?: ReactNode;
+  /** Heading level of the title. Default 2. */
   headingLevel?: 2 | 3;
 }
 

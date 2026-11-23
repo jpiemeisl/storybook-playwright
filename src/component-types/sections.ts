@@ -10,11 +10,13 @@ import type { Money } from '../content-types/money';
 /** The parts of an Image a content editor supplies. */
 export type ImageContent = Pick<ImageProps, 'src' | 'alt' | 'width' | 'height' | 'srcSet' | 'sizes'>;
 
+/** A resolved link (label and href) for buttons and links in components such as Hero, CtaBanner and PricingTable. */
 export interface ActionLink {
   label: string;
   href: string;
 }
 
+/** Content for the Hero component: headline, optional subhead, up to two actions and media. */
 export interface HeroContent {
   headline: string;
   subhead?: ReactNode;
@@ -23,6 +25,7 @@ export interface HeroContent {
   media?: ImageContent;
 }
 
+/** One item in a FeatureGrid: optional icon, title, description and link. */
 export interface FeatureItem {
   icon?: IconName;
   title: string;
@@ -30,6 +33,7 @@ export interface FeatureItem {
   href?: string;
 }
 
+/** Content for a Card: title, optional link, description, eyebrow and image. */
 export interface CardContent {
   title: string;
   href?: string;
@@ -39,11 +43,13 @@ export interface CardContent {
   image?: ImageContent;
 }
 
+/** An article author shown on an ArticleCard: name and optional avatar. */
 export interface Author {
   name: string;
   avatar?: ImageContent;
 }
 
+/** Content for an ArticleCard (also used by RelatedPosts): title, link, publish date and optional excerpt, category, reading time, author and image. */
 export interface ArticleCardContent {
   title: string;
   href: string;
@@ -56,6 +62,7 @@ export interface ArticleCardContent {
   image?: ImageContent;
 }
 
+/** Text content for MediaText (the media is passed separately): optional eyebrow, heading, body and actions. */
 export interface MediaTextContent {
   eyebrow?: string;
   heading: string;
@@ -63,6 +70,7 @@ export interface MediaTextContent {
   actions?: ActionLink[];
 }
 
+/** Content for a CtaBanner: heading, optional body, a required primary action and an optional secondary one. */
 export interface CtaContent {
   heading: string;
   body?: ReactNode;
@@ -70,6 +78,7 @@ export interface CtaContent {
   secondaryAction?: ActionLink;
 }
 
+/** One figure in Stats: a preformatted value, its label and an optional description. */
 export interface StatItem {
   /** Already formatted, e.g. "1,200+" or "98%". */
   value: string;
@@ -77,6 +86,7 @@ export interface StatItem {
   description?: string;
 }
 
+/** Content for a Testimonial: the quote, its author (name, role, company, avatar) and an optional company logo. */
 export interface TestimonialContent {
   quote: ReactNode;
   author: {
@@ -88,6 +98,7 @@ export interface TestimonialContent {
   companyLogo?: ImageContent;
 }
 
+/** One logo in a LogoStrip: company name (used as alt text), image and optional link. */
 export interface LogoItem {
   /** Company name; used as the image's alt text. */
   name: string;
@@ -96,19 +107,23 @@ export interface LogoItem {
   href?: string;
 }
 
+/** One question and answer in a FaqSection; `id` must be unique within the list. */
 export interface FaqItem {
   id: string;
   question: string;
   answer: ReactNode;
 }
 
+/** Billing period of a PricingTier price; PricingTable shows it after the price ("month", "year" or "one-time"). */
 export type BillingInterval = 'month' | 'year' | 'one-time';
 
+/** One line in a pricing tier feature list, marked as included or not. */
 export interface PricingFeature {
   label: string;
   included: boolean;
 }
 
+/** One plan in a PricingTable: name, price (or custom), billing interval, optional annual price, features, call to action and highlight. */
 export interface PricingTier {
   id: string;
   name: string;

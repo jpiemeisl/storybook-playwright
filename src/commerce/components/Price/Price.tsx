@@ -5,6 +5,7 @@ import { formatInterval, formatTrial } from '../../logic/pricing';
 import type { BillingInterval } from '../../types/product';
 import styles from './Price.module.css';
 
+/** Props for Price: the amount in minor units plus optional compare-at, recurring, trial, "from" and unit-price details. */
 export interface PriceProps {
   /** Current price (after any sale). */
   price: Money;

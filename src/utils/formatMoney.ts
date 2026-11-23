@@ -1,5 +1,6 @@
 import type { Money } from '../content-types/money';
 
+/** Options for formatMoney: locale and whether to drop a zero fraction. */
 export interface FormatMoneyOptions {
   /** BCP 47 locale. Default "en-US". */
   locale?: string;

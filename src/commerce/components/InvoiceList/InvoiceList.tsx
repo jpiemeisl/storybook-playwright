@@ -10,6 +10,7 @@ import type { Invoice } from '../../types/account';
 import { StatusBadge } from '../StatusBadge';
 import styles from './InvoiceList.module.css';
 
+/** Props for InvoiceList, the customer's invoices grouped by year. */
 export interface InvoiceListProps {
   invoices: Invoice[];
   /** Shows "Retry payment" on failed invoices (a callback only). */

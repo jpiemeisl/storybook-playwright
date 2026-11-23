@@ -1,6 +1,7 @@
 import type { AnchorHTMLAttributes } from 'react';
 import styles from './SkipLink.module.css';
 
+/** Props for SkipLink. Children default to "Skip to main content". */
 export interface SkipLinkProps extends Omit<AnchorHTMLAttributes<HTMLAnchorElement>, 'href'> {
   /** id of the element to skip to. The target should have tabIndex={-1} so it can take focus. */
   targetId?: string;

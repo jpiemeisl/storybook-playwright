@@ -5,7 +5,9 @@ import { Table } from '../../../components/Table';
 import type { TableData } from '../../types/product';
 import styles from './SizeGuide.module.css';
 
+/** Props for SizeGuide. */
 export interface SizeGuideProps {
+  /** The size chart. Without it the component renders nothing. */
   table?: TableData;
   /** Used in the dialog title: "Size guide: Organic cotton tee". */
   productTitle: string;

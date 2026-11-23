@@ -1,6 +1,7 @@
 import type { ReactNode } from 'react';
 import styles from './SidebarLayout.module.css';
 
+/** Props for SidebarLayout. */
 export interface SidebarLayoutProps {
   /** Main column, e.g. an article body. */
   children: ReactNode;

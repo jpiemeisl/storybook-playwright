@@ -2,7 +2,9 @@ import type { ActionLink } from '../../component-types/sections';
 import { ButtonLink } from '../Button';
 import styles from './StickyActionBar.module.css';
 
+/** Props for StickyActionBar. */
 export interface StickyActionBarProps {
+  /** The call to action, rendered as a large primary ButtonLink. */
   action: ActionLink;
   /** Optional short line beside the button. */
   message?: string;
