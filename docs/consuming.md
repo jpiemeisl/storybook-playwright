@@ -83,9 +83,9 @@ Never write the token itself into `.npmrc` or any committed file. npm stops with
 npm install @jpiemeisl/pattern-library react@19 react-dom@19
 ```
 
-Before 1.0.0, a minor version (0.2.0) may contain breaking changes, so take patches only. npm's default
-`^` range already does that for 0.x versions (`^0.2.0` allows 0.2.x, not 0.3.0); `~0.2.0` says the same
-thing explicitly. Read the CHANGELOG (shipped as `CHANGELOG.md` in the package) before taking a minor
+Before 1.0.0, a minor version (`0.N.0`) may contain breaking changes, so take patches only. npm's
+default `^` range already does that for 0.x versions (`^0.N.0` allows `0.N.x`, not the next minor);
+`~0.N.0` says the same thing explicitly. Read the CHANGELOG (shipped as `CHANGELOG.md` in the package) before taking a minor
 version. What counts as public
 API is in [versioning.md](https://github.com/jpiemeisl/storybook-playwright/blob/main/docs/versioning.md),
 and every exported name is listed in

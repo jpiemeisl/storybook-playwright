@@ -49,7 +49,7 @@ Step by step:
    version's tag already exists locally or on `origin` (or `origin` can't be reached to check), when
    the Unreleased section has no notes, and when CHANGELOG.md already has a section for the new version. Then it runs
    `npm version <bump> --no-git-tag-version --ignore-scripts` (package.json and package-lock.json), moves the Unreleased
-   notes under `## [0.2.0] - <today>`, updates the comparison links, rebuilds the library and
+   notes under `## [<version>] - <today>`, updates the comparison links, rebuilds the library and
    regenerates `docs/api-surface.md`. It commits nothing.
 4. **Review and open a pull request:** `git diff`, then commit, push and open it. CI runs as usual,
    including the `package` job, which installs the packed tarball into a fresh app.
@@ -108,7 +108,7 @@ Find the failing step in the run.
 - **Before "Publish to GitHub Packages"** (verification, build or checks): nothing was published. Fix
   the cause on `main` through a pull request. Then:
   - If the fix didn't change the package (for example a workflow fix), delete the tag
-    (`git push origin :refs/tags/v0.2.0` and `git tag -d v0.2.0`; only an admin can, because of the tag ruleset)
+    (`git push origin :refs/tags/v<version>` and `git tag -d v<version>`; only an admin can, because of the tag ruleset)
     and run `npm run release:tag` again on the new HEAD. Re-running the old run isn't enough: it would
     release the old commit.
   - If the fix changed the package, prepare the next patch instead. It is the safer default.
@@ -119,8 +119,8 @@ Find the failing step in the run.
 - **After publish** (smoke test, Storybook build or GitHub Release failed): the version is published.
   Never delete it and publish the same number again. Consumers or caches may already have it.
   - Re-run the failed jobs if the failure was transient.
-  - Or create the GitHub Release by hand: `gh release create v0.2.0 --verify-tag --notes-file <(node scripts/release.mjs notes 0.2.0)`.
-  - If the published package itself is broken, publish the next patch (0.2.1) with the fix and deprecate
+  - Or create the GitHub Release by hand: `gh release create v<version> --verify-tag --notes-file <(node scripts/release.mjs notes <version>)`.
+  - If the published package itself is broken, publish the next patch with the fix and deprecate
     the broken version (below).
 
 **Never reuse a version number, and never move or re-point a tag that was published.** Always fix
