@@ -11,6 +11,73 @@ Deprecated, Removed, Fixed and Security. `npm run release:prepare` moves them un
 
 ## [Unreleased]
 
+### Added
+
+- `CommerceContext.collectBillingAddress`: set it to `false` and the checkout template hides the billing
+  address fields and validates without them (for payment providers that collect billing details).
+- `CommerceContext.onWishlistToggle(product, saved)` and `ProductPage.inWishlist`: the product page's
+  wishlist button reports changes to the host app and can be controlled by it.
+- `CommerceContext.socialSlot`: sign-in provider buttons for the sign-in template.
+- `AccountLinks.account`: the account area's base path (default `/account`); account templates build their
+  navigation, order, subscription, breadcrumb and sign-in links under it.
+- `AccountAddressesPage.status` and `AddressBook` `status`: host apps report a change's outcome, so a
+  failed save keeps the dialog open with the error instead of being announced as saved.
+- `Order.downloads[].productId` (set by `createOrderFromCart`), `OrderItemsList` `downloadHref`, and an
+  `id` prop on `RelatedProducts` and `CrossSell`.
+- `SizeGuideTable`, the size guide table type for `Product.sizeGuide`.
+- `neutralizeUnsafeUrls` and `normalizePath`, US-spelled names for `neutraliseUnsafeUrls` and
+  `normalisePath` (same behavior).
+- A typed `clampLevel` overload for a non-empty tuple of levels.
+
+### Changed
+
+- `ctx.downloadHref` also links the download buttons on the order detail page and the order
+  confirmation (they were always `#` placeholders).
+- Controls whose callback is missing are hidden instead of doing nothing: "Add address", "Edit",
+  "Delete" and "Make default" in the address book, wishlist remove buttons, and the subscription "Manage"
+  actions. `AddressBook` `onSave`, `onDelete` and `onSetDefault` and `WishlistGrid` `onRemove` are now
+  optional.
+- US spelling and neutral copy in visible text: "License key", "Canceled" and "Canceling" status labels,
+  "Your order has been received and is being prepared.", "Order <number> has been received.", the
+  confirmation next steps, and "Card details are entered securely with the payment provider." Status
+  values such as `'cancelled'` are unchanged.
+- The free-shipping line on the product page is shown only when the product's currency matches
+  `FREE_SHIPPING_THRESHOLD`.
+- `validatePage` checks a page with no `template` as the `default` template, so it also warns when no
+  `hero` or `pageHeader` block provides the h1.
+- The `default` theme description says "grays".
+
+### Fixed
+
+- Tabs with `activation="manual"`: arrow keys move focus and the tab stop without selecting, and leaving
+  the tab list resets the tab stop to the selected tab.
+- Header: navigation items that arrive after the first render are measured, so a nav that doesn't fit
+  collapses to the menu button.
+- Carousel: the ends, the current dot and Previous/Next work in right-to-left layouts (the arrow icons
+  mirror there), and Previous from the end of the track moves back one slide.
+- SearchInput: a `ref` passed by the host app reaches the input without breaking the clear button's focus
+  return.
+- ContactForm: a required field containing only spaces shows the required error, and minimum and maximum
+  lengths are checked against the trimmed text that is submitted.
+- Gallery: a thumbnail button whose image has an empty `alt` is named "Open image n of total".
+- Lists no longer produce duplicate React keys when items repeat a heading, name, label, term, link or
+  social platform.
+- `removeFilter` removes option values that contain `=`.
+- The price facet range uses per-cycle prices for subscription products, matching the price filter.
+- `RelatedProducts` and `CrossSell` no longer share a fixed id, so two on one page don't duplicate it.
+- `BillingIntervalSelector`'s group is named by its visible "Billing" legend.
+- `SubscriptionCard` leaves out the date line when a cancellation at period end has no end date.
+- `addHeadingIds` and `extractHeadings` no longer mistake `id=` text inside another attribute's value
+  for the heading's id.
+- JSDoc: `PageContent.template` (resolved by the templates registry), `getProductAvailability` (the best
+  status any variant has) and the blog post share URL (use an absolute URL).
+
+### Deprecated
+
+- `neutraliseUnsafeUrls` (use `neutralizeUnsafeUrls`), `normalisePath` (use `normalizePath`), the
+  commerce `TableData` type (use `SizeGuideTable`; it clashed with the core `TableData`), and calling
+  `clampLevel` with a plain array (pass a non-empty tuple). Each is kept for at least one minor version.
+
 ## [0.1.1] - 2026-11-22
 
 Documentation and type documentation only: no change to components, styles, tokens or behavior.
