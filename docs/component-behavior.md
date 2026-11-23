@@ -7,8 +7,9 @@ component's JSDoc.
 
 ## Rules that apply everywhere
 
-- **Presentational.** Props in, callbacks out. Components don't fetch, store, set cookies, start timers
-  (except Toast's opt-in auto-dismiss) or read the clock; dates come in as `now`.
+- **Presentational.** Props in, callbacks out. Components don't fetch, store, set cookies or read the
+  clock; dates come in as `now`. The only timers are short UI ones: Toast's opt-in auto-dismiss, the
+  Textarea counter's one-second announcement delay and ShareLinks resetting its "copied" status.
 - **No third-party loading.** Nothing makes a network request on its own. VideoEmbed and MapEmbed render
   a local poster or placeholder and create their iframe only after the user activates them. VideoEmbed
   uses `youtube-nocookie.com`, and Vimeo with `dnt=1`. Share links are plain URLs with no SDKs or
@@ -22,8 +23,9 @@ component's JSDoc.
 ## Links and navigation
 
 - **LinkProvider** injects the element `Link` uses for internal links (for example Next.js `Link`);
-  wiring examples are in [consuming.md](consuming.md#links-wire-linkprovider-to-your-router). External
-  links (absolute http(s) URLs) always render a plain `<a>` with `rel="noopener noreferrer"`.
+  wiring examples are in [consuming.md](consuming.md#links-wire-linkprovider-to-your-router). Absolute
+  and protocol-relative URLs count as external by default (`external={false}` overrides it) and render a
+  plain `<a>` with `rel="noopener noreferrer"`.
 - **ButtonLink** is a Link (through LinkProvider) styled as a Button. Use it for navigation and Button
   for actions. `Link` has an `unstyled` option so `className` fully controls the look.
 - Navigation components take plain data from `src/content-types/navigation.ts` (`NavItem`,
@@ -85,7 +87,7 @@ native constraint attributes (`required`, `type`, `minLength`, `pattern`, ...) w
 - **Field** wires the label's `for` and `id`, `aria-describedby` (hint, then error), `aria-invalid`,
   `required` and `aria-required` onto its child control (or passes them to a render prop).
 - **Required** fields show a visual `*` hidden from screen readers, which announce the control's native
-  `required` state instead. Forms say "Required fields are marked with an asterisk".
+  `required` state instead. ContactForm states "Required fields are marked with an asterisk".
 - **Validation** (`src/utils/validation.ts`): forms use `noValidate` and validate on submit (then on
   blur), with messages built from each control's `ValidityState`. `minLength` and `maxLength` are checked
   in code too, because browsers report them only for typed values. ContactForm shows a focused error

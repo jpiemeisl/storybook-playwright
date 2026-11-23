@@ -51,13 +51,15 @@ export function Page({ page, status, onContact, isPreview }: { page: PageContent
 
 Behavior worth knowing:
 
-- **Headings** are assigned centrally: the first `hero` or `pageHeader` gets the `h1`, every other block
-  heading is `h2`, and items inside blocks are `h3`. Authors never choose levels. Pass `h1Provided` when
-  the page already has its `h1` (templates that render the title do).
+- **Headings** are assigned centrally. The first block that renders a heading gets the `h1` if it is a
+  `hero` or `pageHeader` (otherwise no block gets one, so start pages with one of them); every other block
+  heading is `h2`, and items inside blocks, and blocks nested in tabs, are `h3`. Authors never choose
+  levels. Pass `h1Provided` when the page already has its `h1` (templates that render the title do).
 - **Unknown or broken blocks** render nothing and are reported through `onError` (each block also has an
   error boundary). With `showErrors` they render a visible placeholder instead.
-- **Links** other than relative, `http(s):`, `mailto:` and `tel:` are refused: the text renders without a
-  link and an `unsafe-href` issue is reported. Internal links go through `Link`, so the host app's
+- **Links** other than relative, `http(s):`, `mailto:` and `tel:` are refused and reported as
+  `unsafe-href`: a plain link renders its text without the link, an action button with an unsafe target is
+  left out, and unsafe URLs inside rich text are removed. Internal links go through `Link`, so the host app's
   `LinkProvider` applies ([consuming.md](consuming.md#links-wire-linkprovider-to-your-router)).
 - **Forms** (`contactForm`, `newsletterSignup`) are interactive only when `context.forms` provides
   handlers; otherwise they render as an inert preview with a note.
