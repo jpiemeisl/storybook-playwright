@@ -8,8 +8,7 @@ by Playwright visual regression and accessibility tests that run against every s
 React and strict TypeScript. It is published privately to GitHub Packages as
 `@jpiemeisl/pattern-library`; see [Installing the package](#installing-the-package).
 
-**Status:** phases 1 to 16 are done; Phase 17 (publishing to GitHub Packages) is set up and its first
-release, 0.1.0, is next. Open items are in [docs/ROADMAP.md](docs/ROADMAP.md), and the history of
+**Status:** phases 1 to 17 are done. 0.1.0 is published to GitHub Packages (private). Open items are in [docs/ROADMAP.md](docs/ROADMAP.md), and the history of
 every gap in [docs/GAPS.md](docs/GAPS.md).
 
 ## Quickstart

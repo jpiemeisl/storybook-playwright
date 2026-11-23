@@ -8,9 +8,13 @@ projects read [consuming.md](consuming.md). What a version number promises is in
 - A version is published only by the release workflow (`.github/workflows/release.yml`), only from a
   `v<version>` tag on a commit that is on `main` and passed `ci-status`.
 - A published version's number and tag are never reused or moved.
-- The package stays **private**. The repository is public (so its branch and tag rulesets are enforced
-  on the Free plan), but package visibility is set separately. Never switch the package to public:
-  GitHub doesn't allow a public package to become private again.
+- The package stays **private**. The repository is public, so its branch and tag rulesets are enforced
+  on the Free plan, and **a package first published from this public repository comes out public**.
+  0.1.0 did (2026-11-22) and was switched to private by hand straight afterwards. Package visibility is
+  per package, so later versions stay private. A brand-new package (for example a future adapter
+  package published from this repository) must be set to private right after its first publish (see
+  "Package settings" below). Never switch a package to public on purpose: GitHub's docs warn that a
+  public package can't be made private again. (Switching 0.1.0 back did work, but don't rely on it.)
 
 ## Release flow
 
@@ -137,7 +141,10 @@ forward with the next patch.
 
 On GitHub: your profile → **Packages** → `pattern-library` → **Package settings**:
 
-- **Danger Zone → Change visibility**: must stay **Private**. Check it after the first publish.
+- **Danger Zone → Change visibility**: must say "This package is currently private". The first publish
+  from this public repository comes out **public**, so right after a new package's first release:
+  **Change visibility** → **Private** → type the package name → confirm. Then check that
+  `https://github.com/<owner>/<repo>/pkgs/npm/<package>` returns 404 in a signed-out browser.
 - **Manage Actions access**: `storybook-playwright` should already be listed, because its workflow
   published the package. Make sure its role is **Write** or **Admin**. That is what lets the release
   workflow publish later versions and run the smoke test.

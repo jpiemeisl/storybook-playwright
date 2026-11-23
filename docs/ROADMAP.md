@@ -1,6 +1,6 @@
 # Roadmap
 
-What is still open after Phase 14, with notes for whoever picks it up. Resolved items and the history
+What is still open after Phase 17, with notes for whoever picks it up. Resolved items and the history
 of each gap are in [GAPS.md](GAPS.md).
 
 ## Commerce
@@ -45,11 +45,17 @@ of each gap are in [GAPS.md](GAPS.md).
 - **Horizontal overflow at 375 px (found in Phase 15).** These stories render wider than the viewport, on
   every platform: Compositions/ContentPages Blog Post Layout, Templates/Blog index, Content model
   All Blocks and Templates/Composed pages Contact. Fix the components, then regenerate those baselines.
-- **Publishing to GitHub Packages (next).** `npm run build:lib` and `check:lib` verify the package shape,
-  but it is `private` and unpublished. Next: a scoped package name, semver with a changelog, and a release
-  workflow that publishes to GitHub Packages from CI.
-- **Real CMS adapters.** `src/adapters/example-cms` shows the mapping. Real adapters (headless CMSs)
-  should live in separate packages that depend on the core types.
+- **Publishing: done (Phase 17).** `@jpiemeisl/pattern-library` is published privately to GitHub Packages;
+  0.1.0 was released on 2026-11-22 from a `v0.1.0` tag by the release workflow, with a GitHub Release and a
+  Storybook zip. Release flow, dry runs and recovery: [publishing.md](publishing.md); consuming projects:
+  [consuming.md](consuming.md).
+- **Umbraco adapter (next).** Map Umbraco content (Delivery API JSON: document types, block lists, rich
+  text, media, links) to `PageContent` and the template page shapes, following
+  `src/adapters/example-cms`. Sanitize rich text with an allow-list in the adapter. Ship it as a separate
+  package that depends on the core types (`@jpiemeisl/pattern-library` as a peer), released the same way;
+  set the new package to private after its first publish.
+- **Other CMS adapters.** `src/adapters/example-cms` shows the mapping. Further adapters (headless CMSs)
+  should also live in separate packages that depend on the core types.
 - **Backend integration guide.** Document how a host wires the commerce templates to a real cart,
   checkout, payment provider (hosted fields only) and account API, replacing the demo providers.
 - **Forced colours by hand.** Chromium emulation doesn't repaint author colours; check the main flows in
