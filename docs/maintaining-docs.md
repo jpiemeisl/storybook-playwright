@@ -68,7 +68,7 @@ Each entry in `check-docs.stale.json` and `check-docs.allow.json` carries a `rea
 an entry. A stale entry with `"scope": "prose"` ignores inline code, so identifiers don't trip spelling
 rules.
 
-`npm run check:docs:external` checks every external link with a HEAD request (falling back to GET) and
+`npm run check:docs:externals` checks every external link with a HEAD request (falling back to GET) and
 prints the ones that fail. It never fails the build and isn't in CI, because remote sites go down and
 some refuse automated requests. Run it before a release.
 
