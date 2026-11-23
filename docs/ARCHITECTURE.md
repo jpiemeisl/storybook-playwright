@@ -13,7 +13,7 @@ flowchart TB
     templates["Templates and SiteLayout<br/>src/templates"]
     model["Content model<br/>src/content-types"]
     registry["Block registry and renderer<br/>src/registry"]
-    adapters["CMS adapters<br/>src/adapters"]
+    adapters["Example CMS adapter<br/>src/adapters (not exported)"]
   end
   subgraph commerce["Commerce (src/commerce)"]
     ctypes["Types and pure logic<br/>cart, checkout, account"]
