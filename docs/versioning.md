@@ -49,12 +49,12 @@ The API is still settling, so the rules shift one place to the right:
 
 | Change | Bump | Example |
 | --- | --- | --- |
-| Breaking change to public API | **minor**: 0.2.0 → 0.3.0 | Renaming a prop, removing an export, renaming a semantic token |
+| Breaking change to public API | **minor**: `0.N.0` → `0.N+1.0` | Renaming a prop, removing an export, renaming a semantic token |
 | New feature, backwards compatible | **minor** or patch | A new component, a new optional prop |
-| Fix, no API change | **patch**: 0.2.0 → 0.2.1 | A focus bug, a contrast fix within token intent |
+| Fix, no API change | **patch**: `0.N.0` → `0.N.1` | A focus bug, a contrast fix within token intent |
 
-Until 1.0.0, host apps should take patches only. For a 0.x version, npm's default range `^0.2.0` already
-allows only `0.2.x`, the same as `~0.2.0`; `~` states the intent. Every minor release's CHANGELOG entry
+Until 1.0.0, host apps should take patches only. For a 0.x version, npm's default range `^0.N.0` already
+allows only `0.N.x`, the same as `~0.N.0`; `~` states the intent. Every minor release's CHANGELOG entry
 lists its breaking changes under "Changed" or "Removed", with the migration.
 
 ### From 1.0.0
@@ -81,6 +81,6 @@ Something public is never removed without warning:
    in the CHANGELOG.
 2. **Announce it** under "Deprecated" in the CHANGELOG entry of the release that deprecates it, with the
    replacement and the planned removal version.
-3. **Keep it for at least one minor version.** Something deprecated in 0.2.0 can be removed in 0.3.0 at
-   the earliest. After 1.0.0, removal waits for the next major.
+3. **Keep it for at least one minor version.** Something deprecated in `0.N.0` can be removed in
+   `0.N+1.0` at the earliest. After 1.0.0, removal waits for the next major.
 4. **Remove it** in a later release, listed under "Removed" in its CHANGELOG entry.

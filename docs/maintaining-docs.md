@@ -44,6 +44,8 @@ Every file in `docs/` must be linked from the [docs index](README.md); `check:do
 - **Point at sources of truth** instead of copying values that change: the Node version is in `.nvmrc`,
   the Playwright image in `docker/image.json`, versions in package.json and CHANGELOG.md. Link to
   generated files instead of hand-written counts and lists.
+- **Example versions in prose are placeholders** (`0.N.0`, `<version>`), never real numbers: a real one
+  becomes "the current version" the day a release reaches it, and `check:docs` flags it.
 - **No secrets in examples:** placeholders and environment variables only (`NODE_AUTH_TOKEN`).
 - **consuming.md ships in the package:** links from it to anything outside the package use absolute
   `https://github.com/jpiemeisl/storybook-playwright/blob/main/...` URLs, because relative links break in
