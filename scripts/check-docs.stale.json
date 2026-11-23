@@ -20,7 +20,7 @@
   { "pattern": "\\bgreys?\\b|\\bgreyed\\b", "reason": "US English: gray", "scope": "prose" },
   { "pattern": "\\bmodell(ing|ed|er|ers)\\b", "reason": "US English: modeling, modeled, modeler", "scope": "prose" },
   { "pattern": "\\bartefacts?\\b", "reason": "US English: artifact", "scope": "prose" },
-  { "pattern": "\\bcancell(ed|ing)\\b", "reason": "US English: canceled, canceling (GitHub's own `cancelled` result stays in code font)", "scope": "prose" },
+  { "pattern": "\\bcancell(ed|ing)\\b", "reason": "US English: canceled, canceling (GitHub's own `cancelled` result stays in code font). commerce-account.md is exempt: its subscription action matrix quotes the UI's status text verbatim, and src/commerce/logic/accountDocs.test.ts compares it with the code", "scope": "prose", "ignore": ["docs/commerce-account.md"] },
   { "pattern": "\\b(analys|paralys)(e|es|ed|ing)\\b", "reason": "US English: -yze", "scope": "prose" },
   { "pattern": "\\bjudgement\\b|\\bwhilst\\b|\\bamongst\\b|\\bcheque\\b|\\benrol\\b|\\bpractise\\b|\\btravell(ed|ing)\\b|\\blabell(ed|ing)\\b", "reason": "US English", "scope": "prose" }
 ]
