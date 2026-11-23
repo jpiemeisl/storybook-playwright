@@ -45,6 +45,32 @@ flowchart TB
 - **Demo** holds Storybook-only providers (in-memory cart, checkout, account) and the clickable demo
   shop. It never ships.
 
+## Project layout
+
+```
+.storybook/           Storybook config: theme toolbar and decorator, a11y addon set to fail on violations
+src/tokens/           Design tokens and global CSS: primitives, semantic tokens (the default theme), themes/
+src/components/       Core components: one folder each (.tsx, .module.css, .stories.tsx, index.ts)
+src/templates/        SiteLayout, PageRenderer, the template registry and page templates
+src/content-types/    JSON-only content model (blocks, pages, site chrome) a CMS adapter produces
+src/component-types/  Component prop shapes that may contain ReactNode
+src/registry/         Block registry, BlockRenderer, validators and link safety
+src/adapters/         Example CMS adapter (reference only; not exported)
+src/commerce/         Commerce entry: types, pure logic, components, templates, fixtures
+src/fixtures/         Page, block and chrome fixtures (JSON) and local placeholder images
+src/stories/          Story-only helpers; not exported
+src/index.ts          Core entry point (src/commerce/index.ts is the commerce entry)
+demo/commerce/        Demo-only providers: in-memory cart, checkout and account
+demo/shop/            Demo shop: in-memory router, link and form interception, routes, journeys
+scripts/              Checks, doc generators, release scripts and the Docker runner
+tests/visual/         Visual spec, committed baselines (__screenshots__/), full-page capture CSS
+tests/a11y/           Accessibility specs (all stories, themes, demo shop)
+tests/support/        Shared Storybook helpers for the specs
+docker/               The pinned Playwright image (image.json) and font configuration
+docs/                 Documentation, indexed in docs/README.md
+.github/              CI and release workflows, Dependabot
+```
+
 ## Dependency rules
 
 ```mermaid
@@ -63,19 +89,24 @@ flowchart LR
 | Rule | Enforced by |
 | --- | --- |
 | Core never imports `src/commerce` or `demo/`; nothing under `src/` imports `demo/` | `npm run check:boundaries` |
-| Components use semantic tokens only: no primitives, raw or named colours | `npm run check:tokens` |
-| Every theme defines every colour token, nothing unknown | `npm run check:themes` |
+| Components use semantic tokens only: no primitives, raw or named colors | `npm run check:tokens` |
+| Every theme defines every color token, nothing unknown | `npm run check:themes` |
 | No component references a theme by name | `check:tokens` plus review (themes live only in `src/tokens/themes`) |
 | The core bundle has no commerce, demo or fixture code; commerce imports core as an external; no storage, cookies or fetch in either bundle | `npm run check:lib` |
 | Main stories keep their screenshot tags | `npm run check:story-tags` |
-| The component inventory matches the stories | `npm run docs:components -- --check` (in `check:all`) |
+| The component inventory matches the stories | `npm run docs:components -- --check` |
+| Only the build output and the consumer docs ship in the package; every `exports` target is included | `npm run check:package` |
+| docs/api-surface.md matches the built public API; every public export has a JSDoc summary | `npm run check:api`, `npm run check:jsdoc` |
+| Docs have no broken links, unknown scripts, missing paths, failing checked examples or stale phrases | `npm run check:docs` |
+
+All of these run in `npm run check:all`, and so in CI.
 
 ## Content flow: CMS to rendered page
 
 ```mermaid
 sequenceDiagram
   participant CMS
-  participant Adapter as Adapter (src/adapters)
+  participant Adapter as Adapter (host app)
   participant Validate as validatePage / checker
   participant Renderer as PageRenderer
   participant Template
@@ -91,8 +122,8 @@ sequenceDiagram
 ```
 
 - Unsafe URLs (`javascript:`, `data:`) are refused when links and images are rendered.
-- Rich text arrives as sanitized HTML (`Prose sanitizedHtml`: the adapter or backend must sanitize) or
-  as structured nodes rendered without `dangerouslySetInnerHTML`.
+- Rich text arrives as HTML that the adapter or backend has already sanitized; the library inserts it
+  as-is (see the warning in [cms-integration.md](cms-integration.md)).
 - Problems go to `ctx.onError`; a page never crashes because of one bad block.
 
 ## Checkout flow by cart kind

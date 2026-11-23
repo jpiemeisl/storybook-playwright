@@ -5,7 +5,7 @@
   { "pattern": "npm run test:vrt:update(?![\\w:-])", "reason": "baselines are written only in the container: tell readers to run npm run test:vrt:docker:update" },
   { "pattern": "phases? \\d+ (to|through|-) \\d+ (are|is) done|^Status:", "reason": "phase status lines go stale; the README status line and CHANGELOG.md say what is released" },
   { "pattern": "planning doc", "reason": "the docs in this repository are the plan; there is no separate planning doc" },
-  { "pattern": "\\bwe will\\b|\\bwill be added\\b|coming soon|\\bnot yet (implemented|built|available)\\b", "reason": "docs describe the current state; open work belongs in docs/ROADMAP.md" },
+  { "pattern": "\\bwe will\\b|\\bwill be added\\b|coming soon|\\bnot yet (implemented|built|available)\\b", "reason": "docs describe the current state; open work belongs in docs/ROADMAP.md", "scope": "prose" },
   { "pattern": "\\bno CI\\b|before CI (exists|is set up)|CI (is|isn't) not set up", "reason": "CI runs on every pull request (docs/ci.md)" },
   { "pattern": "^#{1,6} .*\\(Phase \\d+\\)", "reason": "headings describe the current state; which phase added something belongs in CHANGELOG.md or docs/GAPS.md" },
   { "pattern": "\\bsnapshots?\\b", "reason": "say \"baseline\" for an approved screenshot (docs/maintaining-docs.md)", "scope": "prose" },

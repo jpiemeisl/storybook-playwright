@@ -270,7 +270,8 @@ declare module 'react-router' {
 /** Typechecks the checked blocks; returns problems mapped back to Markdown lines. */
 export function typecheckExamples(blocks, root) {
   if (!blocks.length) return [];
-  const dir = join(root, 'node_modules', '.cache', 'check-docs');
+  const rel = `node_modules/.cache/check-docs-${process.pid}`;
+  const dir = join(root, rel);
   rmSync(dir, { recursive: true, force: true });
   mkdirSync(dir, { recursive: true });
   writeFileSync(
@@ -294,9 +295,11 @@ export function typecheckExamples(blocks, root) {
   });
   let output = '';
   try {
-    execSync('npx tsc -p node_modules/.cache/check-docs/tsconfig.json --pretty false', { cwd: root, encoding: 'utf8', stdio: ['ignore', 'pipe', 'pipe'] });
+    execSync(`npx tsc -p ${rel}/tsconfig.json --pretty false`, { cwd: root, encoding: 'utf8', stdio: ['ignore', 'pipe', 'pipe'] });
   } catch (error) {
     output = `${error.stdout ?? ''}${error.stderr ?? ''}`;
+  } finally {
+    rmSync(dir, { recursive: true, force: true });
   }
   const problems = [];
   for (const raw of output.split('\n')) {
