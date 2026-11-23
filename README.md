@@ -54,7 +54,7 @@ subscriptions. Switch the theme in the toolbar to restyle all of it.
 
 Before opening a pull request, follow the checklist in [docs/CONTRIBUTING.md](docs/CONTRIBUTING.md#pull-request-checklist).
 How the pieces fit together: [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md). Testing, Docker and
-baselines: [docs/testing.md](docs/testng.md). Everything else: the [docs index](docs/README.md).
+baselines: [docs/testing.md](docs/testing.md). Everything else: the [docs index](docs/README.md).
 
 ## Scripts
 
