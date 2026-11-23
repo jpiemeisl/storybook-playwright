@@ -642,7 +642,7 @@ export interface PageContent {
   id: string;
   /** URL slug without leading slash, e.g. "about" or "blog/five-day-close"; "" for the home page. */
   slug: string;
-  /** Page template name; interpreted by the host app (e.g. "landing", "article"). */
+  /** Page template name, e.g. "landing" or "blog-post"; PageRenderer resolves it through the templates registry (see TemplateName for the built-in names). Omitted means "default"; an unknown name renders with the default template and is reported as an issue. */
   template?: string;
   /** Metadata. */
   seo: SeoMeta;

@@ -1,13 +1,13 @@
 import { describe, expect, it } from 'vitest';
 import type { NavItem } from '../content-types/navigation';
-import { markCurrent, matchesPath, normalisePath } from './currentPath';
+import { markCurrent, matchesPath, normalisePath, normalizePath } from './currentPath';
 
-describe('normalisePath', () => {
+describe('normalizePath', () => {
   it('drops query, fragment and trailing slashes', () => {
-    expect(normalisePath('/blog/?page=2#top')).toBe('/blog');
-    expect(normalisePath('/')).toBe('/');
-    expect(normalisePath('')).toBe('/');
-    expect(normalisePath('about')).toBe('/about');
+    expect(normalizePath('/blog/?page=2#top')).toBe('/blog');
+    expect(normalizePath('/')).toBe('/');
+    expect(normalizePath('')).toBe('/');
+    expect(normalizePath('about')).toBe('/about');
   });
 });
 
@@ -65,5 +65,11 @@ describe('markCurrent', () => {
     expect(markCurrent(nav, undefined)).toBe(nav);
     markCurrent(nav, '/');
     expect(nav[1]?.current).toBe(true);
+  });
+});
+
+describe('normalisePath (deprecated)', () => {
+  it('behaves like normalizePath', () => {
+    for (const path of ['/blog/?page=2#top', '', 'about']) expect(normalisePath(path)).toBe(normalizePath(path));
   });
 });

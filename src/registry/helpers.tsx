@@ -9,7 +9,7 @@ import { iconNames, type IconName } from '../components/Icon';
 import { Prose } from '../components/Prose';
 import { Stack } from '../components/Stack';
 import { Text } from '../components/Text';
-import { isSafeHref, isSafeImageSrc, neutraliseUnsafeUrls } from './links';
+import { isSafeHref, isSafeImageSrc, neutralizeUnsafeUrls } from './links';
 import type { BlockContext } from './types';
 
 /** ImageRef → Image props. Unsafe sources are dropped (reported); missing alt becomes "". */
@@ -37,10 +37,10 @@ export function toActionLink(ref: LinkRef | ActionRef | undefined, ctx: BlockCon
   return href ? { label: ref.label, href } : undefined;
 }
 
-/** RichText → <Prose>. Unsafe link targets inside the HTML are neutralised (defence in depth). */
+/** RichText → <Prose>. Unsafe link targets inside the HTML are neutralized (defense in depth). */
 export function richTextNode(text: RichText | undefined, ctx: BlockContext, path: string, size: 'base' | 'large' = 'base'): ReactNode {
   if (!text || text.format !== 'html') return null;
-  const { html, removed } = neutraliseUnsafeUrls(text.html);
+  const { html, removed } = neutralizeUnsafeUrls(text.html);
   for (const value of removed) {
     ctx.report({ code: 'unsafe-href', message: `Rich text link/image target ${JSON.stringify(value)} was removed.`, path });
   }
@@ -55,11 +55,19 @@ export function toIconName(name: string | undefined): IconName | undefined {
 type HeadingLevel = 1 | 2 | 3 | 4;
 /**
  * Returns the entry of `allowed` closest to `level` (the earlier entry wins a tie). Block definitions
- * use it to fit the centrally assigned heading level to the levels a component accepts. `allowed`
- * must not be empty.
+ * use it to fit the centrally assigned heading level to the levels a component accepts. `allowed` is a
+ * non-empty tuple, e.g. `[2, 3] as const`.
  */
-export const clampLevel = <L extends HeadingLevel>(level: number, allowed: readonly L[]): L =>
-  allowed.reduce((best, candidate) => (Math.abs(candidate - level) < Math.abs(best - level) ? candidate : best), allowed[0]!);
+export function clampLevel<L extends HeadingLevel>(level: number, allowed: readonly [L, ...L[]]): L;
+/**
+ * Returns the entry of `allowed` closest to `level`.
+ * @deprecated Pass a non-empty tuple, e.g. `[2, 3] as const`: a plain array may be empty, and an empty
+ * one returns undefined.
+ */
+export function clampLevel<L extends HeadingLevel>(level: number, allowed: readonly L[]): L;
+export function clampLevel<L extends HeadingLevel>(level: number, allowed: readonly L[]): L {
+  return allowed.reduce((best, candidate) => (Math.abs(candidate - level) < Math.abs(best - level) ? candidate : best), allowed[0]!);
+}
 
 /**
  * Heading + optional intro above a component, for components that have no heading of their own.

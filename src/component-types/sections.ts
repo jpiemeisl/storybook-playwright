@@ -1,6 +1,7 @@
 /*
  * Plain data shapes for content sections. A CMS adapter maps its own data into these; components
- * never know where the data came from. Rich text is a ReactNode until the Prose component exists.
+ * never know where the data came from. Rich text fields are ReactNode: the registry renders a block's
+ * RichText through the Prose component and passes the result in.
  */
 import type { ReactNode } from 'react';
 import type { IconName } from '../components/Icon';

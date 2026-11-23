@@ -148,7 +148,7 @@ export interface BlogPostPage extends PageContent {
     heroImage?: ImageRef;
     /** Ancestors first; the last item is this post. */
     breadcrumbs?: BreadcrumbItem[];
-    /** Absolute URL for the share links. Share links are omitted without it. */
+    /** URL for the share links; falls back to `seo.canonicalUrl`, and share links are omitted without either. Use an absolute URL: any safe URL, relative ones included, is passed to the share targets as-is, and they need an absolute one. */
     shareUrl?: string;
     /** The body. richText blocks form the prose; their h2/h3 headings build the table of contents (3 or more). */
     body: Block[];

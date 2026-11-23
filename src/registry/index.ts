@@ -1,7 +1,7 @@
 export { BlockRenderer, PageSection, renderBlocks, type BlockRendererProps, type PageSectionProps } from './BlockRenderer';
 export { assignHeadingLevels } from './headingLevels';
 export { clampLevel, HeadedBlock, richTextNode, safeHref, toActionLink, toIconName, toImage } from './helpers';
-export { isSafeAnchorId, isSafeHref, isSafeImageSrc, neutraliseUnsafeUrls } from './links';
+export { isSafeAnchorId, isSafeHref, isSafeImageSrc, neutraliseUnsafeUrls, neutralizeUnsafeUrls } from './links';
 export { createRegistry, defaultRegistry, missingDefinitions, type Registry } from './registry';
 export {
   defineBlock,

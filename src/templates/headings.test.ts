@@ -43,6 +43,19 @@ describe('extractHeadings', () => {
 });
 
 describe('addHeadingIds', () => {
+  it("ignores id= text inside another attribute's value", () => {
+    expect(addHeadingIds(`<h2 title="a id=b">Plan</h2><h2 data-note='x id="y"' data-id="z">Notes</h2>`)).toBe(
+      `<h2 id="plan" title="a id=b">Plan</h2><h2 id="notes" data-note='x id="y"' data-id="z">Notes</h2>`,
+    );
+    expect(extractHeadings('<h2 title="a id=b">Plan</h2>')).toEqual([{ level: 2, text: 'Plan' }]);
+  });
+
+  it('still finds a real id after a quoted value that mentions id=', () => {
+    const html = '<h2 title="a id=b" id="real">Plan</h2><h3 class=x ID = bare>Bare</h3>';
+    expect(addHeadingIds(html)).toBe(html);
+    expect(extractHeadings(html).map((h) => h.id)).toEqual(['real', 'bare']);
+  });
+
   it('adds slug ids to headings that lack one', () => {
     expect(addHeadingIds('<h2>Day 1: Reconcile bank &amp; cards</h2>')).toBe('<h2 id="day-1-reconcile-bank-cards">Day 1: Reconcile bank &amp; cards</h2>');
   });

@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { isSafeAnchorId, isSafeHref, isSafeImageSrc, neutraliseUnsafeUrls } from './links';
+import { isSafeAnchorId, isSafeHref, isSafeImageSrc, neutraliseUnsafeUrls, neutralizeUnsafeUrls } from './links';
 
 describe('isSafeHref', () => {
   it.each(['/about', '#pricing', '?page=2', './a', '../b', 'contact', 'https://example.com', 'http://x.test', 'mailto:hi@x.test', 'tel:+15550100'])(
@@ -43,20 +43,27 @@ describe('isSafeAnchorId', () => {
   it.each(['2fast', 'has space', 'a"b', '<x>', '', 'a'.repeat(65)])('refuses %j', (id) => expect(isSafeAnchorId(id)).toBe(false));
 });
 
-describe('neutraliseUnsafeUrls', () => {
+describe('neutralizeUnsafeUrls', () => {
   it('removes unsafe href values and keeps safe ones', () => {
-    const { html, removed } = neutraliseUnsafeUrls('<p><a href="/ok">ok</a> <a href="javascript:alert(1)">bad</a></p>');
+    const { html, removed } = neutralizeUnsafeUrls('<p><a href="/ok">ok</a> <a href="javascript:alert(1)">bad</a></p>');
     expect(html).toBe('<p><a href="/ok">ok</a> <a>bad</a></p>');
     expect(removed).toEqual(['javascript:alert(1)']);
   });
 
   it('catches entity-encoded and single-quoted schemes', () => {
-    const { html, removed } = neutraliseUnsafeUrls("<a href='&#106;avascript:x'>a</a><a href=\"jav&#x61;script&colon;y\">b</a>");
+    const { html, removed } = neutralizeUnsafeUrls("<a href='&#106;avascript:x'>a</a><a href=\"jav&#x61;script&colon;y\">b</a>");
     expect(html).toBe('<a>a</a><a>b</a>');
     expect(removed).toHaveLength(2);
   });
 
   it('removes data: image sources', () => {
-    expect(neutraliseUnsafeUrls('<img src="data:image/png;base64,AAA" alt="">').html).toBe('<img alt="">');
+    expect(neutralizeUnsafeUrls('<img src="data:image/png;base64,AAA" alt="">').html).toBe('<img alt="">');
+  });
+});
+
+describe('neutraliseUnsafeUrls (deprecated)', () => {
+  it('behaves like neutralizeUnsafeUrls', () => {
+    const html = '<a href="javascript:x">a</a><a href="/ok">b</a>';
+    expect(neutraliseUnsafeUrls(html)).toEqual(neutralizeUnsafeUrls(html));
   });
 });

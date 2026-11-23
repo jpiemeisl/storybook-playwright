@@ -8,7 +8,7 @@ import type { PageContent } from '../../content-types/blocks';
 import type { LegalPage } from '../../content-types/templates';
 import { isObj } from '../../registry/checker';
 import { PageSection } from '../../registry/BlockRenderer';
-import { neutraliseUnsafeUrls } from '../../registry/links';
+import { neutralizeUnsafeUrls } from '../../registry/links';
 import { formatIsoDate } from '../../utils/formatDate';
 import { useGuarded } from '../guard';
 import { ListingHeader } from '../ListingHeader';
@@ -31,7 +31,7 @@ export function Legal({ page, chrome, ctx }: TemplateProps<LegalPage>) {
   const { legal } = page;
   const view = useGuarded(
     (g) => {
-      const { html, removed } = neutraliseUnsafeUrls(legal.body.html);
+      const { html, removed } = neutralizeUnsafeUrls(legal.body.html);
       removed.forEach((value) => g.issues.push({ code: 'unsafe-href', severity: 'error', message: `Link target ${JSON.stringify(value)} was removed.`, path: 'legal.body.html' }));
       return prepareHtml(html, reservedIds(page.blocks));
     },

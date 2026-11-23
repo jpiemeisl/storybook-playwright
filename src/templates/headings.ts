@@ -15,7 +15,11 @@ export interface ExtractedHeading {
 
 /** An h1-h6 element with its attributes and inner HTML. Non-greedy, so it stops at the first matching close tag. */
 const HEADING = /<h([1-6])(\s[^>]*)?>([\s\S]*?)<\/h\1\s*>/gi;
-const ID_ATTR = /\sid\s*=\s*(?:"([^"]*)"|'([^']*)'|([^\s"'>]+))/i;
+/**
+ * One attribute: its name and optional value. Read in order from the start of the attribute string, so a
+ * quoted value (title="a id=b") is consumed whole and its text is never taken for an attribute.
+ */
+const ATTRIBUTE = /\s*([^\s"'>/=]+)(?:\s*=\s*(?:"([^"]*)"|'([^']*)'|([^\s"'>]+)))?/y;
 
 const NAMED: Record<string, string> = { amp: '&', lt: '<', gt: '>', quot: '"', apos: "'", nbsp: ' ', ndash: '–', mdash: '—', hellip: '…', rsquo: '’', lsquo: '‘', rdquo: '”', ldquo: '“', copy: '©', reg: '®' };
 
@@ -36,11 +40,23 @@ function toText(innerHtml: string): string {
   return decodeEntities(stripped).replace(/\s+/g, ' ').trim();
 }
 
+/** The value of the first id attribute, if any. Malformed text between attributes is skipped a character at a time. */
 function idOf(attributes: string | undefined): string | undefined {
   if (!attributes) return undefined;
-  const match = ID_ATTR.exec(attributes);
-  const id = match ? (match[1] ?? match[2] ?? match[3] ?? '').trim() : '';
-  return id ? decodeEntities(id) : undefined;
+  let index = 0;
+  while (index < attributes.length) {
+    ATTRIBUTE.lastIndex = index;
+    const match = ATTRIBUTE.exec(attributes);
+    if (!match || match[0].length === 0) {
+      index++;
+      continue;
+    }
+    index = ATTRIBUTE.lastIndex;
+    if (match[1]?.toLowerCase() !== 'id') continue;
+    const id = (match[2] ?? match[3] ?? match[4] ?? '').trim();
+    return id ? decodeEntities(id) : undefined;
+  }
+  return undefined;
 }
 
 /** h2 and h3 headings in document order, for a table of contents. Empty headings are skipped. */

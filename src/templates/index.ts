@@ -15,7 +15,7 @@ export { ErrorPage } from './ErrorPage';
 export { ThankYou } from './ThankYou';
 export { Landing } from './Landing';
 export { chromeToProps, type ChromeOptions, type ChromeProps } from './chromeToProps';
-export { markCurrent, matchesPath, normalisePath, type PathMatch } from './currentPath';
+export { markCurrent, matchesPath, normalisePath, normalizePath, type PathMatch } from './currentPath';
 export { getDocumentMeta, type DocumentMeta } from './documentMeta';
 export { addHeadingIds, extractHeadings, slugify, type ExtractedHeading } from './headings';
 export { listPageHref, searchPageHref } from './pagination';

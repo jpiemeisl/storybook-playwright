@@ -50,8 +50,8 @@ export function Page({ page, chrome, path, isPreview, onIssue }: { page: Templat
   - an active category or filter id that is not in the list (a warning)
   - duplicate ids in listings, and duplicate block ids and anchor ids across template bodies and page blocks
   - unknown templates (`unknown-template`, a warning)
-  - composed and `landing` pages without a `hero` or `pageHeader` block (a warning; checked only
-    when the page names its template)
+  - composed and `landing` pages without a `hero` or `pageHeader` block (a warning). A page with no
+    `template` renders with `default`, so it gets this check too
 
 ### Adding or replacing a template
 
@@ -189,7 +189,8 @@ Story titles are given for each template; their baselines follow the story ids
 - **CMS notes:**
   - Model the body as rich text, with optional embedded blocks between paragraphs.
   - Headings in rich text should be h2 and h3; do not use h1 in the body.
-  - Share links appear only when `shareUrl` (or else `seo.canonicalUrl`) is set; use an absolute URL.
+  - Share links appear only when `shareUrl` (or else `seo.canonicalUrl`) is set. Use an absolute URL:
+    a relative one is passed to the share targets as-is, and they can't resolve it.
 
 ### `case-study-index`: CaseStudyIndex
 

@@ -36,7 +36,7 @@ const TEMPLATE_PAGES = [
   'search-no-query', 'search-results', 'search-one-result', 'search-no-results', 'search-long-titles',
   'error-404', 'error-500', 'error-503', 'thank-you',
 ];
-const CLEAN_EDGE_CASES = ['empty', 'single-block', 'all-blocks', 'forty-blocks', 'long-text'];
+const CLEAN_EDGE_CASES = ['single-block', 'all-blocks', 'forty-blocks', 'long-text'];
 
 /** Renders through the real registry (toProps + components) and returns every issue reported. */
 function renderIssues(list: readonly BlockLike[]): ValidationIssue[] {
@@ -50,7 +50,7 @@ const codes = (issues: ValidationIssue[]) => issues.map((issue) => `${issue.bloc
 describe('page fixtures', () => {
   it('include every required page and edge case', () => {
     expect(Object.keys(pages).sort()).toEqual(
-      [...TEMPLATE_PAGES, ...CLEAN_EDGE_CASES, 'unknown-block', 'broken-block', 'duplicate-ids', 'unsafe-link'].sort(),
+      [...TEMPLATE_PAGES, ...CLEAN_EDGE_CASES, 'empty', 'unknown-block', 'broken-block', 'duplicate-ids', 'unsafe-link'].sort(),
     );
   });
 
@@ -90,6 +90,11 @@ describe('edge-case fixtures report what they demonstrate', () => {
     const issues = [...validatePage(page(name)), ...renderIssues(page(name).blocks)];
     expect(codes(issues)).toEqual([...expected].sort());
   };
+
+  it('empty: only the warning that no hero or pageHeader provides the h1', () => {
+    expectIssues('empty', [':missing-field']);
+    expect(validatePage(page('empty'))[0]).toMatchObject({ path: 'blocks', severity: 'warning' });
+  });
 
   it('unknown-block: one unknown-type issue (from validation and again at render)', () => {
     expectIssues('unknown-block', ['mystery:unknown-type', 'mystery:unknown-type']);
