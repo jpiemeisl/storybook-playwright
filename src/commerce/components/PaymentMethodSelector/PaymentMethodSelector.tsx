@@ -6,6 +6,7 @@ import styles from './PaymentMethodSelector.module.css';
 
 type PaymentMethod = NonNullable<CheckoutValues['paymentMethod']>;
 
+/** Props for PaymentMethodSelector, the card or wallet choice in checkout. */
 export interface PaymentMethodSelectorProps {
   value?: PaymentMethod;
   onChange: (method: PaymentMethod) => void;
@@ -15,6 +16,7 @@ export interface PaymentMethodSelectorProps {
    * never touches this code. Use DemoPaymentFields in demos.
    */
   paymentFields?: ReactNode;
+  /** Validation message shown for the group, e.g. when no method is chosen. */
   error?: string;
   /** Field name. Default "paymentMethod". */
   name?: string;

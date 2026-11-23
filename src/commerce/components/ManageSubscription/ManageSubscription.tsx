@@ -22,6 +22,7 @@ export type SubscriptionActionRequest =
   | { type: 'reactivate' }
   | { type: 'update-payment' };
 
+/** Props for ManageSubscription, the subscription action buttons and their confirmation dialogs (pause, change plan, cancel and so on). */
 export interface ManageSubscriptionProps {
   subscription: CustomerSubscription;
   /** ISO 8601 "now", for pause resume dates. */
@@ -32,7 +33,9 @@ export interface ManageSubscriptionProps {
    * `idle` after its request, and stays open with `errorMessage` on `error`.
    */
   onAction: (request: SubscriptionActionRequest) => void;
+  /** State of the host's last action request; see `onAction`. */
   status?: 'idle' | 'submitting' | 'error';
+  /** Shown in the open dialog when `status` is `error`. */
   errorMessage?: string;
   /** What happens to digital access when cancelled, from your data (shown in the cancel dialog). */
   accessNote?: string;

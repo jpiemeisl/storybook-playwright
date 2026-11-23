@@ -53,6 +53,11 @@ export function toIconName(name: string | undefined): IconName | undefined {
 }
 
 type HeadingLevel = 1 | 2 | 3 | 4;
+/**
+ * Returns the entry of `allowed` closest to `level` (the earlier entry wins a tie). Block definitions
+ * use it to fit the centrally assigned heading level to the levels a component accepts. `allowed`
+ * must not be empty.
+ */
 export const clampLevel = <L extends HeadingLevel>(level: number, allowed: readonly L[]): L =>
   allowed.reduce((best, candidate) => (Math.abs(candidate - level) < Math.abs(best - level) ? candidate : best), allowed[0]!);
 

@@ -7,8 +7,11 @@ import { Radio, RadioGroup } from '../../../components/Radio';
 import type { Facets, FacetValue, FilterState, SortKey } from '../../logic/browse';
 import styles from './FilterPanel.module.css';
 
+/** Props for FilterPanel, the catalog filter form (works as a plain GET form or live). */
 export interface FilterPanelProps {
+  /** Filter groups, values and counts, usually from computeFacets. */
   facets: Facets;
+  /** The current filters; sets which controls are checked or filled. */
   value: FilterState;
   /** Live mode: every change calls this. Without it the panel is a plain GET form (submit with Apply). */
   onChange?: (state: FilterState) => void;

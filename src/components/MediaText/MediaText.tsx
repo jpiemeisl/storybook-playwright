@@ -5,6 +5,7 @@ import { Heading } from '../Heading';
 import { Text } from '../Text';
 import styles from './MediaText.module.css';
 
+/** Props for MediaText: the MediaTextContent fields plus the media node and layout options. */
 export interface MediaTextProps extends MediaTextContent {
   /** An <Image>, video, illustration or any other node. */
   media: ReactNode;
@@ -12,6 +13,7 @@ export interface MediaTextProps extends MediaTextContent {
   mediaPosition?: 'start' | 'end';
   /** `balanced` = 1:1, `wide` = media takes ~60%. */
   mediaWidth?: 'balanced' | 'wide';
+  /** Heading level of the heading. Default 2. */
   headingLevel?: 2 | 3 | 4;
 }
 

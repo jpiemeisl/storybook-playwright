@@ -19,9 +19,11 @@ interface GridOwnProps {
   columns?: number | ResponsiveColumns;
   /** CSS length, e.g. "16rem". Fits as many columns as possible with items at least this wide. */
   minItemWidth?: string;
+  /** Space between rows and columns, from the spacing tokens. */
   gap?: Gap;
 }
 
+/** Props for Grid. Polymorphic: `as` picks the element (default `div`). The grid is wrapped in a slot `div` that acts as the query container. */
 export type GridProps<E extends ElementType = 'div'> = PolymorphicProps<E, GridOwnProps>;
 
 type GridVars = CSSProperties & Partial<Record<'--grid-base' | '--grid-sm' | '--grid-md' | '--grid-lg' | '--grid-min', string | number>>;

@@ -4,6 +4,7 @@ import { Icon } from '../../../components/Icon';
 import { Link } from '../../../components/Link';
 import styles from './CartIcon.module.css';
 
+/** Props for CartIcon, the header cart link or button with an item count badge. */
 export interface CartIconProps {
   /** Items in the cart (sum of quantities). */
   count: number;

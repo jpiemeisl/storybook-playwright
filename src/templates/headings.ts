@@ -4,6 +4,7 @@
  * server. Both are total: malformed HTML never throws, it just yields fewer headings.
  */
 
+/** An h2 or h3 heading found by extractHeadings: its level, plain text and existing id. */
 export interface ExtractedHeading {
   level: 2 | 3;
   /** Text content: inner tags stripped, entities decoded, whitespace collapsed. */

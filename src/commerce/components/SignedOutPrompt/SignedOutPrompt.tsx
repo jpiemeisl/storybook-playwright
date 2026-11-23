@@ -2,9 +2,11 @@ import { ButtonLink } from '../../../components/Button';
 import { EmptyState } from '../../../components/EmptyState';
 import styles from './SignedOutPrompt.module.css';
 
+/** Props for SignedOutPrompt, shown on account pages when no customer is signed in. */
 export interface SignedOutPromptProps {
   /** e.g. "Sign in to view your orders". Default "Sign in to see your account". */
   title?: string;
+  /** Sign-in and create-account URLs. Default "/account/login" and "/account/register". */
   links?: { signIn?: string; register?: string };
   headingLevel?: 2 | 3;
 }

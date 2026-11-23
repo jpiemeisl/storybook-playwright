@@ -4,6 +4,7 @@ import { Heading } from '../Heading';
 import { Text } from '../Text';
 import styles from './PageHeader.module.css';
 
+/** Props for PageHeader: the PageHeaderContent fields (title, description) plus slots and layout options. */
 export interface PageHeaderProps extends PageHeaderContent {
   /** e.g. <Breadcrumbs />, shown above the title. */
   breadcrumbs?: ReactNode;
@@ -13,7 +14,9 @@ export interface PageHeaderProps extends PageHeaderContent {
   actions?: ReactNode;
   /** Image or illustration; used by the `with-media` variant. */
   media?: ReactNode;
+  /** Layout. `with-media` shows `media` beside the text; other variants ignore `media`. */
   variant?: 'default' | 'centered' | 'with-media';
+  /** Heading level of the title. Default 1. */
   headingLevel?: 1 | 2;
 }
 

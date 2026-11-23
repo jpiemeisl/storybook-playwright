@@ -1,12 +1,17 @@
 import { useId, useRef, useState, type KeyboardEvent, type ReactNode } from 'react';
 import styles from './Tabs.module.css';
 
+/** One tab: its label in the tab list and the panel content it shows. */
 export interface TabItem {
+  /** Unique within the Tabs. Used for `value`/`defaultValue`/`onChange` and to build element ids. */
   id: string;
+  /** Content of the tab button. */
   label: ReactNode;
+  /** Content of the tab panel. Panels of unselected tabs stay in the DOM but are hidden. */
   content: ReactNode;
 }
 
+/** Props for Tabs. The selected tab can be controlled (`value` + `onChange`) or uncontrolled (`defaultValue`). */
 export interface TabsProps {
   tabs: TabItem[];
   /** Accessible name of the tab list. */
@@ -15,9 +20,11 @@ export interface TabsProps {
   value?: string;
   /** Uncontrolled initial tab id. Default: the first tab. */
   defaultValue?: string;
+  /** Called with the id of the newly selected tab. */
   onChange?: (id: string) => void;
   /** `automatic`: arrow keys select. `manual`: arrow keys move focus; Enter/Space select. */
   activation?: 'automatic' | 'manual';
+  /** `vertical` puts the tab list beside the panels and uses ArrowUp/ArrowDown. Default "horizontal". */
   orientation?: 'horizontal' | 'vertical';
 }
 

@@ -202,20 +202,33 @@ const paths = {
   ),
 } satisfies Record<string, ReactNode>;
 
+/** Names of the social-network icons (simplified glyphs, not official brand marks), e.g. for ShareLinks or a footer. */
 export const socialIconNames = ['facebook', 'instagram', 'linkedin', 'x', 'youtube', 'github'] as const;
+/** Name of one of the social-network icons. */
 export type SocialIconName = (typeof socialIconNames)[number];
 
+/** Name of any icon in the library's set. */
 export type IconName = keyof typeof paths;
+/** Rendered size of an Icon. */
 export type IconSize = 'sm' | 'md' | 'lg' | 'xl';
+/** Every available icon name, in definition order. Useful for pickers and Storybook controls. */
 export const iconNames = Object.keys(paths) as IconName[];
 
+/** Props for Icon. Accepts SVG attributes except `children`. */
 export interface IconProps extends Omit<SVGAttributes<SVGSVGElement>, 'children'> {
+  /** Which icon to draw. */
   name: IconName;
+  /** Rendered size. */
   size?: IconSize;
   /** Accessible name. Omit for decorative icons, which are then hidden from assistive tech. */
   title?: string;
 }
 
+/**
+ * An inline 24x24 SVG icon from the library's set, drawn in `currentColor` so it matches the surrounding text.
+ *
+ * Decorative by default (aria-hidden). Pass `title` to give it role="img" and an accessible name.
+ */
 export function Icon({ name, size = 'md', title, className, ...rest }: IconProps) {
   const titleId = useId();
   const classes = [styles.icon, styles[size], className].filter(Boolean).join(' ');

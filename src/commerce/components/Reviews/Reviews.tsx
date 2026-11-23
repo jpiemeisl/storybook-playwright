@@ -70,6 +70,7 @@ function ReviewItem({ review }: { review: Review }) {
   );
 }
 
+/** Props for ReviewList, the sortable product review list. */
 export interface ReviewListProps {
   reviews: Review[];
   sort: ReviewSort;

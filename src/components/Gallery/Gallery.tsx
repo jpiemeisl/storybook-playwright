@@ -4,7 +4,9 @@ import { Image } from '../Image';
 import { Lightbox } from '../Lightbox';
 import styles from './Gallery.module.css';
 
+/** Props for Gallery. Renders nothing when `images` is empty. */
 export interface GalleryProps {
+  /** Images in display order. Each image's alt names its thumbnail button; an optional caption is shown under it. */
   images: GalleryImage[];
   /** `grid`: uniform square crops. `columns`: masonry-style CSS columns with natural aspect ratios. */
   layout?: 'grid' | 'columns';

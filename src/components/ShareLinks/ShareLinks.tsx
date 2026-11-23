@@ -4,10 +4,13 @@ import { Icon, type IconName } from '../Icon';
 import { Link } from '../Link';
 import styles from './ShareLinks.module.css';
 
+/** Props for ShareLinks. */
 export interface ShareLinksProps {
   /** The URL to share. Required: never read from window at render time. */
   url: string;
+  /** Page title, used as the post text on X and the email subject. */
   title?: string;
+  /** Networks to offer, in order. Default all four: x, linkedin, facebook, email. */
   networks?: ShareNetwork[];
   /** Accessible name of the group. */
   label?: string;

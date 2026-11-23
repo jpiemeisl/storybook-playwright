@@ -11,8 +11,10 @@ import type { SummaryRow } from './cartSummary';
 import { subtract } from './money';
 import { addInterval, formatCommerceDate, formatRecurring } from './pricing';
 
+/** Color tone for a status badge: neutral, info, success, warning or danger. */
 export type StatusTone = 'neutral' | 'info' | 'success' | 'warning' | 'danger';
 
+/** Display info for an order or subscription status: short label, badge tone and a one-sentence description. */
 export interface StatusInfo {
   label: string;
   tone: StatusTone;
@@ -41,6 +43,7 @@ export function getOrderStatusInfo(order: Pick<Order, 'status' | 'lines'>): Stat
   return orderStatus[order.status];
 }
 
+/** One milestone in an order timeline built by buildOrderTimeline. */
 export interface TimelineStep {
   id: string;
   label: string;
@@ -86,6 +89,7 @@ export function buildOrderTimeline(order: Pick<Order, 'status' | 'lines' | 'plac
   return steps;
 }
 
+/** Which optional sections an order detail page shows, as returned by getOrderSections. */
 export interface OrderSections {
   shipping: boolean;
   tracking: boolean;
@@ -139,6 +143,7 @@ export function getSubscriptionStatusInfo(sub: CustomerSubscription, now: string
   }
 }
 
+/** Customer actions on a subscription; getSubscriptionActions returns the ones that apply to its current state. */
 export type SubscriptionAction = 'pause' | 'resume' | 'change-plan' | 'cancel' | 'undo-cancel' | 'update-payment' | 'reactivate';
 
 /** Every action, in display order. */
@@ -169,6 +174,7 @@ export function getSubscriptionActions(sub: CustomerSubscription): SubscriptionA
   return SUBSCRIPTION_ACTIONS.filter((a) => rules[a]);
 }
 
+/** How many months a customer can pause a subscription for. */
 export type PauseMonths = 1 | 2 | 3;
 
 /** ISO date `months` months after `now`, clamping month ends (Jan 31 + 1 month → Feb 28, or 29 in leap years). */
@@ -179,6 +185,7 @@ export function computePauseResumeDate(now: string, months: PauseMonths): string
 /** Cycles per year as a fraction [numerator, denominator], for exact price comparisons. */
 const cyclesPerYear = (interval: BillingInterval): [number, number] => [interval.unit === 'week' ? 52 : interval.unit === 'month' ? 12 : 1, interval.count];
 
+/** Result of getPlanChangeSummary: whether a plan change is an upgrade, downgrade or switch, the per-cycle price difference and the confirmation text. */
 export interface PlanChangeSummary {
   direction: 'upgrade' | 'downgrade' | 'switch';
   /** Next plan's price per cycle minus the current one's (may be negative). */
@@ -193,6 +200,7 @@ export interface PlanChangeSummary {
   effectiveText: string;
 }
 
+/** Options for getPlanChangeSummary: when the change takes effect (the host's rule) and the next billing date for the text. */
 export interface PlanChangeOptions {
   /** Default `next-billing-date`. */
   effective?: PlanChangeEffective;
@@ -236,6 +244,7 @@ export function groupInvoicesByYear(invoices: readonly Invoice[]): { year: strin
   return [...groups].map(([year, list]) => ({ year, invoices: list }));
 }
 
+/** Which default an address book entry can hold: shipping or billing. */
 export type AddressKind = 'shipping' | 'billing';
 const flag = (kind: AddressKind): 'isDefaultShipping' | 'isDefaultBilling' => (kind === 'shipping' ? 'isDefaultShipping' : 'isDefaultBilling');
 
@@ -268,6 +277,7 @@ export function removeAddress(addresses: readonly SavedAddress[], id: string): S
 
 // ------------------------------------------------------------------------------------------ dashboard
 
+/** Everything the account area shows for one customer; used by the dashboard helpers. */
 export interface AccountData {
   orders: readonly Order[];
   subscriptions: readonly CustomerSubscription[];
@@ -281,6 +291,7 @@ export interface AccountData {
 export const isAccountEmpty = (data: AccountData) =>
   [data.orders, data.subscriptions, data.invoices, data.downloads, data.addresses, data.wishlist].every((list) => list.length === 0);
 
+/** A problem shown in the account dashboard's "Needs attention" list, with a link to where it can be fixed. */
 export interface AttentionItem {
   id: string;
   kind: 'subscription-past-due' | 'invoice-failed' | 'download-unavailable';
@@ -307,6 +318,7 @@ export function getAttentionItems(data: Pick<AccountData, 'subscriptions' | 'inv
 
 // ------------------------------------------------------------------------------------- order history
 
+/** Order history filter by status and/or year; used by filterOrders. */
 export interface OrderFilter {
   status?: OrderStatus;
   /** "2026". */

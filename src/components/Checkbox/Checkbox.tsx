@@ -3,12 +3,15 @@ import { FieldError } from '../HelpText';
 import { Icon } from '../Icon';
 import styles from './Checkbox.module.css';
 
+/** Props for Checkbox. Native `<input>` props (including `ref` and `required`) go to the input; `className` goes on the wrapper. */
 export interface CheckboxProps extends Omit<ComponentPropsWithRef<'input'>, 'type' | 'children'> {
+  /** Visible label. Shows a "*" when `required` is set. */
   label: ReactNode;
   /** Secondary text under the label, linked with aria-describedby. */
   description?: ReactNode;
   /** Mixed state ("some selected"). Set as a DOM property; announced as "mixed". */
   indeterminate?: boolean;
+  /** Error text under the label. Sets aria-invalid and is linked with aria-describedby. */
   error?: ReactNode;
 }
 

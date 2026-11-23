@@ -3,6 +3,7 @@ import { Icon } from '../../../components/Icon';
 import { Link } from '../../../components/Link';
 import styles from './CheckoutStepper.module.css';
 
+/** One step shown in CheckoutStepper, with its label and progress state. */
 export interface CheckoutStepperStep {
   id: string;
   label: string;
@@ -12,6 +13,7 @@ export interface CheckoutStepperStep {
   href?: string;
 }
 
+/** Props for CheckoutStepper, the checkout progress list. */
 export interface CheckoutStepperProps {
   /** In order. Exactly one is `current`. The template only marks steps complete when they validate. */
   steps: CheckoutStepperStep[];

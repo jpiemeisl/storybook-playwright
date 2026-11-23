@@ -3,6 +3,7 @@ import { Image } from '../Image';
 import { Link } from '../Link';
 import styles from './SiteLogo.module.css';
 
+/** Props for SiteLogo. */
 export interface SiteLogoProps {
   /** Wordmark text; also the link's accessible name. */
   text: string;

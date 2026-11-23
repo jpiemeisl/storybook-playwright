@@ -8,13 +8,16 @@ import type { BillingInterval, Product } from '../types/product';
 import { multiply } from './money';
 import { formatCommerceDate, formatInterval, formatRecurring, formatTrial, subscriptionUnitPrice } from './pricing';
 
+/** Kinds of display note getCartLineNotes can attach to a cart line. */
 export type CartLineNoteKind = 'renewal' | 'trial' | 'download' | 'ships-separately' | 'savings';
 
+/** One short display note under a cart line, such as "Renews every month" or "Instant download". */
 export interface CartLineNote {
   kind: CartLineNoteKind;
   text: string;
 }
 
+/** Optional catalog context for getCartLineNotes; notes that need missing context are skipped. */
 export interface CartLineNoteContext {
   /** The line's product, for digital delivery and stock dates. Notes that need it are skipped without it. */
   product?: Product;
@@ -61,8 +64,10 @@ export function getCartNotes(cart: Cart, products: readonly Product[] = []): Rec
   return Object.fromEntries(cart.lines.map((line) => [line.id, getCartLineNotes(line, { product: byId.get(line.productId), otherShippableLines: shippable > 1 })]));
 }
 
+/** Kinds of stock problem getCartIssues reports for a cart line. */
 export type CartIssueKind = 'out-of-stock' | 'quantity-above-stock' | 'unavailable';
 
+/** A stock problem on one cart line, with a customer-facing message; returned by getCartIssues. */
 export interface CartIssue {
   lineId: string;
   kind: CartIssueKind;
@@ -102,6 +107,7 @@ export function getCartIssues(cart: Cart, products: readonly Product[]): CartIss
   return issues;
 }
 
+/** True when any issue blocks checkout. */
 export const hasBlockingIssues = (issues: readonly CartIssue[]) => issues.some((i) => i.blocking);
 
 /** "$9.00 every month starting Dec 5, 2026", for "Then billed" lists. */

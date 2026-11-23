@@ -4,6 +4,7 @@
  */
 import { isSafeHref, isSafeImageSrc, neutraliseUnsafeUrls } from './links';
 
+/** Machine-readable category of a ValidationIssue, shared by the block, page and template validators and the renderer. */
 export type IssueCode =
   | 'unknown-type'
   | 'missing-field'
@@ -21,6 +22,10 @@ export type IssueCode =
   | 'invalid-date'
   | 'invalid-pagination';
 
+/**
+ * A problem found in content by the validators or while rendering, with its severity, a readable
+ * message, the path inside the block or page, and the block it belongs to (when there is one).
+ */
 export interface ValidationIssue {
   code: IssueCode;
   severity: 'error' | 'warning';
@@ -35,10 +40,14 @@ export interface ValidationIssue {
 /** Issues that make a block impossible to render; the renderer skips (or placeholders) such blocks. */
 export const FATAL_CODES: ReadonlySet<IssueCode> = new Set(['unknown-type', 'missing-field', 'invalid-field', 'too-few', 'nested-tabs', 'render-error']);
 
+/** True when the issue code is in FATAL_CODES, meaning the block cannot render and the renderer skips it (or shows a placeholder). */
 export const isFatal = (issue: ValidationIssue) => FATAL_CODES.has(issue.code);
 
+/** A plain JSON-style object with unknown values, as the validators see content before checking it. */
 export type Obj = Record<string, unknown>;
+/** Type guard: true for a non-null object that is not an array. */
 export const isObj = (value: unknown): value is Obj => typeof value === 'object' && value !== null && !Array.isArray(value);
+/** Type guard: true for a string that is not empty or whitespace only. */
 export const isNonEmptyString = (value: unknown): value is string => typeof value === 'string' && value.trim() !== '';
 
 /** Small helper bound to one object and path, collecting issues. */

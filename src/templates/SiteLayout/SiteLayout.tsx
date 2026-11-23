@@ -14,8 +14,10 @@ import type { FormHandlers } from '../../registry/types';
 import { chromeToProps, type ChromeProps } from '../chromeToProps';
 import styles from './SiteLayout.module.css';
 
+/** How much chrome SiteLayout shows: `default` (full header and footer), `minimal` (logo-only header, legal-only footer) or `bare` (none). */
 export type SiteLayoutVariant = 'default' | 'minimal' | 'bare';
 
+/** Props for SiteLayout: the site chrome content, the layout variant, the current path, the page content and optional handlers. */
 export interface SiteLayoutProps {
   /** Header, footer and announcement content. */
   chrome: SiteChrome;

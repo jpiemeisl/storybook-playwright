@@ -13,6 +13,7 @@ import type { AuthErrors } from '../../logic/authForms';
 import type { PasswordCheck } from '../../logic/password';
 import styles from './AuthForm.module.css';
 
+/** Submission state of an auth form, set by the host: `error` shows the server error, `success` replaces the fields with the success content. */
 export type AuthStatus = 'idle' | 'submitting' | 'error' | 'success';
 
 /** Props every auth form shares. */
@@ -120,7 +121,9 @@ export function AuthFormShell({ action, hiddenFields, fieldIds, errors, enhanced
   );
 }
 
+/** Props for PasswordField, the password input with a show/hide toggle used by the auth forms. */
 export interface PasswordFieldProps {
+  /** Id of the input; also the target of error summary links. */
   id: string;
   name: string;
   label: string;

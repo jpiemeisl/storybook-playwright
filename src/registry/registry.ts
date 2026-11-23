@@ -17,6 +17,7 @@ import {
 } from './definitions/sections';
 import type { RegisteredBlock } from './types';
 
+/** A lookup of block definitions by `type`, as created by createRegistry() and passed to BlockRenderer. */
 export interface Registry {
   get: (type: string) => RegisteredBlock | undefined;
   /** Every registered type, built-in and custom. */
@@ -68,6 +69,7 @@ export function createRegistry(overrides: RegisteredBlock[] = []): Registry {
   };
 }
 
+/** The registry with only the built-in block definitions; BlockRenderer uses it when no `registry` is passed. */
 export const defaultRegistry: Registry = createRegistry();
 
 /** Runtime check (also run by unit tests): every built-in block type has a definition. */

@@ -9,6 +9,7 @@ import { DownloadList, type DownloadItem } from '../DownloadList';
 import { LicenseKey } from '../LicenseKey';
 import styles from './DownloadsLibrary.module.css';
 
+/** Props for DownloadsLibrary, the searchable list of every file the customer has bought. */
 export interface DownloadsLibraryProps {
   items: LibraryItem[];
   /** Group by product (default) or by order. */

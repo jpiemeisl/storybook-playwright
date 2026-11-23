@@ -3,7 +3,9 @@ import { formatIsoDate } from '../../../utils/formatDate';
 import type { StockInfo } from '../../types/product';
 import styles from './StockBadge.module.css';
 
+/** Props for StockBadge. */
 export interface StockBadgeProps {
+  /** Stock status, plus the quantity (low stock) and availability date (backorder, pre-order) when known. */
   stock: StockInfo;
   size?: 'sm' | 'md';
 }

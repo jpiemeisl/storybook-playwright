@@ -2,6 +2,7 @@ import { Icon, type IconName } from '../../../components/Icon';
 import { Link } from '../../../components/Link';
 import styles from './Rating.module.css';
 
+/** Props for Rating, the display-only star rating with an optional review count and link. */
 export interface RatingProps {
   /** Average rating 0-5; displayed to the nearest half star. */
   value: number;

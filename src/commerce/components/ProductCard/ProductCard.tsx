@@ -14,6 +14,7 @@ import { SaleBadge } from '../SaleBadge';
 import { StockBadge } from '../StockBadge';
 import styles from './ProductCard.module.css';
 
+/** Props for ProductCard, the product listing card. */
 export interface ProductCardProps {
   product: Product;
   /** Product page URL. */
@@ -22,6 +23,7 @@ export interface ProductCardProps {
   headingLevel?: 2 | 3 | 4;
   /** CSS aspect ratio of the image area. Default "4 / 5". */
   imageAspectRatio?: string;
+  /** `horizontal` puts the image beside the text once the card is at least 30rem wide; narrower cards stay stacked. Default `vertical`. */
   orientation?: 'vertical' | 'horizontal';
   /**
    * `add`: a separate "Add to cart" button for single-variant, purchasable physical or digital products
@@ -29,6 +31,7 @@ export interface ProductCardProps {
    * several variants or purchase options; the title link opens the product.
    */
   quickAction?: 'add' | 'choose-options';
+  /** Called with the product and its single variant when the quick "Add to cart" button is pressed. The button shows only with `quickAction="add"` and this handler. */
   onQuickAdd?: (product: Product, variant: Variant) => void;
   /** Show "No reviews yet" instead of hiding the rating. */
   showEmptyRating?: boolean;

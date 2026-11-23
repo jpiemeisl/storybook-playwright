@@ -9,14 +9,18 @@ import { Icon } from '../Icon';
 import { Text } from '../Text';
 import styles from './PricingTable.module.css';
 
+/** Billing period selected in the PricingTable toggle. `year` shows each tier's `annualPrice` where it has one. */
 export type BillingPeriod = 'month' | 'year';
 
+/** Props for PricingTable. The billing period can be controlled (`billingPeriod`) or uncontrolled (`defaultBillingPeriod`). */
 export interface PricingTableProps {
+  /** Tiers to show, one card each. A tier without a price shows "Custom"; `highlighted` tiers get a "Recommended" badge unless they set their own. */
   tiers: PricingTier[];
   /** Controlled billing period. Omit to let the table manage it. */
   billingPeriod?: BillingPeriod;
   /** Initial period when uncontrolled. Default "month". */
   defaultBillingPeriod?: BillingPeriod;
+  /** Called when the user picks a period, in both controlled and uncontrolled mode. */
   onBillingPeriodChange?: (period: BillingPeriod) => void;
   /** Shown next to the annual option, e.g. "Save 20%". Not computed. */
   annualSavingsLabel?: string;

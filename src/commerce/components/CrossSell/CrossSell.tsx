@@ -1,9 +1,12 @@
 import type { Product, Variant } from '../../types/product';
 import { RelatedProducts } from '../RelatedProducts';
 
+/** Props for CrossSell, the "Complete your order" product carousel on the cart page. */
 export interface CrossSellProps {
   products: Product[];
+  /** Returns the product page URL for each product. */
   hrefFor: (product: Product) => string;
+  /** Enables each card's quick "Add to cart" button and is called with the product and its single variant. */
   onQuickAdd?: (product: Product, variant: Variant) => void;
 }
 

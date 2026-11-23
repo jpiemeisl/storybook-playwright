@@ -9,6 +9,7 @@ import { recurringText } from './cartLines';
 import { subtract } from './money';
 import { formatCommerceDate } from './pricing';
 
+/** One row of the cart or order summary, as returned by summaryRows; `key` identifies the row type. Money in minor units. */
 export type SummaryRow =
   | { key: 'subtotal'; label: string; amount: Money }
   /** One per applied promo. `amount` is the positive discount; show it as a deduction. */
@@ -20,6 +21,7 @@ export type SummaryRow =
   | { key: 'tax'; label: string; amount: Money; note: string }
   | { key: 'dueToday'; label: string; amount: Money };
 
+/** Options for summaryRows. */
 export interface SummaryOptions {
   /** False before the customer has given an address: shipping is labelled as an estimate, "Calculated at checkout from your address". Default true. */
   shippingKnown?: boolean;
@@ -49,6 +51,7 @@ export function summaryRows(totals: CartTotals, options: SummaryOptions = {}): S
   return rows;
 }
 
+/** One line of the "Then billed" list under the summary: a future recurring charge and an optional trial note. */
 export interface ThenBilledItem {
   /** "$9.00 every month starting Apr 21, 2026". */
   text: string;

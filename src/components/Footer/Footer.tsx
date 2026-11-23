@@ -8,15 +8,20 @@ import { Link } from '../Link';
 import { Section } from '../Section';
 import styles from './Footer.module.css';
 
+/** One footer link column: rendered as a `<nav>` labeled by its heading. */
 export interface FooterColumn {
+  /** Column heading (an h2), also the accessible name of the column's nav landmark. */
   heading: string;
   items: NavItem[];
 }
 
+/** Props for Footer. Every prop is optional. */
 export interface FooterProps {
+  /** Logo slot shown at the top. */
   logo?: ReactNode;
   /** Link columns. One column on narrow slots, two on medium, up to four on wide. */
   columns?: FooterColumn[];
+  /** Social profile links, rendered as icon-only links named by each link's label. */
   social?: SocialLink[];
   /** Copyright line, policy links and similar. */
   legal?: ReactNode;

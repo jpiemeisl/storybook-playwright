@@ -2,11 +2,15 @@ import { useCallback, useMemo, useReducer, useRef } from 'react';
 import type { ToastData } from './Toast';
 import { initialToastState, toastReducer } from './toastReducer';
 
+/** Return value of useToasts: the current toasts plus stable functions to change them. */
 export interface UseToasts {
+  /** Current toasts, oldest first. Pass to ToastRegion's `toasts`. */
   toasts: ToastData[];
   /** Shows a toast and returns its id ("toast-1", "toast-2", ... unless you pass one). */
   show: (toast: Omit<ToastData, 'id'> & { id?: string }) => string;
+  /** Removes the toast with this id. Pass to ToastRegion's `onDismiss`. */
   dismiss: (id: string) => void;
+  /** Removes every toast. */
   clear: () => void;
 }
 

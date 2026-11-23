@@ -5,6 +5,7 @@ import type { FieldSize } from '../Input';
 import field from '../fieldBox.module.css';
 import styles from './SearchInput.module.css';
 
+/** Props for SearchInput. Other native `<input>` props go to the input; `className` goes on the form. */
 export interface SearchInputProps
   extends Omit<ComponentPropsWithRef<'input'>, 'type' | 'size' | 'value' | 'defaultValue' | 'onChange'> {
   /**
@@ -21,11 +22,13 @@ export interface SearchInputProps
   value?: string;
   /** Uncontrolled initial query. */
   defaultValue?: string;
+  /** Called with the raw (untrimmed) query on every change, including the clear button. */
   onChange?: (query: string) => void;
   /** Accessible label for the input and the search landmark. Visually hidden. Default "Search". */
   label?: string;
   /** Show a visible submit button (Enter always submits). */
   showSubmitButton?: boolean;
+  /** Visual size of the box and the submit button. Default "md". */
   size?: FieldSize;
 }
 

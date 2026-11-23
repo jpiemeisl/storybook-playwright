@@ -7,6 +7,7 @@ import { validateForgotPassword, type ForgotPasswordValues } from '../../logic/a
 import { AuthFormShell, type AuthFormBaseProps } from '../AuthForm';
 import styles from '../AuthForm/AuthForm.module.css';
 
+/** Props for ForgotPasswordForm, the request-a-reset-link form. */
 export interface ForgotPasswordFormProps extends AuthFormBaseProps<ForgotPasswordValues> {
   /** The email the request was made for, for the neutral success message. */
   email?: string;

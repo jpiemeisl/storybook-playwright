@@ -48,6 +48,7 @@ export interface BlockLike {
   padding?: 'none' | 'sm' | 'md' | 'lg';
 }
 
+/** How the renderer wraps a block: `contained` in Container xl, `narrow` in Container md, `full-bleed` with no Container. */
 export type BlockLayout = 'contained' | 'narrow' | 'full-bleed';
 
 /** A typed block definition: content type T, component props P. */

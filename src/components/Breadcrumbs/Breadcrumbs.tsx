@@ -2,9 +2,11 @@ import type { BreadcrumbItem } from '../../content-types/navigation';
 import { Link } from '../Link';
 import styles from './Breadcrumbs.module.css';
 
+/** Props for Breadcrumbs. Renders nothing when `items` is empty. */
 export interface BreadcrumbsProps {
   /** Ancestors first; the last item is the current page. */
   items: BreadcrumbItem[];
+  /** Accessible name of the nav landmark. Default "Breadcrumb". */
   'aria-label'?: string;
   className?: string;
 }

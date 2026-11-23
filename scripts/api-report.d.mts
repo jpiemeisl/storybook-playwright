@@ -1,4 +1,5 @@
-export type ExportInfo = { kind: 'component' | 'function' | 'class' | 'constant' | 'namespace' | 'type'; typeOnly: boolean };
+/** origin: the declaration file that declares it; name: its name there (before any `as` rename). */
+export type ExportInfo = { kind: 'component' | 'function' | 'class' | 'constant' | 'namespace' | 'type'; typeOnly: boolean; origin?: string; name?: string };
 export function statements(text: string): string[];
 export function classifyFunction(name: string, text: string): 'component' | 'function';
 export function classifyConst(name: string, text: string): 'component' | 'function' | 'constant';

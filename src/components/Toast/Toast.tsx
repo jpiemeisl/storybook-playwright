@@ -4,6 +4,7 @@ import { Icon, type IconName } from '../Icon';
 import { Link } from '../Link';
 import styles from './Toast.module.css';
 
+/** Kind of Toast. Sets the color, the icon and the visually hidden prefix ("Information", "Success", "Warning", "Error"). */
 export type ToastTone = 'info' | 'success' | 'warning' | 'danger';
 
 /** A toast's content. Plain data, so it can live in a reducer. */
@@ -27,7 +28,9 @@ export interface ToastData {
   duration?: number;
 }
 
+/** Props for Toast: the toast's data plus the dismiss callback. `urgent` has no effect here; ToastRegion uses it to pick the live region. */
 export interface ToastProps extends ToastData {
+  /** Called with the toast's id from the dismiss button or when `duration` runs out. Remove the toast from state here. */
   onDismiss: (id: string) => void;
 }
 
@@ -110,9 +113,11 @@ export function Toast({ id, tone = 'info', title, message, action, duration, onD
   );
 }
 
+/** Props for ToastRegion. Controlled: the host app (or useToasts) owns the list of toasts. */
 export interface ToastRegionProps {
   /** Oldest first. The newest toast is shown last (nearest the screen edge). */
   toasts: ToastData[];
+  /** Called with a toast's id when it is dismissed or times out. */
   onDismiss: (id: string) => void;
   /** Toasts shown before older ones collapse behind "+N more". Default 3. Urgent toasts always show. */
   maxVisible?: number;

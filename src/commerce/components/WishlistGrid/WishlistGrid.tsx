@@ -6,11 +6,14 @@ import { ProductGrid } from '../ProductGrid';
 import { WishlistButton } from '../WishlistButton';
 import styles from './WishlistGrid.module.css';
 
+/** Props for WishlistGrid, the saved products on the account wishlist page. */
 export interface WishlistGridProps {
   items: WishlistItem[];
   /** Products to look the items up in (unknown ids are skipped). */
   products: readonly Product[];
+  /** Returns the product page URL for each product. */
   hrefFor: (product: Product) => string;
+  /** Called with the product id when the customer removes it from the wishlist. */
   onRemove: (productId: string) => void;
   /** Quick add, where the product card allows it (single purchasable variant). */
   onQuickAdd?: (product: Product, variant: Variant) => void;

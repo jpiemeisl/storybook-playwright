@@ -6,9 +6,11 @@ import { Image } from '../Image';
 import { Link } from '../Link';
 import styles from './TeamMember.module.css';
 
+/** Props for TeamMember: the TeamMemberContent fields plus presentation options. */
 export interface TeamMemberProps extends TeamMemberContent {
   /** `card`: bordered with a large photo. `minimal`: small round photo beside the text. */
   variant?: 'card' | 'minimal';
+  /** Heading level of the name. Default 3. */
   headingLevel?: 2 | 3 | 4;
 }
 
@@ -44,11 +46,15 @@ export function TeamMember({ name, role, photo, bio, social = [], variant = 'car
   );
 }
 
+/** Props for TeamGrid. */
 export interface TeamGridProps {
+  /** People to show. Names must be unique (used as keys). */
   members: TeamMemberContent[];
   /** Columns on wide slots (2-4); steps down on narrower ones. */
   columns?: 2 | 3 | 4;
+  /** TeamMember variant applied to every member. Default "card". */
   variant?: 'card' | 'minimal';
+  /** Heading level of each name. Default 3. */
   headingLevel?: 2 | 3 | 4;
 }
 

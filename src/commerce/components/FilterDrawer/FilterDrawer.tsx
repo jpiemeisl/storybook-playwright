@@ -3,6 +3,7 @@ import { Button } from '../../../components/Button';
 import { Icon } from '../../../components/Icon';
 import styles from './FilterDrawer.module.css';
 
+/** Props for FilterDrawer, the "Filters" button and side drawer that holds the FilterPanel on small screens. */
 export interface FilterDrawerProps {
   open: boolean;
   onOpenChange: (open: boolean) => void;

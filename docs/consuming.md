@@ -80,11 +80,13 @@ Never write the token itself into `.npmrc` or any committed file. npm stops with
 ## Install
 
 ```sh
-npm install @jpiemeisl/pattern-library@~0.1.0 react@19 react-dom@19
+npm install @jpiemeisl/pattern-library react@19 react-dom@19
 ```
 
-Before 1.0.0, a minor version (0.2.0) may contain breaking changes, so pin to patches with `~`. Read the
-CHANGELOG (shipped as `CHANGELOG.md` in the package) before taking a minor version. What counts as public
+Before 1.0.0, a minor version (0.2.0) may contain breaking changes, so take patches only. npm's default
+`^` range already does that for 0.x versions (`^0.2.0` allows 0.2.x, not 0.3.0); `~0.2.0` says the same
+thing explicitly. Read the CHANGELOG (shipped as `CHANGELOG.md` in the package) before taking a minor
+version. What counts as public
 API is in [versioning.md](https://github.com/jpiemeisl/storybook-playwright/blob/main/docs/versioning.md),
 and every exported name is listed in
 [api-surface.md](https://github.com/jpiemeisl/storybook-playwright/blob/main/docs/api-surface.md).
@@ -97,12 +99,13 @@ and every exported name is listed in
 | `@jpiemeisl/pattern-library/commerce` | Commerce: templates, components, hooks and pure logic for listing, product, cart, checkout and account. Optional; it imports core, never the reverse |
 | `@jpiemeisl/pattern-library/tokens.css` | Layer order, reset, primitive and semantic tokens, every theme, base styles |
 | `@jpiemeisl/pattern-library/themes/<name>.css` | One theme (`harbor`, `orchard`), for builds that load themes separately |
+| `@jpiemeisl/pattern-library/tokens/*` | The individual token files (`tokens/index.css` is the same as `tokens.css`) |
 | `@jpiemeisl/pattern-library/core.css` | Styles of the core components |
 | `@jpiemeisl/pattern-library/commerce.css` | Styles of the commerce components |
 
 Types come with every JavaScript entry point (`types` condition); nothing extra to install.
 
-```ts
+```tsx check
 import { Button, Container, Heading, PageRenderer, createTemplates, validatePage, type PageContent } from '@jpiemeisl/pattern-library';
 import { commerceTemplates, computeCartTotals, type CommerceContext } from '@jpiemeisl/pattern-library/commerce';
 ```
@@ -111,16 +114,28 @@ import { commerceTemplates, computeCartTotals, type CommerceContext } from '@jpi
 
 Import the CSS once, at the root of the app, in this order:
 
-```ts
+```tsx check
 import '@jpiemeisl/pattern-library/tokens.css';    // layers, reset, tokens, all themes, base
 import '@jpiemeisl/pattern-library/core.css';      // core components
 import '@jpiemeisl/pattern-library/commerce.css';  // only if you use the commerce entry point
 ```
 
-`tokens.css` already includes every theme. To load only some, import the parts instead of `tokens.css`:
-`tokens/index.css` is the full set; `tokens/reset.css`, `tokens/primitives.css`, `tokens/semantic.css`,
-`tokens/base.css` plus `themes/harbor.css` are the pieces. Declare the layer order yourself first if you
-do: `@layer reset, tokens, base, components, overrides;`.
+`tokens.css` already includes every theme. To load only some, replace `tokens.css` with your own CSS file
+that imports the pieces. The pieces contain no `@layer` of their own (`tokens.css` puts each one in its
+layer), so declare the layer order and import each piece into its layer, as `tokens.css` does:
+
+```css
+/* app.css: tokens.css with only the harbor theme */
+@layer reset, tokens, base, components, overrides;
+@import '@jpiemeisl/pattern-library/tokens/reset.css' layer(reset);
+@import '@jpiemeisl/pattern-library/tokens/primitives.css' layer(tokens);
+@import '@jpiemeisl/pattern-library/tokens/semantic.css' layer(tokens);
+@import '@jpiemeisl/pattern-library/themes/harbor.css' layer(tokens);
+@import '@jpiemeisl/pattern-library/tokens/base.css' layer(base);
+```
+
+`semantic.css` is the `default` theme, so it is always needed. Imported without a layer, `reset.css`
+would override the component styles.
 
 The library's CSS lives in cascade layers (`reset, tokens, base, components, overrides`). Put your own
 overrides in the `overrides` layer or in unlayered CSS, and they win without specificity fights. Style
@@ -134,24 +149,26 @@ component you give `LinkProvider`. External links always render a plain `<a>`.
 **Next.js (App Router).** The bundles don't include a `'use client'` directive, so render library
 components from Client Components. A providers file is the usual place:
 
-```tsx
+```tsx check
 // app/providers.tsx
 'use client';
 import NextLink from 'next/link';
+import type { ReactNode } from 'react';
 import { LinkProvider } from '@jpiemeisl/pattern-library';
 
-export function Providers({ children }: { children: React.ReactNode }) {
+export function Providers({ children }: { children: ReactNode }) {
   return <LinkProvider component={NextLink}>{children}</LinkProvider>;
 }
 ```
 
 ```tsx
 // app/layout.tsx
+import type { ReactNode } from 'react';
 import '@jpiemeisl/pattern-library/tokens.css';
 import '@jpiemeisl/pattern-library/core.css';
 import { Providers } from './providers';
 
-export default function RootLayout({ children }: { children: React.ReactNode }) {
+export default function RootLayout({ children }: { children: ReactNode }) {
   return (
     <html lang="en" data-theme="default">
       <body>
@@ -164,8 +181,8 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
 
 **React Router.** Its `Link` takes `to`, so adapt it once:
 
-```tsx
-import { Link as RouterLink } from 'react-router';
+```tsx check
+import { Link as RouterLink, Routes } from 'react-router';
 import { LinkProvider, type LinkComponentProps } from '@jpiemeisl/pattern-library';
 
 function AppLink({ href, ...rest }: LinkComponentProps) {
@@ -175,7 +192,7 @@ function AppLink({ href, ...rest }: LinkComponentProps) {
 export function App() {
   return (
     <LinkProvider component={AppLink}>
-      <Routes />
+      <Routes>{/* your routes */}</Routes>
     </LinkProvider>
   );
 }
@@ -186,12 +203,24 @@ export function App() {
 The themes are `default`, `harbor` (dark) and `orchard`. A theme applies to an element and everything
 inside it, and themes nest.
 
-```tsx
+```tsx check
+import type { ReactNode } from 'react';
 import { Theme, themes, type ThemeName } from '@jpiemeisl/pattern-library';
 
-<html data-theme="harbor">                      {/* the whole page */}
-<Theme name="orchard" as="section">…</Theme>     {/* one region; renders a single element with data-theme */}
-themes.map((t) => t.name);                       // ['default', 'harbor', 'orchard'], for a theme picker
+export function Document({ theme, children }: { theme: ThemeName; children: ReactNode }) {
+  return (
+    <html data-theme={theme}>{/* the whole page */}
+      <body>
+        {children}
+        {/* One region: Theme renders a single element with data-theme. */}
+        <Theme name="orchard" as="section">Seasonal offers</Theme>
+      </body>
+    </html>
+  );
+}
+
+// ['default', 'harbor', 'orchard'], for a theme picker.
+export const themeNames = themes.map((t) => t.name);
 ```
 
 `Theme` has no effects and no storage, and it's safe to render on the server. Choosing and remembering the
@@ -202,20 +231,23 @@ theme (a cookie, user preference, `prefers-color-scheme`) is the host app's job.
 Pages are data (`PageContent` and template page shapes, usually produced by a CMS adapter). `PageRenderer`
 picks the template from `page.template` and renders the whole page, header and footer included.
 
-```tsx
+```tsx check
 import { PageRenderer, createTemplates, getDocumentMeta, validatePage, type PageContent, type SiteChrome } from '@jpiemeisl/pattern-library';
 import { commerceTemplates } from '@jpiemeisl/pattern-library/commerce';
 
 // The core templates plus the commerce ones (collection, product detail, cart, checkout, account...).
 // createTemplates returns a new record; build it once, outside components.
-const templates = createTemplates(Object.values(commerceTemplates));
+export const templates = createTemplates(Object.values(commerceTemplates));
 
 export function Page({ page, chrome, path }: { page: PageContent; chrome: SiteChrome; path: string }) {
   return <PageRenderer page={page} chrome={chrome} templates={templates} ctx={{ currentPath: path, onError: console.warn }} />;
 }
 
-// <head> is yours: getDocumentMeta(page) returns the title, description, canonical URL, robots and Open Graph data.
-// In your CMS preview or tests: validatePage(page, { knownTemplates: Object.keys(templates) }).
+// <head> is yours: the title, description, canonical URL, robots and Open Graph data.
+export const meta = (page: PageContent) => getDocumentMeta(page);
+
+// In your CMS preview or tests: an empty list means the page is valid.
+export const issues = (page: unknown) => validatePage(page, { knownTemplates: Object.keys(templates) });
 ```
 
 Unknown templates and pages missing their template's data fall back to the default template, and are
@@ -228,15 +260,27 @@ The commerce entry point is optional and separate: core never imports it, so a c
 ship it. The templates are presentational. Your app owns the cart, checkout and account state, and
 connects them through `ctx` (a `CommerceContext`):
 
-```tsx
-const ctx: CommerceContext = {
-  currentPath,
-  productHref: (product) => `/products/${product.handle}`,
-  onAddToCart: async (item) => cart.add(item),   // return a promise for the button's loading/success/error states
-  onQuantityChange: (lineId, quantity) => cart.update(lineId, quantity),
-  paymentFields: <ProviderHostedFields />,        // your payment provider's hosted fields: see below
-};
-<PageRenderer page={page} chrome={chrome} templates={templates} ctx={ctx} />;
+```tsx check
+import type { ReactNode } from 'react';
+import { PageRenderer, createTemplates, type PageContent, type SiteChrome } from '@jpiemeisl/pattern-library';
+import { commerceTemplates, type CommerceContext } from '@jpiemeisl/pattern-library/commerce';
+
+// Stand-ins for your own cart store and your payment provider's hosted fields.
+declare const cart: { add(item: unknown): Promise<void>; update(lineId: string, quantity: number): void };
+declare const hostedPaymentFields: ReactNode;
+
+const templates = createTemplates(Object.values(commerceTemplates));
+
+export function CommercePage({ page, chrome, currentPath }: { page: PageContent; chrome: SiteChrome; currentPath: string }) {
+  const ctx: CommerceContext = {
+    currentPath,
+    productHref: (product) => `/products/${product.handle}`,
+    onAddToCart: async (item) => cart.add(item), // return a promise for the button's loading/success/error states
+    onQuantityChange: (lineId, quantity) => cart.update(lineId, quantity),
+    paymentFields: hostedPaymentFields, // your payment provider's hosted fields: see below
+  };
+  return <PageRenderer page={page} chrome={chrome} templates={templates} ctx={ctx} />;
+}
 ```
 
 Pure helpers for your server or state code are exported too, for example `computeCartTotals`,

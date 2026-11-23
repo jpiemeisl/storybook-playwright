@@ -4,7 +4,9 @@ import { Link } from '../../../components/Link';
 import type { ActiveFilter } from '../../logic/browse';
 import styles from './ActiveFilters.module.css';
 
+/** Props for ActiveFilters, the row of removable chips for the filters in effect. */
 export interface ActiveFiltersProps {
+  /** Chips to show, usually from describeFilters (pass `baseHref` there to get the no-JavaScript links). */
   filters: ActiveFilter[];
   /** Live mode: chips are buttons. Without it, chips are links to their `removeHref`. */
   onRemove?: (filter: ActiveFilter) => void;

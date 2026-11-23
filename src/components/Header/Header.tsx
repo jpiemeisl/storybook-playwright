@@ -7,11 +7,13 @@ import { MobileMenu, type MenuCta } from '../MobileMenu';
 import { NavDropdown } from './NavDropdown';
 import styles from './Header.module.css';
 
+/** Props for Header. */
 export interface HeaderProps {
   /** Logo slot, usually a Link to the home page. */
   logo: ReactNode;
   /** Main navigation. Empty: a logo-only header (no nav landmark, no menu button), e.g. for landing pages. */
   items: NavItem[];
+  /** Call-to-action link shown after the nav, and repeated at the bottom of the mobile menu. */
   cta?: MenuCta;
   /** Always-visible controls before the CTA and menu button, e.g. a search link, account link and cart button. */
   actions?: ReactNode;

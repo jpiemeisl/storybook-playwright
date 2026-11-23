@@ -5,11 +5,13 @@ import type { ReactNode } from 'react';
 import type { ImageContent } from './sections';
 import type { SocialLink } from '../content-types/navigation';
 
+/** Content for a PageHeader: page title and optional description. */
 export interface PageHeaderContent {
   title: string;
   description?: ReactNode;
 }
 
+/** Content for an AuthorByline: name and optional role, avatar, profile link and bio. */
 export interface AuthorContent {
   name: string;
   role?: string;
@@ -25,10 +27,12 @@ export interface TagItem {
   count?: number;
 }
 
+/** A category for CategoryFilter: a TagItem with a required id. */
 export interface CategoryItem extends TagItem {
   id: string;
 }
 
+/** One entry in a TableOfContents: the target heading id, label and level (2 or 3). */
 export interface TocItem {
   /** id of the heading element on the page. */
   id: string;
@@ -36,10 +40,12 @@ export interface TocItem {
   level: 2 | 3;
 }
 
+/** One image in a Gallery (and its Lightbox): src, alt, width and height are required; caption is optional. */
 export interface GalleryImage extends Required<Pick<ImageContent, 'src' | 'alt' | 'width' | 'height'>> {
   caption?: ReactNode;
 }
 
+/** Content for a TeamMember: name and optional role, photo, bio and social links. */
 export interface TeamMemberContent {
   name: string;
   role?: string;
@@ -48,6 +54,7 @@ export interface TeamMemberContent {
   social?: SocialLink[];
 }
 
+/** One entry in a Timeline: a date or phase label, title and optional description. */
 export interface TimelineItem {
   /** Date or phase, e.g. "2019" or "Phase 2". */
   label: string;
@@ -55,11 +62,13 @@ export interface TimelineItem {
   description?: ReactNode;
 }
 
+/** One step in a Steps list: title and optional description. */
 export interface StepItem {
   title: string;
   description?: ReactNode;
 }
 
+/** A Table column: the row key it shows, its header, and numeric or alignment options. */
 export interface TableColumn<Row> {
   key: keyof Row & string;
   header: ReactNode;
@@ -68,13 +77,16 @@ export interface TableColumn<Row> {
   align?: 'start' | 'center' | 'end';
 }
 
+/** Columns and rows for a Table, kept together as one value. */
 export interface TableData<Row extends Record<string, ReactNode>> {
   columns: TableColumn<Row>[];
   rows: Row[];
 }
 
+/** Where a VideoEmbed video is hosted: YouTube or Vimeo (embedded by `videoId`) or `generic` (embedded from a full `src` URL). */
 export type VideoProvider = 'youtube' | 'vimeo' | 'generic';
 
+/** Content for a click-to-load VideoEmbed: provider, video id or embed URL, title and optional local poster. */
 export interface VideoContent {
   provider: VideoProvider;
   /** YouTube or Vimeo id. */
@@ -86,6 +98,7 @@ export interface VideoContent {
   poster?: ImageContent;
 }
 
+/** Content for a click-to-load MapEmbed: embed URL, title, address and a directions link. */
 export interface MapContent {
   /** Embed URL (only loaded after the user asks for the map). */
   src: string;
@@ -94,4 +107,5 @@ export interface MapContent {
   directionsHref: string;
 }
 
+/** A network ShareLinks can offer a share link for. */
 export type ShareNetwork = 'x' | 'linkedin' | 'facebook' | 'email';

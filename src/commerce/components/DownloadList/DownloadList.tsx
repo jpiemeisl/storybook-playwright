@@ -6,8 +6,10 @@ import { formatBytes } from '../../logic/options';
 import type { Order } from '../../types/order';
 import styles from './DownloadList.module.css';
 
+/** One downloadable file on an order (an entry of `Order.downloads`), as listed by DownloadList. */
 export type DownloadItem = NonNullable<Order['downloads']>[number];
 
+/** Props for DownloadList, the file list with download links on an order or confirmation page. */
 export interface DownloadListProps {
   downloads: DownloadItem[];
   /**

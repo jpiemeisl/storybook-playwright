@@ -1,11 +1,15 @@
 import type { ReactNode } from 'react';
 import styles from './DescriptionList.module.css';
 
+/** One term/details pair in a DescriptionList, rendered as a `<dt>` and `<dd>`. */
 export interface DescriptionItem {
+  /** The label, e.g. "Industry". Must be unique within the list (used as the key). */
   term: string;
+  /** The value, e.g. "Retail". */
   details: ReactNode;
 }
 
+/** Props for DescriptionList. Renders nothing when `items` is empty. */
 export interface DescriptionListProps {
   items: DescriptionItem[];
   /** `columns`: items side by side when the slot is 36rem+ (a facts strip). `stacked`: one per row. Default "columns". */

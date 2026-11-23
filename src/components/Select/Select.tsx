@@ -4,18 +4,24 @@ import type { FieldSize } from '../Input';
 import field from '../fieldBox.module.css';
 import styles from './Select.module.css';
 
+/** One `<option>` in a Select. `value` must be unique within the Select (used as the key). */
 export interface SelectOption {
   value: string;
+  /** Visible option text. */
   label: string;
   disabled?: boolean;
 }
 
+/** A labeled group of options, rendered as an `<optgroup>`. */
 export interface SelectOptionGroup {
+  /** Group label shown above its options. */
   label: string;
   options: SelectOption[];
 }
 
+/** Props for Select. Native `<select>` props go to the select (single selection only); `className` goes on the visual box. */
 export interface SelectProps extends Omit<ComponentPropsWithRef<'select'>, 'size' | 'multiple'> {
+  /** Visual size of the box. Default "md". */
   size?: FieldSize;
   /** Options and/or <optgroup> groups. Alternatively pass <option> children. */
   options?: (SelectOption | SelectOptionGroup)[];

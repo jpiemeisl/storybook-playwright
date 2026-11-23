@@ -15,11 +15,14 @@ import { AddressBlock } from '../AddressBlock';
 import { AddressForm } from '../AddressForm';
 import styles from './AddressBook.module.css';
 
+/** Props for AddressBook, the saved address cards with add, edit, delete and make-default; the host owns the data and applies each change. */
 export interface AddressBookProps {
   addresses: SavedAddress[];
   /** Add (no id) or update (with id) an address. */
   onSave: (address: Omit<SavedAddress, 'id'> & { id?: string }) => void;
+  /** Deletes an address after the customer confirms. Use removeAddress to keep the defaults set. */
   onDelete: (id: string) => void;
+  /** Makes an address the only default of `kind`; setDefaultAddress does this for an address array. */
   onSetDefault: (id: string, kind: AddressKind) => void;
   /** Error from the host's last change, shown in the open dialog. */
   errorMessage?: string;

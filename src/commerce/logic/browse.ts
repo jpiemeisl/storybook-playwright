@@ -12,8 +12,11 @@ import type { BillingInterval, Product, ProductKind, StockInfo, Variant } from '
 import { percentOff, subscriptionUnitPrice } from './pricing';
 import { isPurchasable } from './variants';
 
+/** Product listing sort orders; also the `sort` URL parameter values (`featured` is the default and is omitted from URLs). */
 export type SortKey = 'featured' | 'price-asc' | 'price-desc' | 'newest' | 'rating' | 'title';
+/** All sort keys in display order, for building a sort control and validating the `sort` parameter. */
 export const sortKeys: readonly SortKey[] = ['featured', 'price-asc', 'price-desc', 'newest', 'rating', 'title'];
+/** Human-readable label for each sort key, shown in the sort control. */
 export const sortLabels: Record<SortKey, string> = {
   featured: 'Featured',
   'price-asc': 'Price: low to high',
@@ -26,6 +29,7 @@ export const sortLabels: Record<SortKey, string> = {
 const KINDS: readonly ProductKind[] = ['physical', 'digital', 'subscription'];
 const MAX_MINOR = 100_000_000_00; // $100M: clamp for price inputs
 
+/** The active catalog filters for a product listing; round-trips through the URL query with parseFilters and serializeFilters. */
 export interface FilterState {
   kinds: ProductKind[];
   tags: string[];
@@ -40,10 +44,12 @@ export interface FilterState {
   query?: string;
 }
 
+/** Returns a new FilterState with no filters set (all kinds, all availability, no sale or rating filter). */
 export const emptyFilters = (): FilterState => ({ kinds: [], tags: [], options: {}, availability: 'all', onSale: false });
 
 /* ---------- price and availability ---------- */
 
+/** A product's price range and sale info as returned by getPriceSummary; money in minor units. */
 export interface PriceSummary {
   min: Money;
   max: Money;
@@ -125,12 +131,14 @@ export function parseFilters(input: string | URLSearchParams): FilterState {
   return state;
 }
 
+/** Reads the `sort` parameter from a query string; returns `featured` when it is missing or not a known SortKey. */
 export function parseSort(input: string | URLSearchParams): SortKey {
   const params = typeof input === 'string' ? new URLSearchParams(input.startsWith('?') ? input.slice(1) : input) : input;
   const sort = params.get('sort');
   return sortKeys.includes(sort as SortKey) ? (sort as SortKey) : 'featured';
 }
 
+/** Reads the 1-based `page` parameter from a query string, rounded and clamped to 1..10000; defaults to 1. */
 export function parsePage(input: string | URLSearchParams): number {
   const params = typeof input === 'string' ? new URLSearchParams(input.startsWith('?') ? input.slice(1) : input) : input;
   return toInt(params.get('page'), 1, 10_000) ?? 1;
@@ -186,6 +194,11 @@ function matches(product: Product, state: FilterState): boolean {
   return variants.length > 0;
 }
 
+/**
+ * Returns the products matching every filter in `state`, in their original order. Pure.
+ *
+ * Option, availability and price filters must all hold on a single variant; subscription products compare their per-cycle price range instead.
+ */
 export const applyFilters = (products: readonly Product[], state: FilterState): Product[] => products.filter((p) => matches(p, state));
 
 /* ---------- sorting and pagination ---------- */
@@ -206,6 +219,7 @@ export function sortProducts(products: readonly Product[], sort: SortKey): Produ
   return [...products].sort(compare[sort]);
 }
 
+/** One page of items from paginate, with the clamped page number and 1-based item range for "Showing 1-24 of 80" text. */
 export interface Page<T> {
   items: T[];
   /** Clamped to 1..totalPages. */
@@ -217,6 +231,7 @@ export interface Page<T> {
   end: number;
 }
 
+/** Returns one page of `items`. Page and page size are floored and clamped (page to 1..totalPages, size to at least 1), so out-of-range input never yields an empty middle page. Pure. */
 export function paginate<T>(items: readonly T[], page: number, perPage: number): Page<T> {
   const size = Math.max(1, Math.floor(perPage) || 1);
   const totalPages = Math.max(1, Math.ceil(items.length / size));
@@ -228,12 +243,14 @@ export function paginate<T>(items: readonly T[], page: number, perPage: number):
 
 /* ---------- facets ---------- */
 
+/** One selectable filter value with its label and the number of products it would match. */
 export interface FacetValue {
   value: string;
   label: string;
   count: number;
 }
 
+/** Filter options with counts for a product listing, as returned by computeFacets; drives FilterPanel. */
 export interface Facets {
   kinds: FacetValue[];
   tags: FacetValue[];
@@ -300,6 +317,7 @@ export function computeFacets(products: readonly Product[], state: FilterState):
 
 /* ---------- active filter chips ---------- */
 
+/** One active filter rendered as a removable chip (see describeFilters and ActiveFilters). */
 export interface ActiveFilter {
   /** Stable id used by removeFilter. */
   id: string;

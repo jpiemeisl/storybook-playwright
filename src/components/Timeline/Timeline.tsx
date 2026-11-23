@@ -2,7 +2,9 @@ import type { StepItem, TimelineItem } from '../../component-types/content';
 import { Icon } from '../Icon';
 import styles from './Timeline.module.css';
 
+/** Props for Timeline. */
 export interface TimelineProps {
+  /** Events in order. Each shows its label (e.g. a date) above its title and optional description. */
   items: TimelineItem[];
   /** Heading level of each item title. Default 3. */
   headingLevel?: 2 | 3 | 4;
@@ -29,10 +31,13 @@ export function Timeline({ items, headingLevel = 3 }: TimelineProps) {
   );
 }
 
+/** Props for Steps. */
 export interface StepsProps {
+  /** Steps in order. Titles must be unique (used as keys). */
   items: StepItem[];
   /** 1-based index of the step in progress (aria-current="step"); earlier steps show as done. */
   currentStep?: number;
+  /** Heading level of each step title. Default 3. */
   headingLevel?: 2 | 3 | 4;
 }
 

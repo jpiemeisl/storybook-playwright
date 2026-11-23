@@ -6,6 +6,7 @@ import { Modal } from '../Modal';
 import { allConsentChoices, defaultConsentChoices, type ConsentCategory, type ConsentChoices } from './consent';
 import styles from './CookieBanner.module.css';
 
+/** Props for CookieBanner. The banner only reports choices through callbacks; the host app stores and applies them. */
 export interface CookieBannerProps {
   /** Controlled: the host decides when to show it (e.g. no stored choice yet). */
   open: boolean;
@@ -13,12 +14,15 @@ export interface CookieBannerProps {
   position?: 'bottom' | 'bottom-start';
   /** Names the region. Default "Cookies on this site". */
   title?: ReactNode;
+  /** Explanation under the title, usually with a link to the cookie policy. */
   message: ReactNode;
   /** The categories shown in "Choose settings". Required ones are always on. */
   categories: ConsentCategory[];
   /** Starting choices in the settings dialog. Default defaultConsentChoices(categories). */
   initialChoices?: ConsentChoices;
+  /** Banner "Accept all". */
   onAcceptAll: () => void;
+  /** Banner "Reject all". (The settings dialog's own "Reject all" calls `onSave` with every optional category off.) */
   onRejectAll: () => void;
   /** Settings dialog "Save choices". */
   onSave: (choices: ConsentChoices) => void;

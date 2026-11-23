@@ -4,9 +4,13 @@ import { CardGrid } from '../Card';
 import { Heading } from '../Heading';
 import styles from './RelatedPosts.module.css';
 
+/** Props for RelatedPosts. */
 export interface RelatedPostsProps {
+  /** Articles to show. Only the first four are used; hrefs must be unique (used as keys). */
   items: ArticleCardContent[];
+  /** Section heading and accessible name. Default "Related articles". */
   heading?: string;
+  /** Heading level of `heading`; card titles use the next level down. Default 2. */
   headingLevel?: 2 | 3;
 }
 

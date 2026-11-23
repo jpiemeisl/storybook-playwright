@@ -5,6 +5,7 @@ import type { Registry } from '../registry/registry';
 import { defaultTemplates, resolveTemplate } from './registry';
 import type { RenderContext, TemplateProps, Templates } from './types';
 
+/** Props for PageRenderer: the page and site chrome, plus optional block registry, templates and render context. */
 export interface PageRendererProps {
   /** The page (PageContent or any template page shape). `page.template` picks the template. */
   page: PageContent;

@@ -3,8 +3,10 @@ import { Grid } from '../Grid';
 import { Image } from '../Image';
 import styles from './Testimonial.module.css';
 
+/** Testimonial presentation: `single` is a large pull quote, `card` a compact version for grids. */
 export type TestimonialVariant = 'single' | 'card';
 
+/** Props for Testimonial: the TestimonialContent fields plus the variant. */
 export interface TestimonialProps extends TestimonialContent {
   /** `single`: large pull quote. `card`: compact, for grids. */
   variant?: TestimonialVariant;
@@ -28,11 +30,16 @@ export function Testimonial({ quote, author, companyLogo, variant = 'single' }: 
   );
 }
 
+/** Props for TestimonialGrid. */
 export interface TestimonialGridProps {
   /** Two or three testimonials. */
   items: TestimonialContent[];
 }
 
+/**
+ * A list of testimonials as `card`-variant Testimonials in a Grid: one column on narrow slots, up to
+ * three on wide ones. Use a single Testimonial for one featured quote.
+ */
 export function TestimonialGrid({ items }: TestimonialGridProps) {
   return (
     <Grid as="ul" columns={{ base: 1, md: Math.min(items.length, 3) }} gap="lg" className={styles.grid}>

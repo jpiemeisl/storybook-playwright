@@ -1,7 +1,7 @@
 # Example CMS adapter (reference only)
 
 This folder shows how to turn a CMS payload into the library's `PageContent`. It is **not** exported
-from `src/index.ts` and is not part of the package API. Copy the patterns into your app's own adapter.
+from `src/index.ts` and is not part of the package. Copy the patterns into your app's own adapter.
 
 The "CMS" is imaginary. Its payloads ([`fixtures/`](fixtures)) have the shape many headless CMSs use:
 
@@ -11,9 +11,10 @@ The "CMS" is imaginary. Its payloads ([`fixtures/`](fixtures)) have the shape ma
 - rich text as a node tree (`paragraph`, `heading_2`, `hyperlink`, `text` with `marks`, ...)
 - section types the adapter does not support (`instagram_feed` in `about.json`)
 
-## Coverage: 9 of 26 block types
+## Coverage
 
-This adapter maps only the 9 section types its imaginary CMS models:
+This adapter maps only the 9 section types its imaginary CMS models, out of the library's block
+types ([content-model.md](../../../docs/content-model.md)):
 
 | CMS section | Block |
 | --- | --- |
@@ -27,9 +28,8 @@ This adapter maps only the 9 section types its imaginary CMS models:
 | `testimonials_section` | `testimonialGrid` |
 | `team_section` | `team` |
 
-Not mapped (17): `pageHeader`, `cardGrid`, `articleCardGrid`, `testimonial`, `logoStrip`,
-`pricingTable`, `gallery`, `videoEmbed`, `mapEmbed`, `timeline`, `steps`, `tabs`, `table`,
-`contactForm`, `newsletterSignup`, `divider` and `spacer`.
+It also maps the CMS's page templates to library template names explicitly (`landing` to `home`,
+`campaign` to `landing`, `article` and `standard` to `default`; anything else to `default`).
 
 A real adapter should cover whichever blocks its CMS actually models, no more and no fewer, and
 report anything else through `onUnmapped`.
@@ -41,12 +41,13 @@ report anything else through `onUnmapped`.
 | `types.ts` | The CMS payload types. |
 | `richText.ts` | `richTextToHtml`: node tree to sanitized HTML. |
 | `mapPage.ts` | `mapPage(payload, { onUnmapped })` plus shared field mappers and one mapper per section type. |
-| `example-cms.test.ts` | Converter and mapper tests, and the contract: every payload maps to a page that passes `validatePage` and renders with no issues. |
+| `fixtures/` | Example payloads: `home.json`, `about.json` and `guide.json`. |
+| `example-cms.test.ts` | Converter and mapper tests, and the contract: every payload maps to a page that `validatePage` finds no errors in and that renders with no issues. |
 
 ## Rich text is sanitized here
 
 `RichText` in the content model is `{ format: 'html', html }`, and the renderer trusts that HTML
-(apart from stripping unsafe URLs as a second line of defence). The adapter is responsible for safe
+(apart from removing unsafe URLs as a second line of defense). The adapter is responsible for safe
 output. `richTextToHtml` is hand-written and allow-list based:
 
 - Only paragraphs, `h2`-`h4`, bold, italic, links, ordered/unordered lists, list items and blockquotes

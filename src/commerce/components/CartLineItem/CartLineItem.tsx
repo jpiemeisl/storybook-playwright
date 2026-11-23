@@ -9,6 +9,7 @@ import { Price } from '../Price';
 import { QuantityStepper } from '../QuantityStepper';
 import styles from './CartLineItem.module.css';
 
+/** Props for CartLineItem, one line in the cart page, MiniCart or OrderSummary. */
 export interface CartLineItemProps {
   line: CartLine;
   /** This line's amounts from computeCartTotals (`totals.lines`): unit price after subscription discount, line total. */

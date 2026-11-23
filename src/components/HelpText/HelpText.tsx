@@ -2,6 +2,7 @@ import type { ComponentPropsWithRef } from 'react';
 import { Icon } from '../Icon';
 import styles from './HelpText.module.css';
 
+/** Props for HelpText: all native `<p>` props, including `id` and `ref`. */
 export type HelpTextProps = ComponentPropsWithRef<'p'>;
 
 /** Hint under a control. Give it an id and reference it from the control's aria-describedby (Field does this). */
@@ -9,6 +10,7 @@ export function HelpText({ className, ...rest }: HelpTextProps) {
   return <p className={[styles.help, className].filter(Boolean).join(' ')} {...rest} />;
 }
 
+/** Props for FieldError: all native `<p>` props, including `id` and `ref`. Children are the message text. */
 export type FieldErrorProps = ComponentPropsWithRef<'p'>;
 
 /**

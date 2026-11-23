@@ -4,7 +4,9 @@ import { Link } from '../Link';
 import { Text } from '../Text';
 import styles from './LogoStrip.module.css';
 
+/** Props for LogoStrip. */
 export interface LogoStripProps {
+  /** Logos to show. Each item's `name` is used as the image alt text; an item with `href` is linked. */
   items: LogoItem[];
   /** Short label above the logos, e.g. "Trusted by". */
   heading?: string;

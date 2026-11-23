@@ -2,8 +2,11 @@ import { Link, type LinkProps } from '../Link';
 import type { ButtonSize, ButtonVariant } from './Button';
 import styles from './Button.module.css';
 
+/** Props for ButtonLink: Link props (minus `variant` and `unstyled`) plus the Button variant and size. The external-link icon is off by default. */
 export interface ButtonLinkProps extends Omit<LinkProps, 'variant' | 'unstyled'> {
+  /** Visual emphasis, matching Button. */
   variant?: ButtonVariant;
+  /** Control height and padding, matching Button. */
   size?: ButtonSize;
 }
 

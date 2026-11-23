@@ -4,8 +4,11 @@ import { Link } from '../Link';
 import hint from '../scrollHint.module.css';
 import styles from './TagList.module.css';
 
+/** Props for TagList. Renders nothing when `items` is empty. */
 export interface TagListProps {
+  /** Tags to show. Labels must be unique (used as keys); an optional `count` is shown and announced as "(N posts)". */
   items: TagItem[];
+  /** Tag size. Default "md". */
   size?: 'sm' | 'md';
   /** Accessible name for the list, e.g. "Tags". */
   label?: string;
@@ -53,11 +56,16 @@ interface CategoryFilterBaseProps {
   label?: string;
 }
 
+/**
+ * Props for CategoryFilter. `mode: 'links'` (default) renders navigation links, using each item's
+ * `href` (or `#id`); `mode: 'buttons'` renders toggle buttons and requires `onChange`.
+ */
 export type CategoryFilterProps = CategoryFilterBaseProps &
   (
     | { mode?: 'links' }
     | {
         mode: 'buttons';
+        /** Called with the new list of selected ids when a button is pressed. Controlled: update `selectedIds` from here. */
         onChange: (selectedIds: string[]) => void;
         /** Allow several pressed at once. Default false (single choice; pressing again clears). */
         multiple?: boolean;

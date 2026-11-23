@@ -4,9 +4,12 @@ import { Icon } from '../../../components/Icon';
 import type { ProductKind } from '../../types/product';
 import styles from './AddToCart.module.css';
 
+/** State of the AddToCart button, set by the host around its add-to-cart request (`disabled` for sold out or a missing selection). */
 export type AddToCartStatus = 'idle' | 'loading' | 'success' | 'error' | 'disabled';
 
+/** Props for AddToCart, the main buy button on a product page. */
 export interface AddToCartProps {
+  /** Product kind; picks the default label ("Add to cart", "Buy and download", "Subscribe"). */
   kind: ProductKind;
   status: AddToCartStatus;
   onAdd: () => void;

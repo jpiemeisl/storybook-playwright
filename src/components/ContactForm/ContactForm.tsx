@@ -11,20 +11,30 @@ import { Select, type SelectOption } from '../Select';
 import { Textarea } from '../Textarea';
 import styles from './ContactForm.module.css';
 
+/** Values ContactForm passes to `onSubmit` once the form is valid. Text values are trimmed. */
 export interface ContactFormValues {
   name: string;
   email: string;
+  /** Omitted when left empty. */
   phone?: string;
+  /** The `value` of the chosen subject option. */
   subject: string;
   message: string;
+  /** Only present when `consentLabel` is set (then always true, since the checkbox is required). */
   consent?: boolean;
 }
 
+/** Props for ContactForm. The host app sends the message and reports progress through `status`. */
 export interface ContactFormProps {
+  /** Options for the required Subject select. */
   subjectOptions: SelectOption[];
+  /** Called with the values after a valid submit. Not called while `status` is "submitting" or "success". */
   onSubmit: (values: ContactFormValues) => void;
+  /** Request state from the host app. "submitting" and "success" disable the fields; "error" and "success" show an alert. */
   status?: FormStatus;
+  /** Shown in an urgent alert when `status` is "error". */
   errorMessage?: ReactNode;
+  /** Shown in a success alert when `status` is "success". */
   successMessage?: ReactNode;
   /** Shows "Send another message" after success; reset the form and set status back to idle. */
   onReset?: () => void;
@@ -32,6 +42,7 @@ export interface ContactFormProps {
   consentLabel?: ReactNode;
   /** Default 2000. */
   messageMaxLength?: number;
+  /** Initial field values (the fields are uncontrolled). */
   defaultValues?: Partial<ContactFormValues>;
 }
 

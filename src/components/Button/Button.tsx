@@ -1,9 +1,12 @@
 import type { ButtonHTMLAttributes, MouseEvent, Ref } from 'react';
 import styles from './Button.module.css';
 
+/** Visual emphasis of a Button or ButtonLink: `primary` for the main action, `secondary` for alternatives, `ghost` for low-emphasis actions. */
 export type ButtonVariant = 'primary' | 'secondary' | 'ghost';
+/** Height, padding and font size of a Button or ButtonLink. */
 export type ButtonSize = 'sm' | 'md' | 'lg';
 
+/** Props for Button. Accepts all native `<button>` attributes; `type` defaults to "button". */
 export interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
   /** Visual emphasis. */
   variant?: ButtonVariant;
@@ -15,9 +18,15 @@ export interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
    * so a keyboard user's focus stays on the button.
    */
   loading?: boolean;
+  /** Ref to the underlying `<button>` element. */
   ref?: Ref<HTMLButtonElement>;
 }
 
+/**
+ * A native `<button>` with the library's variants and sizes. Use for actions; use ButtonLink for navigation.
+ *
+ * Defaults to `type="button"` so it never submits a form by accident; pass `type="submit"` explicitly.
+ */
 export function Button({
   variant = 'primary',
   size = 'md',

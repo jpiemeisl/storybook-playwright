@@ -6,9 +6,12 @@ import { getOptionAvailability, type OptionAvailability, type Selection } from '
 import type { Product, ProductOption } from '../../types/product';
 import styles from './VariantSelector.module.css';
 
+/** Props for VariantSelector, the option pickers (size, color and so on) on a product page. */
 export interface VariantSelectorProps {
   product: Product;
+  /** Currently chosen value per option name; may be partial. */
   selection: Selection;
+  /** Called when a value is chosen. Pass the result of selectOption back as `selection` so impossible combinations resolve to an existing variant. */
   onChange: (optionName: string, value: string) => void;
 }
 

@@ -3,9 +3,12 @@ import { Icon } from '../Icon';
 import { useLinkComponent } from './LinkProvider';
 import styles from './Link.module.css';
 
+/** Link styling: `inline` for links in running text, `standalone` for a link on its own line. */
 export type LinkVariant = 'inline' | 'standalone';
 
+/** Props for Link. Accepts native `<a>` attributes; `href` is required. */
 export interface LinkProps extends Omit<AnchorHTMLAttributes<HTMLAnchorElement>, 'href'> {
+  /** Destination URL. Absolute http(s) or protocol-relative URLs are treated as external. */
   href: string;
   /** `inline` sits inside running text; `standalone` is a call to action on its own line. */
   variant?: LinkVariant;
@@ -22,6 +25,13 @@ export interface LinkProps extends Omit<AnchorHTMLAttributes<HTMLAnchorElement>,
 
 const ABSOLUTE_URL = /^(https?:)?\/\//i;
 
+/**
+ * A text link. Internal links render through the component set by LinkProvider (so the host app's
+ * router handles them); external links render a plain `<a>`.
+ *
+ * External links get rel="noopener noreferrer" and an optional icon. With `target="_blank"`, internal
+ * links get rel="noopener" and external links get visually hidden "(opens in a new tab)" text.
+ */
 export function Link({
   href,
   variant = 'inline',

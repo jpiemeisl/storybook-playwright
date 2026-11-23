@@ -5,12 +5,17 @@ import { Icon } from '../Icon';
 import { Text } from '../Text';
 import styles from './Accordion.module.css';
 
+/** One accordion section: a trigger title and the panel content it reveals. */
 export interface AccordionItem {
+  /** Unique within the accordion. Used for `defaultExpanded` and to build the button and panel ids. */
   id: string;
+  /** Text of the trigger button. */
   title: string;
+  /** Panel content shown when the item is expanded. */
   content: ReactNode;
 }
 
+/** Props for Accordion. Uncontrolled: the open state is kept internally after the first render. */
 export interface AccordionProps {
   items: AccordionItem[];
   /** Let several panels be open at once. Default false (opening one closes the others). */
@@ -89,10 +94,15 @@ export function Accordion({ items, allowMultiple = false, defaultExpanded = [], 
   );
 }
 
+/** Props for FaqSection. */
 export interface FaqSectionProps {
+  /** Questions and answers, shown as accordion items. */
   items: FaqItem[];
+  /** Section heading. Default "Frequently asked questions". */
   heading?: string;
+  /** Optional lead text under the heading. */
   intro?: ReactNode;
+  /** Let several answers be open at once. Default false. */
   allowMultiple?: boolean;
   /** Level of `heading`; questions use the next level down. Default 2. */
   headingLevel?: 2 | 3;

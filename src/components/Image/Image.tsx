@@ -1,6 +1,7 @@
 import { useState, type CSSProperties, type ReactNode } from 'react';
 import styles from './Image.module.css';
 
+/** How an Image fills its box when `aspectRatio` crops it: `cover` fills and crops, `contain` fits the whole image. */
 export type ImageFit = 'cover' | 'contain';
 
 /** Props handed to a `render` override, e.g. to render Next.js `<Image>` instead of `<img>`. */
@@ -18,6 +19,7 @@ export interface ImageRenderProps {
   onError: () => void;
 }
 
+/** Props for Image. */
 export interface ImageProps {
   src: string;
   /** Required. Describe the image, or pass "" for a purely decorative image. */
@@ -29,13 +31,21 @@ export interface ImageProps {
   height?: number;
   /** CSS aspect-ratio, e.g. "16 / 9" or 1.5. Reserves space and crops via `fit`. */
   aspectRatio?: string | number;
+  /** How the image fills its box when cropped. Default `cover`. */
   fit?: ImageFit;
+  /** Native loading hint. Default `lazy`; use `eager` for above-the-fold images. */
   loading?: 'lazy' | 'eager';
   className?: string;
   /** Override the element that is rendered, e.g. a framework image component. */
   render?: (props: ImageRenderProps) => ReactNode;
 }
 
+/**
+ * A responsive `<img>` that lazy-loads, decodes async and can reserve space with `aspectRatio`.
+ *
+ * If the image fails to load it is replaced by a placeholder box of the same ratio that shows the alt
+ * text (role="img" with the alt as its name), or an aria-hidden box for decorative images.
+ */
 export function Image({
   src,
   alt,

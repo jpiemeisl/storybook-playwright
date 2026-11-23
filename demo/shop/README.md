@@ -17,24 +17,25 @@ fit. It lives in `demo/`: nothing under `src/` imports it and no bundle contains
 - **`DemoShopApp.tsx`:** composes the router, `DemoCommerceProvider`, `DemoAccountProvider`, the link
   provider, a demo banner ("Demo shop: no real orders or payments"), one notifications region and the
   route pages. Routes render with `PageRenderer` and the core template registry merged with
-  `commerceTemplates`.
+  `commerceTemplates` (`shopTemplates` in `shopContext.tsx`).
 - **Routes:** `CommerceRoutes.tsx` (collection with filter, sort and page in the query through
   `parseFilters`/`serializeFilters`, product, cart, checkout with the step in demo state, confirmation),
-  `AccountRoutes.tsx` (sign in, register, forgot password, every account page) and the content routes in
-  `DemoShopApp.tsx` (home, about, pricing, contact, journal, search, 404). Content is CMS-shaped data in
+  `AccountRoutes.tsx` (sign in, register, forgot password, every account page; no reset-password route) and the content routes in
+  `DemoShopApp.tsx` (home, about, pricing, contact, journal at `/blog`, search, 404). Content is CMS-shaped data in
   `content.ts` and `journal.ts`.
 - **Header controls** (`ShopHeaderActions.tsx`) use the library's `headerActions` slot: search, the
   account link ("Sign in" or the customer's first name) and the cart button with its live count, which
   opens the MiniCart. Below 30rem only the cart and the menu fit; search and the account link stay in
   the footer's Help column.
 
-## Behaviour
+## Behavior
 
 - **Sign in** accepts the demo customer's email (`robin@example.com`, shown on the sign-in page's banner)
   with any non-empty password. Any other email fails with the generic error. Register signs in at once.
   There is no real authentication.
 - **Placing an order** records it in the demo account (`recordOrder`): it appears in order history, its
   digital files in Downloads and its subscriptions (trials included) in Subscriptions. The cart empties.
+- **Account data** starts from the `calm` fixture set, signed out unless a story sets `signedIn`.
 - **Theme:** the Storybook theme toolbar wraps every story in `<Theme>`, so the whole shop restyles.
 - **Cookie banner:** only in the `WithCookieBanner` story (in-memory choice; the shop sets no cookies).
 

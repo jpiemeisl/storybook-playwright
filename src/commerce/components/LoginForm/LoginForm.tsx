@@ -7,6 +7,7 @@ import { GENERIC_LOGIN_ERROR, validateLogin, type LoginValues } from '../../logi
 import { AuthFormShell, PasswordField, type AuthFormBaseProps } from '../AuthForm';
 import styles from '../AuthForm/AuthForm.module.css';
 
+/** Props for LoginForm, the sign-in form. */
 export interface LoginFormProps extends AuthFormBaseProps<LoginValues> {
   /** "Forgot your password?" and "Create an account" links. */
   links?: { forgotPassword?: string; register?: string };

@@ -8,16 +8,24 @@ import type { FormStatus } from '../forms';
 import { Input } from '../Input';
 import styles from './NewsletterSignup.module.css';
 
+/** Values NewsletterSignup passes to `onSubmit` once the form is valid. */
 export interface NewsletterValues {
   email: string;
+  /** Only present when `showName` is on and the field was filled in. */
   name?: string;
+  /** Only present when `consentLabel` is set (then always true, since the checkbox is required). */
   consent?: boolean;
 }
 
+/** Props for NewsletterSignup. The host app does the actual subscribing and reports progress through `status`. */
 export interface NewsletterSignupProps {
+  /** Called with the values after a valid submit. Not called while `status` is "submitting". */
   onSubmit: (values: NewsletterValues) => void;
+  /** Request state from the host app. "success" replaces the form with the success message; "error" shows `errorMessage` above it. */
   status?: FormStatus;
+  /** Shown in an urgent alert when `status` is "error". */
   errorMessage?: ReactNode;
+  /** Shown in place of the form when `status` is "success". */
   successMessage?: ReactNode;
   /** `inline`: fields and button in one row (stacks on narrow slots). `stacked`: one per row. */
   layout?: 'inline' | 'stacked';
@@ -25,6 +33,7 @@ export interface NewsletterSignupProps {
   showName?: boolean;
   /** Label for a consent checkbox. When given, the checkbox is shown and required. */
   consentLabel?: ReactNode;
+  /** Text of the submit button. Default "Subscribe". */
   submitLabel?: string;
 }
 

@@ -9,6 +9,7 @@ import styles from './DeliveryInfo.module.css';
 /** Store policy text (demo store). Hosts with other policies render their own list. */
 export const DELIVERY_COPY = { dispatch: 'Ships in 1-2 business days', returns: 'Free returns within 30 days' };
 
+/** Props for DeliveryInfo. */
 export interface DeliveryInfoProps {
   product: Product;
   /** The selected purchase option (for the billing line of subscriptions and subscribe-and-save). */
@@ -39,6 +40,7 @@ export function deliveryLines(product: Product, purchaseOption?: PurchaseOption)
   return lines;
 }
 
+/** Lists delivery and billing facts for a product as icon lines: dispatch, free shipping and returns for physical products, file count, size and access period for digital ones, and the billing interval and cancellation terms for a subscription purchase option. Renders nothing when no line applies. */
 export function DeliveryInfo({ product, purchaseOption }: DeliveryInfoProps) {
   const lines = deliveryLines(product, purchaseOption);
   if (lines.length === 0) return null;

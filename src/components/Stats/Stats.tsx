@@ -3,11 +3,15 @@ import { Grid } from '../Grid';
 import { Heading } from '../Heading';
 import styles from './Stats.module.css';
 
+/** Props for Stats. */
 export interface StatsProps {
+  /** Figures to show. Labels must be unique (used as keys). */
   items: StatItem[];
+  /** Optional heading above the figures. */
   heading?: string;
   /** Columns on wide slots (2-4). Defaults to the item count, capped at 4. */
   columns?: 2 | 3 | 4;
+  /** Heading level of `heading`. Default 2. */
   headingLevel?: 2 | 3;
 }
 

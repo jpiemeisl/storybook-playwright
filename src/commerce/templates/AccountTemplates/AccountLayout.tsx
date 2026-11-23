@@ -13,9 +13,12 @@ import type { AccountPage } from '../../types/account-pages';
 import type { CommerceContext } from '../../types/context';
 import styles from './AccountTemplates.module.css';
 
+/** Props for AccountLayout, the shared shell around every account page. */
 export interface AccountLayoutProps {
+  /** The account page data; supplies the customer (null shows the sign-in prompt), navigation counts and links. */
   page: AccountPage;
   chrome: SiteChrome;
+  /** Host callbacks and routing (current path for the active nav item, sign-out handler). */
   ctx?: CommerceContext;
   /** The page's h1. */
   title: string;

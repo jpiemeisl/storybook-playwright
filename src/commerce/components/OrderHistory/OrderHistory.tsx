@@ -12,11 +12,13 @@ import type { Order, OrderStatus } from '../../types/order';
 import { OrderStatusBadge } from '../StatusBadge';
 import styles from './OrderHistory.module.css';
 
+/** Props for OrderHistory, the account order list with status and year filters and pagination. */
 export interface OrderHistoryProps {
   /** The orders on this page (already filtered and paginated). */
   orders: Order[];
   /** Total orders before filtering; 0 shows the "No orders yet" state. */
   totalCount: number;
+  /** The active status and year filter; preselects the filter controls. */
   filter?: OrderFilter;
   /** Years that have orders, for the year filter. */
   years: string[];
