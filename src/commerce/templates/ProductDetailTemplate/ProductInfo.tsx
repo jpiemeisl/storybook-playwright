@@ -30,6 +30,8 @@ interface ProductInfoProps {
   availability: Record<string, Record<string, OptionAvailability>>;
   onSelect: (name: string, value: string) => void;
   initialPurchaseOption?: PurchaseOption;
+  /** Controlled wishlist state (ProductPage.inWishlist). Undefined: the button keeps its own state. */
+  inWishlist?: boolean;
   ctx?: CommerceContext;
 }
 
@@ -45,11 +47,16 @@ function disabledState(product: Product, variant: Variant | undefined) {
  * interval, variants, size guide, quantity, trial banner, add to cart, wishlist, delivery, digital files
  * and the info accordion.
  */
-export function ProductInfo({ product, variant, selection, onSelect, initialPurchaseOption, ctx }: ProductInfoProps) {
+export function ProductInfo({ product, variant, selection, onSelect, initialPurchaseOption, inWishlist, ctx }: ProductInfoProps) {
   const [option, setOption] = useState<PurchaseOption>(initialPurchaseOption ?? defaultPurchaseOption(product));
   const [quantity, setQuantity] = useState(1);
   const [status, setStatus] = useState<AddToCartStatus>('idle');
-  const [saved, setSaved] = useState(false);
+  const [ownSaved, setOwnSaved] = useState(false);
+  const saved = inWishlist ?? ownSaved;
+  const toggleWishlist = (next: boolean) => {
+    if (inWishlist === undefined) setOwnSaved(next);
+    ctx?.onWishlistToggle?.(product, next);
+  };
   const shown = variant ?? product.variants[0]!;
   const subscription = option.type === 'subscription' ? option : undefined;
   const price = subscriptionUnitPrice(shown.price, option);
@@ -118,7 +125,7 @@ export function ProductInfo({ product, variant, selection, onSelect, initialPurc
       <TrialBanner trialDays={subscription?.trialDays} />
       <div ref={buyRef} className={styles.buy}>
         <AddToCart {...addProps} />
-        <WishlistButton pressed={saved} onPressedChange={setSaved} productTitle={product.title} />
+        <WishlistButton pressed={saved} onPressedChange={toggleWishlist} productTitle={product.title} />
       </div>
       <DeliveryInfo product={product} purchaseOption={option} />
       {product.kind === 'digital' && <DigitalDetails digital={product.digital} />}

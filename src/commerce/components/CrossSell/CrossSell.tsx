@@ -8,9 +8,11 @@ export interface CrossSellProps {
   hrefFor: (product: Product) => string;
   /** Enables each card's quick "Add to cart" button and is called with the product and its single variant. */
   onQuickAdd?: (product: Product, variant: Variant) => void;
+  /** Id of the section heading. Default: a unique generated id. */
+  id?: string;
 }
 
 /** "Complete your order": RelatedProducts with the cart page heading. Renders nothing for no products. */
-export function CrossSell({ products, hrefFor, onQuickAdd }: CrossSellProps) {
-  return <RelatedProducts products={products} hrefFor={hrefFor} onQuickAdd={onQuickAdd} heading="Complete your order" />;
+export function CrossSell({ products, hrefFor, onQuickAdd, id }: CrossSellProps) {
+  return <RelatedProducts products={products} hrefFor={hrefFor} onQuickAdd={onQuickAdd} heading="Complete your order" id={id} />;
 }

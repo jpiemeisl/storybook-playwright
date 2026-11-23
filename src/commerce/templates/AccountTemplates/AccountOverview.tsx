@@ -10,7 +10,7 @@ import { getAttentionItems, isAccountEmpty } from '../../logic/account';
 import { formatCommerceDate } from '../../logic/pricing';
 import type { AccountDashboardPage } from '../../types/account-pages';
 import type { CommerceContext } from '../../types/context';
-import { AccountLayout, AccountPageSection } from './AccountLayout';
+import { accountBase, AccountLayout, AccountPageSection } from './AccountLayout';
 import styles from './AccountTemplates.module.css';
 
 /** Account pages need a `customer` (an object, or null for signed out). */
@@ -28,7 +28,8 @@ const firstName = (name: string) => name.split(' ')[0] ?? name;
  */
 export function AccountDashboardTemplate({ page, chrome, ctx }: TemplateProps<AccountDashboardPage> & { ctx?: CommerceContext }) {
   const { customer, orders, subscriptions, now } = page;
-  const attention = getAttentionItems(page);
+  const base = accountBase(page.links);
+  const attention = getAttentionItems(page, base);
   const live = subscriptions.filter((s) => s.status !== 'cancelled');
   const empty = isAccountEmpty({ ...page, wishlist: page.wishlist });
 
@@ -56,7 +57,7 @@ export function AccountDashboardTemplate({ page, chrome, ctx }: TemplateProps<Ac
         </AccountPageSection>
       ) : (
         <>
-          <AccountPageSection id="recent-orders" title="Recent orders" action={orders.length > 3 ? <Link href="/account/orders">All orders</Link> : undefined}>
+          <AccountPageSection id="recent-orders" title="Recent orders" action={orders.length > 3 ? <Link href={`${base}/orders`}>All orders</Link> : undefined}>
             {orders.length === 0 ? (
               <p>No orders yet.</p>
             ) : (
@@ -67,7 +68,7 @@ export function AccountDashboardTemplate({ page, chrome, ctx }: TemplateProps<Ac
                     <span>{formatCommerceDate(order.placedAt)}</span>
                     <OrderStatusBadge order={order} />
                     <span className={styles.recentTotal}>{formatMoney(order.totals.total)}</span>
-                    <Link href={`/account/orders/${order.number}`} aria-label={`View order ${order.number}`}>
+                    <Link href={`${base}/orders/${order.number}`} aria-label={`View order ${order.number}`}>
                       View
                     </Link>
                   </li>
@@ -76,10 +77,10 @@ export function AccountDashboardTemplate({ page, chrome, ctx }: TemplateProps<Ac
             )}
           </AccountPageSection>
           {live.length > 0 && (
-            <AccountPageSection id="subscriptions" title="Your subscriptions" action={<Link href="/account/subscriptions">Manage subscriptions</Link>}>
+            <AccountPageSection id="subscriptions" title="Your subscriptions" action={<Link href={`${base}/subscriptions`}>Manage subscriptions</Link>}>
               <div className={styles.cards}>
                 {live.map((sub) => (
-                  <SubscriptionCard key={sub.id} subscription={sub} now={now} variant="compact" href={`/account/subscriptions/${sub.id}`} />
+                  <SubscriptionCard key={sub.id} subscription={sub} now={now} variant="compact" href={`${base}/subscriptions/${sub.id}`} />
                 ))}
               </div>
             </AccountPageSection>
@@ -89,10 +90,10 @@ export function AccountDashboardTemplate({ page, chrome, ctx }: TemplateProps<Ac
       <AccountPageSection id="quick-links" title="Quick links">
         <ul className={styles.quick}>
           <li>
-            <Link href="/account/addresses">Manage addresses</Link>
+            <Link href={`${base}/addresses`}>Manage addresses</Link>
           </li>
           <li>
-            <Link href="/account/wishlist">Your wishlist</Link>
+            <Link href={`${base}/wishlist`}>Your wishlist</Link>
           </li>
           <li>
             <Link href={page.links?.support ?? '/contact'}>Contact support</Link>

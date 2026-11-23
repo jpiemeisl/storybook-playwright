@@ -24,8 +24,8 @@ export function RelatedPosts({ items, heading = 'Related articles', headingLevel
         {heading}
       </Heading>
       <CardGrid columns={shown.length === 4 ? 4 : 3}>
-        {shown.map((article) => (
-          <ArticleCard key={article.href} article={article} headingLevel={(headingLevel + 1) as 3 | 4} />
+        {shown.map((article, index) => (
+          <ArticleCard key={`${article.href}-${index}`} article={article} headingLevel={(headingLevel + 1) as 3 | 4} />
         ))}
       </CardGrid>
     </section>

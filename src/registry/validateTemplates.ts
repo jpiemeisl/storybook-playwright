@@ -251,13 +251,15 @@ const rules: Partial<Record<TemplateName, (c: Checker, validateBlocks: ValidateB
 };
 
 /**
- * Validates the template name and the template's structured data. Composed templates (blocks only)
- * get a warning when no block can provide the page's h1.
+ * Validates the template name and the template's structured data. A missing template is checked as
+ * `default`. Composed templates (blocks only) get a warning when no block can provide the page's h1.
  */
 export function validateTemplateFields(c: Checker, validateBlocks: ValidateBlocks, knownTemplates: readonly string[] = builtInTemplates) {
-  const template = c.value.template;
-  if (template === undefined) return;
-  if (typeof template !== 'string' || !knownTemplates.includes(template)) {
+  // A page without a template renders with the default template, so it gets the same checks.
+  // The fallback skips the known-name check, so a custom knownTemplates list needn't include it.
+  const declared = c.value.template;
+  const template = declared ?? 'default';
+  if (typeof template !== 'string' || (declared !== undefined && !knownTemplates.includes(template))) {
     c.report('unknown-template', 'template', `Unknown template ${JSON.stringify(template)}; the default template will be used.`, 'warning');
     return;
   }

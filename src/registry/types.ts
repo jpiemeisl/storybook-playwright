@@ -33,7 +33,7 @@ export interface BlockContext extends RendererContext {
   headingLevel: 1 | 2 | 3;
   /** Level for headings of items inside the block (always headingLevel + 1). */
   itemHeadingLevel: 2 | 3 | 4;
-  /** Report a problem found while mapping (e.g. an unsafe link that was neutralised). */
+  /** Report a problem found while mapping (e.g. an unsafe link that was neutralized). */
   report: (issue: Pick<ValidationIssue, 'code' | 'message' | 'path'> & Partial<ValidationIssue>) => void;
   /** Renders nested blocks (used by tabs). One level only. */
   renderNested: (blocks: NestedBlock[]) => ReactNode;

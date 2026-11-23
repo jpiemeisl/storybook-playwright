@@ -33,7 +33,7 @@ export const filterLibrary = (items: readonly LibraryItem[], query = '') => {
 
 /**
  * The downloads library: a search box (client-side, controlled), then each product with its order,
- * licence summary, masked licence key and files (the shared DownloadList; unavailable files show their
+ * license summary, masked license key and files (the shared DownloadList; unavailable files show their
  * reason from data). Grouped by product, or by order with the products underneath.
  */
 export function DownloadsLibrary({ items, groupBy = 'product', query = '', onQueryChange, hrefFor, orderHref = (n) => `/account/orders/${n}`, headingLevel = 2 }: DownloadsLibraryProps) {
@@ -49,7 +49,7 @@ export function DownloadsLibrary({ items, groupBy = 'product', query = '', onQue
       <p className={styles.meta}>
         Bought {formatCommerceDate(item.purchasedAt)} in <Link href={orderHref(item.orderNumber)}>order {item.orderNumber}</Link>
       </p>
-      {item.licence && <p className={styles.licence}>Licence: {item.licence.summary}</p>}
+      {item.licence && <p className={styles.licence}>License: {item.licence.summary}</p>}
       {item.licenseKey && <LicenseKey value={item.licenseKey} />}
       <DownloadList downloads={item.files} hrefFor={hrefFor ? (file) => hrefFor(item, file) : undefined} />
     </article>

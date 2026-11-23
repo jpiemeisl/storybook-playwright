@@ -18,7 +18,7 @@ Everything below is public API of `@jpiemeisl/pattern-library` (see [versioning.
 
 ## Core (`@jpiemeisl/pattern-library`)
 
-445 exports: 97 components, 52 functions, 1 class, 10 constants, 285 types.
+447 exports: 97 components, 54 functions, 1 class, 10 constants, 285 types.
 
 | Name | Kind |
 | --- | --- |
@@ -278,11 +278,13 @@ Everything below is public API of `@jpiemeisl/pattern-library` (see [versioning.
 | `NavItem` | type |
 | `NestedBlock` | type |
 | `neutraliseUnsafeUrls` | function |
+| `neutralizeUnsafeUrls` | function |
 | `NewsletterSignup` | component |
 | `NewsletterSignupBlock` | type |
 | `NewsletterSignupProps` | type |
 | `NewsletterValues` | type |
 | `normalisePath` | function |
+| `normalizePath` | function |
 | `Obj` | type |
 | `PageContent` | type |
 | `PageHeader` | component |
@@ -470,7 +472,7 @@ Everything below is public API of `@jpiemeisl/pattern-library` (see [versioning.
 
 ## Commerce (`@jpiemeisl/pattern-library/commerce`)
 
-411 exports: 89 components, 131 functions, 2 classes, 15 constants, 174 types.
+412 exports: 89 components, 131 functions, 2 classes, 15 constants, 175 types.
 
 | Name | Kind |
 | --- | --- |
@@ -802,6 +804,7 @@ Everything below is public API of `@jpiemeisl/pattern-library` (see [versioning.
 | `SignedOutPromptProps` | type |
 | `SizeGuide` | component |
 | `SizeGuideProps` | type |
+| `SizeGuideTable` | type |
 | `SortKey` | type |
 | `sortKeys` | constant |
 | `sortLabels` | constant |

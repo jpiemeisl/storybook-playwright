@@ -29,7 +29,7 @@ A page: metadata plus an ordered list of blocks.
 | --- | --- | --- | --- |
 | `id` | `string` | yes | CMS entry id. |
 | `slug` | `string` | yes | URL slug without leading slash, e.g. "about" or "blog/five-day-close"; "" for the home page. |
-| `template` | `string` | no | Page template name; interpreted by the host app (e.g. "landing", "article"). |
+| `template` | `string` | no | Page template name, e.g. "landing" or "blog-post"; PageRenderer resolves it through the templates registry (see TemplateName for the built-in names). Omitted means "default"; an unknown name renders with the default template and is reported as an issue. |
 | `seo` | `SeoMeta` | yes | Metadata. |
 | `blocks` | `Block[]` | yes | Blocks in display order. Ids unique within the page. |
 

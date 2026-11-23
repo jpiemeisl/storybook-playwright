@@ -3,7 +3,7 @@ import { Button } from '../Button';
 import { Checkbox } from '../Checkbox';
 import { Icon } from '../Icon';
 import { Modal } from '../Modal';
-import { allConsentChoices, defaultConsentChoices, type ConsentCategory, type ConsentChoices } from './consent';
+import { defaultConsentChoices, type ConsentCategory, type ConsentChoices } from './consent';
 import styles from './CookieBanner.module.css';
 
 /** Props for CookieBanner. The banner only reports choices through callbacks; the host app stores and applies them. */
@@ -22,16 +22,19 @@ export interface CookieBannerProps {
   initialChoices?: ConsentChoices;
   /** Banner "Accept all". */
   onAcceptAll: () => void;
-  /** Banner "Reject all". (The settings dialog's own "Reject all" calls `onSave` with every optional category off.) */
+  /**
+   * "Reject all", from the banner or from the settings dialog (which closes first). The host app records
+   * every optional category as off; `allConsentChoices(categories, false)` builds that value.
+   */
   onRejectAll: () => void;
-  /** Settings dialog "Save choices". */
+  /** Settings dialog "Save choices", with the choices as ticked. */
   onSave: (choices: ConsentChoices) => void;
   /** Adds a close button to the banner. What closing means (e.g. "decide later") is the host's call. */
   onClose?: () => void;
 }
 
 /**
- * UI only, and not legal advice. A non-modal, labelled region at the bottom of the viewport with
+ * UI only, and not legal advice. A non-modal, labeled region at the bottom of the viewport with
  * "Accept all" and "Reject all" given equal weight (same style, one tab stop each) and "Choose settings",
  * which opens a Modal with the categories. It never takes focus when it appears and never traps it; only
  * the settings dialog does, while open. It never reads or writes cookies or storage, loads no scripts and
@@ -85,7 +88,7 @@ export function CookieBanner({ open, position = 'bottom', title = 'Cookies on th
         description="Choose which kinds of cookies this site may use. You can change this later."
         footer={
           <>
-            <Button variant="secondary" onClick={() => finish(() => onSave(allConsentChoices(categories, false)))}>
+            <Button variant="secondary" onClick={() => finish(onRejectAll)}>
               Reject all
             </Button>
             <Button onClick={() => finish(() => onSave(choices))}>Save choices</Button>

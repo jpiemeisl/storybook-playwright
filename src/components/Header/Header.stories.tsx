@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import type { Decorator, Meta, StoryObj } from '@storybook/react-vite';
 import { expect, userEvent, waitFor, within } from 'storybook/test';
 import {
@@ -16,7 +17,7 @@ import { Stack } from '../Stack';
 import { Text } from '../Text';
 import { Header } from './Header';
 
-/** Page content under the header, so dropdown overlap and sticky behaviour are visible. */
+/** Page content under the header, so dropdown overlap and sticky behavior are visible. */
 const withPage: Decorator = (Story, { parameters }) => (
   <>
     <Story />
@@ -145,5 +146,36 @@ export const MobileMenuKeyboard: Story = {
     await waitFor(() => expect(dialog).not.toHaveAttribute('open'));
     await expect(menuButton).toHaveAttribute('aria-expanded', 'false');
     await expect(menuButton).toHaveFocus();
+  },
+};
+
+/**
+ * Items that arrive after the first render (for example from a host app's async navigation) are still
+ * measured: the long nav collapses to the menu button.
+ */
+export const ItemsArriveLater: Story = {
+  parameters: { vrt: { screenshot: false } },
+  args: { items: [] },
+  render: function Render(args) {
+    const [items, setItems] = useState(args.items);
+    return (
+      <>
+        <Header {...args} items={items} />
+        <button type="button" onClick={() => setItems(longNav)}>
+          Load navigation
+        </button>
+      </>
+    );
+  },
+  play: async ({ canvasElement }) => {
+    const canvas = within(canvasElement);
+    const header = canvasElement.querySelector('header')!;
+    await expect(canvas.queryByRole('navigation')).toBeNull();
+    await expect(header).not.toHaveAttribute('data-overflowing');
+    await userEvent.click(canvas.getByRole('button', { name: 'Load navigation' }));
+    // Below 48rem the inline nav is hidden and the menu button always shows, so overflow is measured
+    // (and matters) only at desktop widths.
+    if (window.matchMedia('(min-width: 48rem)').matches) await waitFor(() => expect(header).toHaveAttribute('data-overflowing'));
+    await waitFor(() => expect(canvas.getByRole('button', { name: 'Menu' })).toBeVisible());
   },
 };

@@ -6,7 +6,10 @@ import styles from './Gallery.module.css';
 
 /** Props for Gallery. Renders nothing when `images` is empty. */
 export interface GalleryProps {
-  /** Images in display order. Each image's alt names its thumbnail button; an optional caption is shown under it. */
+  /**
+   * Images in display order. Each image's alt names its thumbnail button (an empty alt falls back to
+   * "Open image n of total"); an optional caption is shown under it.
+   */
   images: GalleryImage[];
   /** `grid`: uniform square crops. `columns`: masonry-style CSS columns with natural aspect ratios. */
   layout?: 'grid' | 'columns';
@@ -42,6 +45,8 @@ export function Gallery({ images, layout = 'grid', columns = 3, lightbox = true,
                     type="button"
                     className={styles.open}
                     aria-haspopup="dialog"
+                    // A decorative (empty) alt would leave the button unnamed; name it by position instead.
+                    aria-label={image.alt?.trim() ? undefined : `Open image ${index + 1} of ${images.length}`}
                     onClick={() => setOpenIndex(index)}
                   >
                     {thumbnail}

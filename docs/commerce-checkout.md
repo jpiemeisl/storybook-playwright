@@ -44,9 +44,21 @@ physical line (digital plus subscription) follows the "nothing ships" path.
 - If something ships, billing defaults to "same as shipping". A separate billing address is required on Payment only when that box is unticked.
 - If nothing ships, there is no shipping address, so the billing address is collected on Information instead.
 
-`validateCheckoutStep`, `canEnterStep` and `firstInvalidStep` take an optional `{ collectBillingAddress: false }`
-for hosts whose payment provider collects billing details itself. The checkout template doesn't take
-this option: it always shows and validates the billing address.
+Hosts whose payment provider collects billing details itself set `ctx.collectBillingAddress: false`.
+The checkout template then leaves out the billing address fields (on Information for carts that ship
+nothing, on Payment for carts that ship) and the billing address on Review, and validates without them.
+`validateCheckoutStep`, `canEnterStep` and `firstInvalidStep` take the same option as
+`{ collectBillingAddress: false }`; pass it in your own step routing and server checks too.
+
+```tsx check
+import { canEnterStep, type CheckoutFlags, type CheckoutValues, type CommerceContext } from '@jpiemeisl/pattern-library/commerce';
+
+/** The provider's hosted form collects the billing address, so checkout doesn't. */
+export const checkoutContext: CommerceContext = { collectBillingAddress: false };
+
+/** Server-side routing with the same rule. */
+export const canOpenPayment = (values: CheckoutValues, flags: CheckoutFlags) => canEnterStep('payment', values, flags, { collectBillingAddress: false });
+```
 
 ## CheckoutValues
 
@@ -129,7 +141,8 @@ The callbacks go in `ctx`:
 
 The page is `{ cart, totals, step, values, errors?, shippingMethods, issues?, notes?, status?, errorMessage?, links? }`. Wire it like this:
 - `ctx.onCheckoutChange(values)`: store the values. When `shippingMethodId` changes, recompute totals with that method.
-- `ctx.onStepChange(step)`: route to the step, for example `/checkout/payment`. The template validates the current step before calling it, and the stepper calls it to go back to completed steps. Never route forward past a step that `canEnterStep` rejects. Without `onStepChange`, steps are `?step=…` links.
+- `ctx.onStepChange(step)`: route to the step, for example `/checkout/payment`. The template validates the current step before calling it, and the stepper calls it to go back to completed steps that `canEnterStep` allows. Never route forward past a step that `canEnterStep` rejects. Without `onStepChange`, steps are `?step=…` links.
+- `ctx.collectBillingAddress`: `false` to leave out the billing address (see the billing address model above).
 - `ctx.onPlaceOrder()`:
   1. Run `firstInvalidStep` again on the server.
   2. Confirm the payment with your provider.
@@ -159,14 +172,14 @@ here. Demo only: no payment is taken." A story checks that the selector contains
 The page is `{ order, links? }`. Build the order with `createOrderFromCart(cart, values, { orderId, orderNumber, placedAt, promoDefinitions, shippingMethods, products })`.
 The caller supplies the ids and the time: the function never reads the clock or generates ids, and it
 doesn't validate the values (run `firstInvalidStep` first).
-- Digital lines become `downloads`.
+- Digital lines become `downloads`, each with the `productId` it belongs to.
 - Subscription lines become `recurring` (first billing date, trial end, a ready-made note).
 - Shippable carts get the shipping address and method.
 - When trials make today's charge smaller, `totals.dueToday` is set.
 
-Download links on the confirmation are `href="#"` placeholders that never navigate: the template has no
-way to pass real URLs (`DownloadList` takes `hrefFor` when used directly). The "Demo only: a confirmation
-would be emailed to …" line is shown only when `order.email` exists. Nothing is sent.
+Download links on the confirmation come from `ctx.downloadHref(productId, fileId)`, the same callback as
+the account downloads library. Without it they're `href="#"` placeholders that never navigate. The "Demo
+only: a confirmation would be emailed to …" line is shown only when `order.email` exists. Nothing is sent.
 
 ### Validation
 

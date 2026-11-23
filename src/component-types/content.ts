@@ -77,7 +77,13 @@ export interface TableColumn<Row> {
   align?: 'start' | 'center' | 'end';
 }
 
-/** Columns and rows for a Table, kept together as one value. */
+/**
+ * Columns and rows for a Table, kept together as one value, so a host app can store or pass a whole
+ * table and spread it into `<Table caption="…" {...data} />`. No core component takes it as a prop.
+ * Not the same as the commerce `TableData` (a JSON size-guide table from
+ * `@jpiemeisl/pattern-library/commerce`); this one is generic over the row shape and its cells may be
+ * React nodes.
+ */
 export interface TableData<Row extends Record<string, ReactNode>> {
   columns: TableColumn<Row>[];
   rows: Row[];

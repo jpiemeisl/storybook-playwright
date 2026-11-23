@@ -46,7 +46,8 @@ Step by step:
    ```
 
    It refuses on `main` or a detached HEAD, with uncommitted changes to tracked files, when the new
-   version's tag already exists locally, and when the Unreleased section has no notes. Then it runs
+   version's tag already exists locally or on `origin` (or `origin` can't be reached to check), when
+   the Unreleased section has no notes, and when CHANGELOG.md already has a section for the new version. Then it runs
    `npm version <bump> --no-git-tag-version --ignore-scripts` (package.json and package-lock.json), moves the Unreleased
    notes under `## [0.2.0] - <today>`, updates the comparison links, rebuilds the library and
    regenerates `docs/api-surface.md`. It commits nothing.

@@ -132,3 +132,16 @@ export const AcceptAndReject: Story = {
     await expect(within(canvasElement).getByLabelText('Last choice')).toHaveTextContent('reject all');
   },
 };
+
+/** The settings dialog's "Reject all" closes the dialog and calls the same onRejectAll as the banner's. */
+export const DialogRejectAll: Story = {
+  parameters: { vrt: { screenshot: false } },
+  render: () => <Harness />,
+  play: async ({ canvasElement }) => {
+    await userEvent.click(within(banner(canvasElement)).getByRole('button', { name: 'Choose settings' }));
+    const dialog = within(await within(canvasElement.ownerDocument.body).findByRole('dialog', { name: 'Cookie settings' }));
+    await userEvent.click(dialog.getByRole('button', { name: 'Reject all' }));
+    await waitFor(() => expect(within(canvasElement).getByLabelText('Last choice')).toHaveTextContent('reject all'));
+    await expect(within(canvasElement.ownerDocument.body).queryByRole('dialog', { name: 'Cookie settings' })).toBeNull();
+  },
+};

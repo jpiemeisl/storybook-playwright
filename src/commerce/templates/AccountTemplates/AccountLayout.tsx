@@ -9,9 +9,12 @@ import { SiteLayout } from '../../../templates/SiteLayout';
 import { layoutProps } from '../../../templates/TemplateBlocks';
 import { AccountNav } from '../../components/AccountNav';
 import { SignedOutPrompt } from '../../components/SignedOutPrompt';
-import type { AccountPage } from '../../types/account-pages';
+import type { AccountLinks, AccountPage } from '../../types/account-pages';
 import type { CommerceContext } from '../../types/context';
 import styles from './AccountTemplates.module.css';
+
+/** The account area's base path from `links.account` (no trailing slash). Default "/account". Internal. */
+export const accountBase = (links?: AccountLinks) => (links?.account ?? '/account').replace(/\/+$/, '') || '/';
 
 /** Props for AccountLayout, the shared shell around every account page. */
 export interface AccountLayoutProps {
@@ -32,10 +35,11 @@ export interface AccountLayoutProps {
 /**
  * The account page shell: SiteLayout, the page header (the only h1), AccountNav (a sidebar from 64rem,
  * above the content below that) and the content. Without a customer it shows SignedOutPrompt instead
- * of the navigation and content.
+ * of the navigation and content. Navigation and sign-in links live under `page.links.account`.
  */
 export function AccountLayout({ page, chrome, ctx, title, description, breadcrumbs, signedOutTitle, children }: AccountLayoutProps) {
   const signedIn = !!page.customer;
+  const base = accountBase(page.links);
   return (
     <SiteLayout chrome={chrome} {...layoutProps(ctx)}>
       <PageSection>
@@ -45,12 +49,12 @@ export function AccountLayout({ page, chrome, ctx, title, description, breadcrum
             {signedIn ? (
               <div className={styles.layout}>
                 <div className={styles.nav}>
-                  <AccountNav currentPath={ctx?.currentPath} counts={page.nav?.counts} has={page.nav?.has} onSignOut={ctx?.onSignOut} />
+                  <AccountNav currentPath={ctx?.currentPath} basePath={base} counts={page.nav?.counts} has={page.nav?.has} onSignOut={ctx?.onSignOut} />
                 </div>
                 <div className={styles.content}>{children}</div>
               </div>
             ) : (
-              <SignedOutPrompt title={signedOutTitle} links={{ signIn: page.links?.login, register: page.links?.register }} />
+              <SignedOutPrompt title={signedOutTitle} links={{ signIn: page.links?.login ?? `${base}/login`, register: page.links?.register ?? `${base}/register` }} />
             )}
           </div>
         </Container>

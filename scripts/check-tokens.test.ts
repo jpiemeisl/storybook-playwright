@@ -5,21 +5,21 @@ const primitives = forbiddenPrimitives(':root { --neutral-0: #fff; --teal-600: #
 const messages = (css: string) => checkCss(css, primitives).map((v) => v.message);
 
 describe('check-tokens', () => {
-  it('collects colour, radius, shadow and font-family primitives but not spacing or type scale', () => {
+  it('collects color, radius, shadow and font-family primitives but not spacing or type scale', () => {
     expect([...primitives].sort()).toEqual(['--font-sans', '--neutral-0', '--radius-2', '--radius-full', '--shadow-1', '--teal-600']);
   });
 
-  it('flags primitives and raw colours in declarations', () => {
+  it('flags primitives and raw colors in declarations', () => {
     expect(messages('.a {\n  color: var(--teal-600);\n  border-radius: var(--radius-2);\n  box-shadow: var(--shadow-1);\n  font-family: var(--font-sans);\n}')).toEqual([
       'primitive token --teal-600',
       'primitive token --radius-2',
       'primitive token --shadow-1',
       'primitive token --font-sans',
     ]);
-    expect(messages('.a {\r\n  color: #fff;\r\n  background: rgb(0 0 0 / 0.5);\r\n  border-color: hsl(10 20% 30%);\r\n  outline-color: white;\r\n}')).toEqual(['raw colour #fff', 'raw colour rgb()', 'raw colour hsl()', 'named colour white']);
+    expect(messages('.a {\r\n  color: #fff;\r\n  background: rgb(0 0 0 / 0.5);\r\n  border-color: hsl(10 20% 30%);\r\n  outline-color: white;\r\n}')).toEqual(['raw color #fff', 'raw color rgb()', 'raw color hsl()', 'named color white']);
   });
 
-  it('allows semantic tokens, spacing primitives, keywords and forced-colours system colours', () => {
+  it('allows semantic tokens, spacing primitives, keywords and forced-colors system colors', () => {
     expect(messages('.a {\n  color: var(--color-text);\n  padding: var(--space-4);\n  background: transparent;\n  fill: currentColor;\n  border-color: inherit;\n}\n@media (forced-colors: active) {\n  .a { color: CanvasText; outline-color: Highlight; border-color: GrayText; }\n}')).toEqual([]);
   });
 

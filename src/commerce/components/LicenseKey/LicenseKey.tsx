@@ -6,7 +6,7 @@ import styles from './LicenseKey.module.css';
 export interface LicenseKeyProps {
   /** The key. Shown only after the customer reveals it; never put in an attribute, URL or log. */
   value: string;
-  /** Default "Licence key". */
+  /** Default "License key". */
   label?: string;
 }
 
@@ -19,11 +19,11 @@ export const maskKey = (value: string) => {
 };
 
 /**
- * A licence key in monospace, masked by default (only the last four characters show, and the real key
+ * A license key in monospace, masked by default (only the last four characters show, and the real key
  * is not in the DOM until revealed). "Show key" is a toggle button (aria-pressed); "Copy" copies the
  * key from the event handler and announces "Copied" (or how to copy manually) politely.
  */
-export function LicenseKey({ value, label = 'Licence key' }: LicenseKeyProps) {
+export function LicenseKey({ value, label = 'License key' }: LicenseKeyProps) {
   const [revealed, setRevealed] = useState(false);
   const [message, setMessage] = useState('');
   const id = useId();

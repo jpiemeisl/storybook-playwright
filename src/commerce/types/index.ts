@@ -10,6 +10,7 @@ export type {
   ProductInfoSection,
   ProductOption,
   ProductReviewsData,
+  SizeGuideTable,
   TableData,
   PurchaseOption,
   Review,

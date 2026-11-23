@@ -12,7 +12,7 @@ export interface ThemeProps extends HTMLAttributes<HTMLElement> {
 
 /**
  * Applies a theme to its subtree by rendering one element with data-theme. Themes nest: a <Theme> inside
- * another uses its own tokens. The element paints its own background and text colour (base.css).
+ * another uses its own tokens. The element paints its own background and text color (base.css).
  * No storage, no effects, no preference detection: SSR-safe. The host decides which theme to show.
  */
 export function Theme({ name, as: Component = 'div', children, ...rest }: ThemeProps) {

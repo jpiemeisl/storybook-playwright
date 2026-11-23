@@ -24,10 +24,10 @@ export interface StatusInfo {
 // ---------------------------------------------------------------------------------------------- orders
 
 const orderStatus: Record<OrderStatus, StatusInfo> = {
-  processing: { label: 'Processing', tone: 'info', description: 'We’ve received your order and are getting it ready.' },
+  processing: { label: 'Processing', tone: 'info', description: 'Your order has been received and is being prepared.' },
   shipped: { label: 'Shipped', tone: 'info', description: 'Your order is on its way.' },
   delivered: { label: 'Delivered', tone: 'success', description: 'Your order was delivered.' },
-  cancelled: { label: 'Cancelled', tone: 'neutral', description: 'This order was cancelled. You have not been charged.' },
+  cancelled: { label: 'Canceled', tone: 'neutral', description: 'This order was canceled. You have not been charged.' },
   refunded: { label: 'Refunded', tone: 'neutral', description: 'This order was refunded to your original payment method.' },
 };
 
@@ -55,7 +55,7 @@ export interface TimelineStep {
 /**
  * The order's milestones, in order, from its status and tracking events:
  *   placed → (subscription started) → (downloads ready) → preparing → shipped → delivered
- * Digital-only orders have no shipping milestones. Cancelled and refunded orders end with that step as
+ * Digital-only orders have no shipping milestones. Canceled and refunded orders end with that step as
  * current; shipping milestones before it appear only if tracking shows they happened.
  */
 export function buildOrderTimeline(order: Pick<Order, 'status' | 'lines' | 'placedAt' | 'tracking' | 'downloads'>): TimelineStep[] {
@@ -122,14 +122,14 @@ const inDays = (days: number) => (days <= 0 ? 'today' : days === 1 ? 'tomorrow' 
 /**
  * Label, tone and a sentence for a subscription:
  *   "Renews on Apr 1, 2026", "Trial ends in 6 days", "Paused until Jan 5, 2027", "Paused",
- *   "Payment failed: update your payment method", "Cancels on Dec 5, 2026", "Cancelled on Oct 2, 2026".
+ *   "Payment failed: update your payment method", "Cancels on Dec 5, 2026", "Canceled on Oct 2, 2026".
  */
 export function getSubscriptionStatusInfo(sub: CustomerSubscription, now: string): StatusInfo {
   const date = (iso?: string) => (iso ? formatCommerceDate(iso) : '');
-  if (sub.status === 'cancelled') return { label: 'Cancelled', tone: 'neutral', description: sub.cancelledAt ? `Cancelled on ${date(sub.cancelledAt)}` : 'Cancelled' };
+  if (sub.status === 'cancelled') return { label: 'Canceled', tone: 'neutral', description: sub.cancelledAt ? `Canceled on ${date(sub.cancelledAt)}` : 'Canceled' };
   if (sub.cancelAtPeriodEnd) {
     const end = sub.currentPeriodEnd ?? sub.trialEndsAt ?? sub.nextBillingAt;
-    return { label: 'Cancelling', tone: 'warning', description: end ? `Cancels on ${date(end)}` : 'Cancels at the end of this period' };
+    return { label: 'Canceling', tone: 'warning', description: end ? `Cancels on ${date(end)}` : 'Cancels at the end of this period' };
   }
   switch (sub.status) {
     case 'trialing':

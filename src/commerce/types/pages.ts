@@ -50,6 +50,11 @@ export interface ProductPage extends PageContent {
   breadcrumbs?: BreadcrumbItem[];
   initialSelection?: Selection;
   initialPurchaseOption?: PurchaseOption;
+  /**
+   * The product is in the customer's wishlist. Set it to control the wishlist button (update it after
+   * `CommerceContext.onWishlistToggle`); leave it out and the button keeps its own state.
+   */
+  inWishlist?: boolean;
 }
 
 /** Links the cart, checkout and confirmation pages use. Defaults: "/shop", "/cart", "/checkout". */

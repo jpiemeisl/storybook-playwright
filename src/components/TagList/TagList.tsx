@@ -29,8 +29,8 @@ export function TagList({ items, size = 'md', label = 'Tags' }: TagListProps) {
   if (items.length === 0) return null;
   return (
     <ul aria-label={label} className={[styles.list, styles[size]].join(' ')}>
-      {items.map((item) => (
-        <li key={item.label}>
+      {items.map((item, index) => (
+        <li key={`${item.label}-${index}`}>
           {item.href ? (
             <Link href={item.href} unstyled className={[styles.tag, styles.linked].join(' ')}>
               {item.label}

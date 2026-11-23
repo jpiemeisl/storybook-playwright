@@ -24,10 +24,10 @@ export function LogoStrip({ items, heading, grayscale = true }: LogoStripProps) 
         </Text>
       )}
       <ul className={styles.list}>
-        {items.map((item) => {
+        {items.map((item, index) => {
           const logo = <Image {...item.image} alt={item.name} className={styles.logo} />;
           return (
-            <li key={item.name} className={styles.item}>
+            <li key={`${item.name}-${index}`} className={styles.item}>
               {item.href ? (
                 <Link href={item.href} unstyled className={styles.link}>
                   {logo}

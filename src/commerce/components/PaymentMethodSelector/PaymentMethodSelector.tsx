@@ -23,7 +23,7 @@ export interface PaymentMethodSelectorProps {
 }
 
 const methods: { value: PaymentMethod; label: string; description: string; icon: 'credit-card' | 'wallet' }[] = [
-  { value: 'card', label: 'Credit or debit card', description: 'Card details are entered securely with our payment provider.', icon: 'credit-card' },
+  { value: 'card', label: 'Credit or debit card', description: 'Card details are entered securely with the payment provider.', icon: 'credit-card' },
   { value: 'wallet', label: 'Digital wallet', description: 'Pay with the wallet on your device. You confirm on the next screen.', icon: 'wallet' },
 ];
 

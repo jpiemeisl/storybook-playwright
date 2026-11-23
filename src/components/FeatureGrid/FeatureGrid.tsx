@@ -43,8 +43,8 @@ export function FeatureGrid({ items, columns = 3, layout = 'stacked', heading, i
         </div>
       )}
       <Grid as="ul" columns={columns} gap="lg">
-        {items.map((item) => (
-          <li key={item.title} className={[styles.item, styles[layout]].join(' ')}>
+        {items.map((item, index) => (
+          <li key={`${item.title}-${index}`} className={[styles.item, styles[layout]].join(' ')}>
             {item.icon && (
               <span className={styles.icon}>
                 <Icon name={item.icon} size="lg" />

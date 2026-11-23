@@ -8,7 +8,8 @@ const PORT = 6007;
 
 export default defineConfig({
   testDir: 'tests/visual',
-  // Baselines are committed. No platform suffix: this project is maintained on a single Windows machine.
+  // Baselines are committed. No platform suffix: every baseline is rendered in the pinned Linux container
+  // (docker/image.json), whatever the host OS.
   snapshotPathTemplate: '{testDir}/__screenshots__/{arg}{ext}',
   fullyParallel: true,
   // Half the logical cores: 8 on the 16-thread maintainer machine. Measured in Phase 14: the smoke suite

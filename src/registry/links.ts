@@ -12,9 +12,9 @@ const ALLOWED_SCHEMES = new Set(['http:', 'https:', 'mailto:', 'tel:']);
 export function isSafeHref(href: unknown): href is string {
   if (typeof href !== 'string') return false;
   // Browsers strip ASCII whitespace and control characters before reading the scheme.
-  const normalised = href.replace(/[\u0000- \u007f-\u009f]/g, '').toLowerCase();
-  if (normalised === '') return false;
-  const scheme = /^([a-z][a-z0-9+.-]*):/.exec(normalised);
+  const normalized = href.replace(/[\u0000- \u007f-\u009f]/g, '').toLowerCase();
+  if (normalized === '') return false;
+  const scheme = /^([a-z][a-z0-9+.-]*):/.exec(normalized);
   if (!scheme) return true; // relative URL
   return ALLOWED_SCHEMES.has(`${scheme[1]}:`);
 }
@@ -22,9 +22,9 @@ export function isSafeHref(href: unknown): href is string {
 /** Image sources: relative or http(s) only (no data:, blob: or javascript:). */
 export function isSafeImageSrc(src: unknown): src is string {
   if (typeof src !== 'string') return false;
-  const normalised = src.replace(/[\u0000- \u007f-\u009f]/g, '').toLowerCase();
-  if (normalised === '') return false;
-  const scheme = /^([a-z][a-z0-9+.-]*):/.exec(normalised);
+  const normalized = src.replace(/[\u0000- \u007f-\u009f]/g, '').toLowerCase();
+  if (normalized === '') return false;
+  const scheme = /^([a-z][a-z0-9+.-]*):/.exec(normalized);
   return !scheme || scheme[1] === 'http' || scheme[1] === 'https';
 }
 
@@ -34,11 +34,11 @@ export function isSafeAnchorId(id: unknown): id is string {
 }
 
 /**
- * Defence in depth for adapter-sanitized rich text: removes href/src attributes whose value is not
+ * Defense in depth for adapter-sanitized rich text: removes href/src attributes whose value is not
  * safe, so such links render as inert text. This is NOT a sanitizer; adapters must sanitize first.
  * Returns the cleaned HTML and the list of removed values.
  */
-export function neutraliseUnsafeUrls(html: string): { html: string; removed: string[] } {
+export function neutralizeUnsafeUrls(html: string): { html: string; removed: string[] } {
   const removed: string[] = [];
   const cleaned = html.replace(
     /\s(href|src)\s*=\s*("([^"]*)"|'([^']*)'|([^\s>]+))/gi,
@@ -51,6 +51,14 @@ export function neutraliseUnsafeUrls(html: string): { html: string; removed: str
     },
   );
   return { html: cleaned, removed };
+}
+
+/**
+ * Removes unsafe href/src attributes from adapter-sanitized rich text (the British-spelled name).
+ * @deprecated Use neutralizeUnsafeUrls instead.
+ */
+export function neutraliseUnsafeUrls(html: string): { html: string; removed: string[] } {
+  return neutralizeUnsafeUrls(html);
 }
 
 /** Decodes the entities an attacker could use to hide a scheme ("&#106;avascript:"). */

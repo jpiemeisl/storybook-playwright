@@ -84,7 +84,11 @@ export function getPriceSummary(product: Product): PriceSummary {
   return { min: min.price, max: max.price, hasRange: min.price.amount !== max.price.amount, onSale: maxDiscountPercent > 0, maxDiscountPercent, ...(min.interval ? { interval: min.interval } : {}) };
 }
 
-/** Overall stock: in stock if any variant is; low stock if every purchasable variant is low; then pre-order, backorder, sold out. */
+/**
+ * Overall stock: the best status any variant has, ranked in-stock, low-stock, pre-order, backorder,
+ * then sold out. So a product is low stock when some variant is low and none is fully in stock, even if
+ * others are on pre-order or backorder (part of it can be bought now); sold out only when every variant is.
+ */
 export function getProductAvailability(product: Product): StockInfo['status'] {
   const statuses = new Set(product.variants.map((v) => v.stock.status));
   for (const status of ['in-stock', 'low-stock', 'preorder', 'backorder'] as const) if (statuses.has(status)) return status;
@@ -263,9 +267,15 @@ export interface Facets {
 
 const kindLabels: Record<ProductKind, string> = { physical: 'Physical', digital: 'Digital', subscription: 'Subscription' };
 
-/** Lowest and highest variant price across products (null for none). */
+/**
+ * Lowest and highest price across products (null for none), on the same basis as the price filter:
+ * getPriceSummary, so subscription products count their per-cycle prices and others their variant prices.
+ */
 export function priceBounds(products: readonly Product[]): { min: Money; max: Money } | null {
-  const prices = products.flatMap((p) => p.variants.map((v) => v.price));
+  const prices = products.flatMap((p) => {
+    const summary = getPriceSummary(p);
+    return [summary.min, summary.max];
+  });
   if (prices.length === 0) return null;
   const sorted = [...prices].sort((a, b) => a.amount - b.amount);
   return { min: sorted[0]!, max: sorted[sorted.length - 1]! };
@@ -335,7 +345,10 @@ export function removeFilter(state: FilterState, id: string): FilterState {
   if (group === 'kind') next.kinds = next.kinds.filter((k) => k !== value);
   if (group === 'tag') next.tags = next.tags.filter((t) => t !== value);
   if (group === 'option') {
-    const [name, optionValue] = value.split('=');
+    // Split on the first "=" only: the value itself may contain "=".
+    const at = value.indexOf('=');
+    const name = at < 0 ? value : value.slice(0, at);
+    const optionValue = at < 0 ? '' : value.slice(at + 1);
     next.options[name!] = (next.options[name!] ?? []).filter((v) => v !== optionValue);
     if (next.options[name!]!.length === 0) delete next.options[name!];
   }

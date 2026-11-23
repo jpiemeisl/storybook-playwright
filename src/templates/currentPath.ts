@@ -8,10 +8,18 @@ import type { NavItem } from '../content-types/navigation';
 export type PathMatch = 'exact' | 'prefix';
 
 /** "/Blog/?page=2#top" → "/Blog". Query, fragment and trailing slashes are ignored; case is kept. */
-export function normalisePath(path: string): string {
+export function normalizePath(path: string): string {
   const withoutQuery = path.split(/[?#]/, 1)[0] ?? '';
   const trimmed = withoutQuery.replace(/\/+$/, '');
   return trimmed === '' ? '/' : trimmed.startsWith('/') ? trimmed : `/${trimmed}`;
+}
+
+/**
+ * Normalizes a path for comparison (the British-spelled name).
+ * @deprecated Use normalizePath instead.
+ */
+export function normalisePath(path: string): string {
+  return normalizePath(path);
 }
 
 const isExternal = (href: string) => /^[a-z][a-z0-9+.-]*:/i.test(href) || href.startsWith('//');
@@ -22,8 +30,8 @@ const isExternal = (href: string) => /^[a-z][a-z0-9+.-]*:/i.test(href) || href.s
  */
 export function matchesPath(href: string, currentPath: string, mode: PathMatch = 'exact'): boolean {
   if (!href || isExternal(href) || href.startsWith('#')) return false;
-  const target = normalisePath(href);
-  const current = normalisePath(currentPath);
+  const target = normalizePath(href);
+  const current = normalizePath(currentPath);
   if (target === current) return true;
   return mode === 'prefix' && target !== '/' && current.startsWith(`${target}/`);
 }
@@ -44,7 +52,7 @@ export function markCurrent(items: NavItem[], currentPath: string | undefined, m
     (mode === 'prefix'
       ? all
           .filter((item) => matchesPath(item.href, currentPath, 'prefix'))
-          .sort((a, b) => normalisePath(b.href).length - normalisePath(a.href).length)[0]
+          .sort((a, b) => normalizePath(b.href).length - normalizePath(a.href).length)[0]
       : undefined);
   const mark = (list: NavItem[]): NavItem[] =>
     list.map(({ current: _current, children, ...item }) => ({

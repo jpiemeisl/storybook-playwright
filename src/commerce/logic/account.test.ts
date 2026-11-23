@@ -25,7 +25,7 @@ describe('orders', () => {
   it('status info has text and a tone for every status; digital-only orders read Complete', () => {
     expect(getOrderStatusInfo(accountOrders.shipped)).toMatchObject({ label: 'Shipped', tone: 'info' });
     expect(getOrderStatusInfo(accountOrders.delivered)).toMatchObject({ label: 'Delivered', tone: 'success' });
-    expect(getOrderStatusInfo(accountOrders.cancelled)).toMatchObject({ label: 'Cancelled', tone: 'neutral' });
+    expect(getOrderStatusInfo(accountOrders.cancelled)).toMatchObject({ label: 'Canceled', tone: 'neutral' });
     expect(getOrderStatusInfo(accountOrders.refunded)).toMatchObject({ label: 'Refunded' });
     expect(getOrderStatusInfo(accountOrders.processing).label).toBe('Processing');
     expect(getOrderStatusInfo(accountOrders.digital).label).toBe('Complete');
@@ -60,7 +60,7 @@ describe('subscription status text', () => {
     expect(text('pausedOpenEnded')).toBe('Paused until you resume it');
     expect(text('pastDue')).toBe('Payment failed: update your payment method');
     expect(text('cancelling')).toBe('Cancels on Apr 2, 2026');
-    expect(text('cancelled')).toBe('Cancelled on Feb 28, 2026');
+    expect(text('cancelled')).toBe('Canceled on Feb 28, 2026');
   });
 
   it('counts trial days in calendar days, across year boundaries', () => {

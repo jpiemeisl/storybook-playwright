@@ -28,10 +28,22 @@ if (git('status', '--porcelain', '--untracked-files=no')) fail('The working tree
 
 const pkg = JSON.parse(readFileSync('package.json', 'utf8'));
 const next = bumpVersion(pkg.version, kind);
-if (git('tag', '--list', tagFor(next))) fail(`Tag ${tagFor(next)} already exists. Version numbers are never reused.`);
+const tag = tagFor(next);
+let remoteTag;
+try {
+  remoteTag = git('ls-remote', '--tags', 'origin', `refs/tags/${tag}`);
+} catch {
+  fail(`Could not list the tags on origin to check for ${tag}. Check your network and that the origin remote exists, then try again.`);
+}
+if (git('tag', '--list', tag) || remoteTag) fail(`Tag ${tag} already exists${remoteTag ? ' on origin' : ''}. Version numbers are never reused.`);
 
 // Check the CHANGELOG before changing anything, so a refusal leaves the tree untouched.
-const changelog = releaseChangelog(readFileSync('CHANGELOG.md', 'utf8'), next, today(), parseRepo(pkg.repository).url);
+let changelog;
+try {
+  changelog = releaseChangelog(readFileSync('CHANGELOG.md', 'utf8'), next, today(), parseRepo(pkg.repository).url);
+} catch (error) {
+  fail(error instanceof Error ? error.message : String(error));
+}
 
 npm(`version ${kind} --no-git-tag-version --ignore-scripts`);
 const bumped = JSON.parse(readFileSync('package.json', 'utf8')).version;

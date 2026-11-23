@@ -29,8 +29,8 @@ export function Stats({ items, heading, columns, headingLevel = 2 }: StatsProps)
         </Heading>
       )}
       <Grid as="dl" columns={{ base: Math.min(cols, 2), md: cols }} gap="lg" className={styles.list}>
-        {items.map((item) => (
-          <div key={item.label} className={styles.item}>
+        {items.map((item, index) => (
+          <div key={`${item.label}-${index}`} className={styles.item}>
             <dt className={styles.label}>{item.label}</dt>
             <dd className={styles.value}>{item.value}</dd>
             {item.description && <dd className={styles.description}>{item.description}</dd>}

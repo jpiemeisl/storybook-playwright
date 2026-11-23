@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
-import { expect, userEvent, waitFor, within } from 'storybook/test';
+import { expect, fn, userEvent, waitFor, within } from 'storybook/test';
 import { checkoutPage, checkoutValues, chrome, type CartFixtureKey } from '../../fixtures';
 import { DemoPaymentFields } from '../../components/PaymentMethodSelector';
 import { expectHeadingOutline } from '../../stories/browseStories';
@@ -51,6 +51,21 @@ export const DigitalInformation: Story = {
     await expect(nav).toHaveTextContent('Step 1 of 3: Information');
     await expect(within(canvasElement).getByRole('group', { name: 'Billing address' })).toBeVisible();
     await expect(within(canvasElement).getByRole('button', { name: 'Continue to payment' })).toBeVisible();
+  },
+};
+const noBillingStepChange = fn();
+/** ctx.collectBillingAddress false: no billing address fields, and continuing needs only the email. */
+export const WithoutBillingAddress: Story = {
+  parameters: { layout: 'fullscreen', vrt: { screenshot: false } },
+  args: { cart: 'digitalOnly', values: 'invalidDigitalBilling' },
+  render: ({ cart, step, values, extra }: Args) => <CheckoutTemplate page={checkoutPage(cart, step, checkoutValues[values], extra)} chrome={chrome} ctx={{ ...ctx, collectBillingAddress: false, onStepChange: noBillingStepChange }} />,
+  play: async ({ canvasElement }) => {
+    const canvas = within(canvasElement);
+    noBillingStepChange.mockClear();
+    await expect(canvas.queryByRole('group', { name: 'Billing address' })).toBeNull();
+    await userEvent.click(canvas.getByRole('button', { name: 'Continue to payment' }));
+    await expect(canvas.queryByRole('alert')).toBeNull();
+    await waitFor(() => expect(noBillingStepChange).toHaveBeenCalledWith('payment'));
   },
 };
 export const DigitalPayment: Story = { tags: ['vrt-full'], parameters: { layout: 'fullscreen' }, args: { cart: 'digitalOnly', step: 'payment', values: 'digital' }, play: outline };

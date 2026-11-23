@@ -44,7 +44,9 @@ export function ShopPage({ page, chrome, ctx }: { page: PageContent; chrome: Sit
 }
 ```
 
-Every `CommerceContext` field is optional; the guides list what each callback enables in its area. Installing the package and the CSS
+Every `CommerceContext` field is optional; the guides list what each callback enables in its area. A
+control whose callback is missing is hidden or falls back to a plain link or form, never a button that
+does nothing. Installing the package and the CSS
 imports are in [consuming.md](consuming.md).
 
 ## Rules

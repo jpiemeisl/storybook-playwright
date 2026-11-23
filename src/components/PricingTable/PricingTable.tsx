@@ -125,8 +125,8 @@ function Tier({ tier, period, headingLevel }: { tier: PricingTier; period: Billi
       </p>
 
       <ul className={styles.features}>
-        {tier.features.map((feature) => (
-          <li key={feature.label} className={feature.included ? styles.included : styles.excluded}>
+        {tier.features.map((feature, index) => (
+          <li key={`${feature.label}-${index}`} className={feature.included ? styles.included : styles.excluded}>
             <Icon name={feature.included ? 'check' : 'close'} size="sm" className={styles.featureIcon} />
             <span>
               <span className={styles.visuallyHidden}>{feature.included ? 'Included: ' : 'Not included: '}</span>

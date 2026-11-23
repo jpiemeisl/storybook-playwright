@@ -75,12 +75,22 @@ describe('validateBlock', () => {
 describe('validatePage', () => {
   const page = (blocks: unknown[]): PageContent => ({ id: 'p', slug: 'test', seo: { title: 'Test' }, blocks: blocks as PageContent['blocks'] });
 
-  it('accepts an empty page', () => {
-    expect(validatePage(page([]))).toEqual([]);
+  it('accepts an empty page with only the warning that nothing provides the h1', () => {
+    expect(validatePage(page([]))).toEqual([expect.objectContaining({ code: 'missing-field', path: 'blocks', severity: 'warning' })]);
+    expect(validatePage(page([{ id: 'h', type: 'pageHeader', title: 'Title' }]))).toEqual([]);
   });
 
   it('requires id, slug and seo.title', () => {
-    expect(codes(validatePage({ blocks: [] }))).toEqual(['missing-field', 'missing-field', 'missing-field']);
+    expect(codes(errorsOnly(validatePage({ blocks: [] })))).toEqual(['missing-field', 'missing-field', 'missing-field']);
+  });
+
+  it('checks a page without a template as the default template', () => {
+    const h1Warning = (template?: string) =>
+      validatePage({ ...page([{ id: 'd', type: 'divider' }]), ...(template ? { template } : {}) }).filter((issue) => issue.path === 'blocks');
+    expect(h1Warning()).toEqual(h1Warning('default'));
+    expect(h1Warning()).toEqual([expect.objectContaining({ code: 'missing-field', severity: 'warning' })]);
+    // The fallback is not reported as an unknown template, even with a custom list that omits it.
+    expect(codes(validatePage(page([{ id: 'h', type: 'pageHeader', title: 'Title' }]), { knownTemplates: ['landing'] }))).toEqual([]);
   });
 
   it('detects duplicate block ids, including inside tabs', () => {
@@ -99,7 +109,7 @@ describe('validatePage', () => {
 
   it('detects duplicate anchor ids', () => {
     const issues = validatePage(page([{ id: 'a', type: 'divider', anchorId: 'x' }, { id: 'b', type: 'divider', anchorId: 'x' }]));
-    expect(codes(issues)).toEqual(['duplicate-id']);
+    expect(codes(issues.filter((issue) => issue.path !== 'blocks'))).toEqual(['duplicate-id']);
   });
 
   it('reports block issues with their page path', () => {

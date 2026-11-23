@@ -202,7 +202,7 @@ describe('createOrderFromCart', () => {
     expect(order.shippingAddress).toBeUndefined();
     expect(order.billingAddress).toEqual(checkoutAddresses.apartment);
     expect(order.downloads?.every((d) => d.available)).toBe(true);
-    expect(order.downloads?.find((d) => d.fileId === 'guide-pdf')).toEqual({ fileId: 'guide-pdf', name: 'small-garden-guide.pdf', available: true, format: 'PDF', sizeBytes: 18_400_000 });
+    expect(order.downloads?.find((d) => d.fileId === 'guide-pdf')).toEqual({ fileId: 'guide-pdf', name: 'small-garden-guide.pdf', available: true, format: 'PDF', sizeBytes: 18_400_000, productId: 'prod-guide' });
     expect(order.downloads?.filter((d) => d.expiresAt).every((d) => d.expiresAt === '2027-03-21')).toBe(true);
   });
 

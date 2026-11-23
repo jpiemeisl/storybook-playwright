@@ -69,7 +69,13 @@ it. The guides describe the library as it is today; this file keeps the history.
 - **Resolved (Phase 14):** scroll hint on the horizontally scrolling AccountNav (CSS scroll-state edge
   fades; browsers without scroll-state queries show no cue).
 - **Open:** proration amounts. Neither timing prorates, and the copy says "Nothing is charged today".
-- **Open:** real sign-in providers. `LoginForm` has an empty `socialSlot`.
+- **Resolved (after Phase 17.5):** the sign-in template had no way to show provider buttons; host apps
+  pass them in `ctx.socialSlot`. The provider integration itself belongs to the host app.
+- **Resolved (after Phase 17.5):** the code issues found while documenting: checkout without a billing
+  address (`ctx.collectBillingAddress`), real download links on order pages, status-driven AddressBook,
+  a wishlist callback on the product page, a configurable account base path, hidden controls instead of
+  do-nothing callbacks, Tabs manual activation, Header late items, Carousel in right-to-left layouts,
+  whitespace-only form input, and more (CHANGELOG.md).
 - **Open:** real authentication. The demo shop accepts a fixed demo customer.
 - **Decision to review:** ManageSubscription takes one `onAction(request)` callback, not seven.
 - **Decision to review:** ManageSubscription dialogs close when `status` returns to `idle`; async host apps

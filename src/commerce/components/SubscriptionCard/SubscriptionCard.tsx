@@ -25,25 +25,31 @@ export interface SubscriptionCardProps {
   headingLevel?: 2 | 3;
 }
 
-/** The date line: next charge, trial end, resume date or cancellation. */
-function keyDate(sub: CustomerSubscription): string | undefined {
+/**
+ * The date line: next charge, trial end, resume date or when access ends after a cancellation.
+ * Undefined (no line) when the date it needs is missing. Not exported from the commerce entry.
+ */
+export function subscriptionKeyDate(sub: CustomerSubscription): string | undefined {
   if (sub.status === 'cancelled') return undefined;
   if (sub.status === 'trialing' && sub.trialEndsAt) return `Trial ends ${formatCommerceDate(sub.trialEndsAt)}, then ${sub.plan.toLowerCase()} billing starts`;
   if (sub.status === 'past-due') return sub.nextBillingAt ? `Payment failed on ${formatCommerceDate(sub.nextBillingAt)}` : undefined;
   if (sub.status === 'paused') return sub.pausedUntil ? `Billing resumes ${formatCommerceDate(sub.pausedUntil)}` : 'No charges while paused';
-  if (sub.cancelAtPeriodEnd) return `Access until ${formatCommerceDate(sub.currentPeriodEnd ?? sub.nextBillingAt ?? '')}`;
+  if (sub.cancelAtPeriodEnd) {
+    const end = sub.currentPeriodEnd ?? sub.nextBillingAt;
+    return end ? `Access until ${formatCommerceDate(end)}` : undefined;
+  }
   return sub.nextBillingAt ? `Next charge ${formatCommerceDate(sub.nextBillingAt)}` : undefined;
 }
 
 /**
  * A subscription: product and plan, price per interval, status badge plus the status sentence (text,
- * never colour alone), the key date, the payment method summary and a Manage link. Past due adds an
+ * never color alone), the key date, the payment method summary and a Manage link. Past due adds an
  * inline notice with "Update payment method" (callback) and an optional slot for the provider's fields.
  */
 export function SubscriptionCard({ subscription: sub, now, href, variant = 'full', onUpdatePayment, paymentFields, headingLevel = 3 }: SubscriptionCardProps) {
   const info = getSubscriptionStatusInfo(sub, now);
   const H = `h${headingLevel}` as const;
-  const date = keyDate(sub);
+  const date = subscriptionKeyDate(sub);
   const compact = variant === 'compact';
   return (
     <article className={[styles.root, styles[variant]].join(' ')} data-status={sub.status}>

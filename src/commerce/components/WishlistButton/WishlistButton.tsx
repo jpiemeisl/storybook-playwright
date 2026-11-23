@@ -14,7 +14,11 @@ export interface WishlistButtonProps {
   action?: 'toggle' | 'remove';
 }
 
-/** Toggle with aria-pressed; the name stays "Save <title> to wishlist" and the pressed state carries the change. */
+/**
+ * Toggle with aria-pressed; the name stays "Save <title> to wishlist" and the pressed state carries the
+ * change. The visible label stays "Save" too (the filled heart shows the saved state), so the visible text
+ * is always part of the accessible name (WCAG 2.5.3).
+ */
 export function WishlistButton({ pressed, onPressedChange, productTitle, action = 'toggle' }: WishlistButtonProps) {
   if (action === 'remove') {
     return (
@@ -27,7 +31,7 @@ export function WishlistButton({ pressed, onPressedChange, productTitle, action 
   return (
     <button type="button" className={styles.button} aria-pressed={pressed} aria-label={`Save ${productTitle} to wishlist`} onClick={() => onPressedChange(!pressed)}>
       <Icon name={pressed ? 'heart-filled' : 'heart'} size="md" />
-      <span aria-hidden="true">{pressed ? 'Saved' : 'Save'}</span>
+      <span aria-hidden="true">Save</span>
     </button>
   );
 }

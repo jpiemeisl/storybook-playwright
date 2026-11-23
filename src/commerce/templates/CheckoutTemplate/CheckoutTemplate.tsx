@@ -18,7 +18,7 @@ import { formatMoney } from '../../../utils/formatMoney';
 import { OrderSummary } from '../../components/OrderSummary';
 import { TrustBadges } from '../../components/TrustBadges';
 import { hasBlockingIssues } from '../../logic/cartLines';
-import { checkoutStepLabels, getCheckoutSteps, validateCheckoutStep } from '../../logic/checkout';
+import { canEnterStep, checkoutStepLabels, getCheckoutSteps, validateCheckoutStep, type CheckoutOptions } from '../../logic/checkout';
 import type { CheckoutErrors, CheckoutStepId, CheckoutValues } from '../../types/checkout';
 import { defaultLineHref, type CommerceContext } from '../../types/context';
 import type { CheckoutPage } from '../../types/pages';
@@ -81,6 +81,8 @@ function Guard({ title, message, cartHref }: { title: string; message: string; c
  * screens, beside it on wide ones; left out on Review, which shows the items itself) and the step form.
  * Continue validates the step with validateCheckoutStep: on failure an error summary takes focus and
  * links to each field; on success ctx.onStepChange moves on. Review places the order via ctx.onPlaceOrder.
+ * `ctx.collectBillingAddress: false` leaves out the billing address fields and their validation, for
+ * payment providers that collect billing details themselves.
  */
 export function CheckoutTemplate({ page, chrome, ctx }: TemplateProps<CheckoutPage> & { ctx?: CommerceContext }) {
   const { cart, totals, values, issues = [], status = 'idle', errorMessage, links = {} } = page;
@@ -95,6 +97,7 @@ export function CheckoutTemplate({ page, chrome, ctx }: TemplateProps<CheckoutPa
   const shownStep = useRef(step);
   const formId = useId();
   const actionsRef = useRef<HTMLDivElement>(null);
+  const options: CheckoutOptions = { collectBillingAddress: ctx?.collectBillingAddress ?? true };
 
   useEffect(() => {
     if (shownStep.current === step) return;
@@ -106,7 +109,7 @@ export function CheckoutTemplate({ page, chrome, ctx }: TemplateProps<CheckoutPa
     if (attempts > 0) summaryRef.current?.focus();
   }, [attempts]);
 
-  const own = validateCheckoutStep(step, values, flags);
+  const own = validateCheckoutStep(step, values, flags, options);
   const errors = attempts > 0 ? own : (page.errors ?? {});
   const set = (patch: Partial<CheckoutValues>) => ctx?.onCheckoutChange?.({ ...values, ...patch });
   const go = (target: CheckoutStepId) => (event: MouseEvent) => {
@@ -131,7 +134,7 @@ export function CheckoutTemplate({ page, chrome, ctx }: TemplateProps<CheckoutPa
   const stepperSteps: CheckoutStepperStep[] = steps.map((id, i) => ({
     id,
     label: checkoutStepLabels[id],
-    state: i === index ? 'current' : i < index && Object.keys(validateCheckoutStep(id, values, flags)).length === 0 ? 'complete' : 'upcoming',
+    state: i === index ? 'current' : i < index && Object.keys(validateCheckoutStep(id, values, flags, options)).length === 0 ? 'complete' : 'upcoming',
     href: `?step=${id}`,
   }));
   const next = steps[index + 1];
@@ -154,7 +157,7 @@ export function CheckoutTemplate({ page, chrome, ctx }: TemplateProps<CheckoutPa
   else
     content = (
       <>
-        <CheckoutStepper steps={stepperSteps} onSelect={ctx?.onStepChange ? (id) => ctx.onStepChange!(id as CheckoutStepId) : undefined} />
+        <CheckoutStepper steps={stepperSteps} onSelect={ctx?.onStepChange ? (id) => canEnterStep(id as CheckoutStepId, values, flags, options) && ctx.onStepChange!(id as CheckoutStepId) : undefined} />
         <h1 ref={headingRef} tabIndex={-1} className={styles.title}>
           {titles[step]}
         </h1>
@@ -166,7 +169,7 @@ export function CheckoutTemplate({ page, chrome, ctx }: TemplateProps<CheckoutPa
           )}
           <form id={formId} className={styles.form} noValidate onSubmit={submit}>
             {attempts > 0 && Object.keys(errors).length > 0 && <ErrorSummary errors={errors} summaryRef={summaryRef} />}
-            <Body page={{ ...page, step }} ctx={ctx} errors={errors} set={set} stepLink={stepLink} />
+            <Body page={{ ...page, step }} ctx={ctx} errors={errors} set={set} stepLink={stepLink} collectBilling={options.collectBillingAddress!} />
             {step === 'review' && status === 'error' && (
               <Alert tone="danger" urgent title="Your order was not placed">
                 {errorMessage ?? 'Something went wrong. You have not been charged. Please try again.'}

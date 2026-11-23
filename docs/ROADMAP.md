@@ -63,9 +63,7 @@ after its first publish ([publishing.md](publishing.md#package-settings-once-aft
 
 - **Real authentication.** Auth templates post to `page.action` or call host callbacks; the demo shop
   accepts a fixed demo customer. Real sign-in, sessions, password reset tokens and rate limiting belong to
-  the host app.
-- **Sign-in providers.** `socialSlot` on the sign-in form renders nothing by default; add provider
-  buttons there.
+  the host app. Sign-in provider buttons go in `ctx.socialSlot`.
 
 ## Internationalization
 

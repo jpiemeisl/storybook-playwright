@@ -32,8 +32,8 @@ export function TeamMember({ name, role, photo, bio, social = [], variant = 'car
         {bio && <div className={styles.bio}>{bio}</div>}
         {social.length > 0 && (
           <ul className={styles.social}>
-            {social.map((link) => (
-              <li key={link.platform}>
+            {social.map((link, index) => (
+              <li key={`${link.platform}-${index}`}>
                 <Link href={link.href} aria-label={link.label} externalIcon={false} unstyled className={styles.socialLink}>
                   <Icon name={link.platform} size="sm" />
                 </Link>
@@ -48,7 +48,7 @@ export function TeamMember({ name, role, photo, bio, social = [], variant = 'car
 
 /** Props for TeamGrid. */
 export interface TeamGridProps {
-  /** People to show. Names must be unique (used as keys). */
+  /** People to show, in order. Names may repeat. */
   members: TeamMemberContent[];
   /** Columns on wide slots (2-4); steps down on narrower ones. */
   columns?: 2 | 3 | 4;
@@ -62,8 +62,8 @@ export interface TeamGridProps {
 export function TeamGrid({ members, columns = 3, variant = 'card', headingLevel = 3 }: TeamGridProps) {
   return (
     <Grid as="ul" columns={{ base: 1, sm: 2, md: Math.min(columns, 3), lg: columns }} gap="lg" className={styles.grid}>
-      {members.map((member) => (
-        <li key={member.name}>
+      {members.map((member, index) => (
+        <li key={`${member.name}-${index}`}>
           <TeamMember {...member} variant={variant} headingLevel={headingLevel} />
         </li>
       ))}

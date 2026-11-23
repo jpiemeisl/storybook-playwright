@@ -2,7 +2,7 @@
  * Shared building blocks for the validators: issue types and a small checker bound to one object
  * and path. Pure: no DOM, no React.
  */
-import { isSafeHref, isSafeImageSrc, neutraliseUnsafeUrls } from './links';
+import { isSafeHref, isSafeImageSrc, neutralizeUnsafeUrls } from './links';
 
 /** Machine-readable category of a ValidationIssue, shared by the block, page and template validators and the renderer. */
 export type IssueCode =
@@ -136,7 +136,7 @@ export class Checker {
       c.oneOf('format', ['html']);
       if (typeof c.target.html !== 'string') c.report('missing-field', 'html', '"html" is required.');
       else {
-        const { removed } = neutraliseUnsafeUrls(c.target.html);
+        const { removed } = neutralizeUnsafeUrls(c.target.html);
         if (removed.length > 0) c.report('unsafe-href', 'html', `Rich text contains ${removed.length} link or image URL(s) with an unsafe scheme; they will be removed.`);
       }
     });

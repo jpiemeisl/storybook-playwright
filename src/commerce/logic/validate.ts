@@ -335,6 +335,7 @@ export function validateOrder(order: unknown): ValidationIssue[] {
       d.str('format', false);
       intField(d, 'sizeBytes', 0);
       d.str('reason', false);
+      d.str('productId', false);
     });
   });
 }

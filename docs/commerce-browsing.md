@@ -37,7 +37,14 @@ string; `parseSort(query)` and `parsePage(query)` read the other two parameters.
 
 **Facets are disjunctive.** `computeFacets(products, state)` counts the kind, tag and option groups as if
 that group's own selection were cleared. Choosing "Moss" therefore still shows how many "Sand" products
-there are. `describeFilters(state, { baseHref, sort })` returns the active filter chips with remove links.
+there are. The price facet's range (`priceBounds`) uses the same prices as the price filter: per-cycle
+prices for subscription products (`getPriceSummary`), variant prices for the rest.
+`describeFilters(state, { baseHref, sort })` returns the active filter chips with remove links;
+`removeFilter(state, chip.id)` drops one (option values may contain `=`).
+
+**Product availability** on cards (`getProductAvailability`) is the best status any variant has: in stock,
+then low stock, pre-order, backorder, and sold out only when every variant is. A product with a low-stock
+variant and a pre-order variant reads as low stock, since part of it can be bought now.
 `buildCollectionListing(products, request)` does filter, sort, facets and pagination in one call (12 per
 page by default).
 
@@ -82,12 +89,13 @@ export function CollectionRoute({ collection, products, search, breadcrumbs, chr
 - **With `ctx.onListingChange({ filters, sort, page })`:** everything is live. Update your URL (for example `router.replace('?' + serializeFilters(filters, { sort, page }))`), rebuild the listing, and pass the new page in.
 - **Load-more mode:** `listing.mode = 'load-more'`. Pass `ctx.onLoadMore`; the "Load more" link also has a real `href` to the next page. `ctx.loading` shows skeletons in the grid.
 - **Narrow containers:** the filters move into `FilterDrawer` (a button and a dialog); on wide containers the template shows the same `FilterPanel` in its sidebar. Only one of the two exists at a time.
-- **Product page:** pass `{ template: 'product-detail', product, reviews, related, breadcrumbs?, initialSelection?, initialPurchaseOption? }`.
+- **Product page:** pass `{ template: 'product-detail', product, reviews, related, breadcrumbs?, initialSelection?, initialPurchaseOption?, inWishlist? }`.
   - The template keeps the selection itself.
   - `ctx.onSelectionChange(selection)` lets you sync the URL if you want to. URL syncing is the host's job.
   - `ctx.onAddToCart({ product, variantId, quantity, purchaseOption })` adds to your cart. Return a promise to get the loading, success and error states on the button.
   - `ctx.onQuickAdd(product, variant)` powers the "Add to cart" button on cards (collection grid, related products, cross-sell and wishlist). Only single-variant, purchasable physical and digital products get the button; products with several variants or purchase options show a "Choose options" cue under the title link instead.
-  - The wishlist button on the product page keeps its state locally; there is no context callback for it yet.
+  - `ctx.onWishlistToggle(product, saved)` saves or removes the product in your wishlist. Set `page.inWishlist` to control the button's pressed state (update it after the callback); without it, the button keeps its own state.
+  - The free-shipping line under the buy button (and in "Shipping and returns") appears only when the product's currency matches `FREE_SHIPPING_THRESHOLD`, the only currency the cart applies it to.
 - **Links** go through `Link`/`LinkProvider`, so Next.js or React Router links work. The "Browse flow" story (`Demo/Product browsing`) shows a LinkProvider that maps links to state.
 - **Validation:** `validateCollectionPage(page)` and `validateProductPage(page)` check the page data: pagination sanity, initial selection and purchase option exist, unsafe links and image sources, and everything the product and reviews validators check.
 
@@ -98,8 +106,8 @@ Beyond the core product fields, these drive the product page and listings:
 - `ProductOption.display?: 'buttons' | 'swatches' | 'select'` and `swatches?: Record<value, cssColor>`.
   - Swatches always show the value text too.
   - Options with 12 or more values default to `select`.
-- `Product.infoSections?: { id, title, content: RichText }[]` (shown in an accordion) and `Product.sizeGuide?: TableData` (opened from the variant selector).
-  - The commerce `TableData` is the JSON `caption`/`columns`/`rows` shape of the content model's `table` block. The core component's `TableData` holds React nodes, so it can't be JSON.
+- `Product.infoSections?: { id, title, content: RichText }[]` (shown in an accordion) and `Product.sizeGuide?: SizeGuideTable` (opened from the variant selector).
+  - `SizeGuideTable` is the JSON `caption`/`columns`/`rows` shape of the content model's `table` block. The core component's `TableData` holds React nodes, so it can't be JSON. The commerce entry's old `TableData` name for it is deprecated; use `SizeGuideTable`.
 - `Product.createdAt?` (ISO date), for the "newest" sort.
 - `Collection.image?`, for tiles.
 - `ProductReviewsData { summary: { average, count, distribution }, reviews }`. `summarizeReviews(reviews)` builds the summary, and `validateReviewsData` checks that the distribution adds up. `ReviewSummary` takes an `action` slot (for example a "Write a review" link); there is no review form.

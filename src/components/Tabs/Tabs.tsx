@@ -1,4 +1,4 @@
-import { useId, useRef, useState, type KeyboardEvent, type ReactNode } from 'react';
+import { useId, useRef, useState, type FocusEvent, type KeyboardEvent, type ReactNode } from 'react';
 import styles from './Tabs.module.css';
 
 /** One tab: its label in the tab list and the panel content it shows. */
@@ -45,7 +45,8 @@ export function Tabs({
   const listRef = useRef<HTMLDivElement>(null);
   const [internal, setInternal] = useState(defaultValue ?? tabs[0]?.id);
   const selected = value ?? internal;
-  const [focused, setFocused] = useState(selected);
+  // The tab with focus while focus is inside the tab list (manual mode's roving tabindex); unset otherwise.
+  const [focused, setFocused] = useState<string | undefined>(undefined);
   const tabId = (id: string) => `${baseId}-tab-${id}`;
   const panelId = (id: string) => `${baseId}-panel-${id}`;
 
@@ -69,16 +70,28 @@ export function Tabs({
     if (next === undefined) return;
     event.preventDefault();
     const nextTab = tabs[next]!;
-    setFocused(nextTab.id);
     listRef.current?.querySelector<HTMLButtonElement>(`[data-tab-id="${CSS.escape(nextTab.id)}"]`)?.focus();
     if (activation === 'automatic') select(nextTab.id);
+  };
+
+  // Forget the focused tab only when focus leaves the tab list, not when it moves between tabs: the
+  // old tab's blur fires during the arrow-key handler and must not undo the move.
+  const onListBlur = (event: FocusEvent<HTMLDivElement>) => {
+    if (!event.currentTarget.contains(event.relatedTarget as Node | null)) setFocused(undefined);
   };
 
   return (
     // Outer element is the query container; the inner one changes layout (a container can't query itself).
     <div className={styles.root}>
       <div className={[styles.tabs, styles[orientation]].join(' ')}>
-        <div ref={listRef} role="tablist" aria-label={label} aria-orientation={orientation} className={styles.list}>
+        <div
+          ref={listRef}
+          role="tablist"
+          aria-label={label}
+          aria-orientation={orientation}
+          className={styles.list}
+          onBlur={onListBlur}
+        >
           {tabs.map((tab) => {
             const isSelected = tab.id === selected;
             // Roving tabindex: only the selected tab (or, mid-navigation in manual mode, the focused one) is tabbable.
@@ -94,12 +107,9 @@ export function Tabs({
                 aria-controls={panelId(tab.id)}
                 tabIndex={tabbable ? 0 : -1}
                 className={styles.tab}
-                onClick={() => {
-                  setFocused(tab.id);
-                  select(tab.id);
-                }}
+                onClick={() => select(tab.id)}
                 onKeyDown={onKeyDown}
-                onBlur={() => setFocused(selected)}
+                onFocus={() => setFocused(tab.id)}
               >
                 {tab.label}
               </button>

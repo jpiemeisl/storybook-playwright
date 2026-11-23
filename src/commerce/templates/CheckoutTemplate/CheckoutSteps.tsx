@@ -30,6 +30,8 @@ export interface StepProps {
   set: (patch: Partial<CheckoutValues>) => void;
   /** A link (with the click handled when the host navigates in place) to another step. */
   stepLink: (step: CheckoutStepId, label: ReactNode, name?: string) => ReactNode;
+  /** Collect a billing address (ctx.collectBillingAddress). Default true. */
+  collectBilling?: boolean;
 }
 
 const paymentLabels = { card: 'Credit or debit card', wallet: 'Digital wallet' } as const;
@@ -48,7 +50,7 @@ function Section({ id, title, action, children }: { id: string; title: string; a
   );
 }
 
-export function InformationStep({ page, errors, set }: StepProps) {
+export function InformationStep({ page, errors, set, collectBilling = true }: StepProps) {
   const { values, totals } = page;
   return (
     <>
@@ -60,12 +62,12 @@ export function InformationStep({ page, errors, set }: StepProps) {
       </Section>
       {totals.flags.needsShippingStep ? (
         <AddressForm section="shipping" idPrefix="shipping" value={values.shippingAddress ?? {}} errors={errors} onChange={(a) => set({ shippingAddress: a as CheckoutValues['shippingAddress'] })} />
-      ) : (
+      ) : collectBilling ? (
         <>
-          <p className={styles.explain}>Nothing in your order is shipped, so we only need your billing address for the payment.</p>
+          <p className={styles.explain}>Nothing in your order is shipped, so only your billing address is needed for the payment.</p>
           <AddressForm section="billing" idPrefix="billing" value={values.billingAddress ?? {}} errors={errors} onChange={(a) => set({ billingAddress: a as CheckoutValues['billingAddress'] })} />
         </>
-      )}
+      ) : null}
     </>
   );
 }
@@ -95,22 +97,24 @@ function renewalText(totals: CartTotals) {
   return charges.length ? `Your subscription renews automatically (${charges.join('; ')}) until you cancel.` : 'Your subscription renews automatically until you cancel.';
 }
 
-export function PaymentStep({ page, ctx, errors, set, stepLink }: StepProps) {
+export function PaymentStep({ page, ctx, errors, set, stepLink, collectBilling = true }: StepProps) {
   const { values, totals } = page;
   const ships = totals.flags.needsShippingStep;
   return (
     <>
       <PaymentMethodSelector value={values.paymentMethod} onChange={(m) => set({ paymentMethod: m })} paymentFields={ctx?.paymentFields} error={errors.paymentMethod} />
-      <Section id="checkout-billing" title="Billing address" action={!ships && values.billingAddress ? stepLink('information', 'Change', 'Change billing address') : undefined}>
-        {ships ? (
-          <>
-            <Checkbox id="checkout-billing-same" name="billingSameAsShipping" label="Same as shipping address" checked={values.billingSameAsShipping} onChange={(e) => set({ billingSameAsShipping: e.target.checked })} />
-            {!values.billingSameAsShipping && <AddressForm section="billing" idPrefix="billing" legend="Enter your billing address" value={values.billingAddress ?? {}} errors={errors} onChange={(a) => set({ billingAddress: a as CheckoutValues['billingAddress'] })} />}
-          </>
-        ) : (
-          values.billingAddress && <AddressBlock address={values.billingAddress} />
-        )}
-      </Section>
+      {collectBilling && (
+        <Section id="checkout-billing" title="Billing address" action={!ships && values.billingAddress ? stepLink('information', 'Change', 'Change billing address') : undefined}>
+          {ships ? (
+            <>
+              <Checkbox id="checkout-billing-same" name="billingSameAsShipping" label="Same as shipping address" checked={values.billingSameAsShipping} onChange={(e) => set({ billingSameAsShipping: e.target.checked })} />
+              {!values.billingSameAsShipping && <AddressForm section="billing" idPrefix="billing" legend="Enter your billing address" value={values.billingAddress ?? {}} errors={errors} onChange={(a) => set({ billingAddress: a as CheckoutValues['billingAddress'] })} />}
+            </>
+          ) : (
+            values.billingAddress && <AddressBlock address={values.billingAddress} />
+          )}
+        </Section>
+      )}
       {totals.flags.hasDigital && (
         <Alert tone="info" title="Digital delivery">
           Your downloads are available on the confirmation page as soon as the payment goes through.
@@ -147,11 +151,11 @@ export function PaymentStep({ page, ctx, errors, set, stepLink }: StepProps) {
   );
 }
 
-export function ReviewStep({ page, ctx, stepLink }: StepProps) {
+export function ReviewStep({ page, ctx, stepLink, collectBilling = true }: StepProps) {
   const { values, totals, cart, notes, shippingMethods } = page;
   const ships = totals.flags.needsShippingStep;
   const method = shippingMethods.find((m) => m.id === values.shippingMethodId);
-  const billing = ships && values.billingSameAsShipping ? values.shippingAddress : values.billingAddress;
+  const billing = !collectBilling ? undefined : ships && values.billingSameAsShipping ? values.shippingAddress : values.billingAddress;
   const lineHref = ctx?.lineHref ?? defaultLineHref;
   return (
     <>
