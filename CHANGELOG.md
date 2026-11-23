@@ -11,6 +11,11 @@ Deprecated, Removed, Fixed and Security. `npm run release:prepare` moves them un
 
 ## [Unreleased]
 
+## [0.2.0] - 2026-11-23
+
+Upgrading from 0.1.x: read "Changed". Controls whose callback is missing are now hidden, both CookieBanner
+"Reject all" buttons call `onRejectAll`, and some visible text changed (US spelling, neutral copy).
+
 ### Added
 
 - `CommerceContext.collectBillingAddress`: set it to `false` and the checkout template hides the billing
@@ -127,6 +132,7 @@ The first published version.
 - CSS entry points: `tokens.css`, `core.css`, `commerce.css` and one file per theme.
 - TypeScript declarations for every entry point.
 
-[Unreleased]: https://github.com/jpiemeisl/storybook-playwright/compare/v0.1.1...HEAD
+[Unreleased]: https://github.com/jpiemeisl/storybook-playwright/compare/v0.2.0...HEAD
+[0.2.0]: https://github.com/jpiemeisl/storybook-playwright/compare/v0.1.1...v0.2.0
 [0.1.1]: https://github.com/jpiemeisl/storybook-playwright/compare/v0.1.0...v0.1.1
 [0.1.0]: https://github.com/jpiemeisl/storybook-playwright/releases/tag/v0.1.0
