@@ -10,11 +10,11 @@ projects read [consuming.md](consuming.md). What a version number promises is in
 - A published version's number and tag are never reused or moved.
 - The package stays **private**. The repository is public, so its branch and tag rulesets are enforced
   on the Free plan, and **a package first published from this public repository comes out public**.
-  0.1.0 did (2026-11-22) and was switched to private by hand straight afterwards. Package visibility is
-  per package, so later versions stay private. A brand-new package (for example a future adapter
-  package published from this repository) must be set to private right after its first publish (see
-  "Package settings" below). Never switch a package to public on purpose: GitHub's docs warn that a
-  public package can't be made private again. (Switching 0.1.0 back did work, but don't rely on it.)
+  The first version (0.1.0) came out public and was switched to private by hand right afterwards. <!-- check-docs: version-ok -->
+  Visibility is set per package, not per version, so later versions stay private. A brand-new package
+  (for example a future adapter package published from this repository) must be set to private right
+  after its first publish (see "Package settings" below). Never switch a package to public on purpose:
+  GitHub's docs warn that a public package can't be made private again.
 
 ## Release flow
 
@@ -45,8 +45,9 @@ Step by step:
    npm run release:prepare -- minor      # or patch, major
    ```
 
-   It refuses a dirty tree, an existing tag and an empty Unreleased section. Then it runs
-   `npm version <bump> --no-git-tag-version` (package.json and package-lock.json), moves the Unreleased
+   It refuses on `main` or a detached HEAD, with uncommitted changes to tracked files, when the new
+   version's tag already exists locally, and when the Unreleased section has no notes. Then it runs
+   `npm version <bump> --no-git-tag-version --ignore-scripts` (package.json and package-lock.json), moves the Unreleased
    notes under `## [0.2.0] - <today>`, updates the comparison links, rebuilds the library and
    regenerates `docs/api-surface.md`. It commits nothing.
 4. **Review and open a pull request:** `git diff`, then commit, push and open it. CI runs as usual,
@@ -85,10 +86,10 @@ Nothing else can publish:
 
 ## Dry run
 
-After this workflow is on `main`, a dry run builds and checks everything and runs
-`npm publish --dry-run`. The publish step's log lists every file that would be published, and the job
-summary shows the package contents and the release notes. Nothing is published, and no release is
-created.
+A dry run runs the same verification, build and checks, then `npm publish --dry-run`, and builds the
+Storybook zip. It skips the smoke test from GitHub Packages and the GitHub Release. The publish step's
+log lists every file that would be published, and the job summary shows the package contents and the
+release notes. Nothing is published, and no release is created.
 
 ```sh
 gh workflow run release.yml -f dry_run=true          # current main
@@ -106,7 +107,7 @@ Find the failing step in the run.
 - **Before "Publish to GitHub Packages"** (verification, build or checks): nothing was published. Fix
   the cause on `main` through a pull request. Then:
   - If the fix didn't change the package (for example a workflow fix), delete the tag
-    (`git push origin :refs/tags/v0.2.0` and `git tag -d v0.2.0`, by an admin if the tag ruleset is on)
+    (`git push origin :refs/tags/v0.2.0` and `git tag -d v0.2.0`; only an admin can, because of the tag ruleset)
     and run `npm run release:tag` again on the new HEAD. Re-running the old run isn't enough: it would
     release the old commit.
   - If the fix changed the package, prepare the next patch instead. It is the safer default.
@@ -129,7 +130,7 @@ forward with the next patch.
 1. Publish the fixed version first (normally the next patch).
 2. Add a "Deprecated" note to that version's CHANGELOG entry, naming the bad version and why.
 3. Edit the bad version's GitHub Release, and add a warning at the top pointing to the fixed version.
-4. Try `npm deprecate @jpiemeisl/pattern-library@0.2.0 "Broken CSS export; use 0.2.1"` with a classic
+4. Try `npm deprecate @jpiemeisl/pattern-library@0.2.0 "Broken CSS export; use 0.2.1"` with a classic <!-- check-docs: version-ok -->
    token that has `write:packages`, set in your user `.npmrc` (never in the repository). GitHub's docs
    don't say whether the npm registry on GitHub Packages supports `npm deprecate`. If it refuses, steps
    2 and 3 are the deprecation.
@@ -154,11 +155,12 @@ On GitHub: your profile → **Packages** → `pattern-library` → **Package set
   access (not its visibility). With a public repository this setting affects access only. Visibility
   stays as set above.
 
-## Tag ruleset (set this up once)
+## Tag ruleset
 
-Only maintainers should be able to create, move or delete release tags. A pushed `v*` tag starts a
-release, so this protects the release trigger. A personal repository on the Free plan supports rulesets
-because the repository is public.
+A pushed `v*.*.*` tag starts a release, so only admins can create, move or delete release tags. The
+active tag ruleset `release tags` targets `v*`, restricts creations, updates and deletions, and has
+**Repository admin** on its bypass list. A personal repository on the Free plan supports rulesets
+because the repository is public. To recreate the ruleset:
 
 1. Open the repository on GitHub → **Settings**.
 2. In the sidebar, under **Code and automation**, click **Rules** → **Rulesets**.
@@ -172,8 +174,8 @@ because the repository is public.
    others off.
 8. Click **Create**.
 
-To test it, a collaborator without admin rights pushing `git push origin refs/tags/v9.9.9` is rejected.
-Your own `npm run release:tag` still works, because admins are on the bypass list.
+A collaborator without admin rights who pushes a `v*` tag is rejected. An admin's `npm run release:tag`
+works because admins are on the bypass list.
 
 ## Bumping Playwright or Storybook without changing the package
 
