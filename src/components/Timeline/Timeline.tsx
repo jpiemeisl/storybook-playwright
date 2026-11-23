@@ -10,7 +10,7 @@ export interface TimelineProps {
   headingLevel?: 2 | 3 | 4;
 }
 
-/** Ordered events. Single column on narrow containers; alternating either side of a centre line from 48rem. */
+/** Ordered events. Single column on narrow containers; alternating either side of a center line from 48rem. */
 export function Timeline({ items, headingLevel = 3 }: TimelineProps) {
   const H = `h${headingLevel}` as const;
   return (
@@ -51,7 +51,7 @@ export function Steps({ items, currentStep, headingLevel = 3 }: StepsProps) {
           const number = index + 1;
           const state = currentStep === undefined ? 'todo' : number < currentStep ? 'done' : number === currentStep ? 'current' : 'todo';
           return (
-            <li key={item.title} className={styles.step} data-state={state} aria-current={state === 'current' ? 'step' : undefined}>
+            <li key={`${item.title}-${index}`} className={styles.step} data-state={state} aria-current={state === 'current' ? 'step' : undefined}>
               <span className={styles.number} aria-hidden="true">
                 {state === 'done' ? <Icon name="check" size="sm" /> : number}
               </span>

@@ -70,7 +70,7 @@
     font-weight: var(--text-weight-strong);
   }
 
-  /* Wide: centre line, events alternate sides. */
+  /* Wide: center line, events alternate sides. */
   @container (min-width: 48rem) {
     .timeline::before {
       inset-inline-start: calc(50% - 1px);

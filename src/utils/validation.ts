@@ -104,18 +104,67 @@ export function contextFor(element: ValidatableElement, label: string): FieldCon
   };
 }
 
+/** Text controls whose values forms trim before use; whitespace in passwords is significant. */
+const TRIMMED_TYPES = new Set(['text', 'textarea', 'email', 'search', 'tel', 'url']);
+
 /**
- * Native tooShort/tooLong only fire for values the user typed, not for prefilled or programmatic
- * values, so lengths are checked here too.
+ * True when a required text control holds only whitespace. Native `required` accepts "   ", but forms
+ * trim text values, so it would be submitted as empty. Internal (not exported from the package).
  */
+export function isBlankRequired({ required, type, value }: { required: boolean; type: string; value: string }): boolean {
+  return required && TRIMMED_TYPES.has(type) && value.length > 0 && value.trim() === '';
+}
+
+/**
+ * Length checks for minLength and maxLength. Native tooShort/tooLong only fire for values the user
+ * typed, not for prefilled or programmatic values, so lengths are checked in code. Text controls are
+ * measured trimmed, as forms submit them ("a" plus nine spaces is 1 character); other types (such as
+ * passwords) are measured as they are, together with the native flags. Empty values are never too
+ * short (`required` covers them). Internal (not exported from the package).
+ */
+export function lengthValidity({
+  type,
+  value,
+  minLength,
+  maxLength,
+  nativeTooShort = false,
+  nativeTooLong = false,
+}: {
+  type: string;
+  value: string;
+  minLength?: number;
+  maxLength?: number;
+  nativeTooShort?: boolean;
+  nativeTooLong?: boolean;
+}): { tooShort: boolean; tooLong: boolean } {
+  const trimmed = TRIMMED_TYPES.has(type);
+  const length = trimmed ? value.trim().length : value.length;
+  const shortByLength = !!minLength && length > 0 && length < minLength;
+  const longByLength = maxLength !== undefined && length > maxLength;
+  // The native flags count untrimmed characters, so they only apply to untrimmed types.
+  return {
+    tooShort: trimmed ? shortByLength : nativeTooShort || shortByLength,
+    tooLong: trimmed ? longByLength : nativeTooLong || longByLength,
+  };
+}
+
+/** Constraint flags for a live element, with the length and whitespace-only checks applied. */
 function validityOf(element: ValidatableElement, context: FieldContext): Partial<Pick<ValidityState, ValidityFlag | 'valid'>> {
   const { validity } = element;
-  const length = element.value.length;
-  const tooShort = validity.tooShort || (!!context.minLength && length > 0 && length < context.minLength);
-  const tooLong = validity.tooLong || (context.maxLength !== undefined && length > context.maxLength);
+  const blank = isBlankRequired(element);
+  const lengths = lengthValidity({
+    type: element.type,
+    value: element.value,
+    minLength: context.minLength,
+    maxLength: context.maxLength,
+    nativeTooShort: validity.tooShort,
+    nativeTooLong: validity.tooLong,
+  });
+  const tooShort = !blank && lengths.tooShort;
+  const tooLong = lengths.tooLong;
   return {
-    valid: validity.valid && !tooShort && !tooLong,
-    valueMissing: validity.valueMissing,
+    valid: validity.valid && !blank && !tooShort && !tooLong,
+    valueMissing: validity.valueMissing || blank,
     typeMismatch: validity.typeMismatch,
     patternMismatch: validity.patternMismatch,
     tooShort,

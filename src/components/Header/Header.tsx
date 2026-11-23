@@ -45,7 +45,10 @@ export function Header({
   const slotRef = useRef<HTMLDivElement>(null);
   const listRef = useRef<HTMLUListElement>(null);
 
-  // Collapse to the menu button whenever the inline nav is wider than the space it has.
+  const hasNav = items.length > 0;
+
+  // Collapse to the menu button whenever the inline nav is wider than the space it has. The slot and
+  // list exist only while there are items, so re-run when the nav appears or disappears.
   useEffect(() => {
     const slot = slotRef.current;
     const list = listRef.current;
@@ -55,14 +58,13 @@ export function Header({
     observer.observe(slot);
     observer.observe(list);
     return () => observer.disconnect();
-  }, []);
+  }, [hasNav]);
 
   const closeMenu = useCallback(() => setMenuOpen(false), []);
-  const hasNav = items.length > 0;
   const classes = [styles.header, sticky && styles.sticky].filter(Boolean).join(' ');
 
   return (
-    <header className={classes} data-overflowing={overflowing || undefined} data-no-nav={hasNav ? undefined : ''}>
+    <header className={classes} data-overflowing={(hasNav && overflowing) || undefined} data-no-nav={hasNav ? undefined : ''}>
       <Container size="xl" className={styles.inner}>
         <div className={styles.logo}>{logo}</div>
 
@@ -71,7 +73,7 @@ export function Header({
             <nav aria-label={navLabel}>
               <ul ref={listRef} className={styles.list}>
                 {items.map((item, index) => (
-                  <li key={item.href}>
+                  <li key={`${item.href}-${index}`}>
                     {item.children?.length ? (
                       <NavDropdown
                         item={item}

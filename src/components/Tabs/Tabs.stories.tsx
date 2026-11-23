@@ -53,7 +53,7 @@ export const SecondSelected: Story = {
 
 /** Automatic activation: arrows, Home and End move focus and select; focus ring visible. */
 export const KeyboardAutomatic: Story = {
-  // Behaviour test: its screenshots were identical to SecondSelected's at every width, so it isn't captured.
+  // Behavior test: its screenshots were identical to SecondSelected's at every width, so it isn't captured.
   parameters: { vrt: { screenshot: false } },
   play: async ({ canvasElement }) => {
     const canvas = within(canvasElement);
@@ -71,19 +71,52 @@ export const KeyboardAutomatic: Story = {
   },
 };
 
-/** Manual activation: arrows move focus only; Enter selects. */
+/**
+ * Manual activation: arrows move focus (and the roving tabindex) only; Enter or Space selects. Leaving
+ * the tab list and coming back lands on the selected tab.
+ */
 export const KeyboardManual: Story = {
-  // Behaviour test: its screenshots were identical to SecondSelected's at every width, so it isn't captured.
+  // Behavior test: its screenshots were identical to SecondSelected's at every width, so it isn't captured.
   parameters: { vrt: { screenshot: false } },
   args: { activation: 'manual' },
   play: async ({ canvasElement }) => {
     const canvas = within(canvasElement);
+    const overview = canvas.getByRole('tab', { name: 'Overview' });
+    const pricing = canvas.getByRole('tab', { name: 'Pricing' });
+    const faq = canvas.getByRole('tab', { name: 'FAQ' });
     await userEvent.tab();
+    await expect(overview).toHaveFocus();
     await userEvent.keyboard('{ArrowRight}');
-    await expect(canvas.getByRole('tab', { name: 'Pricing' })).toHaveFocus();
-    await expect(canvas.getByRole('tab', { name: 'Overview' })).toHaveAttribute('aria-selected', 'true');
+    await expect(pricing).toHaveFocus();
+    await expect(pricing).toHaveAttribute('tabindex', '0');
+    await expect(overview).toHaveAttribute('tabindex', '-1');
+    await expect(overview).toHaveAttribute('aria-selected', 'true');
+    await userEvent.keyboard('{ArrowRight}');
+    await expect(faq).toHaveFocus();
+    await expect(faq).toHaveAttribute('tabindex', '0');
+    await expect(pricing).toHaveAttribute('tabindex', '-1');
+    await expect(overview).toHaveAttribute('aria-selected', 'true');
+    await expect(canvas.getByRole('tabpanel', { name: 'Overview' })).toBeVisible();
+    await userEvent.keyboard('{ArrowLeft}');
+    await expect(pricing).toHaveFocus();
+    await expect(overview).toHaveAttribute('aria-selected', 'true');
     await userEvent.keyboard('{Enter}');
-    await expect(canvas.getByRole('tab', { name: 'Pricing' })).toHaveAttribute('aria-selected', 'true');
+    await expect(pricing).toHaveAttribute('aria-selected', 'true');
+    await expect(canvas.getByRole('tabpanel', { name: 'Pricing' })).toBeVisible();
+    await userEvent.keyboard('{ArrowRight}');
+    await expect(faq).toHaveFocus();
+    await expect(pricing).toHaveAttribute('aria-selected', 'true');
+    await userEvent.keyboard(' ');
+    await expect(faq).toHaveAttribute('aria-selected', 'true');
+    // Tab to the panel and back: focus returns to the selected tab.
+    await userEvent.keyboard('{ArrowLeft}');
+    await expect(pricing).toHaveFocus();
+    await userEvent.tab();
+    await expect(canvas.getByRole('tabpanel', { name: 'FAQ' })).toHaveFocus();
+    await expect(faq).toHaveAttribute('tabindex', '0');
+    await expect(pricing).toHaveAttribute('tabindex', '-1');
+    await userEvent.tab({ shift: true });
+    await expect(faq).toHaveFocus();
   },
 };
 

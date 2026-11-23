@@ -31,7 +31,7 @@ export interface CookieBannerProps {
 }
 
 /**
- * UI only, and not legal advice. A non-modal, labelled region at the bottom of the viewport with
+ * UI only, and not legal advice. A non-modal, labeled region at the bottom of the viewport with
  * "Accept all" and "Reject all" given equal weight (same style, one tab stop each) and "Choose settings",
  * which opens a Modal with the categories. It never takes focus when it appears and never traps it; only
  * the settings dialog does, while open. It never reads or writes cookies or storage, loads no scripts and

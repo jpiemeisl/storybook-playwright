@@ -22,8 +22,8 @@ export function DescriptionList({ items, layout = 'columns' }: DescriptionListPr
   return (
     <div className={styles.root}>
       <dl className={[styles.list, styles[layout]].join(' ')}>
-        {items.map((item) => (
-          <div key={item.term} className={styles.item}>
+        {items.map((item, index) => (
+          <div key={`${item.term}-${index}`} className={styles.item}>
             <dt className={styles.term}>{item.term}</dt>
             <dd className={styles.details}>{item.details}</dd>
           </div>

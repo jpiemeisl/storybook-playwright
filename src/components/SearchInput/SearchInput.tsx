@@ -1,4 +1,4 @@
-import { useId, useRef, useState, type ComponentPropsWithRef, type FormEvent } from 'react';
+import { useCallback, useId, useRef, useState, type ComponentPropsWithRef, type FormEvent, type Ref } from 'react';
 import { Button } from '../Button';
 import { Icon } from '../Icon';
 import type { FieldSize } from '../Input';
@@ -32,6 +32,15 @@ export interface SearchInputProps
   size?: FieldSize;
 }
 
+/** Points a caller's ref (callback or object) at the node; returns the callback ref's cleanup, if any. */
+function assignRef<T>(ref: Ref<T> | undefined, node: T | null): (() => void) | void {
+  if (typeof ref === 'function') {
+    const cleanup = ref(node);
+    return typeof cleanup === 'function' ? cleanup : undefined;
+  }
+  if (ref) ref.current = node;
+}
+
 /**
  * <form role="search"> (a real GET form with `action`) with a search input, a leading icon and a
  * clear button that appears when there is text. Clearing returns focus to the input. No suggestions or autocomplete.
@@ -47,11 +56,25 @@ export function SearchInput({
   size = 'md',
   id,
   className,
+  ref,
   ...rest
 }: SearchInputProps) {
   const generatedId = useId();
   const inputId = id ?? generatedId;
   const inputRef = useRef<HTMLInputElement>(null);
+  // The clear button needs the input too, so keep the internal ref and forward to the caller's `ref`.
+  const setInputRef = useCallback(
+    (node: HTMLInputElement | null) => {
+      inputRef.current = node;
+      const cleanup = assignRef(ref, node);
+      return () => {
+        inputRef.current = null;
+        if (cleanup) cleanup();
+        else assignRef(ref, null);
+      };
+    },
+    [ref],
+  );
   const [internal, setInternal] = useState(defaultValue);
   const query = value ?? internal;
 
@@ -82,7 +105,7 @@ export function SearchInput({
       <div className={[field.box, field[size], styles.box].join(' ')}>
         <Icon name="search" size="sm" className={styles.icon} />
         <input
-          ref={inputRef}
+          ref={setInputRef}
           id={inputId}
           type="search"
           value={query}

@@ -97,3 +97,14 @@ export const LightboxSingleImage: Story = {
     await waitFor(() => expect(within(canvasElement).getByRole('button', { name: galleryOne[0]!.alt })).toHaveFocus());
   },
 };
+
+/** Decorative images (empty alt): each thumbnail button is named by its position instead of being unnamed. */
+export const EmptyAltNamesButtons: Story = {
+  parameters: { vrt: { screenshot: false } },
+  args: { images: galleryThree.map((image, index) => (index === 1 ? { ...image, alt: '' } : image)), columns: 3 },
+  play: async ({ canvasElement }) => {
+    const canvas = within(canvasElement);
+    await expect(canvas.getByRole('button', { name: 'Open image 2 of 3' })).toBeInTheDocument();
+    await expect(canvas.getByRole('button', { name: galleryThree[0]!.alt })).not.toHaveAttribute('aria-label');
+  },
+};

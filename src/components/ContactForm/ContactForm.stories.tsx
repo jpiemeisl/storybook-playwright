@@ -97,6 +97,20 @@ export const ErrorClearsOnBlur: Story = {
   },
 };
 
+/** Whitespace-only required fields count as empty: they show the normal required error and are not submitted. */
+export const WhitespaceOnlyIsMissing: Story = {
+  parameters: { vrt: { screenshot: false } },
+  args: { defaultValues: { ...filledContact, name: '   ', message: '            ', consent: true } },
+  play: async ({ canvasElement, args }) => {
+    const canvas = within(canvasElement);
+    await userEvent.click(canvas.getByRole('button', { name: 'Send message' }));
+    const links = within(canvas.getByRole('alert')).getAllByRole('link');
+    await expect(links.map((link) => link.textContent)).toEqual(['Enter your full name', 'Enter your message']);
+    await expect(canvas.getByRole('textbox', { name: /Full name/ })).toHaveAttribute('aria-invalid', 'true');
+    await expect(args.onSubmit).not.toHaveBeenCalled();
+  },
+};
+
 export const ValidSubmit: Story = {
   args: { defaultValues: { ...filledContact, consent: true } },
   play: async ({ canvasElement, args }) => {

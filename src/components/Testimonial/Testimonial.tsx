@@ -43,8 +43,8 @@ export interface TestimonialGridProps {
 export function TestimonialGrid({ items }: TestimonialGridProps) {
   return (
     <Grid as="ul" columns={{ base: 1, md: Math.min(items.length, 3) }} gap="lg" className={styles.grid}>
-      {items.map((item) => (
-        <li key={item.author.name}>
+      {items.map((item, index) => (
+        <li key={`${item.author.name}-${index}`}>
           <Testimonial {...item} variant="card" />
         </li>
       ))}

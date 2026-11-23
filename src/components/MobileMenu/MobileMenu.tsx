@@ -91,8 +91,8 @@ export function MobileMenu({
 
         <nav aria-label={navLabel} className={styles.nav}>
           <ul className={styles.list}>
-            {items.map((item) => (
-              <MenuEntry key={item.href} item={item} onNavigate={onClose} />
+            {items.map((item, index) => (
+              <MenuEntry key={`${item.href}-${index}`} item={item} onNavigate={onClose} />
             ))}
           </ul>
         </nav>

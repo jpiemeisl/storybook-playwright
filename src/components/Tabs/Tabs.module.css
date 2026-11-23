@@ -32,7 +32,7 @@
     color: var(--color-text);
   }
 
-  /* Selected: underline bar plus full-strength text (not colour alone). */
+  /* Selected: underline bar plus full-strength text (not color alone). */
   .tab[aria-selected='true'] {
     border-block-end-color: var(--color-action);
     color: var(--color-text);
@@ -88,7 +88,7 @@
     }
   }
 
-  /* Forced colours draw "transparent" borders, so give unselected tabs an invisible Canvas-coloured
+  /* Forced colors draw "transparent" borders, so give unselected tabs an invisible Canvas-colored
      bar and only the selected tab a Highlight bar. */
   @media (forced-colors: active) {
     .tab {

@@ -43,8 +43,8 @@ export function Footer({ logo, columns = [], social = [], legal, newsletter }: F
 
         {columns.length > 0 && (
           <Grid columns={{ base: 1, sm: 2, lg: Math.min(columns.length, 4) }} gap="lg">
-            {columns.map((column) => (
-              <FooterLinks key={column.heading} column={column} />
+            {columns.map((column, index) => (
+              <FooterLinks key={`${column.heading}-${index}`} column={column} />
             ))}
           </Grid>
         )}
@@ -54,8 +54,8 @@ export function Footer({ logo, columns = [], social = [], legal, newsletter }: F
             {legal && <div className={styles.legal}>{legal}</div>}
             {social.length > 0 && (
               <ul className={styles.social}>
-                {social.map((link) => (
-                  <li key={link.platform}>
+                {social.map((link, index) => (
+                  <li key={`${link.platform}-${index}`}>
                     <Link href={link.href} aria-label={link.label} externalIcon={false} className={styles.socialLink}>
                       <Icon name={link.platform} />
                     </Link>
@@ -78,8 +78,8 @@ function FooterLinks({ column }: { column: FooterColumn }) {
         {column.heading}
       </Heading>
       <ul className={styles.links}>
-        {column.items.map((item) => (
-          <li key={item.href}>
+        {column.items.map((item, index) => (
+          <li key={`${item.href}-${index}`}>
             <Link href={item.href} className={styles.link} aria-current={item.current ? 'page' : undefined}>
               {item.label}
             </Link>

@@ -32,7 +32,7 @@ component's JSDoc.
   `SocialLink`, `BreadcrumbItem`); map CMS or router data into those shapes.
 - **Header** shows the inline nav from 48rem. It also measures the nav: whenever the items don't fit
   their slot (long or many labels), it hides the inline nav and shows the menu button instead, at any
-  width. Items never wrap or get clipped. Dropdowns are disclosure buttons (Enter, Space, arrow keys,
+  width, including when items arrive after the first render. Items never wrap or get clipped. Dropdowns are disclosure buttons (Enter, Space, arrow keys,
   Escape, outside click); nothing depends on hover. The `actions` slot (`ctx.headerActions` in
   templates) holds host controls such as search, account and cart at every width.
 - **MobileMenu** is a native `<dialog>` opened with `showModal()`: focus stays in the dialog (Tab can
@@ -65,8 +65,13 @@ component's JSDoc.
 - **TableOfContents** is a sticky list on wide screens (64rem and up) and a `<details>` on narrow ones.
   `observe` tracks the heading in view with IntersectionObserver. `buildTocFromHeadings` is a pure helper.
 - **Modal** and **Lightbox** use `<dialog>` with `showModal()`. **Carousel** is CSS scroll-snap with
-  buttons and dots, and never autoplays. **Tabs** use a roving tabindex. **Table** wraps the table in a
+  buttons and dots, and never autoplays; in right-to-left layouts (`dir="rtl"`) its ends, dots and
+  buttons follow the inline direction and the arrow icons mirror. **Tabs** use a roving tabindex: with
+  `activation="manual"` the arrow keys move focus (and the tab stop) without selecting, Enter or Space
+  selects, and leaving the tab list resets the tab stop to the selected tab. **Table** wraps the table in a
   focusable, caption-labeled scroll region; `stickyHeader` caps its height so the header can stick.
+- **Gallery** thumbnails (with the lightbox) are buttons named by the image's `alt`; an empty `alt`
+  falls back to "Open image n of total", so no button is unnamed.
 - **Card** with `href`: the title is the only link, and its hit area is stretched over the card. There
   are no nested links, and the focus ring wraps the whole card.
 - **Accordion** uses the WAI-ARIA button pattern, not `<details>`, for arrow, Home and End navigation and
@@ -81,8 +86,8 @@ Forms are presentational and backend-free: they call `onSubmit(values)` and rend
 (`'idle' | 'submitting' | 'success' | 'error'`) they're given. They're built on native controls and
 native constraint attributes (`required`, `type`, `minLength`, `pattern`, ...) with no form library.
 
-- **Controls** (Input, Textarea, Select, Checkbox, Radio) work controlled or uncontrolled, accept `ref`
-  (React 19's ref as a prop), and spread other native props onto the native element. States are styled
+- **Controls** (Input, Textarea, Select, Checkbox, Radio, and SearchInput's input) work controlled or
+  uncontrolled, accept `ref` (React 19's ref as a prop), and spread other native props onto the native element. States are styled
   from attributes (`aria-invalid`, `:disabled`, `[readonly]`), not classes.
 - **Field** wires the label's `for` and `id`, `aria-describedby` (hint, then error), `aria-invalid`,
   `required` and `aria-required` onto its child control (or passes them to a render prop).
@@ -90,7 +95,9 @@ native constraint attributes (`required`, `type`, `minLength`, `pattern`, ...) w
   `required` state instead. ContactForm states "Required fields are marked with an asterisk".
 - **Validation** (`src/utils/validation.ts`): forms use `noValidate` and validate on submit (then on
   blur), with messages built from each control's `ValidityState`. `minLength` and `maxLength` are checked
-  in code too, because browsers report them only for typed values. ContactForm shows a focused error
+  in code too, because browsers report them only for typed values, and text fields are measured
+  trimmed, as they're submitted (passwords aren't trimmed). A required text field holding only
+  whitespace counts as empty (forms trim text values), so it gets the normal required message. ContactForm shows a focused error
   summary (`role="alert"`) whose links move focus to each field. FieldError isn't a live region.
 - **Textarea counter:** the visible "n / max" is `aria-hidden`; the limit is in the description, and a
   polite live region announces the remaining characters once typing pauses for a second.

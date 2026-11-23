@@ -39,14 +39,15 @@ const reducedMotion = () => window.matchMedia?.('(prefers-reduced-motion: reduce
 
 /**
  * Scroll-snap carousel. Native horizontal scrolling (touch, trackpad, keyboard on the focusable
- * track) plus previous/next buttons and optional dots. No autoplay. Slides are never hidden from
- * assistive tech, so links in off-screen slides stay reachable by Tab.
+ * track) plus previous/next buttons and optional dots. No autoplay. Works in right-to-left layouts
+ * (`dir="rtl"`): positions are measured from the inline start and the arrow icons mirror. Slides are
+ * never hidden from assistive tech, so links in off-screen slides stay reachable by Tab.
  */
 export function Carousel({ label, children, slidesPerView = 1, loop = false, showDots = false }: CarouselProps) {
   const trackRef = useRef<HTMLDivElement>(null);
   const slides = Children.toArray(children);
   const count = slides.length;
-  const [position, setPosition] = useState({ index: 0, atStart: true, atEnd: count <= 1 });
+  const [position, setPosition] = useState({ index: 0, leading: 0, atStart: true, atEnd: count <= 1 });
   const perView = resolve(slidesPerView);
 
   const measure = useCallback(() => {
@@ -54,11 +55,17 @@ export function Carousel({ label, children, slidesPerView = 1, loop = false, sho
     const first = track?.firstElementChild as HTMLElement | null;
     if (!track || !first) return;
     const step = first.offsetWidth + parseFloat(getComputedStyle(track).columnGap || '0');
-    const atEnd = track.scrollLeft + track.clientWidth >= track.scrollWidth - 1;
+    // Distance scrolled from the inline start. In right-to-left layouts scrollLeft runs from 0 down to
+    // negative values, so use its magnitude.
+    const scrolled = Math.abs(track.scrollLeft);
+    const atEnd = scrolled + track.clientWidth >= track.scrollWidth - 1;
+    const leading = Math.round(scrolled / step);
     setPosition({
       // At the end of the track the last slide is "current", so the last dot lights up.
-      index: atEnd ? track.children.length - 1 : Math.round(track.scrollLeft / step),
-      atStart: track.scrollLeft <= 1,
+      index: atEnd ? track.children.length - 1 : leading,
+      // The slide actually at the inline start; Previous steps back from it (at the end it is not `index`).
+      leading,
+      atStart: scrolled <= 1,
       atEnd,
     });
   }, []);
@@ -87,14 +94,21 @@ export function Carousel({ label, children, slidesPerView = 1, loop = false, sho
     const slide = track?.children[index] as HTMLElement | undefined;
     if (!track || !slide) return;
     // The track is position: relative, so offsetLeft is measured from its padding edge.
-    const padding = parseFloat(getComputedStyle(track).paddingInlineStart || '0');
-    track.scrollTo({ left: slide.offsetLeft - padding, behavior: reducedMotion() ? 'instant' : 'smooth' });
+    const style = getComputedStyle(track);
+    const padding = parseFloat(style.paddingInlineStart || '0');
+    // Right-to-left: the slide's inline start is its right edge, aligned with the track's right
+    // padding; scrollLeft is 0 at the start and negative beyond it.
+    const left =
+      style.direction === 'rtl'
+        ? slide.offsetLeft + slide.offsetWidth - track.clientWidth + padding
+        : slide.offsetLeft - padding;
+    track.scrollTo({ left, behavior: reducedMotion() ? 'instant' : 'smooth' });
   };
 
   const step = (direction: 1 | -1) => {
     if (direction === 1 && position.atEnd) return loop ? scrollToSlide(0) : undefined;
     if (direction === -1 && position.atStart) return loop ? scrollToSlide(count - 1) : undefined;
-    scrollToSlide(Math.min(Math.max(position.index + direction, 0), count - 1));
+    scrollToSlide(Math.min(Math.max(position.leading + direction, 0), count - 1));
   };
 
   const vars = {
