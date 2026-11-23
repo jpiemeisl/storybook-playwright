@@ -28,7 +28,7 @@ import { Button, Theme } from '@jpiemeisl/pattern-library';
 
 export const Example = () => (
   <Theme name="harbor">
-    <Button variant="primary">Get started</Button>
+    <Button variant="huge">Get started</Button>
   </Theme>
 );
 ```
