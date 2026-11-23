@@ -66,6 +66,8 @@ Deprecated, Removed, Fixed and Security. `npm run release:prepare` moves them un
 - The price facet range uses per-cycle prices for subscription products, matching the price filter.
 - `RelatedProducts` and `CrossSell` no longer share a fixed id, so two on one page don't duplicate it.
 - `BillingIntervalSelector`'s group is named by its visible "Billing" legend.
+- `WishlistButton`: the visible label stays "Save" when pressed (the filled heart shows the state), so the
+  visible text is always part of its accessible name.
 - `SubscriptionCard` leaves out the date line when a cancellation at period end has no end date.
 - `addHeadingIds` and `extractHeadings` no longer mistake `id=` text inside another attribute's value
   for the heading's id.
