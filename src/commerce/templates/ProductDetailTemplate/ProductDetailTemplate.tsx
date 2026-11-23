@@ -27,6 +27,7 @@ export const canRenderProductDetail = (page: PageContent) => {
  * Product detail: breadcrumbs, gallery (sticky on wide containers) beside the info column, then
  * reviews (#reviews) and related products. Selection state lives here (useVariantSelection); the host
  * owns the cart through ctx.onAddToCart and hears about selection changes through ctx.onSelectionChange.
+ * The wishlist button reports to ctx.onWishlistToggle and shows page.inWishlist when the host sets it.
  */
 export function ProductDetailTemplate({ page, chrome, ctx }: TemplateProps<ProductPage> & { ctx?: CommerceContext }) {
   const { product, reviews, related } = page;
@@ -57,7 +58,7 @@ export function ProductDetailTemplate({ page, chrome, ctx }: TemplateProps<Produ
               <div className={styles.gallery}>
                 <ProductGallery images={product.images} index={imageIndex} onIndexChange={setImageIndex} title={product.title} />
               </div>
-              <ProductInfo product={product} variant={variant} selection={selection} availability={availability} onSelect={select} initialPurchaseOption={page.initialPurchaseOption} ctx={ctx} />
+              <ProductInfo product={product} variant={variant} selection={selection} availability={availability} onSelect={select} initialPurchaseOption={page.initialPurchaseOption} inWishlist={page.inWishlist} ctx={ctx} />
             </div>
           </div>
         </Container>

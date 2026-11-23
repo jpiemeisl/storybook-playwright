@@ -37,7 +37,7 @@ export interface ManageSubscriptionProps {
   status?: 'idle' | 'submitting' | 'error';
   /** Shown in the open dialog when `status` is `error`. */
   errorMessage?: string;
-  /** What happens to digital access when cancelled, from your data (shown in the cancel dialog). */
+  /** What happens to digital access when canceled, from your data (shown in the cancel dialog). */
   accessNote?: string;
 }
 
@@ -60,7 +60,7 @@ const REASONS = ['It costs too much', 'I’m not using it enough', 'It’s missi
  * dialog: focus trap, Escape, focus returns to the button): pause (1-3 months with the resume date),
  * change plan (radio cards, current disabled, the change summary before confirming), cancel (what
  * happens, optional reason and comment; "Keep subscription" has focus first; a destructive confirm
- * marked by icon and border, not colour alone), resume, undo cancellation and reactivate. Update payment
+ * marked by icon and border, not color alone), resume, undo cancellation and reactivate. Update payment
  * method is a callback only. Outcomes are announced politely.
  */
 export function ManageSubscription({ subscription: sub, now, onAction, status = 'idle', errorMessage, accessNote }: ManageSubscriptionProps) {
@@ -144,7 +144,7 @@ export function ManageSubscription({ subscription: sub, now, onAction, status = 
             {accessNote && <li>{accessNote}</li>}
             <li>You can undo this any time before {periodEnd ? formatCommerceDate(periodEnd) : 'the period ends'}.</li>
           </ul>
-          <RadioGroup legend="Why are you cancelling? (optional)" name={`${id}-reason`} value={reason} onChange={setReason}>
+          <RadioGroup legend="Why are you canceling? (optional)" name={`${id}-reason`} value={reason} onChange={setReason}>
             {REASONS.map((r) => (
               <Radio key={r} value={r} label={r} />
             ))}
@@ -213,7 +213,7 @@ function outcome(r: SubscriptionActionRequest, sub: CustomerSubscription): strin
     case 'change-plan':
       return r.effective === 'immediately' ? `${sub.productTitle} plan changed.` : `Plan change scheduled for ${sub.productTitle}${sub.nextBillingAt ? ` on ${formatCommerceDate(sub.nextBillingAt)}` : ''}.`;
     case 'cancel':
-      return `${sub.productTitle} will be cancelled at the end of this period.`;
+      return `${sub.productTitle} will be canceled at the end of this period.`;
     case 'undo-cancel':
       return `${sub.productTitle} will keep renewing.`;
     case 'reactivate':

@@ -90,6 +90,7 @@ export function validateProductPage(page: unknown): ValidationIssue[] {
       const keys = (product.purchaseOptions as Product['purchaseOptions']).map(purchaseOptionKey);
       if (!isObj(option) || !keys.includes(purchaseOptionKey(option as never))) c.report('invalid-field', 'initialPurchaseOption', '"initialPurchaseOption" is not one of the product’s purchase options.');
     }
+    if (c.value.inWishlist !== undefined && typeof c.value.inWishlist !== 'boolean') c.report('invalid-field', 'inWishlist', '"inWishlist" must be true or false.');
     if (isObj(product) && Array.isArray(product.images)) {
       product.images.forEach((img, i) => {
         if (isObj(img) && typeof img.src === 'string' && !isSafeHref(img.src)) c.report('unsafe-src', `product.images[${i}].src`, 'Unsafe image source.');
@@ -182,7 +183,7 @@ export function validateConfirmationPage(page: unknown): ValidationIssue[] {
 const AUTH = ['login', 'register', 'forgot-password', 'reset-password'];
 const accountLinks = (c: Checker) =>
   c.child('links', false, (l) => {
-    for (const key of ['login', 'register', 'forgotPassword', 'shop', 'terms', 'privacy', 'support']) l.href(key, false);
+    for (const key of ['account', 'login', 'register', 'forgotPassword', 'shop', 'terms', 'privacy', 'support']) l.href(key, false);
   });
 
 /** Auth pages: a known template, a safe action and safe links. */
@@ -247,6 +248,7 @@ export function validateAccountPage(page: unknown): ValidationIssue[] {
         break;
       case 'account-addresses':
         c.issues.push(...prefix(validateAddressBook(c.value.addresses), 'addresses'));
+        if (c.value.status !== undefined) c.oneOf('status', ['idle', 'submitting', 'error']);
         break;
       case 'account-wishlist':
         list(c, 'items', validateWishlistItem);

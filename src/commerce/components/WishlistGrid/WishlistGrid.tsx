@@ -13,8 +13,8 @@ export interface WishlistGridProps {
   products: readonly Product[];
   /** Returns the product page URL for each product. */
   hrefFor: (product: Product) => string;
-  /** Called with the product id when the customer removes it from the wishlist. */
-  onRemove: (productId: string) => void;
+  /** Called with the product id when the customer removes it from the wishlist. Without it, the remove buttons are hidden. */
+  onRemove?: (productId: string) => void;
   /** Quick add, where the product card allows it (single purchasable variant). */
   onQuickAdd?: (product: Product, variant: Variant) => void;
   /** "Browse the shop" link for the empty state. */
@@ -23,7 +23,7 @@ export interface WishlistGridProps {
 
 /**
  * The wishlist: ProductCards (stock status shown as text by the card) on a ProductGrid, each with a
- * "Remove <title> from wishlist" button, the newest first. Quick add follows the card's own rules.
+ * "Remove <title> from wishlist" button (when `onRemove` is given), the newest first. Quick add follows the card's own rules.
  */
 export function WishlistGrid({ items, products, hrefFor, onRemove, onQuickAdd, shopHref = '/shop' }: WishlistGridProps) {
   const byId = new Map(products.map((p) => [p.id, p]));
@@ -34,9 +34,11 @@ export function WishlistGrid({ items, products, hrefFor, onRemove, onQuickAdd, s
       {shown.map((product) => (
         <div key={product.id} className={styles.item}>
           <ProductCard product={product} href={hrefFor(product)} headingLevel={2} quickAction={onQuickAdd ? 'add' : undefined} onQuickAdd={onQuickAdd} />
-          <div className={styles.remove}>
-            <WishlistButton action="remove" pressed onPressedChange={() => onRemove(product.id)} productTitle={product.title} />
-          </div>
+          {onRemove && (
+            <div className={styles.remove}>
+              <WishlistButton action="remove" pressed onPressedChange={() => onRemove(product.id)} productTitle={product.title} />
+            </div>
+          )}
         </div>
       ))}
     </ProductGrid>

@@ -42,4 +42,5 @@ which validates promo codes, stock and prices.
   `scheduledPlanChange`. Nothing is prorated.
 - In `Account.stories.tsx`, the story parameters are `demoAccount: { data }` (an `accountData` fixture key)
   and `demo: { failAction: true }`, which makes subscription, address and wishlist actions fail with a
-  server error.
+  server error. The subscription and address pages pass the failure back as `page.status: 'error'` with
+  `errorMessage`, so the dialog stays open (the `Address Delete Fails` story).

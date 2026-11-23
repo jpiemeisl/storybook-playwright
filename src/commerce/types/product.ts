@@ -24,8 +24,17 @@ export interface ProductOption {
   swatches?: Record<string, string>;
 }
 
-/** A JSON table: the same caption/columns/rows shape as the content model's `table` block. */
-export type TableData = Pick<TableBlock, 'caption' | 'columns' | 'rows'>;
+/**
+ * A product's size guide: a JSON table with the same caption/columns/rows shape as the content model's
+ * `table` block (unlike the core `TableData`, which holds React nodes).
+ */
+export type SizeGuideTable = Pick<TableBlock, 'caption' | 'columns' | 'rows'>;
+
+/**
+ * A JSON table: the same caption/columns/rows shape as the content model's `table` block.
+ * @deprecated Use `SizeGuideTable` instead (this name clashes with the core `TableData`). Kept for at least one minor version.
+ */
+export type TableData = SizeGuideTable;
 
 /** A titled block of product information, e.g. "Materials" or "Care". */
 export interface ProductInfoSection {
@@ -185,7 +194,7 @@ export interface Product {
   /** Extra information sections (materials, care, plan details). Shown in an accordion. */
   infoSections?: ProductInfoSection[];
   /** Size guide table, opened from the variant selector. */
-  sizeGuide?: TableData;
+  sizeGuide?: SizeGuideTable;
   /** ISO 8601 date the product was added; used by the "newest" sort. */
   createdAt?: string;
 }

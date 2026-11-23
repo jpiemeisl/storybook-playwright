@@ -50,6 +50,14 @@ describe('getProductAvailability', () => {
     expect(getProductAvailability(stool)).toBe('backorder');
     expect(getProductAvailability(kettle)).toBe('preorder');
   });
+
+  it('ranks the best variant status: low stock beats pre-order and backorder, sold out only when all are', () => {
+    const withStatuses = (...stocks: Product['variants'][number]['stock'][]): Product => ({ ...tee, variants: stocks.map((stock, i) => ({ ...tee.variants[0]!, id: `v${i}`, stock })) });
+    expect(getProductAvailability(withStatuses({ status: 'low-stock', quantity: 2 }, { status: 'preorder' }))).toBe('low-stock');
+    expect(getProductAvailability(withStatuses({ status: 'backorder' }, { status: 'low-stock', quantity: 1 }))).toBe('low-stock');
+    expect(getProductAvailability(withStatuses({ status: 'out-of-stock' }, { status: 'preorder' }))).toBe('preorder');
+    expect(getProductAvailability(withStatuses({ status: 'out-of-stock' }, { status: 'out-of-stock' }))).toBe('out-of-stock');
+  });
 });
 
 describe('parseFilters and serializeFilters', () => {
@@ -179,6 +187,13 @@ describe('computeFacets', () => {
   it('price bounds and empty catalogue', () => {
     expect(priceBounds(products)).toEqual({ min: { amount: 0, currency: 'USD' }, max: { amount: 1249900, currency: 'USD' } });
     expect(priceBounds([])).toBeNull();
+    // Same basis as the price filter: subscriptions use their per-cycle prices.
+    const subs = products.filter((p) => p.kind === 'subscription');
+    const bounds = priceBounds(subs)!;
+    expect(bounds.min.amount).toBe(Math.min(...subs.map((p) => getPriceSummary(p).min.amount)));
+    expect(bounds.max.amount).toBe(Math.max(...subs.map((p) => getPriceSummary(p).max.amount)));
+    expect(applyFilters(subs, state({ price: { min: bounds.min.amount, max: bounds.max.amount } }))).toHaveLength(subs.length);
+    expect(applyFilters(subs, state({ price: { min: bounds.max.amount + 1 } }))).toHaveLength(0);
     expect(computeFacets([], emptyFilters())).toMatchObject({ kinds: [], tags: [], options: [], inStock: 0, price: null });
   });
 });
@@ -198,5 +213,13 @@ describe('describeFilters and removeFilter', () => {
     expect(removeFilter(s, 'price:').price).toBeUndefined();
     expect(removeFilter(s, 'kind:digital').kinds).toEqual([]);
     expect(describeFilters(emptyFilters())).toEqual([]);
+  });
+
+  it('removeFilter keeps option values that contain "="', () => {
+    const withEquals = state({ options: { Fit: ['a=b=c', 'plain'] } });
+    const chip = describeFilters(withEquals).find((c) => c.label === 'Fit a=b=c')!;
+    expect(chip.id).toBe('option:Fit=a=b=c');
+    expect(removeFilter(withEquals, chip.id).options).toEqual({ Fit: ['plain'] });
+    expect(removeFilter(state({ options: { Fit: ['a=b'] } }), 'option:Fit=a=b').options).toEqual({});
   });
 });

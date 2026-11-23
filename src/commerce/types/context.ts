@@ -27,6 +27,12 @@ export interface CommerceContext extends RenderContext {
   /** Add to cart from the product page. May return a promise: the button shows loading, then success or error. */
   onAddToCart?: (item: { product: Product; variantId: string; quantity: number; purchaseOption: PurchaseOption }) => void | Promise<unknown>;
   onSelectionChange?: (selection: Selection) => void;
+  /**
+   * The product page's wishlist button was toggled: `saved` is the new state. Save or remove the product
+   * in the host's wishlist. With `ProductPage.inWishlist` set, the button shows that state (controlled);
+   * without it, the button keeps its own pressed state.
+   */
+  onWishlistToggle?: (product: Product, saved: boolean) => void;
 
   // Cart, checkout and confirmation (Phase 11).
   /** Product page URL for a cart or order line. Default "/products/<productId>". */
@@ -46,6 +52,12 @@ export interface CommerceContext extends RenderContext {
   onStepChange?: (step: CheckoutStepId) => void;
   onPlaceOrder?: () => void;
   /**
+   * Collect a billing address at checkout. Default true. Pass false when the payment provider collects
+   * billing details itself: the checkout template then hides the billing address fields and validates
+   * without them (the `collectBillingAddress` option of validateCheckoutStep and canEnterStep).
+   */
+  collectBillingAddress?: boolean;
+  /**
    * The payment provider's hosted fields, rendered under the selected payment method. SECURITY: never
    * build card inputs yourself; this library renders none. Use DemoPaymentFields only in demos.
    */
@@ -54,6 +66,11 @@ export interface CommerceContext extends RenderContext {
   // Auth and account (Phase 12). Without the auth callbacks, the forms POST to page.action natively.
   /** Hidden inputs for every auth form, e.g. a CSRF token. */
   formHiddenFields?: ReactNode;
+  /**
+   * Sign-in buttons for other providers (for example "Continue with ..."), shown at the top of the sign-in
+   * form (LoginForm's `socialSlot`). Nothing by default.
+   */
+  socialSlot?: ReactNode;
   onLogin?: (values: LoginValues) => void;
   onRegister?: (values: RegisterValues) => void;
   onForgotPassword?: (values: ForgotPasswordValues) => void;
@@ -64,11 +81,21 @@ export interface CommerceContext extends RenderContext {
   onRetryInvoice?: (invoice: Invoice) => void;
   /** "Buy again" on an order. A callback only. */
   onReorder?: (order: Order) => void;
+  /**
+   * Add or update a saved address. Without it, the address book hides "Add address" and "Edit". Report
+   * the outcome of async saves through `AccountAddressesPage.status`.
+   */
   onSaveAddress?: (address: Omit<SavedAddress, 'id'> & { id?: string }) => void;
+  /** Delete a saved address. Without it, the address book hides "Delete". */
   onDeleteAddress?: (id: string) => void;
+  /** Make an address the default of a kind. Without it, the address book hides "Make default". */
   onSetDefaultAddress?: (id: string, kind: AddressKind) => void;
+  /** Remove a product from the wishlist. Without it, the wishlist page hides the remove buttons. */
   onRemoveWishlistItem?: (productId: string) => void;
-  /** Download URL per library file. Default "#" placeholders. */
+  /**
+   * Download URL for a purchased file: used by the downloads library, the order detail page and the order
+   * confirmation. Default "#" placeholders that don't navigate.
+   */
   downloadHref?: (productId: string, fileId: string) => string;
 }
 

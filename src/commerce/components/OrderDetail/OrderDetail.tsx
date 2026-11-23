@@ -21,8 +21,10 @@ export interface OrderItemsListProps {
   order: Order;
   /** Returns the product page URL for a line's title link. */
   lineHref: (line: CartLine) => string;
-  /** Catalogue products, to attach each digital line's files to it. Without them, downloads are not shown per line. */
+  /** Catalog products, to attach each digital line's files to it. Without them, downloads are not shown per line. */
   products?: readonly Product[];
+  /** Download URL for a line's file (`CommerceContext.downloadHref`). Default "#" placeholders that don't navigate. */
+  downloadHref?: (productId: string, fileId: string) => string;
 }
 
 /** Notes for a placed order's line: its recurring note (first billing, trial) instead of the cart's renewal text. */
@@ -33,7 +35,7 @@ function orderLineNotes(order: Order, line: CartLine): CartLineNote[] {
 }
 
 /** The order's items as compact lines; digital lines list their files underneath when `products` is given. */
-export function OrderItemsList({ order, lineHref, products = [] }: OrderItemsListProps) {
+export function OrderItemsList({ order, lineHref, products = [], downloadHref }: OrderItemsListProps) {
   const amounts = orderLineAmounts(order);
   return (
     <ul className={styles.items}>
@@ -45,7 +47,7 @@ export function OrderItemsList({ order, lineHref, products = [] }: OrderItemsLis
             <CartLineItem line={line} amounts={amounts[i]!} href={lineHref(line)} notes={orderLineNotes(order, line)} variant="compact" />
             {files.length > 0 && (
               <div className={styles.lineFiles}>
-                <DownloadList downloads={files} />
+                <DownloadList downloads={files} hrefFor={downloadHref ? (file) => downloadHref(line.productId, file.fileId) : undefined} />
               </div>
             )}
           </li>

@@ -54,6 +54,8 @@ template uses the `minimal` site layout unless `layout` is `default`.
   - forgot password: `email`
   - reset password: `password`, `confirmPassword`
 - **CSRF and reset tokens:** put them in `ctx.formHiddenFields`, for example `<input type="hidden" name="csrf" value={csrfToken} />`. They go into every auth form. The reset token belongs there too, never in a URL the library builds.
+- **Other sign-in providers:** pass your buttons (for example "Continue with …") as `ctx.socialSlot`. They're shown above the sign-in fields. A ReactNode can't live in JSON page data, which is why it goes in the context.
+- **Links** come from `page.links` (`login`, `register`, `forgotPassword`, `terms`, `privacy`). The sign-in, create-account and forgot-password defaults are `<links.account>/login`, `/register` and `/forgot-password`, with `links.account` defaulting to `/account`.
 - **With JavaScript,** `ctx.onLogin`, `onRegister`, `onForgotPassword` and `onResetPassword` receive the validated values instead of the native POST. Report back by re-rendering with `status`: `submitting`, `error` (with `errorMessage`) or `success`.
 - **Client checks** (`validateLogin`, `validateRegister`, `validateForgotPassword`, `validateResetPassword`) only check shape. The server validates again.
 
@@ -70,7 +72,14 @@ export function authContext(csrfToken: string, signIn: (values: LoginValues) => 
 
 ### Account pages and callbacks
 
-Supply page data from your APIs, `now` from your server clock, and these callbacks in `ctx`:
+Supply page data from your APIs, `now` from your server clock, and these callbacks in `ctx`. A control
+whose callback is missing is hidden (for example "Buy again" without `onReorder`, or "Delete" without
+`onDeleteAddress`), so a page rendered without callbacks is read-only rather than full of buttons that do
+nothing.
+
+**Account paths.** Set `page.links.account` when your account area isn't at `/account`. The templates
+build every account link under it: the navigation, order and subscription links and breadcrumbs, the
+downloads library's order links, "Needs attention" links and the signed-out prompt.
 
 | Callback | Used by |
 | --- | --- |
@@ -78,18 +87,18 @@ Supply page data from your APIs, `now` from your server clock, and these callbac
 | `onSubscriptionAction(subscriptionId, request)` | Subscription detail (every action) and the subscription cards on the list page (`update-payment` only). `request` is `{ type: 'pause', months, resumesOn }`, `{ type: 'change-plan', planId, effective }`, `{ type: 'cancel', reason?, comment? }`, or `{ type }` for `resume`, `undo-cancel`, `reactivate` and `update-payment`. |
 | `onRetryInvoice(invoice)` | Invoice list (failed invoices) |
 | `onReorder(order)` | Order detail ("Buy again") |
-| `onSaveAddress`, `onDeleteAddress`, `onSetDefaultAddress` | Address book |
-| `onRemoveWishlistItem(productId)` | Wishlist |
+| `onSaveAddress`, `onDeleteAddress`, `onSetDefaultAddress` | Address book: "Add address" and "Edit", "Delete", and "Make default", each hidden without its callback |
+| `onRemoveWishlistItem(productId)` | Wishlist (the remove buttons are hidden without it) |
 | `onQuickAdd`, `productHref` | Wishlist cards |
-| `downloadHref(productId, fileId)` | Downloads library (signed URLs; default `#` placeholders that don't navigate). Download links on the order detail page are always placeholders. |
+| `downloadHref(productId, fileId)` | Download links in the downloads library, on the order detail page and on the order confirmation (signed URLs; default `#` placeholders that don't navigate). Order files are matched to their product by `Order.downloads[].productId` (set by `createOrderFromCart`), then by `page.products`, then by the order's only digital line; a file whose product can't be told keeps `#`. |
 | `paymentFields` | Past-due notice on the subscription detail: your payment provider's hosted fields |
 
 ## Dialog contract
 
-`ManageSubscription` (the actions on the subscription detail page) closes its dialogs **based on
-`status`**, not on the click:
+`ManageSubscription` (the actions on the subscription detail page) and, when you pass `status`,
+`AddressBook` (the addresses page) close their dialogs **based on `status`**, not on the click:
 
-1. **On confirm,** the component calls `onSubscriptionAction` with the request.
+1. **On confirm,** the component calls the callback (`onSubscriptionAction`, or an address callback) with the request.
 2. **A synchronous host** updates its data and leaves `status` as `idle`; the dialog closes straight away and the outcome is announced.
 3. **An asynchronous host** (a server round trip) must set `page.status: 'submitting'` *inside the callback, before it returns*. The confirm button then shows its loading state and the dialog stays open.
 4. **When the save finishes,** set `status: 'idle'` (the dialog closes and the outcome is announced) or `status: 'error'` with `errorMessage` (the dialog stays open and shows the error; the customer can retry or close it).
@@ -97,9 +106,12 @@ Supply page data from your APIs, `now` from your server clock, and these callbac
 If `submitting` is set later, for example after an `await`, the component sees `idle` first and closes
 the dialog before the save has finished.
 
-`AddressBook` works differently: it has no `status`. Its dialogs close and the change is announced as
-soon as the callback returns. `page.errorMessage` on the addresses page is shown inside the edit dialog
-the next time it is open.
+On the addresses page, set `page.status` and `page.errorMessage` the same way. A failed save keeps the
+edit dialog open, a failed delete keeps the confirmation open, and a failed "Make default" announces the
+error; nothing is announced as saved until `status` is `idle` again. Without `page.status`,
+`AddressBook` keeps its earlier behavior for synchronous hosts: its dialogs close and the change is
+announced as soon as the callback returns, and `page.errorMessage` shows in the edit dialog whenever
+it's set.
 
 ## Security notes
 
@@ -122,8 +134,8 @@ These come from `getSubscriptionStatusInfo(sub, now)` and `getSubscriptionAction
 | pastDue | Payment failed | Payment failed: update your payment method | cancel, update-payment |
 | paused | Paused | Paused until Jun 1, 2026 | resume, cancel, update-payment |
 | pausedOpenEnded | Paused | Paused until you resume it | resume, cancel, update-payment |
-| cancelling | Cancelling | Cancels on Apr 2, 2026 | undo-cancel, update-payment |
-| cancelled | Cancelled | Cancelled on Feb 28, 2026 | reactivate |
+| cancelling | Canceling | Cancels on Apr 2, 2026 | undo-cancel, update-payment |
+| cancelled | Canceled | Canceled on Feb 28, 2026 | reactivate |
 <!-- action-matrix:end -->
 
 The rules behind the actions ("canceling" means `cancelAtPeriodEnd` is set):
@@ -149,7 +161,7 @@ Neither timing prorates, so the copy always says "Nothing is charged today". Dir
 `DemoAccountProvider` and `useDemoAccount()` (Storybook only, in [`demo/commerce`](../demo/commerce/README.md)) keep the customer, orders, subscriptions, invoices, downloads, addresses and wishlist in memory.
 - **Actions:** `perform(action)` runs the pure `applyAccountAction`, which checks subscription actions with `getSubscriptionActions`, dates changes from `DEMO_NOW`, returns a typed result (success, or `not-allowed`, `not-found` or `server`) and shows a Toast.
 - **Plan changes** follow the request: immediate changes switch the plan, and next-billing-date changes set `scheduledPlanChange`.
-- **Failures:** `parameters.demo.failAction` makes subscription, address and wishlist actions fail with a server error.
+- **Failures:** `parameters.demo.failAction` makes subscription, address and wishlist actions fail with a server error. The subscription and address demo pages pass it back as `page.status: 'error'` with `errorMessage`, so the dialog stays open.
 
 It does not:
 - persist anything
@@ -166,5 +178,4 @@ Apr 1, and the paused one resumes Jun 1. The 12- and 60-order histories are gene
 ## Limitations
 
 - **US addresses only,** with no autocomplete or verification (the address book uses the checkout address form).
-- **No real sign-in providers.** `LoginForm` has a `socialSlot`, but the auth template doesn't fill it.
 - **No proration.** Plan changes never charge or credit the difference.

@@ -3,9 +3,9 @@ import { formatBytes } from '../../logic/options';
 import type { DigitalDelivery } from '../../types/product';
 import styles from './DigitalDetails.module.css';
 
-const licenceNames = { single: 'Single-user licence', team: 'Team licence', unlimited: 'Unlimited licence' } as const;
+const licenseNames = { single: 'Single-user license', team: 'Team license', unlimited: 'Unlimited license' } as const;
 
-/** Compact file list (name, format, size) and licence summary for digital products. */
+/** Compact file list (name, format, size) and license summary for digital products. */
 export function DigitalDetails({ digital }: { digital?: DigitalDelivery }) {
   if (!digital) return null;
   return (
@@ -25,7 +25,7 @@ export function DigitalDetails({ digital }: { digital?: DigitalDelivery }) {
         <p className={styles.licence}>
           <Icon name="shield" size="sm" className={styles.icon} />
           <span>
-            <strong>{licenceNames[digital.licence.type]}.</strong> {digital.licence.summary}
+            <strong>{licenseNames[digital.licence.type]}.</strong> {digital.licence.summary}
           </span>
         </p>
       )}

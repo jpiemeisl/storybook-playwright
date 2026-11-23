@@ -86,9 +86,10 @@ export interface Order {
   tracking?: { carrier: string; number: string; events: { at: string; label: string }[]; /** Carrier tracking page. Must be a safe href. */ url?: string };
   /**
    * Download links for digital lines. `format` and `sizeBytes` are shown when present; `reason` explains
-   * why an unavailable file cannot be downloaded (from data, e.g. an expired link).
+   * why an unavailable file cannot be downloaded (from data, e.g. an expired link). `productId` is the
+   * product the file belongs to (set by createOrderFromCart), passed to `CommerceContext.downloadHref`.
    */
-  downloads?: { fileId: string; name: string; available: boolean; expiresAt?: string; format?: string; sizeBytes?: number; reason?: string }[];
+  downloads?: { fileId: string; name: string; available: boolean; expiresAt?: string; format?: string; sizeBytes?: number; reason?: string; productId?: string }[];
   /** Billing for subscription lines. */
   recurring?: OrderRecurringLine[];
   /** Contact email given at checkout. */

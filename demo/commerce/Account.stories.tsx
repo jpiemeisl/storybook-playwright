@@ -55,9 +55,10 @@ function SubscriptionDemo({ id }: { id: string }) {
 
 function AddressesDemo() {
   const account = useDemoAccount();
+  const error = account.lastError?.scope === 'addresses' ? account.lastError.message : undefined;
   return (
     <>
-      <AccountAddressesTemplate page={{ ...addressesPage('three'), addresses: account.addresses }} chrome={chrome} ctx={useCtx('/account/addresses')} />
+      <AccountAddressesTemplate page={{ ...addressesPage('three'), addresses: account.addresses, status: error ? 'error' : 'idle', errorMessage: error }} chrome={chrome} ctx={useCtx('/account/addresses')} />
       <Toasts />
     </>
   );
@@ -172,6 +173,21 @@ export const AddressDefaultsAndDelete: Story = {
   },
 };
 
+/** demo.failAction with page.status: the delete dialog stays open with the error and the address stays. */
+export const AddressDeleteFails: Story = {
+  parameters: { layout: 'fullscreen', vrt: { screenshot: false }, demo: { failAction: true } },
+  render: () => <AddressesDemo />,
+  play: async ({ canvasElement }) => {
+    const canvas = within(canvasElement);
+    await userEvent.click(canvas.getByRole('button', { name: 'Delete Studio' }));
+    const d = await dialog(canvasElement);
+    await userEvent.click(d.getByRole('button', { name: 'Delete address' }));
+    await waitFor(() => expect(d.getByText(/the address couldn’t be deleted/)).toBeVisible());
+    await expect(d.getByRole('button', { name: 'Delete address' })).toBeVisible();
+    await expect(canvas.getByText('Studio', { selector: 'h2' })).toBeInTheDocument();
+  },
+};
+
 /** Remove a wishlist item. */
 export const RemoveWishlistItem: Story = {
   render: () => <WishlistDemo />,
@@ -183,7 +199,7 @@ export const RemoveWishlistItem: Story = {
   },
 };
 
-/** Reveal and copy a licence key in the downloads library. */
+/** Reveal and copy a license key in the downloads library. */
 export const RevealAndCopyLicenceKey: Story = {
   render: () => <AccountDownloadsTemplate page={downloadsPage('six')} chrome={chrome} ctx={{ currentPath: '/account/downloads' }} />,
   play: async ({ canvasElement }) => {

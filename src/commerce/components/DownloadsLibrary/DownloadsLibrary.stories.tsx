@@ -21,7 +21,7 @@ const cell = (label: string, children: React.ReactNode) => (
   </section>
 );
 
-/** One product; six products with bundles, expired files and licence keys (grouped by order); a filter with no match; empty. */
+/** One product; six products with bundles, expired files and license keys (grouped by order); a filter with no match; empty. */
 export const Matrix: Story = {
   parameters: { vrt: { viewports: [{ width: 375, fullPage: true }, { width: 1280, fullPage: true }] } },
   render: () => (
@@ -34,7 +34,7 @@ export const Matrix: Story = {
   ),
 };
 
-/** Licence key: masked by default (not in the DOM), revealed by a toggle, copied with a polite message. */
+/** License key: masked by default (not in the DOM), revealed by a toggle, copied with a polite message. */
 export const LicenseKeyRevealAndCopy: Story = {
   parameters: { vrt: { viewports: [375, 1280] } },
   render: () => <LicenseKey value="GDTB-7Q4M-K2XP-9VNA" />,

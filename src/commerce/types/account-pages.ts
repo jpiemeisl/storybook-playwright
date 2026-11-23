@@ -9,8 +9,14 @@ import type { Customer, Invoice, LibraryItem, SavedAddress, WishlistItem } from 
 import type { CustomerSubscription, Order } from './order';
 import type { Product } from './product';
 
-/** Links the auth and account templates use. Defaults under "/account". */
+/** Links the auth and account templates use. Defaults under "/account" (or under `account` when set). */
 export interface AccountLinks {
+  /**
+   * Base path of the account area. The account templates build their links under it (orders, order
+   * detail, subscriptions, addresses, wishlist, downloads, breadcrumbs, the account navigation), and the
+   * sign-in, create-account and forgot-password defaults below. Default "/account".
+   */
+  account?: string;
   login?: string;
   register?: string;
   forgotPassword?: string;
@@ -114,6 +120,12 @@ export interface AccountSubscriptionPage extends AccountPageBase {
 export interface AccountAddressesPage extends AccountPageBase {
   template: 'account-addresses';
   addresses: SavedAddress[];
+  /**
+   * The last address change's state, for async hosts (AddressBook `status`): the dialog closes and the
+   * change is announced only once it is `idle` again, and stays open with `errorMessage` on `error`.
+   * Omit it when changes apply synchronously.
+   */
+  status?: 'idle' | 'submitting' | 'error';
   errorMessage?: string;
 }
 

@@ -9,7 +9,19 @@ import type { CommerceContext } from '../../types/context';
 import { AccountDashboardTemplate } from './AccountOverview';
 import { AccountAddressesTemplate, AccountDownloadsTemplate, AccountOrdersTemplate, AccountOrderTemplate, AccountSubscriptionsTemplate, AccountSubscriptionTemplate, AccountWishlistTemplate } from './AccountPages';
 
-const ctx = (currentPath: string): CommerceContext => ({ currentPath, lineHref, onSignOut: () => undefined, onSubscriptionAction: () => undefined, onRetryInvoice: () => undefined, onReorder: () => undefined, paymentFields: <DemoPaymentFields /> });
+const ctx = (currentPath: string): CommerceContext => ({
+  currentPath,
+  lineHref,
+  onSignOut: () => undefined,
+  onSubscriptionAction: () => undefined,
+  onRetryInvoice: () => undefined,
+  onReorder: () => undefined,
+  onSaveAddress: () => undefined,
+  onDeleteAddress: () => undefined,
+  onSetDefaultAddress: () => undefined,
+  onRemoveWishlistItem: () => undefined,
+  paymentFields: <DemoPaymentFields />,
+});
 
 const meta = { title: 'Commerce/Templates/Account', parameters: { layout: 'fullscreen' } } satisfies Meta;
 export default meta;

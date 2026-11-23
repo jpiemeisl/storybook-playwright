@@ -17,6 +17,7 @@ import { formatMoney } from '../../../utils/formatMoney';
 import { CartLineItem } from '../../components/CartLineItem';
 import { DownloadList } from '../../components/DownloadList';
 import { orderLineAmounts } from '../../logic/checkout';
+import { orderDownloadHref } from '../../logic/downloads';
 import { formatCommerceDate } from '../../logic/pricing';
 import { defaultLineHref, type CommerceContext } from '../../types/context';
 import type { Order } from '../../types/order';
@@ -33,8 +34,8 @@ export function nextSteps(order: Order): StepItem[] {
   if (order.downloads?.length) steps.push({ title: 'Download your files', description: 'Your downloads are ready now. They are listed below.' });
   if (ships) {
     const method = order.shippingMethod;
-    steps.push({ title: 'We pack and ship your order', description: method ? `${method.label}${method.estimate ? `: ${method.estimate}` : ''}.` : 'We’ll pack your order next.' });
-    steps.push({ title: 'Tracking follows', description: 'We’ll send tracking details when your parcel leaves us.' });
+    steps.push({ title: 'Your order is packed and shipped', description: method ? `${method.label}${method.estimate ? `: ${method.estimate}` : ''}.` : 'Your order is packed next.' });
+    steps.push({ title: 'Tracking follows', description: 'Tracking details follow when your parcel ships.' });
   }
   if (order.recurring?.length) {
     const titleOf = (lineId: string) => order.lines.find((l) => l.id === lineId)?.snapshot.title ?? '';
@@ -107,7 +108,7 @@ export function OrderConfirmationTemplate({ page, chrome, ctx }: TemplateProps<O
               </p>
             </header>
             <Alert tone="success" title="Order confirmed">
-              We’ve received order {order.number}.{order.email && ` Demo only: a confirmation would be emailed to ${order.email}.`}
+              Order {order.number} has been received.{order.email && ` Demo only: a confirmation would be emailed to ${order.email}.`}
             </Alert>
 
             <Section id="next-steps" title="What happens next">
@@ -116,7 +117,7 @@ export function OrderConfirmationTemplate({ page, chrome, ctx }: TemplateProps<O
 
             {order.downloads?.length ? (
               <Section id="downloads" title="Your downloads">
-                <DownloadList downloads={order.downloads} />
+                <DownloadList downloads={order.downloads} hrefFor={orderDownloadHref(order, ctx?.downloadHref)} />
               </Section>
             ) : null}
 

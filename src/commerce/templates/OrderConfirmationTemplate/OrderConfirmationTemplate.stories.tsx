@@ -30,7 +30,7 @@ export const Mixed: Story = {
   play: async ({ canvasElement }) => {
     const canvas = within(canvasElement);
     await expect(canvas.getByRole('heading', { level: 1 })).toHaveTextContent('Thank you for your order');
-    await expect(canvas.getByRole('status')).toHaveTextContent('We’ve received order FH-2004.');
+    await expect(canvas.getByRole('status')).toHaveTextContent('Order FH-2004 has been received.');
     await expect(canvas.getByRole('link', { name: 'Download small-garden-guide.pdf' })).toBeVisible();
     // In "What happens next" and in "Then billed".
     await expect(canvas.getAllByText(/House coffee beans: \$23\.80 \/ month, next charge Apr 21, 2026/, { selector: 'li' })).toHaveLength(2);

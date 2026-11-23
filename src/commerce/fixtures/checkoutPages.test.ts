@@ -64,10 +64,10 @@ describe('validateConfirmationPage', () => {
 describe('next steps by kind', () => {
   const titles = (key: ConfirmationOrderKey) => nextSteps(confirmationOrders[key]).map((s) => s.title);
   it('combines shipping, downloads and subscription steps', () => {
-    expect(titles('physical')).toEqual(['Order placed', 'We pack and ship your order', 'Tracking follows']);
+    expect(titles('physical')).toEqual(['Order placed', 'Your order is packed and shipped', 'Tracking follows']);
     expect(titles('digital')).toEqual(['Order placed', 'Download your files']);
     expect(titles('subscriptionTrial')).toEqual(['Order placed', 'Your subscription starts']);
-    expect(titles('mixed')).toEqual(['Order placed', 'Download your files', 'We pack and ship your order', 'Tracking follows', 'Your subscription starts']);
+    expect(titles('mixed')).toEqual(['Order placed', 'Download your files', 'Your order is packed and shipped', 'Tracking follows', 'Your subscription starts']);
   });
 });
 

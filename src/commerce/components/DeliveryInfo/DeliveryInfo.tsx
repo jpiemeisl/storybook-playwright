@@ -16,12 +16,26 @@ export interface DeliveryInfoProps {
   purchaseOption?: PurchaseOption;
 }
 
-/** Delivery lines for the product kind. Text comes from product data and constants, never from a clock. */
+/**
+ * "Free shipping on orders over $75" when FREE_SHIPPING_THRESHOLD is in the product's currency (the cart
+ * applies it only then); undefined otherwise. Not exported from the commerce entry.
+ */
+export function freeShippingText(product: Product): string | undefined {
+  const currency = product.variants[0]?.price.currency;
+  if (currency !== FREE_SHIPPING_THRESHOLD.currency) return undefined;
+  return `Free shipping on orders over ${formatMoney(FREE_SHIPPING_THRESHOLD, { trimWholeAmounts: true })}`;
+}
+
+/**
+ * Delivery lines for the product kind. Text comes from product data and constants, never from a clock.
+ * The free-shipping line is left out when the product's currency differs from FREE_SHIPPING_THRESHOLD's.
+ */
 export function deliveryLines(product: Product, purchaseOption?: PurchaseOption): { icon: IconName; text: string }[] {
   const lines: { icon: IconName; text: string }[] = [];
   if (product.kind === 'physical') {
     lines.push({ icon: 'truck', text: DELIVERY_COPY.dispatch });
-    lines.push({ icon: 'tag', text: `Free shipping on orders over ${formatMoney(FREE_SHIPPING_THRESHOLD, { trimWholeAmounts: true })}` });
+    const freeShipping = freeShippingText(product);
+    if (freeShipping) lines.push({ icon: 'tag', text: freeShipping });
     lines.push({ icon: 'refresh', text: DELIVERY_COPY.returns });
   }
   if (product.kind === 'digital' && product.digital) {

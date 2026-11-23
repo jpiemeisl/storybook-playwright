@@ -39,3 +39,26 @@ export const ForgotPassword: Story = { tags: ['vrt-mobile'], parameters: mobile,
 export const ForgotPasswordSent: Story = { tags: ['vrt-mobile'], parameters: mobile, args: { template: 'forgot-password', extra: { status: 'success', email: 'robin@example.com' } } };
 export const ResetPassword: Story = { tags: ['vrt-mobile'], parameters: mobile, args: { template: 'reset-password' } };
 export const ResetPasswordExpired: Story = { tags: ['vrt-mobile'], parameters: mobile, args: { template: 'reset-password', extra: { expired: true } } };
+
+/** ctx.socialSlot goes above the sign-in fields; links default under page.links.account. Behavior only. */
+export const LoginWithSocialSlot: Story = {
+  parameters: { layout: 'fullscreen', vrt: { screenshot: false } },
+  render: () => (
+    <AuthTemplate
+      page={authPage('login', { links: { account: '/my-account' } })}
+      chrome={chrome}
+      ctx={{
+        socialSlot: (
+          <button type="button" onClick={() => undefined}>
+            Continue with a single sign-on provider
+          </button>
+        ),
+      }}
+    />
+  ),
+  play: async ({ canvasElement }) => {
+    const canvas = within(canvasElement);
+    await expect(canvas.getByRole('button', { name: 'Continue with a single sign-on provider' })).toBeVisible();
+    await expect(canvas.getByRole('link', { name: /Forgot/ })).toHaveAttribute('href', '/my-account/forgot-password');
+  },
+};

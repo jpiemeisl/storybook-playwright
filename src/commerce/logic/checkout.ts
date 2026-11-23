@@ -147,7 +147,7 @@ export interface OrderContext extends Omit<CartContext, 'now'> {
 /**
  * Builds an Order from a cart and valid checkout values (validate first: this function does not).
  * Totals come from computeCartTotals with the chosen shipping method. Digital lines produce
- * `downloads` (available now; expiry from accessDays), subscription lines produce `recurring` with the
+ * `downloads` (available now; expiry from accessDays; each with its `productId`), subscription lines produce `recurring` with the
  * first billing date, and shippable carts get the shipping address and method.
  */
 export function createOrderFromCart(cart: Cart, values: CheckoutValues, ctx: OrderContext): Order {
@@ -160,9 +160,9 @@ export function createOrderFromCart(cart: Cart, values: CheckoutValues, ctx: Ord
     .filter((line) => line.snapshot.kind === 'digital')
     .flatMap((line) => {
       const digital = byId.get(line.productId)?.digital;
-      if (!digital) return [{ fileId: line.productId, name: line.snapshot.title, available: true }];
+      if (!digital) return [{ fileId: line.productId, name: line.snapshot.title, available: true, productId: line.productId }];
       const expiresAt = digital.accessDays ? addDays(ctx.placedAt, digital.accessDays) : undefined;
-      return digital.files.map((f) => ({ fileId: f.id, name: f.name, available: true, format: f.format, sizeBytes: f.sizeBytes, ...(expiresAt ? { expiresAt } : {}) }));
+      return digital.files.map((f) => ({ fileId: f.id, name: f.name, available: true, format: f.format, sizeBytes: f.sizeBytes, ...(expiresAt ? { expiresAt } : {}), productId: line.productId }));
     });
 
   const recurring: OrderRecurringLine[] = cart.lines.flatMap((line, i) => {

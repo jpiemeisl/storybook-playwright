@@ -33,7 +33,7 @@ export const ThreeIntervals: Story = {
     </Stack>
   ),
   play: async ({ canvasElement }) => {
-    const group = within(canvasElement).getAllByRole('radiogroup', { name: 'Billing interval' })[0]!;
+    const group = within(canvasElement).getAllByRole('group', { name: 'Billing' })[0]!;
     await expect(within(group).getByText('Save 20% vs monthly')).toBeVisible();
     await userEvent.click(within(group).getByRole('radio', { name: /Quarterly/ }));
     await expect(within(group).getByRole('radio', { name: /Quarterly/ })).toBeChecked();

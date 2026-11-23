@@ -1,6 +1,8 @@
 import { describe, expect, it } from 'vitest';
 import { ratingLabel, starIcons } from './Rating';
 import { stockLabel } from './StockBadge';
+import { subscriptionKeyDate } from './SubscriptionCard/SubscriptionCard';
+import { accountSubscriptions } from '../fixtures';
 
 describe('stockLabel', () => {
   it('gives every status a text, not only a tone', () => {
@@ -29,5 +31,16 @@ describe('Rating helpers', () => {
     expect(ratingLabel(4, 1)).toBe('Rated 4 out of 5 from 1 review');
     expect(ratingLabel(3.5)).toBe('Rated 3.5 out of 5');
     expect(ratingLabel(0, 0)).toBe('No reviews yet');
+  });
+});
+
+describe('subscriptionKeyDate', () => {
+  const active = accountSubscriptions.active;
+  it('shows when access ends for a cancellation at period end', () => {
+    expect(subscriptionKeyDate({ ...active, status: 'active', cancelAtPeriodEnd: true, currentPeriodEnd: '2026-04-02' })).toBe('Access until Apr 2, 2026');
+    expect(subscriptionKeyDate({ ...active, status: 'active', cancelAtPeriodEnd: true, currentPeriodEnd: undefined, nextBillingAt: '2026-05-01' })).toBe('Access until May 1, 2026');
+  });
+  it('omits the line when a cancellation has no end date', () => {
+    expect(subscriptionKeyDate({ ...active, status: 'active', cancelAtPeriodEnd: true, currentPeriodEnd: undefined, nextBillingAt: undefined })).toBeUndefined();
   });
 });

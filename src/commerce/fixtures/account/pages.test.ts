@@ -6,6 +6,7 @@ import { createTemplates, getTemplate, resolveTemplate } from '../../../template
 import { validateAccountPage, validateAuthPage } from '../../logic/validatePages';
 import { commerceTemplates } from '../../templates';
 import type { AccountPage, AuthPage } from '../../types/account-pages';
+import type { CommerceContext } from '../../types/context';
 import { chrome } from '../browsing';
 import { orderHistories } from './orders';
 import { addressesPage, authPage, dashboardPage, downloadsPage, orderPage, ordersPage, signedOutPage, subscriptionPage, subscriptionsPage, wishlistPage } from './pages';
@@ -80,5 +81,34 @@ describe('auth and account templates in the registry', () => {
     expect(html).toContain('9VNA');
     const login = renderToStaticMarkup(createElement(PageRenderer, { page: authPage('login'), chrome, templates }));
     expect(login).toMatch(/type="password"[^>]*value=""|value=""[^>]*type="password"/);
+  });
+});
+
+describe('account links, downloads and missing callbacks', () => {
+  const templates = createTemplates(Object.values(commerceTemplates));
+  const render = (page: AccountPage | AuthPage, ctx?: CommerceContext) => renderToStaticMarkup(createElement(PageRenderer, { page, chrome, templates, ctx }));
+
+  it('builds account links under links.account', () => {
+    const html = render({ ...subscriptionsPage(), links: { account: '/me/' } });
+    expect(html).toContain('href="/me/subscriptions/');
+    expect(html).toContain('href="/me/orders"'); // account navigation
+    expect(html).not.toContain('href="/account');
+    expect(render({ ...signedOutPage(), links: { account: '/me' } })).toContain('href="/me/login"');
+    expect(render(authPage('login', { links: { account: '/me' } }))).toContain('href="/me/register"');
+    expect(validateAccountPage({ ...subscriptionsPage(), links: { account: 'javascript:alert(1)' } }).map((i) => i.path)).toEqual(['links.account']);
+  });
+
+  it('links order downloads through ctx.downloadHref, "#" without it', () => {
+    const downloadHref = (productId: string, fileId: string) => `/dl/${productId}/${fileId}`;
+    expect(render(orderPage('digital'), { downloadHref })).toMatch(/href="\/dl\/[^"]+"/);
+    expect(render(orderPage('digital'))).not.toContain('href="/dl/');
+  });
+
+  it('hides address and wishlist controls without their callbacks', () => {
+    expect(render(addressesPage('three'))).not.toContain('Add address');
+    expect(render(addressesPage('three'), { onSaveAddress: () => undefined })).toContain('Add address');
+    expect(render(wishlistPage('fourteen'))).not.toContain('from wishlist');
+    expect(render(wishlistPage('fourteen'), { onRemoveWishlistItem: () => undefined })).toContain('from wishlist');
+    expect(validateAccountPage({ ...addressesPage('three'), status: 'done' as never }).map((i) => i.path)).toEqual(['status']);
   });
 });

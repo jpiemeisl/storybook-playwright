@@ -36,12 +36,15 @@ export interface BillingIntervalSelectorProps {
   onChange: (option: PurchaseOption) => void;
 }
 
-/** Segmented radio control for billing intervals with a savings callout computed from the data ("Save 20% vs monthly"). */
+/**
+ * Segmented radio control for billing intervals with a savings callout computed from the data ("Save 20%
+ * vs monthly"). A fieldset whose legend ("Billing") names the group of native radios.
+ */
 export function BillingIntervalSelector({ product, variant, value, onChange }: BillingIntervalSelectorProps) {
   const name = useId();
   const options = product.purchaseOptions.filter((o) => o.type === 'subscription');
   return (
-    <fieldset className={styles.group} role="radiogroup" aria-label="Billing interval">
+    <fieldset className={styles.group}>
       <legend className={styles.legend}>Billing</legend>
       <div className={styles.segments}>
         {options.map((option) => {

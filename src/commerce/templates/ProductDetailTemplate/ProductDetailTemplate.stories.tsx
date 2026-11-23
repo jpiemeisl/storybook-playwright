@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
-import { expect, userEvent, within } from 'storybook/test';
+import { expect, fn, userEvent, within } from 'storybook/test';
 import {
   bundle,
   calendar,
@@ -133,5 +133,20 @@ export const SwitchPurchaseOption: Story = {
     await expect(canvas.getAllByText('/ month').length).toBeGreaterThan(0);
     await expect(canvas.queryByRole('spinbutton', { name: 'Quantity' })).toBeNull();
     window.scrollTo(0, 0);
+  },
+};
+
+const wishlistToggle = fn();
+/** page.inWishlist controls the wishlist button; a click reports to ctx.onWishlistToggle and waits for the host. */
+export const WishlistControlled: Story = {
+  parameters: { vrt: { screenshot: false } },
+  render: () => <ProductDetailTemplate page={{ ...pages.simple!, inWishlist: true }} chrome={chrome} ctx={{ onAddToCart: () => undefined, onWishlistToggle: wishlistToggle }} />,
+  play: async ({ canvasElement }) => {
+    wishlistToggle.mockClear();
+    const button = within(canvasElement).getByRole('button', { name: `Save ${mug.title} to wishlist` });
+    await expect(button).toHaveAttribute('aria-pressed', 'true');
+    await userEvent.click(button);
+    await expect(wishlistToggle).toHaveBeenCalledWith(mug, false);
+    await expect(button).toHaveAttribute('aria-pressed', 'true');
   },
 };

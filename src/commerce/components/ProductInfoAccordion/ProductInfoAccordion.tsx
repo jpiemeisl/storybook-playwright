@@ -1,12 +1,11 @@
 import { Accordion, type AccordionItem } from '../../../components/Accordion';
 import { Prose } from '../../../components/Prose';
-import { neutraliseUnsafeUrls } from '../../../registry/links';
-import { formatMoney } from '../../../utils/formatMoney';
-import { FREE_SHIPPING_THRESHOLD } from '../../logic/cart';
+import { neutralizeUnsafeUrls } from '../../../registry/links';
 import type { Product } from '../../types/product';
 import { DELIVERY_COPY } from '../DeliveryInfo';
+import { freeShippingText } from '../DeliveryInfo/DeliveryInfo';
 
-const html = (text: string) => <Prose sanitizedHtml={neutraliseUnsafeUrls(text).html} />;
+const html = (text: string) => <Prose sanitizedHtml={neutralizeUnsafeUrls(text).html} />;
 
 /** Kind-specific default sections, used when the product does not define one with the same id. */
 export function defaultInfoSections(product: Product): AccordionItem[] {
@@ -14,7 +13,7 @@ export function defaultInfoSections(product: Product): AccordionItem[] {
     const files = product.digital?.files ?? [];
     return [
       { id: 'included', title: 'What’s included', content: html(`<ul>${files.map((f) => `<li>${escape(f.name)} (${escape(f.format)})</li>`).join('')}</ul>`) },
-      { id: 'licence', title: 'Licence', content: html(`<p>${escape(product.digital?.licence?.summary ?? 'Personal use by one person.')}</p>`) },
+      { id: 'licence', title: 'License', content: html(`<p>${escape(product.digital?.licence?.summary ?? 'Personal use by one person.')}</p>`) },
     ];
   }
   if (product.kind === 'subscription') {
@@ -24,7 +23,7 @@ export function defaultInfoSections(product: Product): AccordionItem[] {
       { id: 'cancel', title: terms?.cancelAnytime === false ? 'Minimum term' : 'Cancel anytime', content: html(terms?.minimumTermMonths ? `<p>Minimum term ${terms.minimumTermMonths} months, then cancel anytime.</p>` : '<p>Cancel from your account before the next billing date and you won’t be charged again.</p>') },
     ];
   }
-  return [{ id: 'shipping', title: 'Shipping and returns', content: html(`<p>${DELIVERY_COPY.dispatch}. Free shipping on orders over ${formatMoney(FREE_SHIPPING_THRESHOLD, { trimWholeAmounts: true })}. ${DELIVERY_COPY.returns}.</p>`) }];
+  return [{ id: 'shipping', title: 'Shipping and returns', content: html(`<p>${[DELIVERY_COPY.dispatch, freeShippingText(product), DELIVERY_COPY.returns].filter(Boolean).join('. ')}.</p>`) }];
 }
 
 function escape(text: string) {
