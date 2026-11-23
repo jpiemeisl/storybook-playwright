@@ -1,0 +1,42 @@
+import { Meta } from '@storybook/addon-docs/blocks';
+
+<Meta title="Introduction" />
+
+# Pattern library
+
+React components, page templates, a CMS-agnostic content model, an optional commerce layer and themes for
+content sites and small shops, published privately as `@jpiemeisl/pattern-library`. The stories double as
+tests: the visual suite runs each story's play function and axe and compares its screenshots with the
+committed baselines, and the accessibility suite checks every story with axe.
+
+## Where to start
+
+- **Demo shop / Checkpoints / Home:** a complete, clickable shop built only from library pieces. Sign in as
+  `robin@example.com` with any password.
+- **Themes:** switch between `default`, `harbor` and `orchard` in the toolbar; every story restyles.
+- **Docs tab:** each component's page shows its props, from the JSDoc in the source.
+
+## Using the library in a host app
+
+Install from GitHub Packages, import the CSS once, wrap the app in `LinkProvider` for your router, and
+render content with `BlockRenderer` or `PageRenderer`. The full guide is
+[docs/consuming.md](https://github.com/jpiemeisl/storybook-playwright/blob/main/docs/consuming.md).
+
+## Working on the library
+
+```sh
+npm install
+npm run storybook          # this Storybook
+npm run check:all          # every non-browser check
+npm run docker:pull        # once: the pinned Playwright image
+npm run test:vrt:docker    # the visual suite, in the container
+```
+
+Baselines are only ever written in the container (`npm run test:vrt:docker:update`). Story tags choose
+what gets captured: `vrt-mobile`, `vrt-full`, `theme-smoke` and `skip-vrt` (docs only); see
+[docs/testing.md](https://github.com/jpiemeisl/storybook-playwright/blob/main/docs/testing.md).
+
+## Documentation
+
+Every guide, grouped by audience (using the library, contributing, maintaining), is in the
+[docs index](https://github.com/jpiemeisl/storybook-playwright/blob/main/docs/README.md) on GitHub.
