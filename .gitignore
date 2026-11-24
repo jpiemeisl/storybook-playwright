@@ -5,3 +5,4 @@ test-results/
 dist/
 *.log
 .DS_Store
+demo-output/
