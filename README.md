@@ -89,6 +89,7 @@ baselines: [docs/testing.md](docs/testing.md). Everything else: the [docs index]
 | `npm run test:vrt:changed -- "<pattern>"` | Builds Storybook, then runs only tests whose title matches |
 | `npm run test:vrt:flaky -- "<pattern>"` | No build: runs matching tests five times each with no retries |
 | `npm run test:vrt:report` | Opens the HTML report from the last run |
+| `npm run demo:break` / `demo:vrt` / `demo:fix` | The [visual regression demo](demo/vrt-regression/README.md): apply a small Button regression, run its story in the container, revert it |
 | `npm run release:prepare -- <patch\|minor\|major>` | On a release branch: bump the version, date the CHANGELOG, regenerate the API report |
 | `npm run release:tag` | On `main` after the release pull request merged and CI passed: tag `v<version>` and push the tag |
 

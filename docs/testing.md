@@ -209,6 +209,25 @@ tolerance (a slightly darker gray, say) are left stale. After a token change, re
 npm run test:vrt:docker:update -- --update-snapshots=all
 ```
 
+## Targeted runs
+
+Run the smallest set that covers the change. Every Docker run builds Storybook in the container first
+(several minutes on a Windows or macOS bind mount), then runs the tests.
+
+| When | Run | Covers |
+| --- | --- | --- |
+| While developing a story or component | `npm run test:vrt:docker -- --grep "<title>"` | Tests whose title matches. Titles are `<Storybook title> / <story name>`, for example `"Media/Modal / Large"`; the pattern is a regular expression matched anywhere in the title, so `"Button"` also matches "Navigation/Pagination / Button Mode" |
+| Before opening a pull request | `npm run test:vrt:docker:smoke` | The smoke set: one desktop capture of each `theme-smoke` or `vrt-full` story |
+| Token, theme or shared-layout changes | `npm run test:vrt:docker` | The full suite. Locally it can take up to an hour; run it only when a change reaches most stories |
+| Everything else | CI | The full suite in four shards on every pull request ([ci.md](ci.md)) |
+
+A small change can hide inside the 1% tolerance: a story only fails when enough of its pixels change.
+So a component change is best checked in the stories that use the component, not only in its own
+stories, and CI's full run is the one that counts.
+
+[The visual regression demo](../demo/vrt-regression/README.md) shows a targeted run end to end: a
+one-line Button regression, the failing screenshot, the report, and the fix.
+
 ## Subsets, shards and speed
 
 The full suite captures every story (about 1,630 screenshots); in CI the four shards take about 3

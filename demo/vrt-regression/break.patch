@@ -1,0 +1,13 @@
+diff --git a/src/components/Button/Button.module.css b/src/components/Button/Button.module.css
+index b8897be..9007559 100644
+--- a/src/components/Button/Button.module.css
++++ b/src/components/Button/Button.module.css
+@@ -44,7 +44,7 @@
+   }
+ 
+   .md {
+-    min-height: var(--control-height-md);
++    min-height: var(--control-height-sm);
+     padding-inline: var(--control-padding-md);
+     font-size: var(--text-size-md);
+   }

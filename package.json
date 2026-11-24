@@ -85,7 +85,10 @@
     "release:tag": "node scripts/release-tag.mjs",
     "check:docs": "node scripts/check-docs.mjs",
     "check:docs:external": "node scripts/check-docs.mjs --external",
-    "check:jsdoc": "node scripts/check-jsdoc.mjs"
+    "check:jsdoc": "node scripts/check-jsdoc.mjs",
+    "demo:break": "node scripts/demo-vrt.mjs break",
+    "demo:fix": "node scripts/demo-vrt.mjs fix",
+    "demo:vrt": "node scripts/demo-vrt.mjs vrt"
   },
   "peerDependencies": {
     "react": "^19.0.0",
